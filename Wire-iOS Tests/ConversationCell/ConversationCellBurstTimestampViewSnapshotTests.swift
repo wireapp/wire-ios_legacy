@@ -29,8 +29,6 @@ final class ConversationCellBurstTimestampViewSnapshotTests: XCTestCase {
         sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 40))
         sut.unreadDot.backgroundColor = .red
         sut.backgroundColor = .lightGray
-        sut.separatorColor = .black
-        sut.separatorColorExpanded = .black
     }
 
     override func tearDown() {

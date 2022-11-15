@@ -172,7 +172,7 @@ final class AddParticipantsViewController: UIViewController {
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         confirmButton.hasRoundCorners = true
 
-        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: variant)
+        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection)
 
         searchGroupSelector = SearchGroupSelector()
 
@@ -181,8 +181,7 @@ final class AddParticipantsViewController: UIViewController {
                                                                   shouldIncludeGuests: viewModel.context.includeGuests,
                                                                   isFederationEnabled: isFederationEnabled)
 
-        emptyResultView = EmptySearchResultsView(variant: self.variant,
-                                                 isSelfUserAdmin: SelfUser.current.canManageTeam,
+        emptyResultView = EmptySearchResultsView(isSelfUserAdmin: SelfUser.current.canManageTeam,
                                                  isFederationEnabled: isFederationEnabled)
         super.init(nibName: nil, bundle: nil)
 
@@ -331,11 +330,8 @@ final class AddParticipantsViewController: UIViewController {
             }
         }()
 
-        let titleLabel = DynamicFontLabel(
-            text: title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        guard let title = title else { return }
+        navigationItem.setupNavigationBarTitle(title: title.capitalized)
 
     }
 

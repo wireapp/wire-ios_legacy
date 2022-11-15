@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "cevapsız arama";
 "conversation_list.voiceover.status.pause_media" = "medyayı durdur";
 "conversation_list.voiceover.status.play_media" = "medyayı oynat";
-"conversation_list.voiceover.status.silenced" = "sessize alındı";
 "conversation_list.voiceover.status.typing" = "yazıyor";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.status.mention" = "senden bahsedildi";
-"conversation_list.voiceover.status.reply" = "yanıtla";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "en son";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "Klasörler";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "arşivlendi";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "arşivlenmiş konuşmaların listesi";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kişiler";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "Wire'da insanları arayın";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "yaz";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "mesaj yaz ve sonrası için kaydet";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "kamera";
@@ -227,8 +216,6 @@
 "list.section.requests" = "İstekler";
 "list.section.favorites" = "Favoriler";
 
-"conversation.voiceover.verified" = "onaylanmış";
-"conversation.voiceover.legalhold" = "kanuni durdurma";
 "conversation.voiceover.value.active" = "etkin";
 "conversation.voiceover.value.disabled" = "devre dışı";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Konuşma";
 "compose.message.title" = "Mesaj";
-
-"conversation_details.open_button.accessibility_hint" = "Sohbetin ayrıntılarını görüntülemek için iki kez hafifçe vurun.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "İleti silindi.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "Guests";
+"conversation.banner.services" = "Servisler";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = " ve ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Siz aradınız";
 "content.system.ephemeral_time_remaining" = "%@ ayrıldı";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "Sen";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Yeni biri katıldı.";
 "content.system.verify_devices" = "Cihazları doğrula";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Bu cihazı bir süredir kullanmıyorsunuz. Bazı mesajlar burada görünmeyebilir.";
 "content.system.missing_messages.subtitle_start" = "Bu sırada,";
 
-"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
-"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "Fix future messages";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
-"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
-"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Bu mesaj görüntülenemiyor. Wire'ın eski bir sürümünü kullanıyor olabilirsiniz.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Engelle";
 "profile.unblock_button_title_action" = "Engeli kaldır";
 
-"profile.cancel_connection_button_title" = "İSTEĞİ İPTAL ET";
+"profile.cancel_connection_button_title" = "İsteği İptal Et";
 "profile.connection_request_state.blocked" = "ENGELLENDİ";
 "profile.create_conversation_button_title" = "Grup oluştur";
 "profile.open_conversation_button_title" = "Konuşma aç";
@@ -961,8 +946,6 @@
 "self.about" = "Hakkında";
 "self.sign_out" = "Çıkış Yap";
 "self.report_abuse" = "Kötüye Kullanımı Raporla";
-"self.voiceover.label" = "Profil";
-"self.voiceover.hint" = "Profili ve ayarları aç";
 "self.new-device.voiceover.label" = "Profil, yeni cihazlar eklendi";
 
 "self.add_email_password" = "E-posta adresi ve parola ekleyin";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
-"self.settings.account_picture_group.picture" = "Resim";
-"self.settings.account_picture_group.color" = "Renk";
+"self.settings.account_picture_group.picture" = "Profil resmi";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
+"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";
