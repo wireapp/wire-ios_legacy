@@ -49,8 +49,12 @@ public class IconStringsBuilder {
                     color: SemanticColors.Icon.foregroundPlainDownArrow).withRenderingMode(.alwaysTemplate)
 
                 let icon = NSTextAttachment()
+                let iconBounds =  CGRect(x: 0,
+                                         y: (titleFont.capHeight - iconImage.size.height).rounded() / 2,
+                                         width: iconImage.size.width,
+                                         height: iconImage.size.height)
 
-                icon.bounds = CGRect(x: 0, y: (titleFont.capHeight - iconImage.size.height).rounded() / 2, width: iconImage.size.width, height: iconImage.size.height)
+                icon.bounds = iconBounds
                 icon.image = iconImage
                 let iconString = NSAttributedString(attachment: icon)
                 components.append(iconString)
