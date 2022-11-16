@@ -1023,8 +1023,8 @@
 
 "self.settings.account_picture_group.picture" = "Profilio nuotrauka";
 "self.settings.account_picture_group.alert.title" = "Change your profile picture";
-"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
-"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
+"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
 "self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";

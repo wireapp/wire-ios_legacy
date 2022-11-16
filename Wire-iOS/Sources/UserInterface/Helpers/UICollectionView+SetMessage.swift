@@ -22,13 +22,16 @@ import WireCommonComponents
 
 extension UICollectionView {
 
-    func setEmptyMessage(_ message: String, variant: ColorSchemeVariant = ColorScheme.default.variant) {
-        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+    func setEmptyMessage(_ message: String) {
+        let messageLabel = UILabel(frame: CGRect(x: 0,
+                                                 y: 0,
+                                                 width: self.bounds.size.width,
+                                                 height: self.bounds.size.height))
         messageLabel.text = message
-        messageLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        messageLabel.textColor = SemanticColors.Label.textSettingsPasswordPlaceholder
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
-        messageLabel.font = FontSpec(.medium, .semibold).font!
+        messageLabel.font = FontSpec.mediumSemiboldFont.font!
 
         self.backgroundView = messageLabel
     }
