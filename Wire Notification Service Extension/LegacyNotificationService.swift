@@ -133,13 +133,19 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
     public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
         guard
             let accountID = session?.accountIdentifier,
-            let voipPayload = VoIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
-            let payload = voipPayload.asDictionary
+            let conversationID = event.conversationUUID,
+            let callContent = CallEventContent(from: event)
         else {
             return
         }
 
-      callEventHandler.reportIncomingVoIPCall(payload)
+        // TODO: add caller name and has video.
+
+        callEventHandler.reportIncomingVoIPCall([
+            "accountID": accountID,
+            "conversationID": conversationID,
+            "shouldRing": callContent.initiatesRinging
+        ])
   }
 
   public func notificationSessionDidFailWithError(error: NotificationSessionError) {
