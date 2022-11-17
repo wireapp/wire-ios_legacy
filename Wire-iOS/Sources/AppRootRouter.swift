@@ -234,7 +234,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         }
     }
 
-    func performWhenAuthenticated(_ block : @escaping () -> Void) {
+    func performWhenAuthenticated(_ block: @escaping () -> Void) {
         if case .authenticated = appStateCalculator.appState {
             block()
         } else {

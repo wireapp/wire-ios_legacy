@@ -531,7 +531,7 @@ extension CameraKeyboardViewController: WireCallCenterCallStateObserver {
 
 extension PHAsset {
 
-    func getVideoURL(completionHandler : @escaping ((_ responseURL: URL?) -> Void)) {
+    func getVideoURL(completionHandler: @escaping ((_ responseURL: URL?) -> Void)) {
         guard mediaType == .video else {
             completionHandler(nil)
             return
