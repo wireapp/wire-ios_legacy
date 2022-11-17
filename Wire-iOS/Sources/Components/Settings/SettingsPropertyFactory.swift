@@ -143,7 +143,7 @@ final class SettingsPropertyFactory {
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.phoneNumber)
 
         case .handle:
-            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: APIVersion.isFederationEnabled))
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: BackendInfo.isFederationEnabled))
 
         case .team:
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.teamName)
