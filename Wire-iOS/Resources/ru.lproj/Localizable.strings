@@ -124,7 +124,7 @@
 "contacts_ui.notification.invitation_failed" = "Не удалось отправить приглашение";
 "contacts_ui.title" = "Пригласить пользователей";
 
-"conversation_list.empty.all_archived.message" = "Отправлено в архив";
+"conversation_list.empty.all_archived.message" = "Архивировано";
 "conversation_list.empty.no_contacts.message" = "Начните беседу или\nсоздайте группу.";
 
 
@@ -139,7 +139,7 @@
 "conversation_list.bottom_bar.contacts.title" = "Контакты";
 "conversation_list.bottom_bar.conversations.title" = "Беседы";
 "conversation_list.bottom_bar.folders.title" = "Папки";
-"conversation_list.bottom_bar.archived.title" = "Архивировать";
+"conversation_list.bottom_bar.archived.title" = "Архив";
 
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "пропущенный вызов";
 "conversation_list.voiceover.status.pause_media" = "поставить на паузу";
 "conversation_list.voiceover.status.play_media" = "воспроизвести медиа";
-"conversation_list.voiceover.status.silenced" = "беззвучно";
 "conversation_list.voiceover.status.typing" = "печатает";
 "conversation_list.voiceover.status.ping" = "пинг";
-"conversation_list.voiceover.status.mention" = "вас упомянули";
-"conversation_list.voiceover.status.reply" = "ответить";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "недавние";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "список недавних бесед";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "папки";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "список бесед, организованных в папки";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "архивировано";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "список архивированных бесед";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "поиск пользователей в Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "создать";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "создайте сообщение и сохраните его для последующей отправки";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
@@ -201,7 +190,7 @@
 "folder.creation.name.footer" = "Не более 64 символов";
 "folder.creation.name.placeholder" = "Название папки";
 
-"folder.picker.title" = "Перемещение";
+"folder.picker.title" = "Переместить";
 "folder.picker.empty.hint" = "Создайте новую папку кнопкой +";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -227,8 +216,6 @@
 "list.section.requests" = "Запросы";
 "list.section.favorites" = "Избранное";
 
-"conversation.voiceover.verified" = "верифицировано";
-"conversation.voiceover.legalhold" = "юридические ограничения";
 "conversation.voiceover.value.active" = "активно";
 "conversation.voiceover.value.disabled" = "отключено";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Беседа";
 "compose.message.title" = "Сообщение";
-
-"conversation_details.open_button.accessibility_hint" = "Нажмите дважды для просмотра деталей беседы.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "Сообщение удалено.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Гости**";
-"conversation.banner.services" = "**Сервисы**";
-"conversation.banner.externals" = "**Внешние**";
-"conversation.banner.remotes" = "**Федеративные пользователи**";
+"conversation.banner.guests" = "Гости";
+"conversation.banner.services" = "Сервисы";
+"conversation.banner.externals" = "Внешние";
+"conversation.banner.remotes" = "Федеративные пользователи";
 "conversation.banner.are_present" = "%@ присутствуют";
 "conversation.banner.are_active" = "%@ активны";
 "conversation.banner.separator" = " и ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Вы звонили";
 "content.system.ephemeral_time_remaining" = "осталось %@";
 
-"content.system.self_user_new_client" = "**Вы** начали использовать [новое устройство](%@)";
-"content.system.self_user_new_self_client" = "**Вы** начали использовать [это устройство](%@)";
+"content.system.self_user_new_client" = "Вы начали использовать [новое устройство](%@)";
+"content.system.self_user_new_self_client" = "Вы начали использовать [это устройство](%@)";
 
 "content.system.you_started" = "Вы";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Присоединился новый участник.";
 "content.system.verify_devices" = "Верифицируйте устройства";
 
-"content.system.unverified_self_devices" = "**Вы** отозвали верификацию одного из [своих устройств](%@)";
-"content.system.unverified_other_devices" = "**Вы** отозвали верификацию одного из [%1$@ устройств](%2$@)";
+"content.system.unverified_self_devices" = " Вы отозвали верификацию одного из [своих устройств](%@)";
+"content.system.unverified_other_devices" = "Вы отозвали верификацию одного из [%1$@ устройств](%2$@)";
 
 "content.system.missing_messages.title" = "Вы не использовали это устройство продолжительное время. Некоторые сообщения могут не отображаться.";
 "content.system.missing_messages.subtitle_start" = "Тем временем,";
 
-"content.system.cannot_decrypt.self" = "Не удалось расшифровать **ваше** сообщение.";
-"content.system.cannot_decrypt.other" = "Не удалось расшифровать сообщение от **%@**.";
+"content.system.cannot_decrypt.self" = "Не удалось расшифровать ваше сообщение.";
+"content.system.cannot_decrypt.other" = "Не удалось расшифровать сообщение от %@.";
 "content.system.cannot_decrypt.reset_session" = "Исправить будущие сообщения";
 "content.system.cannot_decrypt.error_details" = "(Исправлена ошибка: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "Теперь вы можете расшифровывать свои сообщения. Чтобы восстановить утраченные сообщения, **вы должны отправить их повторно.**";
-"content.system.cannot_decrypt_resolved.other" = "Теперь вы можете расшифровывать сообщения от **%1$@**. Чтобы восстановить утраченные сообщения, **попросите **%1$@** отправить их повторно**";
+"content.system.cannot_decrypt_resolved.self" = "Теперь вы можете расшифровывать свои сообщения. Чтобы восстановить утраченные сообщения, вы должны отправить их повторно.";
+"content.system.cannot_decrypt_resolved.other" = "Теперь вы можете расшифровывать сообщения от %1$@.  Чтобы восстановить утраченные сообщения, попросите %1$@ отправить их повторно.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "Идентификатор **вашего** устройства изменился. Сообщение не доставлено.";
-"content.system.cannot_decrypt_identity_changed.other" = "Идентификатор устройства **%@** изменился. Сообщение не доставлено."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Идентификатор вашего устройства изменился. Сообщение не доставлено.";
+"content.system.cannot_decrypt_identity_changed.other" = "Идентификатор устройства %@ изменился. Сообщение не доставлено."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ не смог расшифровать некоторые из ваших сообщений, но решил проблему**. Это затронуло все ваши совместные беседы.";
-"content.system.session_reset.self" = "**Вам не смогли расшифровать некоторые из ваших сообщений, но проблема была решена**. Это затронуло все беседы.";
+"content.system.session_reset.other" = "%@ не смог расшифровать некоторые из ваших сообщений, но решил проблему. Это затронуло все ваши совместные беседы.";
+"content.system.session_reset.self" = "Вам не смогли расшифровать некоторые из ваших сообщений, но проблема была решена. Это затронуло все беседы.";
 
 "content.system.unknown_message.body" = "Сообщение не может быть показано. Возможно, вы используете старую версию Wire.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Заблокировать";
 "profile.unblock_button_title_action" = "Разблокировать";
 
-"profile.cancel_connection_button_title" = "ОТМЕНИТЬ ЗАПРОС";
+"profile.cancel_connection_button_title" = "Отменить запрос";
 "profile.connection_request_state.blocked" = "ЗАБЛОКИРОВАН";
 "profile.create_conversation_button_title" = "Создать группу";
 "profile.open_conversation_button_title" = "Открыть беседу";
@@ -961,8 +946,6 @@
 "self.about" = "О Wire";
 "self.sign_out" = "Выход";
 "self.report_abuse" = "Сообщить о злоупотреблении";
-"self.voiceover.label" = "Профиль";
-"self.voiceover.hint" = "Открыть профиль и настройки";
 "self.new-device.voiceover.label" = "Профиль, добавлены новые устройства";
 
 "self.add_email_password" = "Добавить email и пароль";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Шифровать сообщения в режиме ожидания";
 
-"self.settings.account_picture_group.picture" = "Изображение";
-"self.settings.account_picture_group.color" = "Цвет";
+"self.settings.account_picture_group.picture" = "Изображение профиля";
+"self.settings.account_picture_group.alert.title" = "Изменить изображение профиля";
+"self.settings.account_picture_group.alert.choose_picture" = "Выбрать из медиатеки";
+"self.settings.account_picture_group.alert.take_picture" = "Сделать фото";
+"self.settings.account_picture_group.color" = "Цвет профиля";
 "self.settings.account_picture_group.accent_color.blue" = "Синий";
 "self.settings.account_picture_group.accent_color.green" = "Зеленый";
 "self.settings.account_picture_group.accent_color.yellow" = "Желтый";

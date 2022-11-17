@@ -26,12 +26,64 @@
 "conversation.searchButton.description" = "Открыть поиск";
 "conversation.profileImage.description" = "Изображение профиля";
 "conversation.profileImage.hint" = "Нажмите дважды для открытия профиля";
+"conversation.titleViewForGroup.hint" = "Нажмите дважды, чтобы открыть сведения о беседе";
+"conversation.titleViewForOneToOne.hint" = "Нажмите дважды для открытия профиля";
+"conversation.legalHoldIcon.description" = "Юридические ограничения";
+"conversation.verifiedIcon.description" = "Верифицировано";
+
+"conversationDetails.messageTimeoutState.description" = "Выбрано";
+"selfDeletingMessagesConversationSettings.closeButton.description" = "Закрыть настройки самоудаляющихся сообщений";
+"notificationConversationSettings.closeButton.description" = "Закрыть настройки уведомлений";
+"serviceConversationSettings.closeButton.description" = "Закрыть настройки сервисов";
+"guestConversationSettings.closeButton.description" = "Закрыть настройки гостей";
+"addParticipantsConversationSettings.closeButton.description" = "Закрыть настройки добавления участников";
+
+"conversationDetails.optionButton.hint" = "Нажмите дважды, чтобы открыть настройки";
+"conversationDetails.closeButton.description" = "Закрыть информацию о беседе";
+"conversationDetails.moreButton.description" = "Открыть параметры беседы";
+"conversationDetails.showParticipantsButton.hint" = "Нажмите дважды, чтобы открыть список участников";
+"conversationDetails.participantCell.hint" = "Нажмите дважды для открытия профиля";
+
+"createConversation.backButton.description" = "Вернуться к списку контактов";
+"createConversation.hideSettings.hint" = "Нажмите дважды, чтобы скрыть настройки";
+"createConversation.openSettings.hint" = "Нажмите дважды, чтобы открыть настройки";
+"createConversation.searchView.description" = "Введите имя группы";
+"createConversation.selectedUser.hint" = "Нажмите дважды, чтобы отменить выбор";
+"createConversation.unselectedUser.hint" = "Нажмите дважды, чтобы выбрать";
 
 "settings.deviceCount.hint" = "Используемые устройства %@";
 "settings.closeButton.description" = "Закрыть настройки";
-"settings.backButton.description" = "Вернуться к %@";
-"options.soundButton.hint" = "Нажмите дважды, чтобы изменить настройку";
-"clientList.deviceDetails.hint" = "Нажмите дважды, чтобы открыть сведения об устройстве";
+"settings.backButton.description" = "Вернуться в раздел Настройки";
+
+"accountSettings.backButton.description" = "Вернуться в раздел Аккаунт";
+
+"optionsSettings.backButton.description" = "Вернуться в раздел Параметры";
+
+"advancedSettings.backButton.description" = "Вернуться в раздел Дополнительно";
+
+"supportSettings.backButton.description" = "Вернуться в раздел Поддержка";
+
+"aboutSettings.backButton.description" = "Вернуться в раздел О программе";
+"licenseInformationSettings.backButton.description" = "Вернуться в раздел Информация о лицензии";
+"licenseDetailsSettings.backButton.description" = "Вернуться в раздел Сведения о лицензии";
+
+"developerOptionsSettings.backButton.description" = "Вернуться в раздел Параметры разработчика";
+
+"clientsList.deviceDetails.hint" = "Нажмите дважды, чтобы открыть сведения об устройстве";
+"clientsList.deviceId.description" = "ID устройства";
+"clientsList.deviceName.description" = "Имя устройства";
+"clientsList.keyFingerprint.description" = "Отпечаток ключа";
+"clientsList.deviceVerified.description" = "Верифицировано";
+"clientsList.deviceNotVerified.description" = "Не верифицировано";
+
+"deviceDetails.whyVerifyFingerprint.hint" = "Нажмите дважды, чтобы узнать больше о верификации";
+"deviceDetails.howToVerifyFingerprint.hint" = "Узнать больше о верификации отпечатком";
+"deviceDetails.verified.description" = "Устройство верифицировано";
+"deviceDetails.backButton.description" = "Вернуться к информации устройства";
+
+"profile.backButton.description" = "Вернуться к сведениям о беседе";
+"profile.closeButton.description" = "Закрыть профиль";
+
 "accountPage.availabilityStatus.description" = "Статус";
 "accountPage.availabilityStatus.hint" = "Нажмите дважды, чтобы изменить статус";
 "accountPage.handle.description" = "Псевдоним";
@@ -39,3 +91,53 @@
 "accountPage.teamName.description" = "Название команды";
 "accountPage.profilePicture.description" = "Изображение профиля";
 "accountPage.profilePicture.hint" = "Для изменения вашего изображения нажмите дважды";
+"accountPage.closeButton.description" = "Закрыть информацию об аккаунте";
+"accountPage.backButton.description" = "Вернуться к информации об аккаунте";
+
+"contactsList.guestIcon.description" = "Гость";
+"contactsList.externalIcon.description" = "Внешний";
+"contactsList.federatedIcon.description" = "Федеративный";
+"contactsList.memberIcon.description" = "Участник";
+"contactsList.userCell.hint" = "Нажмите дважды, чтобы открыть беседу";
+"contactsList.pendingConnection.hint" = "Нажмите дважды для открытия профиля";
+"contactsList.closeButton.description" = "Закрыть список контактов";
+
+"servicesList.serviceCell.hint" = "Нажмите дважды, чтобы открыть сведения о сервисе";
+
+"serviceDetails.closeButton.description" = "Закрыть сведения о сервисе";
+"serviceDetails.backButton.description" = "Вернуться к списку сервисов";
+
+"searchView.clearButton.description" = "Очистить";
+
+"conversationsListHeader.collapsedButton.description" = "Свернуто";
+"conversationsListHeader.expandedButton.description" = "Развернуто";
+
+"conversationsList.accountButton.hint" = "Нажмите дважды, чтобы открыть профиль и настройки";
+"conversationsList.contactsBottomBar.description" = "Контакты";
+"conversationsList.contactsBottomBar.hint" = "Нажмите дважды, чтобы найти людей и открыть список контактов";
+"conversationsList.recentBottomBar.description" = "Беседы";
+"conversationsList.recentBottomBar.hint" = "Нажмите дважды, чтобы открыть список последних бесед";
+"conversationsList.folderBottomBar.description" = "Папки";
+"conversationsList.folderBottomBar.hint" = "Нажмите дважды, чтобы открыть список бесед, организованных по папкам";
+"conversationsList.archiveBottomBar.description" = "Архив";
+"conversationsList.archiveBottomBar.hint" = "Нажмите дважды, чтобы открыть список архивных бесед";
+"conversationsList.bottomBar.value" = "Выбрано";
+"conversationsList.silencedStatus.value" = "Без звука";
+"conversationsList.mentionStatus.value" = "Вас упомянули";
+"conversationsList.replyStatus.value" = "Ответить";
+"conversationsList.badgeView.value" = "Новых сообщений: %d";
+"conversationsList.itemCell.hint" = "Нажмите дважды, чтобы открыть беседу";
+"conversationsList.joinButton.description" = "Присоединиться";
+"conversationsList.joinButton.hint" = "Нажмите дважды, чтобы присоединиться к вызову";
+"conversationsList.connectionRequest.description" = "В ожидании подтверждения запроса";
+"conversationsList.connectionRequest.hint" = "Нажмите дважды для открытия профиля";
+
+"conversationAnnouncement.text.description" = "Текстовое сообщение получено от %@";
+"conversationAnnouncement.picture.description" = "Изображение получено от %@";
+"conversationAnnouncement.audio.description" = "Аудиосоообщение получено от %@";
+"conversationAnnouncement.video.description" = "Видеосоообщение получено от %@";
+"conversationAnnouncement.location.description" = "%@ поделился(-лась) местоположением";
+"conversationAnnouncement.ping.description" = "%@ отправил(-а) пинг";
+"conversationAnnouncement.file.description" = "Файл %@ получен от %@";
+"conversationAnnouncement.deletedMessage.description" = "%@ удалил сообщение";
+"conversationAnnouncement.editedMessage.description" = "%@ изменил сообщение";

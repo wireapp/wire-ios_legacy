@@ -144,7 +144,7 @@ final class AddParticipantsViewController: UIViewController {
 
     init(context: Context,
          variant: ColorSchemeVariant = ColorScheme.default.variant,
-         isFederationEnabled: Bool = APIVersion.isFederationEnabled) {
+         isFederationEnabled: Bool = BackendInfo.isFederationEnabled) {
         self.variant = variant
 
         viewModel = AddParticipantsViewModel(with: context, variant: variant)
