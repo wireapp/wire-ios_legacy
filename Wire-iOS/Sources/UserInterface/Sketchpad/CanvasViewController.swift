@@ -35,10 +35,10 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     weak var delegate: CanvasViewControllerDelegate?
     var canvas = Canvas()
     private lazy var toolbar: SketchToolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
-    let drawButton = NonLegacyIconButton()
-    let emojiButton = NonLegacyIconButton()
+    let drawButton = NonLegacyIconButton(.iconButtonStyle)
+    let emojiButton = NonLegacyIconButton(.iconButtonStyle)
     let sendButton = IconButton.sendButton()
-    let photoButton = NonLegacyIconButton()
+    let photoButton = NonLegacyIconButton(.iconButtonStyle)
     let separatorLine = UIView()
     let hintLabel = UILabel()
     let hintImageView = UIImageView()

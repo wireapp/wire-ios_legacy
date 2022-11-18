@@ -26,16 +26,24 @@ import WireCommonComponents
 
 // TODO: - [AGIS] Get rid of this class as soon as we make all the appropriate changes to the original class
 class NonLegacyIconButton: IconButton {
+    var nonLegacybuttonStyle: ButtonStyle?
+
+    init(_ style: ButtonStyle) {
+        super.init()
+        nonLegacybuttonStyle = style
+    }
 
     override var isSelected: Bool {
         didSet {
-            applyStyle(.iconButtonStyle)
+            guard let style = nonLegacybuttonStyle else { return }
+            applyStyle(style)
         }
     }
 
     override var isHighlighted: Bool {
         didSet {
-            applyStyle(.iconButtonStyle)
+            guard let style = nonLegacybuttonStyle else { return }
+            applyStyle(style)
         }
     }
 }
