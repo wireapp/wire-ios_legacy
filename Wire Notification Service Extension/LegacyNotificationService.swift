@@ -142,8 +142,8 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
         // TODO: add caller name and has video.
 
         callEventHandler.reportIncomingVoIPCall([
-            "accountID": accountID,
-            "conversationID": conversationID,
+            "accountID": accountID.uuidString,
+            "conversationID": conversationID.uuidString,
             "shouldRing": callContent.initiatesRinging
         ])
   }
