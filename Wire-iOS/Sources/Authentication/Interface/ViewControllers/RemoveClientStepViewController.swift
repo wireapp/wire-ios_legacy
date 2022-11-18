@@ -47,8 +47,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         clientListController = ClientListViewController(clientsList: clients,
                                                         credentials: emailCredentials,
                                                         showTemporary: false,
-                                                        showLegalHold: false,
-                                                        variant: .light)
+                                                        showLegalHold: false)
 
         super.init(nibName: nil, bundle: nil)
     }

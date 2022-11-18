@@ -101,8 +101,7 @@ final class ClientListViewController: UIViewController,
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true,
-                  showLegalHold: Bool = true,
-                  variant: ColorSchemeVariant? = .none) {
+                  showLegalHold: Bool = true) {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
