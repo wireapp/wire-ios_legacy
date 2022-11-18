@@ -318,7 +318,7 @@ class IconButton: ButtonWithLargerHitArea {
         priorState = state
         // Update for new state (selected, highlighted, disabled) here if needed
         updateTintColor()
-        updateBorderColor()
+        //updateBorderColor()
     }
 
     func icon(for state: UIControl.State) -> StyleKitIcon? {

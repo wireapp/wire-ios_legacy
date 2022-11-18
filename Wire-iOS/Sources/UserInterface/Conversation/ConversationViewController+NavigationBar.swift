@@ -42,11 +42,10 @@ extension ConversationViewController {
 
         button.addTarget(self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)), for: .touchUpInside)
 
-        button.backgroundColor = ButtonColors.backgroundBarItem
-        button.layer.borderWidth = 1
-        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
         button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
         button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+        button.applyStyle(.navigationBarIconButtonStyle)
 
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
@@ -65,11 +64,10 @@ extension ConversationViewController {
 
         button.addTarget(self, action: #selector(ConversationViewController.videoCallItemTapped(_:)), for: .touchUpInside)
 
-        button.backgroundColor = ButtonColors.backgroundBarItem
-        button.layer.borderWidth = 1
-        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
         button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
         button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+        button.applyStyle(.navigationBarIconButtonStyle)
 
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))

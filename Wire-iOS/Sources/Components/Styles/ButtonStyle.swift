@@ -83,4 +83,17 @@ public struct ButtonStyle {
                                                          background: ButtonColors.backgroundInputBarItemHighlighted,
                                                          title: ButtonColors.textInputBarItemHighlighted,
                                                          border: ButtonColors.borderInputBarItemHighlighted))
+
+    static let navigationBarIconButtonStyle = ButtonStyle(normalStateColors: (
+                                                          background: ButtonColors.backgroundInputBarItemEnabled,
+                                                          title: ButtonColors.textInputBarItemEnabled,
+                                                          border: ButtonColors.borderInputBarItemEnabled),
+                                                         highlightedStateColors: (
+                                                          background: ButtonColors.backgroundInputBarItemHighlighted,
+                                                          title: ButtonColors.textInputBarItemHighlighted,
+                                                          border: ButtonColors.borderInputBarItemHighlighted),
+                                                         selectedStateColors: (
+                                                          background: ButtonColors.backgroundInputBarItemHighlighted,
+                                                          title: ButtonColors.textInputBarItemHighlighted,
+                                                          border: ButtonColors.borderInputBarItemHighlighted))
 }
