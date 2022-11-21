@@ -161,7 +161,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = viewModel.state.rows[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: row.cellType.reuseIdentifier, for: indexPath) as! CellConfigurationConfigurable
-        cell.configure(with: row, variant: variant)
+        cell.configure(with: row)
         return cell as! UITableViewCell
     }
 

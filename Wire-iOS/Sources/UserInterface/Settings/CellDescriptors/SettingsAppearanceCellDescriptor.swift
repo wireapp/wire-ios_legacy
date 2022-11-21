@@ -55,7 +55,7 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
 
     func featureCell(_ cell: SettingsCellType) {
         if let tableCell = cell as? SettingsAppearanceCell {
-            tableCell.configure(with: .appearance(title: text), variant: .dark)
+            tableCell.configure(with: .appearance(title: text))
 
             if let previewGenerator = self.previewGenerator {
                 tableCell.type = previewGenerator(self)

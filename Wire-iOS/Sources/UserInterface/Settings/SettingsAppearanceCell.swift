@@ -100,7 +100,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         createConstraints()
     }
 
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
+    func configure(with configuration: CellConfiguration) {
         guard case let .appearance(title) = configuration else { preconditionFailure() }
         titleLabel.text = title
     }

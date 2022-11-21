@@ -27,11 +27,6 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     private let toggle = Switch(style: .default)
     private let subtitleLabel = UILabel()
     private var action: ((Bool, UIView?) -> Void)?
-    private var variant: ColorSchemeVariant = .light {
-        didSet {
-            styleViews()
-        }
-    }
 
     private lazy var imageContainerWidthConstraint: NSLayoutConstraint = imageContainer.widthAnchor.constraint(equalToConstant: CGFloat.IconCell.IconWidth)
     private lazy var iconImageViewLeadingConstraint: NSLayoutConstraint = iconImageView.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: CGFloat.IconCell.IconSpacing)
@@ -141,30 +136,27 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         action?(sender.isOn, self)
     }
 
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
+    func configure(with configuration: CellConfiguration) {
         guard case let .iconToggle(title,
                                    subtitle,
                                    identifier,
                                    titleIdentifier,
                                    icon,
-                                   color,
+                                   _,
                                    isEnabled,
                                    get,
                                    set) = configuration else { preconditionFailure() }
 
-        let mainColor = variant.mainColor(color: color)
 
         if let icon = icon {
-            tintColor = SemanticColors.Label.textDefault
             iconImageView.setTemplateIcon(icon, size: .tiny)
+            tintColor = SemanticColors.Label.textDefault
             imageContainerWidthConstraint.constant = CGFloat.IconCell.IconWidth
             iconImageViewLeadingConstraint.constant = CGFloat.IconCell.IconSpacing
         } else {
             imageContainerWidthConstraint.constant = 0
             iconImageViewLeadingConstraint.constant = 0
         }
-
-        titleLabel.textColor = mainColor
 
         titleLabel.text = title
 
@@ -185,6 +177,6 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         titleLabel.accessibilityIdentifier = titleIdentifier
         toggle.isOn = get()
         toggle.isEnabled = isEnabled
-        self.variant = variant
+        styleViews()
     }
 }

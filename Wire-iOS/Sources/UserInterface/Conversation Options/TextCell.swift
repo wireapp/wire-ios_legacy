@@ -50,7 +50,7 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
+    func configure(with configuration: CellConfiguration) {
         guard case let .text(text) = configuration else { preconditionFailure() }
         label.attributedText = text && .lineSpacing(8)
 

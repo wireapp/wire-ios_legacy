@@ -254,7 +254,7 @@ final class ProfileDetailsContentController: NSObject,
                 self.isAdminState.toggle()
                 self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
                 self.updateConversationRole()
-            }), variant: ColorScheme.default.variant)
+            }))
 
             return cell
         case .richProfile(let fields):

@@ -38,8 +38,7 @@ class SettingsCopyButtonCellDescriptor: SettingsCellDescriptorType {
     func featureCell(_ cell: SettingsCellType) {
         if let iconActionCell = cell as? IconActionCell {
             delegate = iconActionCell
-            iconActionCell.configure(with: copyInProgress ? copiedLink : copyLink,
-                                     variant: .dark)
+            iconActionCell.configure(with: copyInProgress ? copiedLink : copyLink)
         }
     }
 

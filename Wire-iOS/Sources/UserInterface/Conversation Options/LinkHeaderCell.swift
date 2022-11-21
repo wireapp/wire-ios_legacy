@@ -78,8 +78,8 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
         backgroundColor = .clear
     }
 
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        self.variant = variant
+    func configure(with configuration: CellConfiguration) {
+        // no-op
     }
 
 }

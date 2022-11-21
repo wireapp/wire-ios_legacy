@@ -59,7 +59,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         ])
     }
 
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
+    func configure(with configuration: CellConfiguration) {
         guard case let .iconAction(title, icon, _, _) = configuration else { preconditionFailure() }
         iconImageView.setTemplateIcon(icon, size: .tiny)
         iconImageView.tintColor = SemanticColors.Icon.foregroundDefault

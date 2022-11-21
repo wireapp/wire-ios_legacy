@@ -41,7 +41,6 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         backgroundView.backgroundColor = SemanticColors.View.backgroundUserCell
         selectedBackgroundView = backgroundView
         imageContainer.addSubview(iconImageView)
-        iconImageView.setIcon(.link, size: .tiny, color: SemanticColors.Icon.foregroundDefault)
         iconImageView.setTemplateIcon(.link, size: .tiny)
         iconImageView.tintColor = SemanticColors.Icon.foregroundDefault
         label.textColor = SemanticColors.Label.textDefault
@@ -66,7 +65,7 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         ])
     }
 
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
+    func configure(with configuration: CellConfiguration) {
         guard case let .leadingButton(title, identifier, _) = configuration else { preconditionFailure() }
         accessibilityIdentifier = identifier
         label.text = title
