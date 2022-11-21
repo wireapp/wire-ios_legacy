@@ -27,6 +27,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
             color: SemanticColors.Label.textDefault)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         return label
     }()
