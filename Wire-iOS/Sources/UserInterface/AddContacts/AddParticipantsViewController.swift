@@ -99,7 +99,6 @@ final class AddParticipantsViewController: UIViewController {
         case create(ConversationCreationValues)
     }
 
-    fileprivate let variant: ColorSchemeVariant
     fileprivate let searchResultsViewController: SearchResultsViewController
     fileprivate let searchGroupSelector: SearchGroupSelector
     fileprivate let searchHeaderViewController: SearchHeaderViewController
@@ -144,11 +143,9 @@ final class AddParticipantsViewController: UIViewController {
     }
 
     init(context: Context,
-         variant: ColorSchemeVariant = ColorScheme.default.variant,
          isFederationEnabled: Bool = BackendInfo.isFederationEnabled) {
-        self.variant = variant
 
-        viewModel = AddParticipantsViewModel(with: context, variant: variant)
+        viewModel = AddParticipantsViewModel(with: context)
 
         collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -313,7 +310,7 @@ final class AddParticipantsViewController: UIViewController {
                                                      allowGuests: true,
                                                      allowServices: true,
                                                      selfUser: ZMUser.selfUser())
-            viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
+            viewModel = AddParticipantsViewModel(with: .create(updated))
         }
 
         // Enable button & collection view content inset
