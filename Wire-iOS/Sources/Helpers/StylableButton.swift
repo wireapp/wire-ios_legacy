@@ -42,13 +42,15 @@ class StylableButton: UIButton, Stylable {
     }
 
     private func setBorder(for style: ButtonStyle) {
-        guard style.highlightedStateColors.border != nil || style.normalStateColors.border != nil else { return }
+        guard style.highlightedStateColors.border != nil ||
+                style.normalStateColors.border != nil ||
+                style.selectedStateColors?.border != nil else { return }
         let normalStateColor = style.normalStateColors.border?.cgColor ?? UIColor.clear.cgColor
         let highlightedStateColor = style.highlightedStateColors.border?.cgColor ?? UIColor.clear.cgColor
-        let selectedStateColor = style.selectedStateColors.border?.cgColor ?? UIColor.clear.cgColor
+        let selectedStateColor = style.selectedStateColors?.border.cgColor ?? UIColor.clear.cgColor
         self.layer.borderWidth = 1
         self.layer.borderColor = isHighlighted ? highlightedStateColor : normalStateColor
-        self.layer.borderColor = isSelected ?   selectedStateColor : normalStateColor
+        self.layer.borderColor = isSelected ? selectedStateColor : normalStateColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

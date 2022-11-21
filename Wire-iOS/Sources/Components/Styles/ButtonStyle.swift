@@ -22,8 +22,8 @@ public struct ButtonStyle {
 
     typealias ButtonColors = SemanticColors.Button
 
-    private(set) var normalStateColors: (background: UIColor, title: UIColor, border: UIColor)
-    private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor)
+    private(set) var normalStateColors: (background: UIColor, title: UIColor, border: UIColor?)
+    private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor?)
     private(set) var selectedStateColors: (background: UIColor, title: UIColor, border: UIColor)?
 
     static let secondaryTextButtonStyle = ButtonStyle(normalStateColors: (
