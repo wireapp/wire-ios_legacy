@@ -100,7 +100,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
 
         // WHEN
         XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
-        sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
+        sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970, callerName: "")
 
         // THEN
         XCTAssertTrue(callEventHandlerMock.reportIncomingVoIPCallCalled)
@@ -123,7 +123,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
 
         // WHEN
         XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
-        sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
+        sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970, callerName: "")
 
         // THEN
         XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)

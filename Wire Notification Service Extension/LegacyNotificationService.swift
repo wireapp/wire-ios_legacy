@@ -135,7 +135,7 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
         contentHandler(mutabaleContent)
     }
 
-    public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
+    public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval, callerName: String) {
         Self.logger.trace("report call event")
         guard
             let accountID = session?.accountIdentifier,
@@ -151,7 +151,9 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
         callEventHandler.reportIncomingVoIPCall([
             "accountID": accountID.uuidString,
             "conversationID": conversationID.uuidString,
-            "shouldRing": callContent.initiatesRinging
+            "shouldRing": callContent.initiatesRinging,
+            "callerName": callerName,
+            "hasVideo": callContent.isVideo
         ])
   }
 
