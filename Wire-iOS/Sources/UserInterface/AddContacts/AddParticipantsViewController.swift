@@ -144,7 +144,7 @@ final class AddParticipantsViewController: UIViewController {
 
     init(context: Context,
          variant: ColorSchemeVariant = ColorScheme.default.variant,
-         isFederationEnabled: Bool = APIVersion.isFederationEnabled) {
+         isFederationEnabled: Bool = BackendInfo.isFederationEnabled) {
         self.variant = variant
 
         viewModel = AddParticipantsViewModel(with: context, variant: variant)
@@ -168,7 +168,7 @@ final class AddParticipantsViewController: UIViewController {
         confirmButton.layer.cornerRadius = 16
         confirmButton.layer.masksToBounds = true
 
-        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: variant)
+        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection)
 
         searchGroupSelector = SearchGroupSelector()
 
@@ -177,8 +177,7 @@ final class AddParticipantsViewController: UIViewController {
                                                                   shouldIncludeGuests: viewModel.context.includeGuests,
                                                                   isFederationEnabled: isFederationEnabled)
 
-        emptyResultView = EmptySearchResultsView(variant: self.variant,
-                                                 isSelfUserAdmin: SelfUser.current.canManageTeam,
+        emptyResultView = EmptySearchResultsView(isSelfUserAdmin: SelfUser.current.canManageTeam,
                                                  isFederationEnabled: isFederationEnabled)
         super.init(nibName: nil, bundle: nil)
 
@@ -338,11 +337,8 @@ final class AddParticipantsViewController: UIViewController {
             }
         }()
 
-        let titleLabel = DynamicFontLabel(
-            text: title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        guard let title = title else { return }
+        navigationItem.setupNavigationBarTitle(title: title.capitalized)
 
     }
 

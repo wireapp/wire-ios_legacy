@@ -57,11 +57,7 @@ final class DeveloperOptionsController: UIViewController {
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Self.Settings.DeveloperOptions.Loggin.title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.DeveloperOptions.Loggin.title.capitalized)
     }
 
     // MARK: - Cells

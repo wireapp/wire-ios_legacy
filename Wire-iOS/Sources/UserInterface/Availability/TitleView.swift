@@ -77,7 +77,7 @@ class TitleView: UIView, DynamicTypeCapable {
 
         guard let font = titleFont, let color = titleColor else { return }
         let shouldShowInteractiveIcon = interactive && showInteractiveIcon
-        let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color)
+        let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color, titleFont: titleFont?.font)
 
         titleButton.titleLabel!.font = font.font
         titleButton.setAttributedTitle(normalLabel, for: [])
@@ -102,10 +102,10 @@ class TitleView: UIView, DynamicTypeCapable {
 
 // MARK: NSTextAttachment Extension
 extension NSTextAttachment {
-    static func downArrow(color: UIColor) -> NSTextAttachment {
+    static func downArrow(color: UIColor, size: StyleKitIcon.Size = .nano) -> NSTextAttachment {
         let attachment = NSTextAttachment()
         attachment.image = StyleKitIcon.downArrow.makeImage(
-            size: 14,
+            size: size,
             color: SemanticColors.Icon.foregroundPlainDownArrow).withRenderingMode(.alwaysTemplate)
         return attachment
     }

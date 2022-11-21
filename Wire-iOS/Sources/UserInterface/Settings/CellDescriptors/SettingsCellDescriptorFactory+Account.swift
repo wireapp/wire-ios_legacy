@@ -71,7 +71,7 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
-        let federationEnabled = APIVersion.isFederationEnabled
+        let federationEnabled = BackendInfo.isFederationEnabled
         var cellDescriptors: [SettingsCellDescriptorType] = []
         cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
                            handleElement(
@@ -270,7 +270,7 @@ extension SettingsCellDescriptorFactory {
             return actionSheet
         }
         return SettingsAppearanceCellDescriptor(
-            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.picture,
+            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.picture.capitalized,
             previewGenerator: previewGenerator,
             presentationStyle: .alert,
             presentationAction: presentationAction)
@@ -278,7 +278,7 @@ extension SettingsCellDescriptorFactory {
 
     func colorElement() -> SettingsCellDescriptorType {
         return SettingsAppearanceCellDescriptor(
-            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.color,
+            text: L10n.Localizable.Self.Settings.AccountPictureGroup.color.capitalized,
             previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) },
             presentationStyle: .navigation,
             presentationAction: AccentColorPickerController.init)

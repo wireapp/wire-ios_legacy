@@ -351,7 +351,10 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
                     at indexPath: IndexPath?,
                     for changeType: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
-        // no-op
+        if let message = anObject as? ZMConversationMessage, changeType == .insert {
+            /// VoiceOver will output the announcement string from the message
+            message.postAnnouncementIfNeeded()
+        }
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,

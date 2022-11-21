@@ -25,7 +25,7 @@ import WireCommonComponents
  * A title view subclass that displays the availability of the user.
  */
 
-final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
+final class AvailabilityTitleView: TitleView, ZMUserObserver {
 
     /// The available options for this view.
     struct Options: OptionSet {
@@ -55,13 +55,6 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     private var options: Options
 
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard colorSchemeVariant != oldValue else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
 
     // MARK: - Initialization
 
@@ -94,7 +87,9 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
 
     // MARK: - Configuration
 
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
         updateConfiguration()
     }
 
@@ -143,7 +138,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         if options.contains(.useLargeFont) {
             titleFont = .headerSemiboldFont
         } else {
-            titleFont = .smallRegularFont
+            titleFont = .headerRegularFont
         }
 
         titleColor = SemanticColors.Label.textDefault
