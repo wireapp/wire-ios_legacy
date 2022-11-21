@@ -80,6 +80,9 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
 
         switch self.presentationStyle {
         case .alert:
+            if let viewController = viewController {
+                controllerToShow.configPopover(pointToView: viewController.view)
+            }
             viewController?.present(controllerToShow, animated: true)
         case .navigation:
             viewController?.navigationController?.pushViewController(controllerToShow, animated: true)

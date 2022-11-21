@@ -61,7 +61,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
     init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
-         isFederationEnabled: Bool = APIVersion.isFederationEnabled) {
+         isFederationEnabled: Bool = BackendInfo.isFederationEnabled) {
         self.isFederationEnabled = isFederationEnabled
         self.addressBookHelperType = addressBookHelperType
         self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
@@ -118,10 +118,10 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView
         searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = "search.list"
 
-        if let team = (selfUser as? ZMUser)?.team {
-            title = team.name?.uppercased()
-        } else {
-            title = selfUser.name?.uppercased()
+        if let title = (selfUser as? ZMUser)?.team?.name {
+            navigationItem.setupNavigationBarTitle(title: title.capitalized)
+        } else if let title = selfUser.name {
+            navigationItem.setupNavigationBarTitle(title: title.capitalized)
         }
 
         searchHeader.delegate = self

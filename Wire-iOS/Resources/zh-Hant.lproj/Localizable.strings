@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "未接來電";
 "conversation_list.voiceover.status.pause_media" = "暫停";
 "conversation_list.voiceover.status.play_media" = "播放";
-"conversation_list.voiceover.status.silenced" = "靜音";
 "conversation_list.voiceover.status.typing" = "輸入中";
 "conversation_list.voiceover.status.ping" = "招呼";
-"conversation_list.voiceover.status.mention" = "有人提及你";
-"conversation_list.voiceover.status.reply" = "回覆";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "最近更新";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "最近更新對話列表";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "資料夾";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "文件夾中已整理的對話列表";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "已封存";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "已封存對話";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡人";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "在Wire搜索其它使用者";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "撰寫訊息";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "撰寫訊息並儲存待用";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "相機";
@@ -227,8 +216,6 @@
 "list.section.requests" = "請求";
 "list.section.favorites" = "我的最愛";
 
-"conversation.voiceover.verified" = "已驗證";
-"conversation.voiceover.legalhold" = "合法保留";
 "conversation.voiceover.value.active" = "啟動";
 "conversation.voiceover.value.disabled" = "已停用";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "對話";
 "compose.message.title" = "訊息";
-
-"conversation_details.open_button.accessibility_hint" = "按兩下以查看對話的詳細資訊。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "此訊息已刪除。";
 
 // Conversation banner
-"conversation.banner.guests" = "**訪客**";
-"conversation.banner.services" = "**服務**";
-"conversation.banner.externals" = "**外部合作者**";
-"conversation.banner.remotes" = "**聯邦使用者**";
+"conversation.banner.guests" = "訪客";
+"conversation.banner.services" = "服務";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = "和";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "您曾打電話";
 "content.system.ephemeral_time_remaining" = "餘下%@";
 
-"content.system.self_user_new_client" = "**您**開始使用[新的設備](%@)";
-"content.system.self_user_new_self_client" = "**您**開始使用[此設備](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "您";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "新使用者加入。";
 "content.system.verify_devices" = "驗證設備";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "您已有一段時間沒有使用此設備，可能不會顯示部分訊息。";
 "content.system.missing_messages.subtitle_start" = "同時，";
 
-"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
-"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "修正將來的信息";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
-"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**您的**設備識別已更改。信息無法送達。";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@的**設備識別已更改。信息無法送達。"; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
-"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "無法顯示此消息。可能因為您使用舊版本的Wire。";
 
@@ -961,8 +946,6 @@
 "self.about" = "關於";
 "self.sign_out" = "登出";
 "self.report_abuse" = "檢舉濫用";
-"self.voiceover.label" = "個人資料";
-"self.voiceover.hint" = "打開用戶檔案和設定";
 "self.new-device.voiceover.label" = "已添加設定檔及新設備";
 
 "self.add_email_password" = "新增電子郵件信箱和密碼";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "待命時加密消息";
 
-"self.settings.account_picture_group.picture" = "大頭照";
-"self.settings.account_picture_group.color" = "主色調";
+"self.settings.account_picture_group.picture" = "個人頭像";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
+"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";
