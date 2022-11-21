@@ -22,9 +22,9 @@ import UserNotifications
 
 extension Loggable {
 
-    var logger: Logger {
+    var logger: os.Logger {
         
-        return Logger(category: String(describing: type(of: self))
+        return os.Logger(category: String(describing: type(of: self))
 )
     }
 
@@ -32,11 +32,11 @@ extension Loggable {
 
 protocol Loggable {
 
-    var logger: Logger { get }
+    var logger: os.Logger { get }
 
 }
 
-extension Logger {
+extension os.Logger {
 
     private static var subsystem = "simple nse"
 
