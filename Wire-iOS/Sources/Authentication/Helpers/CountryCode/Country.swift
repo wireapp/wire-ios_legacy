@@ -67,10 +67,8 @@ final class Country: NSObject {
     class func detectCountry(withMatcher matcher: @escaping (Country?) -> Bool) -> Country? {
         var matches: [Country] = []
         let allCountries = self.allCountries
-        for country in allCountries ?? [] {
-            if matcher(country) {
-                matches.append(country)
-            }
+        for country in allCountries ?? [] where matcher(country) {
+            matches.append(country)
         }
 
         // One or no matches is trivial case
@@ -87,10 +85,9 @@ final class Country: NSObject {
         // List to prioritize main countries with shared prefixes (e.g., USA with "+1")
         let priorityList = ["us", "it", "fi", "tz", "uk", "no", "ru"]
 
-        for country in matches {
-            if priorityList.contains(country.iso) {
-                return country
-            }
+        for country in matches where priorityList.contains(country.iso) {
+            return country
+
         }
 
         // Feel free to add more smart heuristics here:
