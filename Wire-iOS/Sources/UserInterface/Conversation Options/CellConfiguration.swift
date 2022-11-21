@@ -21,7 +21,7 @@ import WireCommonComponents
 import UIKit
 
 protocol CellConfigurationConfigurable: Reusable {
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant)
+    func configure(with configuration: CellConfiguration)
 }
 
 enum CellConfiguration {
