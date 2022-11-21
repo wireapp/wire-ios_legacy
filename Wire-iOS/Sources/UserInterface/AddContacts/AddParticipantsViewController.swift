@@ -206,6 +206,9 @@ final class AddParticipantsViewController: UIViewController {
             // not going to be added to the new conversation with the bot.
             if group == .services {
                 self.searchHeaderViewController.clearInput()
+                self.confirmButton.isHidden = true
+            } else {
+                self.confirmButton.isHidden = false
             }
 
             self.searchResultsViewController.searchGroup = group
