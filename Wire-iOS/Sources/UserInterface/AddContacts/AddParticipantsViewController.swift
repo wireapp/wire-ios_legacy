@@ -65,18 +65,19 @@ extension AddParticipantsViewController.Context {
     }
 
     var alertForSelectionOverflow: UIAlertController {
+        typealias AddParticipantsAlert = L10n.Localizable.AddParticipants.Alert
         let max = ZMConversation.maxParticipants
         let message: String
         switch self {
         case .add(let conversation):
             let freeSpace = conversation.freeParticipantSlots
-            message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
+            message = AddParticipantsAlert.Message.existingConversation(max, freeSpace)
         case .create:
-            message = "add_participants.alert.message.new_conversation".localized(args: max)
+            message = AddParticipantsAlert.Message.newConversation(max)
         }
 
         let controller = UIAlertController(
-            title: "add_participants.alert.title".localized,
+            title: AddParticipantsAlert.title.capitalized,
             message: message,
             preferredStyle: .alert
         )
@@ -234,10 +235,10 @@ final class AddParticipantsViewController: UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParent: self)
         searchResultsViewController.searchResultsView.emptyResultView = emptyResultView
-        searchResultsViewController.searchResultsView.backgroundColor = UIColor.from(scheme: .contentBackground, variant: self.variant)
+        searchResultsViewController.searchResultsView.backgroundColor = SemanticColors.View.backgroundDefault
         searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = "add_participants.list"
 
-        view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: self.variant)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         view.addSubview(confirmButton)
 
         createConstraints()
