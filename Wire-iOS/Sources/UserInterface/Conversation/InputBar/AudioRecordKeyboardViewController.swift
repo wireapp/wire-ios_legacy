@@ -82,7 +82,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     convenience init() {
         self.init(audioRecorder: AudioRecorder(
             format: .wav,
-            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength ,
+            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength,
             maxFileSize: ZMUserSession.shared()?.maxUploadFileSize))
     }
 
