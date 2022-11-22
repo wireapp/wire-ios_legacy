@@ -230,15 +230,6 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         return wr_supportedInterfaceOrientations
     }
 
-    override func executeAction(_ action: AuthenticationCoordinatorAction) {
-        switch action {
-        case .confirmCredentials:
-            emailPasswordInputField.confirmButtonTapped()
-        default:
-            break
-        }
-    }
-
     func configure(with featureProvider: AuthenticationFeatureProvider) {
         if isRegistering {
             // Only email registration is allowed.

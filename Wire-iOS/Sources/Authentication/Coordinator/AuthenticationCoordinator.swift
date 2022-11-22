@@ -324,9 +324,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .openURL(let url):
                 openURL(url)
 
-            case .confirmCredentials:
-                currentViewController?.executeAction(.confirmCredentials)
-
             case .repeatAction:
                 repeatAction()
 

@@ -43,7 +43,6 @@ enum AuthenticationCoordinatorAction {
     case setMarketingConsent(Bool)
     case completeUserRegistration
     case openURL(URL)
-    case confirmCredentials
     case repeatAction
     case displayInlineError(NSError)
     case continueFlowWithLoginCode(String)
