@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,22 +17,22 @@
 //
 
 import UIKit
+import WireCommonComponents
 
-protocol TransparentBackgroundNavigationBar {
-    func configureTransparentBackground()
-}
+final class LinkButton: DynamicFontButton {
 
-extension TransparentBackgroundNavigationBar where Self: DefaultNavigationBar {
-    func configureTransparentBackground() {
-        isTranslucent = true
-        setBackgroundImage(UIImage(), for: .default)
-        shadowImage = UIImage()
-    }
-}
+    func setup(title: String) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontSpec.normalRegularFont.font!,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabledDefault,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
 
-final class TransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
+        let attributeString = NSMutableAttributedString(
+            string: title,
+            attributes: attributes
+        )
 
-    override func configureBackground() {
-        configureTransparentBackground()
+        setAttributedTitle(attributeString, for: .normal)
     }
 }
