@@ -359,6 +359,32 @@ internal enum L10n {
         internal static let hint = L10n.tr("Accessibility", "conversationDetails.showParticipantsButton.hint")
       }
     }
+    internal enum ConversationSearch {
+      internal enum CloseButton {
+        /// Close search
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.closeButton.description")
+      }
+      internal enum FilesSection {
+        /// Files in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.filesSection.description")
+      }
+      internal enum ImagesSection {
+        /// Pictures in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.imagesSection.description")
+      }
+      internal enum LinksSection {
+        /// Links in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.linksSection.description")
+      }
+      internal enum Section {
+        /// Double tab to open all
+        internal static let hint = L10n.tr("Accessibility", "conversationSearch.section.hint")
+      }
+      internal enum VideosSection {
+        /// Videos in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.videosSection.description")
+      }
+    }
     internal enum ConversationsList {
       internal enum AccountButton {
         /// Double tap to open profile and settings

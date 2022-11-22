@@ -60,6 +60,13 @@
 "conversation.bulletListButton.description" = "Use bullet list";
 "conversation.codeButton.description" = "Use code format";
 
+"conversationSearch.closeButton.description" = "Close search";
+"conversationSearch.imagesSection.description" = "Pictures in this conversation";
+"conversationSearch.filesSection.description" = "Files in this conversation";
+"conversationSearch.videosSection.description" = "Videos in this conversation";
+"conversationSearch.linksSection.description" = "Links in this conversation";
+"conversationSearch.section.hint" = "Double tab to open all";
+
 "conversationDetails.messageTimeoutState.description" = "Selected";
 "selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
 "notificationConversationSettings.closeButton.description" = "Close notification settings";
