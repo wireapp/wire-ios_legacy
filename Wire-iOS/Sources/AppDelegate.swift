@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireSyncEngine
 import avs
-import WireCoreCrypto
+import CoreCrypto
 
 enum ApplicationLaunchType {
     case unknown
@@ -276,7 +276,7 @@ private extension AppDelegate {
             configuration: configuration,
             detector: jailbreakDetector,
             requiredPushTokenType: requiredPushTokenType,
-            coreCryptoSetup: CoreCrypto.setup
+            coreCryptoSetup: CoreCryptoWrapper.setup
         )
     }
 
