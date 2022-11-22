@@ -181,8 +181,7 @@ final class AddParticipantsViewController: UIViewController {
                                                                   shouldIncludeGuests: viewModel.context.includeGuests,
                                                                   isFederationEnabled: isFederationEnabled)
 
-        emptyResultView = EmptySearchResultsView(variant: self.variant,
-                                                 isSelfUserAdmin: SelfUser.current.canManageTeam,
+        emptyResultView = EmptySearchResultsView(isSelfUserAdmin: SelfUser.current.canManageTeam,
                                                  isFederationEnabled: isFederationEnabled)
         super.init(nibName: nil, bundle: nil)
 
