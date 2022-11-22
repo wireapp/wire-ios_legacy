@@ -82,8 +82,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     private let inputStack = UIStackView()
     let loginButton = Button(style: .accentColorTextButtonStyle,
-                                     cornerRadius: 16,
-                                     fontSpec: .normalSemiboldFont)
+                             cornerRadius: 16,
+                             fontSpec: .normalSemiboldFont)
     private let countryCodeInputView = IconButton()
     private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8, style: .default)
 
@@ -132,11 +132,13 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         textField.accessibilityLabel = RegistrationEnterPhoneNumber.placeholder.capitalized
         textField.accessibilityIdentifier = "PhoneNumberField"
         textField.showConfirmButton = false
+
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.defaultCountry)
+
         // loginButton
         loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
         loginButton.addTarget(self, action: #selector(handleLoginButtonTap), for: .touchUpInside)

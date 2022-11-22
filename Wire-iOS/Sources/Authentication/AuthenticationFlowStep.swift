@@ -136,7 +136,7 @@ enum IntermediateRegistrationStep: Equatable {
         switch self {
         case .start: return false
         case .provideMarketingConsent: return false
-        default : return true
+        default: return true
         }
     }
 }

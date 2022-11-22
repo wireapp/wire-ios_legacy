@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "chamada perdida";
 "conversation_list.voiceover.status.pause_media" = "pausar a mídia";
 "conversation_list.voiceover.status.play_media" = "reproduzir mídia";
-"conversation_list.voiceover.status.silenced" = "silenciado";
 "conversation_list.voiceover.status.typing" = "digitando";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.status.mention" = "você foi mencionado";
-"conversation_list.voiceover.status.reply" = "responder";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "recente";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "lista de conversas recentes";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "pastas";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "lista de conversas organizadas em pastas";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "arquivado";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista de conversas arquivadas";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatos";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "busca por pessoas no Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "escrever";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "escrever mensagens e salvar para mais tarde";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "câmera";
@@ -227,8 +216,6 @@
 "list.section.requests" = "Solicitações";
 "list.section.favorites" = "Favoritos";
 
-"conversation.voiceover.verified" = "verificado";
-"conversation.voiceover.legalhold" = "proteção jurídica";
 "conversation.voiceover.value.active" = "ativo";
 "conversation.voiceover.value.disabled" = "desativado";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Conversa";
 "compose.message.title" = "Mensagem";
-
-"conversation_details.open_button.accessibility_hint" = "Toque duas vezes para ver os detalhes da conversa.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "A mensagem foi excluída.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Convidados**";
-"conversation.banner.services" = "**Serviços**";
-"conversation.banner.externals" = "**Externos**";
-"conversation.banner.remotes" = "**Usuários federados**";
+"conversation.banner.guests" = "Convidados";
+"conversation.banner.services" = "Serviços";
+"conversation.banner.externals" = "Externos";
+"conversation.banner.remotes" = "Usuários federados";
 "conversation.banner.are_present" = "%@ estão presentes";
 "conversation.banner.are_active" = "%@ estão ativos";
 "conversation.banner.separator" = " e ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Você ligou";
 "content.system.ephemeral_time_remaining" = "%@ saiu";
 
-"content.system.self_user_new_client" = "**Você** começou a usar [um novo dispositivo](%@)";
-"content.system.self_user_new_self_client" = "**Você** começou a usar [este dispositivo](%@)";
+"content.system.self_user_new_client" = "Você começou a usar [um novo dispositivo](%@)";
+"content.system.self_user_new_self_client" = "Você começou a usar [este dispositivo](%@)";
 
 "content.system.you_started" = "Você";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Novo usuário juntou-se.";
 "content.system.verify_devices" = "Verifique dispositivos";
 
-"content.system.unverified_self_devices" = "**Você** não verificou um de [seus dispositivos](%@)";
-"content.system.unverified_other_devices" = "**Você** não verificou um dos [%1$@ dispositivos seus](%2$@)";
+"content.system.unverified_self_devices" = "Você não verificou um dos [seus dispositivos](%@)";
+"content.system.unverified_other_devices" = "Você não verificou um dos [dispositivos de %1$@](%2$@)";
 
 "content.system.missing_messages.title" = "Você não usou este dispositivo por algum um tempo. Algumas mensagens podem não aparecer aqui.";
 "content.system.missing_messages.subtitle_start" = "Enquanto isso,";
 
-"content.system.cannot_decrypt.self" = "Uma mensagem **sua** não pôde ser descriptografada.";
-"content.system.cannot_decrypt.other" = "Uma mensagem de **%@** não pôde ser descriptografada.";
+"content.system.cannot_decrypt.self" = "Uma mensagem sua não pôde ser descriptografada.";
+"content.system.cannot_decrypt.other" = "Uma mensagem de %@ não pôde ser descriptografada.";
 "content.system.cannot_decrypt.reset_session" = "Corrigir mensagens futuras";
 "content.system.cannot_decrypt.error_details" = "(Erro corrigido: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "Agora você pode descriptografar mensagens de você mesmo. Para recuperar mensagens perdidas, **você precisa reenviá-las.**";
-"content.system.cannot_decrypt_resolved.other" = "Agora você pode descriptografar mensagens de **%1$@**. Para recuperar mensagens perdidas, **peça a %1$@ para reenviá-las.**";
+"content.system.cannot_decrypt_resolved.self" = "Agora você pode descriptografar mensagens de si mesmo. Para recuperar mensagens perdidas, você precisa reenviá-las.";
+"content.system.cannot_decrypt_resolved.other" = "Agora você pode descriptografar mensagens de %1$@. Para recuperar mensagens perdidas, peça a %1$@ para reenviá-las.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "A identidade do **seu dispositivo** mudou. Mensagem não entregue.";
-"content.system.cannot_decrypt_identity_changed.other" = "A identidade do dispositivo de **%@** mudou. Mensagem não entregue."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "A identidade do seu dispositivo mudou. Mensagem não entregue.";
+"content.system.cannot_decrypt_identity_changed.other" = "A identidade do dispositivo de %@ mudou. Mensagem não entregue."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ não conseguiu descriptografar algumas de suas mensagens, mas resolveu o problema**. Isso afetou todas as conversas que vocês compartilham.";
-"content.system.session_reset.self" = "**Você não conseguiu descriptografar algumas de suas mensagens, mas resolveu o problema**. Isso afetou todas as conversas.";
+"content.system.session_reset.other" = "%@ não conseguiu descriptografar algumas de suas mensagens, mas resolveu o problema. Isso afetou todas as conversas que vocês compartilham.";
+"content.system.session_reset.self" = "Você não conseguiu descriptografar algumas de suas mensagens, mas resolveu o problema. Isso afetou todas as conversas.";
 
 "content.system.unknown_message.body" = "Esta mensagem não pode ser exibida. Você pode estar usando uma versão antiga do Wire.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Bloquear";
 "profile.unblock_button_title_action" = "Desbloquear";
 
-"profile.cancel_connection_button_title" = "CANCELAR PEDIDO";
+"profile.cancel_connection_button_title" = "Cancelar pedido";
 "profile.connection_request_state.blocked" = "BLOQUEADO";
 "profile.create_conversation_button_title" = "Criar grupo";
 "profile.open_conversation_button_title" = "Abrir conversa";
@@ -920,7 +905,7 @@
 "device.type.unknown" = "Desconhecido";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remover integração";
 
 // Group details
 "group_details.guest_options_cell.title" = "Convidados";
@@ -961,8 +946,6 @@
 "self.about" = "Sobre";
 "self.sign_out" = "Sair";
 "self.report_abuse" = "Reportar Abuso";
-"self.voiceover.label" = "Perfil";
-"self.voiceover.hint" = "Abrir perfil e configurações";
 "self.new-device.voiceover.label" = "Perfil, novos dispositivos adicionados";
 
 "self.add_email_password" = "Adicionar o endereço de e-mail e senha";
@@ -1038,15 +1021,18 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Criptografar mensagens em repouso";
 
-"self.settings.account_picture_group.picture" = "Foto";
-"self.settings.account_picture_group.color" = "Cor";
-"self.settings.account_picture_group.accent_color.blue" = "Blue";
-"self.settings.account_picture_group.accent_color.green" = "Green";
-"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
-"self.settings.account_picture_group.accent_color.red" = "Red";
-"self.settings.account_picture_group.accent_color.amber" = "Amber";
-"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
-"self.settings.account_picture_group.accent_color.purple" = "Purple";
+"self.settings.account_picture_group.picture" = "Foto do perfil";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
+"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
+"self.settings.account_picture_group.color" = "Profile color";
+"self.settings.account_picture_group.accent_color.blue" = "Azul";
+"self.settings.account_picture_group.accent_color.green" = "Verde";
+"self.settings.account_picture_group.accent_color.yellow" = "Amarelo";
+"self.settings.account_picture_group.accent_color.red" = "Vermelho";
+"self.settings.account_picture_group.accent_color.amber" = "Âmbar";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquês";
+"self.settings.account_picture_group.accent_color.purple" = "Roxo";
 
 "self.settings.account_personal_information_group.title" = "Informações Pessoais";
 

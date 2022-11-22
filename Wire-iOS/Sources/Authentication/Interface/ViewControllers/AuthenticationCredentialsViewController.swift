@@ -201,6 +201,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         contentStack.isLayoutMarginsRelativeArrangement = true
         contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 31, bottom: 0, trailing: 31)
 
+        if isRegistering {
+            contentStack.isLayoutMarginsRelativeArrangement = true
+            contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 31, bottom: 0, trailing: 31)
+        }
         return contentStack
     }
 
