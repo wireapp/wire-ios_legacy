@@ -78,19 +78,19 @@ extension ConversationViewController {
     }
 
     private var audioAndVideoCallButtons: UIView {
-            let buttonStack = UIStackView(arrangedSubviews: [videoCallButton, audioCallButton])
-            buttonStack.distribution = .fillEqually
-            buttonStack.spacing = 0
-            buttonStack.axis = .horizontal
+        let buttonStack = UIStackView(frame: CGRect(x: 0, y: 0, width: 80, height: 32))
+        buttonStack.distribution = .fillEqually
+        buttonStack.spacing = 0
+        buttonStack.axis = .horizontal
 
-            let buttonsView = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 32))
-            buttonsView.addSubview(buttonStack)
+        buttonStack.addArrangedSubview(videoCallButton)
+        buttonStack.addArrangedSubview(audioCallButton)
 
-            buttonStack.translatesAutoresizingMaskIntoConstraints = false
-            buttonStack.fitIn(view: buttonsView)
+        let buttonsView = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 32))
+        buttonsView.addSubview(buttonStack)
 
-            return buttonsView
-        }
+        return buttonsView
+    }
 
     var joinCallButton: UIBarButtonItem {
         let button = IconButton(fontSpec: .smallSemiboldFont)

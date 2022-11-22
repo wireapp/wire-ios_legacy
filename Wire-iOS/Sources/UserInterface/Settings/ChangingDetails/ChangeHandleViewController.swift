@@ -220,7 +220,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     /// Used to inject a specific `HandleChangeState` in tests. See `ChangeHandleViewControllerTests`.
-    init(state: HandleChangeState, federationEnabled: Bool = APIVersion.isFederationEnabled) {
+    init(state: HandleChangeState, federationEnabled: Bool = BackendInfo.isFederationEnabled) {
         self.state = state
         self.federationEnabled = federationEnabled
         super.init(style: .grouped)
