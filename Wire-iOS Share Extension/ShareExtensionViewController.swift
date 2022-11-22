@@ -22,7 +22,7 @@ import WireShareEngine
 import MobileCoreServices
 import WireDataModel
 import WireCommonComponents
-import WireCoreCrypto
+import CoreCrypto
 import WireLinkPreview
 import LocalAuthentication
 
@@ -167,7 +167,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             hostBundleIdentifier: hostBundleIdentifier,
             environment: BackendEnvironment.shared,
             appLockConfig: legacyConfig,
-            coreCryptoSetup: CoreCrypto.setup
+            coreCryptoSetup: CoreCryptoWrapper.setup
         )
     }
 

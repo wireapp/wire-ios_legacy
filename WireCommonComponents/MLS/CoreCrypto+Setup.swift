@@ -17,12 +17,15 @@
 //
 
 import Foundation
-import WireSyncEngine
+import WireDataModel
 import CoreCrypto
 import CoreCryptoSwift
 
+private let logger = ZMSLog(tag: "MLS")
+
 extension CoreCryptoWrapper {
-    static func setup(with configuration: CoreCryptoConfiguration) throws -> CoreCryptoWrapper {
+
+    public static func setup(with configuration: CoreCryptoConfiguration) throws -> CoreCryptoWrapper {
         let coreCrypto =  try CoreCryptoWrapper(
             path: configuration.path,
             key: configuration.key,
@@ -30,7 +33,7 @@ extension CoreCryptoWrapper {
             entropySeed: nil
         )
 
-        Logging.mls.info("Instantiated CoreCrypto (\(version()))")
+        logger.info("Instantiated CoreCrypto (\(version()))")
 
         return coreCrypto
     }
