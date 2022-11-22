@@ -34,6 +34,8 @@ protocol PhoneNumberInputViewDelegate: AnyObject {
 
 class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate, TextContainer {
 
+    typealias RegistrationEnterPhoneNumber = L10n.Localizable.Registration.EnterPhoneNumber
+
     /// The object receiving notifications about events from this view.
     weak var delegate: PhoneNumberInputViewDelegate?
 
@@ -80,7 +82,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     private let inputStack = UIStackView()
     private let countryCodeInputView = IconButton()
-    private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8)
+    private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8, style: .default)
 
     // MARK: - Initialization
 
@@ -99,7 +101,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private func configureSubviews() {
         // countryPickerButton
         countryPickerButton.accessibilityIdentifier = "CountryPickerButton"
-        countryPickerButton.titleLabel?.font = UIFont.normalLightFont
+        countryPickerButton.titleLabel?.font = FontSpec.normalLightFont.font!
         countryPickerButton.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
         countryPickerButton.addTarget(self, action: #selector(handleCountryButtonTap), for: .touchUpInside)
         countryPickerButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -107,9 +109,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         // countryCodeButton
         countryCodeInputView.setContentHuggingPriority(.required, for: .horizontal)
-        countryCodeInputView.setBackgroundImageColor(.white, for: .normal)
-        countryCodeInputView.setTitleColor(UIColor.Team.textColor, for: .normal)
-        countryCodeInputView.titleLabel?.font = FontSpec(.normal, .regular, .inputText).font
+        countryCodeInputView.setTitleColor(SemanticColors.Label.textDefault, for: .normal)
+        countryCodeInputView.titleLabel?.font = FontSpec.normalRegularFontWithInputTextStyle.font!
         countryCodeInputView.titleEdgeInsets.top = -1
         countryCodeInputView.isUserInteractionEnabled = false
         countryCodeInputView.accessibilityTraits = [.staticText]
@@ -123,17 +124,18 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         addSubview(inputStack)
 
         // textField
-        textField.textInsets.left = 0
-        textField.placeholder = "registration.enter_phone_number.placeholder".localized(uppercased: true)
-        textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
+        textField.textInsets.left = 10
+        textField.placeholder = RegistrationEnterPhoneNumber.placeholder
+        textField.accessibilityLabel = RegistrationEnterPhoneNumber.placeholder
         textField.accessibilityIdentifier = "PhoneNumberField"
-        textField.tintColor = UIColor.Team.activeButtonColor
         textField.confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.defaultCountry)
+
+        backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     private func configureConstraints() {
@@ -150,11 +152,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
             // inputStack
             inputStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             inputStack.topAnchor.constraint(equalTo: countryPickerButton.bottomAnchor, constant: 16),
-            inputStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            inputStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
             inputStack.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             // dimentions
-            textField.heightAnchor.constraint(equalToConstant: 56),
+            textField.heightAnchor.constraint(equalToConstant: 48),
             countryCodeInputView.widthAnchor.constraint(equalToConstant: 60)
         ])
     }
@@ -185,17 +187,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     // MARK: - Customization
 
-    var inputBackgroundColor: UIColor = .white {
-        didSet {
-            countryCodeInputView.setBackgroundImageColor(inputBackgroundColor, for: .normal)
-            textField.backgroundColor = inputBackgroundColor
-        }
-    }
-
-    var textColor: UIColor = UIColor.Team.textColor {
+    var textColor: UIColor = SemanticColors.Label.textDefault {
         didSet {
             countryCodeInputView.setTitleColor(textColor, for: .normal)
-            textField.textColor = textColor
             updateCountryButtonLabel()
         }
     }

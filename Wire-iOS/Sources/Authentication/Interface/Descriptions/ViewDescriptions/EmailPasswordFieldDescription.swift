@@ -49,7 +49,6 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
         // Reset the error message when the user changes the text and we use deferred validation
         guard usePasswordDeferredValidation else { return }
         valueValidated?(nil)
-        textField.passwordField.hideGuidanceDot()
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
@@ -58,7 +57,6 @@ extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldD
 
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {
         if let passwordError = textField.passwordValidationError {
-            textField.passwordField.showGuidanceDot()
             valueValidated?(.error(passwordError, showVisualFeedback: true))
         }
     }

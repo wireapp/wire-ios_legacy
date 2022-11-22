@@ -21,7 +21,7 @@ import UIKit
 
 final class AccessoryTextFieldCell: UITableViewCell {
 
-    let textField = ValidatedTextField()
+    let textField = ValidatedTextField(style: .default)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -45,8 +45,8 @@ final class AccessoryTextFieldCell: UITableViewCell {
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             textField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             textField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8)
         ])

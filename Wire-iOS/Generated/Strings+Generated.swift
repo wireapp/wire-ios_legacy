@@ -3721,7 +3721,7 @@ internal enum L10n {
         internal static let gotIt = L10n.tr("Localizable", "registration.no_history.got_it")
         /// It’s the first time you’re using Wire on this device.
         internal static let hero = L10n.tr("Localizable", "registration.no_history.hero")
-        /// Restore from backup
+        /// Restore From Backup
         internal static let restoreBackup = L10n.tr("Localizable", "registration.no_history.restore_backup")
         /// For privacy reasons, your conversation history will not appear here.
         internal static let subtitle = L10n.tr("Localizable", "registration.no_history.subtitle")
@@ -4803,11 +4803,11 @@ internal enum L10n {
           return L10n.tr("Localizable", "team.activation_code.subheadline", String(describing: p1))
         }
         internal enum Button {
-          /// Change email
+          /// Change Email
           internal static let changeEmail = L10n.tr("Localizable", "team.activation_code.button.change_email")
           /// Change phone number
           internal static let changePhone = L10n.tr("Localizable", "team.activation_code.button.change_phone")
-          /// Resend code
+          /// Resend Code
           internal static let resend = L10n.tr("Localizable", "team.activation_code.button.resend")
         }
       }

@@ -34,6 +34,7 @@ final class UnderlineButtonDescription {
 extension UnderlineButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = DynamicFontButton(fontSpec: .smallSemiboldFont)
+
         let attributes: [NSAttributedString.Key: Any] = [
             .font: FontSpec.smallSemiboldFont.font!,
             .foregroundColor: SemanticColors.Button.textUnderlineEnabled,

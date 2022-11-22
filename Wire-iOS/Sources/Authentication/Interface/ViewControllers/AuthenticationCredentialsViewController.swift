@@ -102,7 +102,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     let contentStack = UIStackView()
 
     let emailPasswordInputField = EmailPasswordTextField()
-    let emailInputField = ValidatedTextField(kind: .email)
+    let emailInputField = ValidatedTextField(kind: .email, style: .default)
     let phoneInputView = PhoneNumberInputView()
 
     let tabBar: TabBar = {
@@ -157,6 +157,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             self?.emailFieldValidationError == nil
         }
 
+        if isRegistering {
+            contentStack.isLayoutMarginsRelativeArrangement = true
+            contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 31, bottom: 0, trailing: 31)
+        }
         return contentStack
     }
 
