@@ -195,16 +195,16 @@ final class DeveloperToolsViewModel: ObservableObject {
     }
 
     private var backendDomain: String {
-        return APIVersion.domain ?? "None"
+        return BackendInfo.domain ?? "None"
     }
 
     private var apiVersion: String {
-        guard let version = APIVersion.current else { return "None" }
+        guard let version = BackendInfo.apiVersion else { return "None" }
         return String(describing: version.rawValue)
     }
 
     private var isFederationEnabled: String {
-        return String(describing: APIVersion.isFederationEnabled)
+        return String(describing: BackendInfo.isFederationEnabled)
     }
 
     private var selfUser: ZMUser? {

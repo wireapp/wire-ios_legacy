@@ -181,8 +181,10 @@ final class SelfProfileViewController: UIViewController {
     @objc func userDidTapProfileImage(sender: UserImageView) {
         guard userCanSetProfilePicture else { return }
 
-        let alert = profileImagePicker.selectProfileImage()
-        present(alert, animated: true)
+        let alertViewController = profileImagePicker.selectProfileImage()
+        alertViewController.configPopover(pointToView: profileHeaderViewController.imageView)
+
+        present(alertViewController, animated: true)
     }
 
     override func accessibilityPerformEscape() -> Bool {

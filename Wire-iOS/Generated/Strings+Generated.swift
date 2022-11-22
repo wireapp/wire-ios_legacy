@@ -4148,9 +4148,9 @@ internal enum L10n {
             internal static let yellow = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.yellow")
           }
           internal enum Alert {
-            /// Choose from library
+            /// Choose from Library
             internal static let choosePicture = L10n.tr("Localizable", "self.settings.account_picture_group.alert.choose_picture")
-            /// Take photo
+            /// Take Photo
             internal static let takePicture = L10n.tr("Localizable", "self.settings.account_picture_group.alert.take_picture")
             /// Change your profile picture
             internal static let title = L10n.tr("Localizable", "self.settings.account_picture_group.alert.title")

@@ -545,7 +545,7 @@ extension ShareExtensionViewController {
         }
     }
 
-    private func authenticationEvaluated(with result: AppLockAuthenticationResult, completion:  @escaping Completion) {
+    private func authenticationEvaluated(with result: AppLockAuthenticationResult, completion: @escaping Completion) {
         switch result {
         case .granted:
             localAuthenticationStatus = .granted

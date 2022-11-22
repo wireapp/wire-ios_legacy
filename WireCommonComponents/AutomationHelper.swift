@@ -19,6 +19,7 @@
 import Foundation
 import WireSystem
 import WireDataModel
+import WireSyncEngine
 
 final public class AutomationEmailCredentials: NSObject {
     public var email: String
@@ -121,7 +122,7 @@ public final class AutomationHelper: NSObject {
             let value = arguments.flagValueIfPresent(AutomationKey.preferredAPIversion.rawValue),
             let apiVersion = Int32(value)
         {
-            APIVersion.preferredVersion = APIVersion(rawValue: apiVersion)
+            BackendInfo.preferredAPIVersion = APIVersion(rawValue: apiVersion)
         }
 
         super.init()

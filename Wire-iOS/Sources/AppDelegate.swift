@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutomationHelperOperation(),
         MediaManagerOperation(),
         FileBackupExcluderOperation(),
-        APIVersionOperation(),
+        BackendInfoOperation(),
         FontSchemeOperation(),
         VoIPPushHelperOperation(),
         CleanUpDebugStateOperation()
@@ -274,7 +274,8 @@ private extension AppDelegate {
             environment: BackendEnvironment.shared,
             configuration: configuration,
             detector: jailbreakDetector,
-            requiredPushTokenType: requiredPushTokenType
+            requiredPushTokenType: requiredPushTokenType,
+            isDeveloperModeEnabled: Bundle.developerModeEnabled
         )
     }
 
