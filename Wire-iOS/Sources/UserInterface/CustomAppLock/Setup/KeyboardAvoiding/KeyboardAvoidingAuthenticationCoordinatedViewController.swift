@@ -36,10 +36,6 @@ final class KeyboardAvoidingAuthenticationCoordinatedViewController: KeyboardAvo
         childAuthenticationCoordinatedViewController?.displayError(error)
     }
 
-    func executeAction(_ action: AuthenticationCoordinatorAction) {
-        // No op
-    }
-
     private var childAuthenticationCoordinatedViewController: AuthenticationCoordinatedViewController? {
         return viewController as? AuthenticationCoordinatedViewController
     }

@@ -525,7 +525,4 @@ final class LandingViewController: AuthenticationStepViewController {
         // no-op
     }
 
-    func executeAction(_ action: AuthenticationCoordinatorAction) {
-        // No op
-    }
 }

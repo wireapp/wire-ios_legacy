@@ -122,8 +122,4 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
         // NO OP
     }
 
-    func executeAction(_ action: AuthenticationCoordinatorAction) {
-        // NO OP
-    }
-
 }
