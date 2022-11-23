@@ -52,3 +52,13 @@ extension UITextView: Stylable {
     }
 
 }
+
+extension UISearchBar: Stylable {
+
+    public func applyStyle(_ style: SearchBarStyle) {
+        tintColor = style.textColor
+        barTintColor = style.backgroundColor
+
+        layer.cornerRadius = style.cornerRadius
+    }
+}

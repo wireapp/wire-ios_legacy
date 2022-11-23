@@ -77,12 +77,14 @@ final class CountryCodeTableViewController: UITableViewController, UISearchContr
         searchController.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
-        searchController.searchBar.backgroundColor = UIColor.white
+        searchController.searchBar.backgroundColor = SemanticColors.View.backgroundDefault
+        searchController.searchBar.applyStyle(.default)
 
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
 
         definesPresentationContext = true
-        title = NSLocalizedString("registration.country_select.title", comment: "").localizedUppercase
+        navigationItem.setupNavigationBarTitle(title: NSLocalizedString("registration.country_select.title",
+                                                                        comment: "").capitalized)
     }
 
     // MARK: - UITableViewDelegate
