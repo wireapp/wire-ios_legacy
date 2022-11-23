@@ -24,6 +24,26 @@ protocol EmailPasswordTextFieldDelegate: AnyObject {
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
+class RevisedEmailPasswordTextField: EmailPasswordTextField {
+
+    override func configureConstraints() {
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // dimensions
+            passwordField.heightAnchor.constraint(equalToConstant: 48),
+            emailField.heightAnchor.constraint(equalToConstant: 48),
+
+            // contentStack
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 31),
+            contentStack.topAnchor.constraint(equalTo: topAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -31),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+
+}
+
 class EmailPasswordTextField: UIView, MagicTappable {
 
     let emailField = ValidatedTextField(kind: .email, cornerRadius: 12, setNewColors: true, style: .default)
@@ -103,7 +123,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         contentStack.addArrangedSubview(passwordField)
     }
 
-    private func configureConstraints() {
+     func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
