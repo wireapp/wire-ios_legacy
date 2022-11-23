@@ -60,6 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ]
     private var appStateCalculator = AppStateCalculator()
 
+    private static let logger = Logger(subsystem: "VoIP Push", category: "AppDelegate")
+
     // MARK: - Private Set Property
     private(set) var appRootRouter: AppRootRouter?
     private(set) var launchType: ApplicationLaunchType = .unknown
@@ -98,6 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        Self.logger.trace("app will finish launching with options: \(launchOptions)")
         zmLog.info("application:willFinishLaunchingWithOptions \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
 
         // Initial log line to indicate the client version and build
@@ -111,6 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        Self.logger.trace("app did finish launching with options: \(launchOptions)")
         voIPPushManager.registerForVoIPPushes()
 
         ZMSLog.switchCurrentLogToPrevious()
@@ -135,10 +139,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        Self.logger.trace("app will enter foreground")
         zmLog.info("applicationWillEnterForeground: (applicationState = \(application.applicationState.rawValue)")
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        Self.logger.trace("app did become active")
         zmLog.info("applicationDidBecomeActive (applicationState = \(application.applicationState.rawValue))")
 
         switch launchType {
@@ -151,10 +157,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        Self.logger.trace("app will resign active")
         zmLog.info("applicationWillResignActive:  (applicationState = \(application.applicationState.rawValue))")
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        Self.logger.trace("app did enter background")
         zmLog.info("applicationDidEnterBackground:  (applicationState = \(application.applicationState.rawValue))")
 
         launchType = .unknown
@@ -169,6 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        Self.logger.trace("app will terminate")
         zmLog.info("applicationWillTerminate:  (applicationState = \(application.applicationState.rawValue))")
     }
 
@@ -196,6 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        Self.logger.trace("app continue user activity")
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
 
         return SessionManager.shared?.continueUserActivity(userActivity) ?? false
