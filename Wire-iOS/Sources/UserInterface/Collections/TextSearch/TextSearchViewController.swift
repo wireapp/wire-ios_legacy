@@ -100,6 +100,11 @@ final class TextSearchViewController: NSObject {
         resultsView.isHidden = query.isEmpty
 
         resultsView.tableView.reloadData()
+        // TODO Katerina
+        if let ggg = resultsView.superview as? CollectionsView {
+            //ggg.collectionView.isAccessibilityElement = resultsView.noResultsView.isHidden
+            ggg.collectionView.accessibilityElementsHidden = !resultsView.noResultsView.isHidden
+        }
     }
 
     @objc
