@@ -61,8 +61,8 @@ class ValueValidationCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -(24 + ValidatedTextField.ConfirmButtonWidth)),
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 36),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -36),
             label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
@@ -77,7 +77,7 @@ class ValueValidationCell: UITableViewCell {
         case .info(let infoText)?:
             label.accessibilityIdentifier = "validation-rules"
             label.text = infoText
-            label.textColor = UIColor.Team.placeholderColor
+            label.textColor = SemanticColors.Label.textSectionFooter
 
         case .error(let error, let showVisualFeedback)?:
             if !showVisualFeedback {
@@ -88,7 +88,7 @@ class ValueValidationCell: UITableViewCell {
 
             label.accessibilityIdentifier = "validation-failure"
             label.text = error.errorDescription
-            label.textColor = UIColor.from(scheme: .errorIndicator, variant: .dark)
+            label.textColor = SemanticColors.Label.textErrorDefault
 
         case nil:
             updateValidation(initialValidation)
