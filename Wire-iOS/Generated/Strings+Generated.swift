@@ -368,17 +368,33 @@ internal enum L10n {
         /// Files in this conversation
         internal static let description = L10n.tr("Accessibility", "conversationSearch.filesSection.description")
       }
+      internal enum Image {
+        /// Image
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.image.description")
+      }
       internal enum ImagesSection {
         /// Pictures in this conversation
         internal static let description = L10n.tr("Accessibility", "conversationSearch.imagesSection.description")
+      }
+      internal enum Item {
+        /// Douple tap to open
+        internal static let hint = L10n.tr("Accessibility", "conversationSearch.item.hint")
       }
       internal enum LinksSection {
         /// Links in this conversation
         internal static let description = L10n.tr("Accessibility", "conversationSearch.linksSection.description")
       }
+      internal enum NoResults {
+        /// No results
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.noResults.description")
+      }
       internal enum Section {
         /// Double tab to open all
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.section.hint")
+      }
+      internal enum Video {
+        /// Video
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.video.description")
       }
       internal enum VideosSection {
         /// Videos in this conversation

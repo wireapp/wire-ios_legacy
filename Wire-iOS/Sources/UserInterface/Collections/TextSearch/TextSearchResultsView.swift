@@ -39,7 +39,7 @@ final class TextSearchResultsView: UIView {
         tableView.backgroundColor = .clear
         addSubview(tableView)
 
-        noResultsView.label.accessibilityLabel = "no text messages"
+        noResultsView.label.accessibilityLabel = L10n.Accessibility.ConversationSearch.NoResults.description
         noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
         noResultsView.icon = .search
         addSubview(noResultsView)

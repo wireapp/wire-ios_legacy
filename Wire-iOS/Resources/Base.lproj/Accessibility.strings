@@ -66,6 +66,11 @@
 "conversationSearch.videosSection.description" = "Videos in this conversation";
 "conversationSearch.linksSection.description" = "Links in this conversation";
 "conversationSearch.section.hint" = "Double tab to open all";
+"conversationSearch.noResults.description" = "No results";
+"conversationSearch.image.description" = "Image";
+"conversationSearch.video.description" = "Video";
+"conversationSearch.item.hint" = "Douple tap to open";
+
 
 "conversationDetails.messageTimeoutState.description" = "Selected";
 "selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
