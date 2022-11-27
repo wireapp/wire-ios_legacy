@@ -50,7 +50,7 @@ public final class FileMetaDataGenerator: NSObject {
 
 extension AVURLAsset {
     static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
-        return audiovisualTypes().contains(where: { compatibleUTI  -> Bool in
+        return audiovisualTypes().contains(where: { compatibleUTI -> Bool in
             UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
         })
     }
