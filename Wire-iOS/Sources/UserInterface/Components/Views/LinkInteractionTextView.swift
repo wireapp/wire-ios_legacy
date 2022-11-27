@@ -143,8 +143,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
             }
 
             if needFixForRepeatedGesture {
-                /// workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
-                /// the issue is fixed on iOS 13.2 and no need this workaround
+                // Workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
+                // the issue is fixed on iOS 13.2 and no need this workaround
                 if textView.gestureRecognizers?.contains(where: {$0.isKind(of: UITapGestureRecognizer.self) && $0.state == .ended}) == true {
                     return performLinkInteraction()
                 }

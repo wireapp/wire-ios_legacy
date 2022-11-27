@@ -340,7 +340,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
             conversation.markMessagesAsRead(until: lastVisibleMessage)
         }
 
-        /// update media bar visiblity
+        // Update media bar visiblity
         updateMediaBar()
     }
 
@@ -355,7 +355,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     }
 
     // MARK: - MediaPlayer
-
+    /// Update media bar visiblity
     private func updateMediaBar() {
         let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
 

@@ -28,7 +28,7 @@ func localizeString (stringToLocalize: String, language: String) -> String? {
 final class StatusMessageTypeTests: XCTestCase {
 
     func testForAllLanguageIsLocalized() {
-        /// GIVEN
+        // GIVEN
         let availableLanguages = Bundle.main.localizations
 
         for statusMessageType in StatusMessageType.allCases {
@@ -36,22 +36,22 @@ final class StatusMessageTypeTests: XCTestCase {
                 availableLanguages.forEach { language in
                     if let localizationKey = localizeString(stringToLocalize: key, language: language) {
 
-                        /// WHEN
+                        // WHEN
                         var sut = String(format: localizationKey.localized, 1)
 
-                        /// THEN
+                        // THEN
                         XCTAssertGreaterThan(sut.count, 0, "localized string is \(sut)")
 
-                        /// WHEN
+                        // WHEN
                         sut = String(format: localizationKey.localized, 2)
 
-                        /// THEN
+                        // THEN
                         XCTAssertGreaterThan(sut.count, 0, "localized string is \(sut)")
 
-                        /// WHEN
+                        // WHEN
                         sut = String(format: localizationKey.localized, 100)
 
-                        /// THEN
+                        // THEN
                         XCTAssertGreaterThan(sut.count, 0, "localized string is \(sut)")
                     }
                 }
@@ -61,12 +61,12 @@ final class StatusMessageTypeTests: XCTestCase {
 
     func testForBaseLanguageIsLocalized() {
 
-        /// GIVEN
+        // GIVEN
         for statusMessageType in StatusMessageType.allCases {
-            /// WHEN
+            // WHEN
             var count: UInt = 1
 
-            /// THEN
+            // THEN
             switch statusMessageType {
             case .mention:
                 XCTAssertEqual(statusMessageType.localizedString(with: count), "1 mention")
@@ -82,10 +82,10 @@ final class StatusMessageTypeTests: XCTestCase {
                 XCTAssertNil(statusMessageType.localizedString(with: count))
             }
 
-            /// WHEN
+            // WHEN
             count = 2
 
-            /// THEN
+            // THEN
             switch statusMessageType {
             case .mention:
                 XCTAssertEqual(statusMessageType.localizedString(with: count), "2 mentions")

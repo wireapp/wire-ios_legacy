@@ -152,7 +152,7 @@ final class ProfileViewControllerViewModel: NSObject {
     func handleBlockAndUnblock() {
         switch context {
         case .search:
-            /// stay on this VC and let user to decise what to do next
+            // Stay on this VC and let user to decise what to do next
             enqueueChanges(toggleBlocked)
         default:
             transitionToListAndEnqueue { self.toggleBlocked() }

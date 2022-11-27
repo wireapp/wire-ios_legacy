@@ -55,7 +55,7 @@ final class BackupExcluderTests: XCTestCase { /// TODO: test protocol instead
     }
 
     func testThatFileIsExcluded() {
-        /// GIVEN
+        // GIVEN
         let filesToExclude: [FileInDirectory] = [(FileManager.SearchPathDirectory.documentDirectory, filename)]
 
         write(text: "test", to: filename)
@@ -66,10 +66,10 @@ final class BackupExcluderTests: XCTestCase { /// TODO: test protocol instead
             XCTAssertFalse(url.isExcludedFromBackup)
         }
 
-        /// WHEN
+        // WHEN
         try! MockBackupExcluder.exclude(filesToExclude: filesToExclude)
 
-        /// THEN
+        // THEN
         filesToExclude.forEach { (directory, path) in
             let url = URL.directory(for: directory).appendingPathComponent(path)
 

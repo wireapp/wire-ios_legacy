@@ -161,7 +161,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     private func setupSwipeMenuCollectionCell() {
         canOpenDrawer = true
         overscrollFraction = 0.6
-        /// When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.
+        // When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.
         maxVisualDrawerOffset = SwipeMenuCollectionCell.MaxVisualDrawerOffsetRevealDistance
 
         swipeView.backgroundColor = .clear
@@ -304,10 +304,10 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
 
         swipeViewHorizontalConstraint = swipeView.leftAnchor.constraint(equalTo: contentView.leftAnchor)
 
-        /// menu view attachs to swipeView before reaching max offset
+        // Menu view attachs to swipeView before reaching max offset
         menuViewToSwipeViewLeftConstraint = menuView.rightAnchor.constraint(equalTo: swipeView.leftAnchor)
 
-        /// menu view attachs to content view after reaching max offset
+        // Menu view attachs to content view after reaching max offset
         maxMenuViewToSwipeViewLeftConstraint = menuView.leftAnchor.constraint(equalTo: leftAnchor, constant: maxVisualDrawerOffset)
 
         [swipeView, separatorLine, menuView].prepareForLayout()

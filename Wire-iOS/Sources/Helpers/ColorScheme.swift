@@ -275,7 +275,7 @@ extension UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
-    // NB: the order of coefficients must match ZMAccentColor enum ordering
+    /// NB: the order of coefficients must match ZMAccentColor enum ordering
     private static let accentColorNameColorBlendingCoefficientsDark: [CGFloat] = [0.8, 0.8, 0.72, 1.0, 0.8, 0.8, 0.8, 0.64]
     private static let accentColorNameColorBlendingCoefficientsLight: [CGFloat] = [0.8, 0.8, 0.72, 1.0, 0.8, 0.8, 0.64, 1.0]
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.

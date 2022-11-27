@@ -166,7 +166,7 @@ final class CollectionsViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-        /// Prevent content overlaps navi bar
+        // Prevent content overlaps navi bar
         navigationController?.navigationBar.isTranslucent = false
     }
 

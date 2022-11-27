@@ -132,7 +132,7 @@ final class ConversationListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        /// update
+        // Update
         hideNoContactLabel(animated: false)
 
         setupObservers()
