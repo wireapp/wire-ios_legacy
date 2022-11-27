@@ -11,7 +11,6 @@
 
 import UIKit
 
-// swiftlint:disable orphaned_doc_comment
 public class WireStyleKit: NSObject {
 
     //// Cache
