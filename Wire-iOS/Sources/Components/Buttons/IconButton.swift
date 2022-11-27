@@ -296,7 +296,7 @@ class IconButton: ButtonWithLargerHitArea {
 
         layer.mask = maskLayer
 
-        /// When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
+        // When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
         layer.cornerRadius = borderWidth > 0 ? radius : 0
     }
 
