@@ -360,9 +360,17 @@ internal enum L10n {
       }
     }
     internal enum ConversationSearch {
+      internal enum BackButton {
+        /// Go back to search
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.backButton.description")
+      }
       internal enum CloseButton {
         /// Close search
         internal static let description = L10n.tr("Accessibility", "conversationSearch.closeButton.description")
+      }
+      internal enum EmptyResult {
+        /// No results
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.emptyResult.description")
       }
       internal enum FilesSection {
         /// Files in this conversation
@@ -384,9 +392,9 @@ internal enum L10n {
         /// Links in this conversation
         internal static let description = L10n.tr("Accessibility", "conversationSearch.linksSection.description")
       }
-      internal enum NoResults {
-        /// No results
-        internal static let description = L10n.tr("Accessibility", "conversationSearch.noResults.description")
+      internal enum NoItems {
+        /// No items in collection
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.noItems.description")
       }
       internal enum Section {
         /// Double tab to open all
@@ -547,6 +555,48 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "licenseInformationSettings.backButton.description")
       }
     }
+    internal enum MessageAction {
+      internal enum CopyButton {
+        /// Copy picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.copyButton.description")
+      }
+      internal enum DeleteButton {
+        /// Delete picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.deleteButton.description")
+      }
+      internal enum EmojiButton {
+        /// Sketch emoji over picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.emojiButton.description")
+      }
+      internal enum LikeButton {
+        /// Like the picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.likeButton.description")
+      }
+      internal enum MoreButton {
+        /// Open more messaging options
+        internal static let description = L10n.tr("Accessibility", "messageAction.moreButton.description")
+      }
+      internal enum RevealButton {
+        /// Reveal in conversation
+        internal static let description = L10n.tr("Accessibility", "messageAction.revealButton.description")
+      }
+      internal enum SaveButton {
+        /// Save picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.saveButton.description")
+      }
+      internal enum ShareButton {
+        /// Share picture 1111
+        internal static let description = L10n.tr("Accessibility", "messageAction.shareButton.description")
+      }
+      internal enum SketchButton {
+        /// Sketch over picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.sketchButton.description")
+      }
+      internal enum UnlikeButton {
+        /// Unlike the picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.unlikeButton.description")
+      }
+    }
     internal enum NotificationConversationSettings {
       internal enum CloseButton {
         /// Close notification settings
@@ -557,6 +607,12 @@ internal enum L10n {
       internal enum BackButton {
         /// Go back to Options
         internal static let description = L10n.tr("Accessibility", "optionsSettings.backButton.description")
+      }
+    }
+    internal enum PictureView {
+      internal enum CloseButton {
+        /// Close picture view
+        internal static let description = L10n.tr("Accessibility", "pictureView.closeButton.description")
       }
     }
     internal enum Profile {
@@ -1189,7 +1245,7 @@ internal enum L10n {
         internal static let details = L10n.tr("Localizable", "content.message.details")
         /// Download
         internal static let download = L10n.tr("Localizable", "content.message.download")
-        /// Share
+        /// Share house
         internal static let forward = L10n.tr("Localizable", "content.message.forward")
         /// Reveal
         internal static let goToConversation = L10n.tr("Localizable", "content.message.go_to_conversation")

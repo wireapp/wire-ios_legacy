@@ -61,16 +61,32 @@
 "conversation.codeButton.description" = "Use code format";
 
 "conversationSearch.closeButton.description" = "Close search";
+"conversationSearch.backButton.description" = "Go back to search";
 "conversationSearch.imagesSection.description" = "Pictures in this conversation";
 "conversationSearch.filesSection.description" = "Files in this conversation";
 "conversationSearch.videosSection.description" = "Videos in this conversation";
 "conversationSearch.linksSection.description" = "Links in this conversation";
 "conversationSearch.section.hint" = "Double tab to open all";
-"conversationSearch.noResults.description" = "No results";
+"conversationSearch.emptyResult.description" = "No results";
+"conversationSearch.noItems.description" = "No items in collection";
 "conversationSearch.image.description" = "Image";
 "conversationSearch.video.description" = "Video";
 "conversationSearch.item.hint" = "Douple tap to open";
 
+"createConversation.backButton.description" = "Go back to contact list";
+
+"pictureView.closeButton.description" = "Close picture view";
+
+"messageAction.unlikeButton.description" = "Unlike the picture";
+"messageAction.likeButton.description" = "Like the picture";
+"messageAction.shareButton.description" = "Share picture 1111";
+"messageAction.sketchButton.description" = "Sketch over picture";
+"messageAction.emojiButton.description" = "Sketch emoji over picture";
+"messageAction.copyButton.description" = "Copy picture";
+"messageAction.moreButton.description" = "Open more messaging options";
+"messageAction.saveButton.description" = "Save picture";
+"messageAction.revealButton.description" = "Reveal in conversation";
+"messageAction.deleteButton.description" = "Delete picture";
 
 "conversationDetails.messageTimeoutState.description" = "Selected";
 "selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
