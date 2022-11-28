@@ -37,6 +37,7 @@ final class CallViewController: UIViewController {
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
     fileprivate let hapticsController = CallHapticsController()
+    private let isOverlayEnabled: Bool
 
     fileprivate var classification: SecurityClassification = .none {
         didSet {
@@ -67,17 +68,20 @@ final class CallViewController: UIViewController {
     private static var userEnabledCBR: Bool {
         return Settings.shared[.callingConstantBitRate] == true
     }
+    weak var configurationObserver: CallInfoConfigurationObserver?
 
     init(voiceChannel: VoiceChannel,
          selfUser: UserType,
          proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared?.proximityMonitorManager,
          mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
-         permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
+         permissionsConfiguration: CallPermissionsConfiguration = CallPermissions(),
+         isOverlayEnabled: Bool = true) {
 
         self.voiceChannel = voiceChannel
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
         callGridConfiguration = CallGridConfiguration(voiceChannel: voiceChannel)
+        self.isOverlayEnabled = isOverlayEnabled
 
         if let userSession = ZMUserSession.shared(),
            let participants = voiceChannel.conversation?.participants {
@@ -113,7 +117,12 @@ final class CallViewController: UIViewController {
 
         singleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
         singleTapRecognizer.numberOfTapsRequired = 1
-        self.view.addGestureRecognizer(singleTapRecognizer)
+        if isOverlayEnabled {
+            self.view.addGestureRecognizer(singleTapRecognizer)
+        } else {
+            callInfoRootViewController.view.alpha = 0
+        }
+
         doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
         doubleTapRecognizer.numberOfTapsRequired = 2
         self.view.addGestureRecognizer(doubleTapRecognizer)
@@ -265,6 +274,7 @@ final class CallViewController: UIViewController {
         updateOverlayAfterStateChanged()
         updateAppearance()
         updateIdleTimer()
+        configurationObserver?.didUpdateConfiguration(configuration: callInfoConfiguration)
     }
 
     private func updateIdleTimer() {
@@ -302,7 +312,7 @@ final class CallViewController: UIViewController {
         present(alert, animated: true)
     }
 
-    fileprivate func toggleVideoState() {
+     func toggleVideoState() {
         if !permissions.canAcceptVideoCalls {
             permissions.requestOrWarnAboutVideoPermission { isVideoPermissionGranted in
                 self.disableVideoIfNeeded()
@@ -465,7 +475,7 @@ extension CallViewController: NetworkQualityObserver {
 
 extension CallViewController: CallInfoRootViewControllerDelegate {
 
-    func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction) {
+    func callingActionsViewPerformAction(_ action: CallAction) {
         Log.calling.debug("request to perform call action: \(action)")
         guard let userSession = ZMUserSession.shared() else { return }
 
@@ -530,6 +540,7 @@ extension CallViewController {
     }
 
     private func animateOverlay(show: Bool) {
+        guard isOverlayEnabled else { return }
         if show {
             startOverlayTimer()
         } else {

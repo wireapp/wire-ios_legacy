@@ -121,7 +121,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    private func apply(_ configuration: CallActionAppearance) {
+    func apply(_ configuration: CallActionAppearance) {
         setTitleColor(configuration.iconColorNormal, for: .normal)
         iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
         iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
@@ -145,8 +145,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
 }
 
 // MARK: - Helper
-
-fileprivate extension UIControl.State {
+ extension UIControl.State {
     static let disabledAndSelected: UIControl.State = [.disabled, .selected]
     static let selectedAndHighlighted: UIControl.State = [.highlighted, .selected]
 }

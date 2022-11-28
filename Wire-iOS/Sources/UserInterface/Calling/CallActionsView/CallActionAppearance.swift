@@ -19,11 +19,11 @@
 import UIKit
 
 enum CallActionAppearance: Equatable {
-    case light, dark(blurred: Bool)
+    case light, dark(blurred: Bool), adaptive
 
     var showBlur: Bool {
         switch self {
-        case .light: return false
+        case .light, .adaptive: return false
         case .dark(blurred: let blurred): return blurred
         }
     }
@@ -32,6 +32,7 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.lightGraphite.withAlphaComponent(0.08)
         case .dark: return UIColor.white.withAlphaComponent(0.24)
+        case .adaptive: return UIColor.from(scheme: .callIconBackground, variant: ColorScheme.default.variant)
         }
     }
 
@@ -39,6 +40,8 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
+
+            case .adaptive: return UIColor.from(scheme: .callIconBackgroundSelected, variant: ColorScheme.default.variant)
         }
     }
 
@@ -46,6 +49,7 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
+        case .adaptive: return UIColor.from(scheme: .callIconNormal, variant: ColorScheme.default.variant)
         }
     }
 
@@ -53,13 +57,34 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .dark)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .light)
+        case .adaptive: return UIColor.from(scheme: .callIconSelected, variant: ColorScheme.default.variant)
         }
     }
+
+
+    var backgroundColorDisabled: UIColor {
+        switch self {
+        case .light: return UIColor.black.withAlphaComponent(0.16)
+        case .dark: return UIColor.white.withAlphaComponent(0.4)
+        case .adaptive: return UIColor.from(scheme: .callIconBackgroundDisabled, variant: ColorScheme.default.variant)
+        }
+    }
+
+
+    var iconColorDisabled: UIColor {
+        switch self {
+        case .light: return UIColor.black.withAlphaComponent(0.16)
+        case .dark: return UIColor.white.withAlphaComponent(0.4)
+        case .adaptive: return UIColor.from(scheme: .callIconDisabled, variant: ColorScheme.default.variant)
+        }
+    }
+
 
     var backgroundColorSelectedAndHighlighted: UIColor {
         switch self {
         case .light: return UIColor.black.withAlphaComponent(0.16)
         case .dark: return UIColor.white.withAlphaComponent(0.4)
+        case .adaptive: return UIColor.from(scheme: .callIconBackgroundDisabled, variant: ColorScheme.default.variant)
         }
     }
 }

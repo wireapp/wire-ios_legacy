@@ -87,7 +87,9 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         // first responder when the call overlay is interactively dismissed but canceled.
         UIResponder.currentFirst?.resignFirstResponder()
 
-        let activeCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
+
+        let activeCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel) // TODO: ACC-143  USE FEATURE FLAG 
+//        let activeCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
         activeCallViewController.delegate = callController
 
         let modalVC = ModalPresentationViewController(viewController: activeCallViewController, enableDismissOnPan: !CallingConfiguration.config.paginationEnabled)

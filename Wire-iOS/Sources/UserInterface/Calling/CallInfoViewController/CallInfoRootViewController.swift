@@ -21,8 +21,7 @@ import UIKit
 import SafariServices
 import WireDataModel
 
-protocol CallInfoRootViewControllerDelegate: AnyObject {
-    func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction)
+protocol CallInfoRootViewControllerDelegate: CallingActionsViewDelegate {
     func infoRootViewController(_ viewController: CallInfoRootViewController, contextDidChange context: CallInfoRootViewController.Context)
 }
 
@@ -121,8 +120,8 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction) {
         switch (action, configuration.degradationState) {
         case (.showParticipantsList, _): presentParticipantsList()
-        case (.acceptCall, .incoming): delegate?.infoRootViewController(self, perform: .acceptDegradedCall)
-        default: delegate?.infoRootViewController(self, perform: action)
+        case (.acceptCall, .incoming): delegate?.callingActionsViewPerformAction(.acceptDegradedCall)
+        default: delegate?.callingActionsViewPerformAction(action)
         }
     }
 
@@ -132,11 +131,11 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     }
 
     func continueDegradedCall() {
-        delegate?.infoRootViewController(self, perform: .continueDegradedCall)
+        delegate?.callingActionsViewPerformAction(.continueDegradedCall)
     }
 
     func cancelDegradedCall() {
-        delegate?.infoRootViewController(self, perform: .terminateDegradedCall)
+        delegate?.callingActionsViewPerformAction(.terminateDegradedCall)
     }
 
 }

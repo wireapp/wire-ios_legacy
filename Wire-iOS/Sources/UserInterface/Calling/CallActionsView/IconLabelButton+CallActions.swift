@@ -41,3 +41,36 @@ extension IconLabelButton {
     }
 
 }
+
+extension CallingActionButton {
+
+    convenience init(callingActionIcon: CallActionIconType) {
+        self.init(input: callingActionIcon)
+    }
+
+    static func speakerButton() -> CallingActionButton {
+        .init(callActionIcon: .speaker)
+    }
+
+    static func microphoneButton() -> CallingActionButton {
+        .init(callActionIcon: .microphone)
+    }
+
+    static func cameraButton() -> CallingActionButton {
+        .init(callActionIcon: .camera)
+    }
+
+    static func flipCameraButton() -> CallingActionButton {
+        .init(callActionIcon: .flipCamera)
+    }
+
+}
+
+
+extension EndCallButton {
+
+
+    static func endCallButton() -> EndCallButton {
+        .init(callActionIcon: .endCall)
+    }
+}
