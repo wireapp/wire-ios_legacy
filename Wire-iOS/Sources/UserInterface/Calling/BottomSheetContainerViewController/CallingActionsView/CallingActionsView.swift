@@ -101,7 +101,7 @@ class CallingActionsView: UIView {
             verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
-            verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
             topStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
             cameraButtonDisabled.leftAnchor.constraint(equalTo: cameraButton.leftAnchor),
             cameraButtonDisabled.rightAnchor.constraint(equalTo: cameraButton.rightAnchor),

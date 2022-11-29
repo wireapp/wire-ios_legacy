@@ -46,6 +46,19 @@ enum CallActionIconType: IconLabelButtonInput {
         }
     }
 
+    // TODO: remove it afterACC-143 is accepted
+    var updatedLabel: String {
+        typealias Voice = L10n.Localizable.Voice
+
+        switch self {
+        case .microphone: return Voice.MuteButton.title
+        case .camera: return Voice.VideoButton.title
+        case .speaker: return Voice.SpeakerButton.title
+        case .flipCamera: return Voice.FlipCameraButton.title
+        case .endCall:  return Voice.HangUpButton.title
+        }
+    }
+
     var accessibilityIdentifier: String {
         switch self {
         case .microphone: return "CallMuteButton"

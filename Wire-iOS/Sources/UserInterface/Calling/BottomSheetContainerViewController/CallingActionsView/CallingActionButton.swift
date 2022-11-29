@@ -21,10 +21,16 @@ import WireCommonComponents
 
 class CallingActionButton: IconLabelButton {
 
+    override init(input: IconLabelButtonInput) {
+        super.init(input: input)
+        subtitleTransformLabel.text = input.updatedLabel
+        subtitleTransformLabel.textTransform = .capitalize
+    }
+
     override func apply(_ configuration: CallActionAppearance) {
         iconButton.borderWidth = 1
         subtitleTransformLabel.textTransform = .capitalize
-        // TODO Dynamic text
+        // TODO Katerina Dynamic text
         titleLabel?.font = FontSpec(.small, .regular).font!
 
         setTitleColor(configuration.textColorNormal, for: .normal)
@@ -49,9 +55,7 @@ class CallingActionButton: IconLabelButton {
     }
 }
 
-
-class EndCallButton: IconLabelButton {
-
+class EndCallButton: CallingActionButton {
     override func apply(_ configuration: CallActionAppearance) {
         subtitleTransformLabel.textTransform = .capitalize
         titleLabel?.font = FontSpec(.small, .regular).font!

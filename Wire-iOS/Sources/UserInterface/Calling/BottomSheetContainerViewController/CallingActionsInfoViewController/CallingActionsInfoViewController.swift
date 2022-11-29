@@ -28,6 +28,8 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     fileprivate var collectionView: CallParticipantsListView!
     private let actionsView = CallingActionsView()
     private let stackView = UIStackView(axis: .vertical)
+    private var participantsHeaderView = UIView()
+    private var participantsHeaderLabel = UILabel()
 
     weak var actionsDelegate: CallingActionsViewDelegate? {
         didSet {
@@ -38,6 +40,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     var participants: CallParticipantsList {
         didSet {
             updateRows()
+            participantsHeaderLabel.text = "call.participants.list.title".localized(uppercased: true) + " (\(participants.count))"
         }
     }
     let showParticipants: Bool
@@ -66,7 +69,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         super.viewDidLoad()
         setupViews()
         createConstraints()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
     }
 
     override func viewDidLayoutSubviews() {
@@ -78,23 +81,27 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 16
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 0
 
-        title = "call.participants.list.title".localized(uppercased: true)
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
+
+        participantsHeaderView.backgroundColor = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        participantsHeaderView.addSubview(participantsHeaderLabel)
+        participantsHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
+        participantsHeaderLabel.font = .smallSemiboldFont
+        participantsHeaderLabel.textColor = UIColor(light: Asset.gray70, dark: Asset.gray50)
 
         let collectionView = CallParticipantsListView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.bounces = showParticipants
         collectionView.delegate = self
         self.collectionView = collectionView
-        stackView.addArrangedSubview(actionsView)
-        stackView.addArrangedSubview(collectionView)
+        [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
         CallParticipantsListCellConfiguration.prepare(collectionView)
     }
 
@@ -106,10 +113,11 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            actionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            actionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -actionsViewHeight)
+            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -actionsViewHeight),
+
+            participantsHeaderView.heightAnchor.constraint(equalToConstant: 42.0),
+            participantsHeaderLabel.leadingAnchor.constraint(equalTo: participantsHeaderView.leadingAnchor, constant: 16.0),
+            participantsHeaderLabel.centerYAnchor.constraint(equalTo: participantsHeaderView.centerYAnchor)
         ])
     }
 

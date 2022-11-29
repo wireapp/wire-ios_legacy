@@ -22,12 +22,12 @@ import WireCommonComponents
 protocol IconLabelButtonInput {
     func icon(forState state: UIControl.State) -> StyleKitIcon
     var label: String { get }
+    var updatedLabel: String { get } // TODO: clean and leave only "label" after ACC-143 approved
     var accessibilityIdentifier: String { get }
 }
 
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64
-    private static let height: CGFloat = 78
 
     private(set) var iconButton = IconButton()
     private(set) var subtitleTransformLabel = TransformLabel()
@@ -78,9 +78,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private func createConstraints() {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            heightAnchor.constraint(greaterThanOrEqualToConstant: IconLabelButton.height),
-            iconButton.widthAnchor.constraint(equalToConstant: 56),
-            iconButton.heightAnchor.constraint(equalToConstant: 56),
+            iconButton.widthAnchor.constraint(equalToConstant: IconLabelButton.width),
+            iconButton.heightAnchor.constraint(equalToConstant: IconLabelButton.width),
             blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
             blurView.trailingAnchor.constraint(equalTo: iconButton.trailingAnchor),
             blurView.topAnchor.constraint(equalTo: iconButton.topAnchor),
@@ -88,6 +87,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
             iconButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconButton.topAnchor.constraint(equalTo: topAnchor),
             iconButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            iconButton.heightAnchor.constraint(equalTo: widthAnchor),
+            subtitleTransformLabel.topAnchor.constraint(equalTo: iconButton.bottomAnchor, constant: 8.0),
             subtitleTransformLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             subtitleTransformLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             subtitleTransformLabel.heightAnchor.constraint(equalToConstant: 16)
