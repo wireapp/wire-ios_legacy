@@ -19,6 +19,7 @@
 import UIKit
 
 enum CallActionAppearance: Equatable {
+
     case light, dark(blurred: Bool), adaptive
 
     var showBlur: Bool {
@@ -32,7 +33,7 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.lightGraphite.withAlphaComponent(0.08)
         case .dark: return UIColor.white.withAlphaComponent(0.24)
-        case .adaptive: return UIColor.from(scheme: .callIconBackground, variant: ColorScheme.default.variant)
+        case .adaptive: return SemanticColors.Button.backgroundCallingNormal
         }
     }
 
@@ -40,8 +41,23 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
+        case .adaptive: return SemanticColors.Button.backgroundCallingSelected
+        }
+    }
 
-            case .adaptive: return UIColor.from(scheme: .callIconBackgroundSelected, variant: ColorScheme.default.variant)
+    var backgroundColorDisabled: UIColor {
+        switch self {
+        case .light: return UIColor.black.withAlphaComponent(0.16)
+        case .dark: return UIColor.white.withAlphaComponent(0.4)
+        case .adaptive: return SemanticColors.Button.backgroundCallingDisabled
+        }
+    }
+
+    var backgroundColorSelectedAndHighlighted: UIColor {
+        switch self {
+        case .light: return UIColor.black.withAlphaComponent(0.16)
+        case .dark: return UIColor.white.withAlphaComponent(0.4)
+        case .adaptive: return SemanticColors.Button.backgroundCallingDisabled
         }
     }
 
@@ -49,7 +65,7 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
-        case .adaptive: return UIColor.from(scheme: .callIconNormal, variant: ColorScheme.default.variant)
+        case .adaptive: return SemanticColors.Button.iconCallingNormal
         }
     }
 
@@ -57,34 +73,56 @@ enum CallActionAppearance: Equatable {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .dark)
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .light)
-        case .adaptive: return UIColor.from(scheme: .callIconSelected, variant: ColorScheme.default.variant)
+        case .adaptive: return SemanticColors.Button.iconCallingSelected
         }
     }
-
-
-    var backgroundColorDisabled: UIColor {
-        switch self {
-        case .light: return UIColor.black.withAlphaComponent(0.16)
-        case .dark: return UIColor.white.withAlphaComponent(0.4)
-        case .adaptive: return UIColor.from(scheme: .callIconBackgroundDisabled, variant: ColorScheme.default.variant)
-        }
-    }
-
 
     var iconColorDisabled: UIColor {
         switch self {
         case .light: return UIColor.black.withAlphaComponent(0.16)
         case .dark: return UIColor.white.withAlphaComponent(0.4)
-        case .adaptive: return UIColor.from(scheme: .callIconDisabled, variant: ColorScheme.default.variant)
+        case .adaptive: return SemanticColors.Button.iconCallingDisabled
         }
     }
 
+    var borderColorNormal: UIColor {
+        switch self {
+        case .light: return UIColor.lightGraphite.withAlphaComponent(0.08)
+        case .dark: return UIColor.white.withAlphaComponent(0.24)
+        case .adaptive: return SemanticColors.Button.borderCallingNormal
+        }
+    }
 
-    var backgroundColorSelectedAndHighlighted: UIColor {
+    var borderColorSelected: UIColor {
+        switch self {
+        case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
+        case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
+        case .adaptive: return SemanticColors.Button.borderCallingSelected
+        }
+    }
+
+    var borderColorDisabled: UIColor {
         switch self {
         case .light: return UIColor.black.withAlphaComponent(0.16)
         case .dark: return UIColor.white.withAlphaComponent(0.4)
-        case .adaptive: return UIColor.from(scheme: .callIconBackgroundDisabled, variant: ColorScheme.default.variant)
+        case .adaptive: return SemanticColors.Button.borderCallingDisabled
         }
     }
+
+    var textColorNormal: UIColor {
+        switch self {
+        case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
+        case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
+        case .adaptive: return SemanticColors.Button.textCallingNormal
+        }
+    }
+
+    var textColorDisabled: UIColor {
+        switch self {
+        case .light: return UIColor.black.withAlphaComponent(0.16)
+        case .dark: return UIColor.white.withAlphaComponent(0.4)
+        case .adaptive: return SemanticColors.Button.textCallingDisabled
+        }
+    }
+
 }

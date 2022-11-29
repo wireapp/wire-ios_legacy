@@ -27,7 +27,7 @@ protocol IconLabelButtonInput {
 
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64
-    private static let height: CGFloat = 88
+    private static let height: CGFloat = 78
 
     private(set) var iconButton = IconButton()
     private(set) var subtitleTransformLabel = TransformLabel()
@@ -43,8 +43,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
         super.init()
         setupViews()
         createConstraints()
-        iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
-        iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
+        iconButton.setIcon(input.icon(forState: .normal), size: .medium, for: .normal)
+        iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
         subtitleTransformLabel.text = input.label
         self.accessibilityIdentifier = input.accessibilityIdentifier
     }
@@ -79,8 +79,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalToConstant: IconLabelButton.width),
             heightAnchor.constraint(greaterThanOrEqualToConstant: IconLabelButton.height),
-            iconButton.widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            iconButton.heightAnchor.constraint(equalToConstant: IconLabelButton.width),
+            iconButton.widthAnchor.constraint(equalToConstant: 56),
+            iconButton.heightAnchor.constraint(equalToConstant: 56),
             blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
             blurView.trailingAnchor.constraint(equalTo: iconButton.trailingAnchor),
             blurView.topAnchor.constraint(equalTo: iconButton.topAnchor),
@@ -97,7 +97,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private func updateState() {
         apply(appearance)
         subtitleTransformLabel.font = titleLabel?.font
-        subtitleTransformLabel.textColor = titleColor(for: state)
+        //subtitleTransformLabel.textColor = titleColor(for: state)
     }
 
     override var isHighlighted: Bool {
