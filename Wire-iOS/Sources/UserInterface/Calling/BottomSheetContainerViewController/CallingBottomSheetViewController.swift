@@ -26,7 +26,7 @@ protocol CallInfoConfigurationObserver: AnyObject {
 }
 
 class CallingBottomSheetViewController: BottomSheetContainerViewController {
-    private let bottomSheetInitialOffset = 150.0
+    private let bottomSheetInitialOffset = 110.0
     private let bottomSheetMaxHeight = UIScreen.main.bounds.height * 0.7
 
     weak var delegate: ActiveCallViewControllerDelegate?

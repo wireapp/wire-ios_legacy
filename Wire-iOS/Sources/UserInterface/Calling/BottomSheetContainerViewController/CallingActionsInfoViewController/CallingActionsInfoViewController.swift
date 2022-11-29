@@ -69,7 +69,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         super.viewDidLoad()
         setupViews()
         createConstraints()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
     }
 
     override func viewDidLayoutSubviews() {

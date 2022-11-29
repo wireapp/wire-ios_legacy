@@ -28,7 +28,6 @@ protocol IconLabelButtonInput {
 
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64
-    private static let height: CGFloat = 88
 
     private(set) var iconButton = IconButton()
     private(set) var subtitleTransformLabel = TransformLabel()
@@ -79,7 +78,6 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private func createConstraints() {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            heightAnchor.constraint(greaterThanOrEqualToConstant: IconLabelButton.height),
             iconButton.widthAnchor.constraint(equalToConstant: IconLabelButton.width),
             iconButton.heightAnchor.constraint(equalToConstant: IconLabelButton.width),
             blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
@@ -89,6 +87,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
             iconButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconButton.topAnchor.constraint(equalTo: topAnchor),
             iconButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            iconButton.heightAnchor.constraint(equalTo: widthAnchor),
+            subtitleTransformLabel.topAnchor.constraint(equalTo: iconButton.bottomAnchor, constant: 8.0),
             subtitleTransformLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             subtitleTransformLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             subtitleTransformLabel.heightAnchor.constraint(equalToConstant: 16)
