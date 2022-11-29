@@ -22,8 +22,8 @@ import WireCommonComponents
 protocol IconLabelButtonInput {
     func icon(forState state: UIControl.State) -> StyleKitIcon
     var label: String { get }
-    var updatedLabel: String { get } // TODO: clean and leave only "label" after ACC-143 approved
     var accessibilityIdentifier: String { get }
+    var accessibilityLabel: String { get }
 }
 
 class IconLabelButton: ButtonWithLargerHitArea {
@@ -46,7 +46,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
         iconButton.setIcon(input.icon(forState: .normal), size: .medium, for: .normal)
         iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
         subtitleTransformLabel.text = input.label
-        self.accessibilityIdentifier = input.accessibilityIdentifier
+        accessibilityIdentifier = input.accessibilityIdentifier
+        accessibilityLabel = input.accessibilityLabel
     }
 
     @available(*, unavailable)
@@ -98,7 +99,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private func updateState() {
         apply(appearance)
         subtitleTransformLabel.font = titleLabel?.font
-        //subtitleTransformLabel.textColor = titleColor(for: state)
+        if !DeveloperFlag.updatedCallingUI.isOn {
+            subtitleTransformLabel.textColor = titleColor(for: state)
+        }
     }
 
     override var isHighlighted: Bool {

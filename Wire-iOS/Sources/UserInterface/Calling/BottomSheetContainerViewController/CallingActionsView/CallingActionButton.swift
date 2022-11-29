@@ -23,15 +23,14 @@ class CallingActionButton: IconLabelButton {
 
     override init(input: IconLabelButtonInput) {
         super.init(input: input)
-        subtitleTransformLabel.text = input.updatedLabel
+
+        subtitleTransformLabel.text = input.label
         subtitleTransformLabel.textTransform = .capitalize
+        titleLabel?.font = DynamicFontLabel(fontSpec: .smallRegularFont, color: .sectionText).font
     }
 
     override func apply(_ configuration: CallActionAppearance) {
         iconButton.borderWidth = 1
-        subtitleTransformLabel.textTransform = .capitalize
-        // TODO Katerina Dynamic text
-        titleLabel?.font = FontSpec(.small, .regular).font!
 
         setTitleColor(configuration.textColorNormal, for: .normal)
         iconButton.setBorderColor(configuration.borderColorNormal, for: .normal)
@@ -47,19 +46,13 @@ class CallingActionButton: IconLabelButton {
         iconButton.setBorderColor(configuration.borderColorDisabled, for: .disabled)
         iconButton.setIconColor(configuration.iconColorDisabled, for: .disabled)
         iconButton.setBackgroundImageColor(configuration.backgroundColorDisabled, for: .disabled)
-
-        setTitleColor(configuration.textColorNormal, for: .disabledAndSelected)
-        iconButton.setBorderColor(configuration.borderColorSelected, for: .disabledAndSelected)
-        iconButton.setIconColor(configuration.iconColorSelected, for: .disabledAndSelected)
-        iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .disabledAndSelected)
     }
+
 }
 
 class EndCallButton: CallingActionButton {
-    override func apply(_ configuration: CallActionAppearance) {
-        subtitleTransformLabel.textTransform = .capitalize
-        titleLabel?.font = FontSpec(.small, .regular).font!
 
+    override func apply(_ configuration: CallActionAppearance) {
         let redColor = SemanticColors.Button.backgroundLikeHighlighted
         setTitleColor(configuration.textColorNormal, for: .normal)
         iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)

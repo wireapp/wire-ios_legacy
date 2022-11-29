@@ -53,14 +53,11 @@ class CallingActionsView: UIView {
 
     init() {
         super.init(frame: .zero)
+
         videoButtonDisabledTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(performButtonAction))
         setupViews()
-        setupAccessibility()
         createConstraints()
         updateToLayoutSize(layoutSize)
-
-        print(ColorScheme.default.variant == .dark)
-        backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
     }
 
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
@@ -68,6 +65,8 @@ class CallingActionsView: UIView {
     }
 
     private func setupViews() {
+        backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
+
         cameraButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .fillEqually
         topStackView.spacing = 16
@@ -80,17 +79,6 @@ class CallingActionsView: UIView {
         [handleView, topStackView].forEach(verticalStackView.addArrangedSubview) //add top handle
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         addSubview(cameraButtonDisabled)
-    }
-
-
-    private func setupAccessibility() {
-        typealias Voice = L10n.Localizable.Voice
-
-        microphoneButton.accessibilityLabel = Voice.MuteButton.title
-        cameraButton.accessibilityLabel = Voice.VideoButton.title
-        speakerButton.accessibilityLabel = Voice.SpeakerButton.title
-        flipCameraButton.accessibilityLabel = Voice.FlipVideoButton.title
-        acceptCallButton.accessibilityLabel = Voice.AcceptButton.title
     }
 
     private func createConstraints() {

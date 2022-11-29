@@ -141,3 +141,10 @@
 "conversationAnnouncement.file.description" = "File %@ received from %@";
 "conversationAnnouncement.deletedMessage.description" = "%@ deleted a message";
 "conversationAnnouncement.editedMessage.description" = "%@ edited a message";
+
+"calling.flipCameraButton.description" = "Flip";
+"calling.videoButton.description" = "Camera";
+"calling.muteButton.description" = "Microphone";
+"calling.speakerButton.description" = "Speaker";
+"calling.hangUpButton.description" = "Hang Up";
+"calling.acceptButton.description" = "Accept";
