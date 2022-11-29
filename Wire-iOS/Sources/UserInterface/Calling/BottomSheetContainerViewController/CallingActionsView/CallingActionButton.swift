@@ -21,6 +21,12 @@ import WireCommonComponents
 
 class CallingActionButton: IconLabelButton {
 
+    override init(input: IconLabelButtonInput) {
+        super.init(input: input)
+        subtitleTransformLabel.text = input.updatedLabel
+        subtitleTransformLabel.textTransform = .capitalize
+    }
+
     override func apply(_ configuration: CallActionAppearance) {
         setTitleColor(configuration.iconColorNormal, for: .normal)
         iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
@@ -43,7 +49,7 @@ class CallingActionButton: IconLabelButton {
 }
 
 
-class EndCallButton: IconLabelButton {
+class EndCallButton: CallingActionButton {
     override func apply(_ configuration: CallActionAppearance) {
         let redColor = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
         setTitleColor(configuration.iconColorNormal, for: .normal)

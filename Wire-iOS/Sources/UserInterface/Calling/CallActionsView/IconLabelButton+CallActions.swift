@@ -66,9 +66,7 @@ extension CallingActionButton {
 
 }
 
-
 extension EndCallButton {
-
 
     static func endCallButton() -> EndCallButton {
         .init(callActionIcon: .endCall)

@@ -22,6 +22,7 @@ import WireCommonComponents
 protocol IconLabelButtonInput {
     func icon(forState state: UIControl.State) -> StyleKitIcon
     var label: String { get }
+    var updatedLabel: String { get } // TODO: clean and leave only "label" after ACC-143 approved
     var accessibilityIdentifier: String { get }
 }
 

@@ -665,6 +665,9 @@
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
 "voice.top_overlay.accessibility_title" = "Ongoing call";
 
+// TODO: ACC-143 add translations
+"voice.flip_camera_button.title" = "Flip";
+
 // Voice New
 
 "call.status.connecting" = "Connecting…";

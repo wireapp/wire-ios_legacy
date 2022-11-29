@@ -33,6 +33,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     private var participantsObserverToken: Any?
     private let voiceChannel: VoiceChannel
     private var cameraType: CaptureDevice = .front
+    
 
     var visibleVoiceChannelViewController: CallViewController{
         didSet {
