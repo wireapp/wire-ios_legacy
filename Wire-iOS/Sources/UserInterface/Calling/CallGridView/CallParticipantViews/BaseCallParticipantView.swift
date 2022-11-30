@@ -125,7 +125,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         backgroundColor = .graphite
         avatarView.user = stream.user
         avatarView.userSession = userSession
-        userDetailsView.alpha =  DeveloperFlag.updatedCallingUI.isOn ? 1 : 0
+        userDetailsView.alpha = DeveloperFlag.updatedCallingUI.isOn ? 1 : 0
     }
 
     func createConstraints() {

@@ -55,13 +55,10 @@ final class CallParticipantDetailsView: RoundedBlurView {
     }
 
     override init() {
-        if DeveloperFlag.updatedCallingUI.isOn {
-            nameLabel = DynamicFontLabel(fontSpec: .mediumRegularFont, color: .white)
-            super.init()
-        } else {
-            nameLabel = UILabel(key: nil, size: .medium, weight: .semibold, color: .textForeground, variant: .dark)
-            super.init()
-        }
+        nameLabel = DeveloperFlag.updatedCallingUI.isOn
+                    ? DynamicFontLabel(fontSpec: .mediumRegularFont, color: .white)
+                    : UILabel(key: nil, size: .medium, weight: .semibold, color: .textForeground, variant: .dark)
+        super.init()
     }
 
     override func setupViews() {
@@ -79,8 +76,8 @@ final class CallParticipantDetailsView: RoundedBlurView {
             labelContainerView.layer.cornerRadius = 3.0
             labelContainerView.layer.masksToBounds = true
             microphoneImageView.image = StyleKitIcon.microphoneOff.makeImage(size: .tiny,
-                                                                             color: SemanticColors.Icon.foregroundMuted)
-            microphoneImageView.backgroundColor = SemanticColors.Icon.backgroundMuted
+                                                                             color: SemanticColors.Icon.foregroundMicrophone)
+            microphoneImageView.backgroundColor = SemanticColors.Icon.foregroundDefaultWhite
             microphoneImageView.contentMode = .center
             microphoneImageView.layer.cornerRadius = 3.0
             microphoneImageView.layer.masksToBounds = true

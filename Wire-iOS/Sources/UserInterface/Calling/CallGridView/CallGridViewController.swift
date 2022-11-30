@@ -82,7 +82,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     /// Update view visibility when this view controller is covered or not
-    var isCovered: Bool = DeveloperFlag.updatedCallingUI.isOn ? false : true {
+    var isCovered: Bool = !DeveloperFlag.updatedCallingUI.isOn {
         didSet {
             if DeveloperFlag.updatedCallingUI.isOn { isCovered = false }
             guard isCovered != oldValue else { return }
