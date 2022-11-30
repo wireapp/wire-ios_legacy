@@ -22,6 +22,7 @@ import WireDataModel
 import WireSyncEngine
 import avs
 import DifferenceKit
+import WireCommonComponents
 
 protocol CallGridViewControllerDelegate: AnyObject {
     func callGridViewController(_ viewController: CallGridViewController, perform action: CallGridAction)
@@ -81,8 +82,9 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     /// Update view visibility when this view controller is covered or not
-    var isCovered: Bool = true {
+    var isCovered: Bool = DeveloperFlag.updatedCallingUI.isOn ? false : true {
         didSet {
+            if DeveloperFlag.updatedCallingUI.isOn { isCovered = false }
             guard isCovered != oldValue else { return }
             notifyVisibilityChanged()
             displayIndicatorViewsIfNeeded()

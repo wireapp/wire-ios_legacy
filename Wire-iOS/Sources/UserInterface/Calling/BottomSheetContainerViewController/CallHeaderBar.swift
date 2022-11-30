@@ -19,7 +19,7 @@
 import UIKit
 
 class CallHeaderBar: UIView {
-    private let titleLabel = DynamicFontLabel(fontSpec: .largeSemiboldFont, color:  SemanticColors.Label.textDefault)
+    private let titleLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color:  SemanticColors.Label.textDefault)
     private let avatarView = UIImageView()
     private let avatarContainerView = UIView()
 
@@ -44,7 +44,7 @@ class CallHeaderBar: UIView {
         avatarContainerView.layer.cornerRadius = 5.0
         avatarContainerView.backgroundColor = .clear
         avatarContainerView.layer.borderWidth = 2.0
-        avatarContainerView.layer.borderColor = SemanticColors.View.selectedBorder.cgColor
+        avatarContainerView.layer.borderColor = UIColor.accent().cgColor
 
         [avatarView, avatarContainerView, titleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         addSubview(titleLabel)
@@ -63,7 +63,8 @@ class CallHeaderBar: UIView {
             avatarContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
             avatarContainerView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
             avatarContainerView.widthAnchor.constraint(equalToConstant: 32.0),
-            avatarContainerView.heightAnchor.constraint(equalToConstant: 32.0)
+            avatarContainerView.heightAnchor.constraint(equalToConstant: 32.0),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: avatarContainerView.trailingAnchor, constant: 6.0)
         ])
     }
 
