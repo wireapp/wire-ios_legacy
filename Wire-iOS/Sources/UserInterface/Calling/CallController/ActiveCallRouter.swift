@@ -89,12 +89,12 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         UIResponder.currentFirst?.resignFirstResponder()
 
         var activeCallViewController: UIViewController!
-        if  DeveloperFlag.updatedCallingUI.isOn {
-             let bottomSheetActiveCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel)
+        if DeveloperFlag.updatedCallingUI.isOn {
+            let bottomSheetActiveCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel)
             bottomSheetActiveCallViewController.delegate = callController
             activeCallViewController = bottomSheetActiveCallViewController
         } else {
-             let oldActiveCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
+            let oldActiveCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
             oldActiveCallViewController.delegate = callController
             activeCallViewController = oldActiveCallViewController
         }

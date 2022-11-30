@@ -30,7 +30,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     private let actionsView = CallingActionsView()
     private let stackView = UIStackView(axis: .vertical)
     private var participantsHeaderView = UIView()
-    private var participantsHeaderLabel = UILabel()
+    private var participantsHeaderLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .sectionText)
 
     weak var actionsDelegate: CallingActionsViewDelegate? {
         didSet {
@@ -41,7 +41,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     var participants: CallParticipantsList {
         didSet {
             updateRows()
-            participantsHeaderLabel.text = "call.participants.list.title".localized(uppercased: true) + " (\(participants.count))"
+            participantsHeaderLabel.text = L10n.Localizable.Call.Participants.showAll(participants.count).uppercased()
         }
     }
     let showParticipants: Bool
@@ -94,11 +94,11 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
 
-        participantsHeaderView.backgroundColor = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        participantsHeaderView.backgroundColor = SemanticColors.View.backgroundDefault
         participantsHeaderView.addSubview(participantsHeaderLabel)
         participantsHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
-        participantsHeaderLabel.font = .smallSemiboldFont
-        participantsHeaderLabel.textColor = UIColor(light: Asset.gray70, dark: Asset.gray50)
+        participantsHeaderLabel.applyStyle(.headerLabel)
+        participantsHeaderLabel.accessibilityTraits.insert(.header)
 
         let collectionView = CallParticipantsListView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

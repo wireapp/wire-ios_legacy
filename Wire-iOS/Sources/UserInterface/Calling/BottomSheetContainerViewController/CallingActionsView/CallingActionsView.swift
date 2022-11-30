@@ -43,7 +43,7 @@ class CallingActionsView: UIView {
     private let flipCameraButton = CallingActionButton.flipCameraButton()
     private let endCallButton =  EndCallButton.endCallButton()
     private let acceptCallButton = IconButton.acceptCall()
-    private  let handleView = UIView()
+    private let handleView = UIView()
 
     private var allButtons: [IconLabelButton] {
         return [flipCameraButton, cameraButton, microphoneButton, speakerButton, endCallButton]
@@ -53,14 +53,11 @@ class CallingActionsView: UIView {
 
     init() {
         super.init(frame: .zero)
+
         videoButtonDisabledTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(performButtonAction))
         setupViews()
-        setupAccessibility()
         createConstraints()
         updateToLayoutSize(layoutSize)
-
-        print(ColorScheme.default.variant == .dark)
-        backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
     }
 
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
@@ -68,6 +65,8 @@ class CallingActionsView: UIView {
     }
 
     private func setupViews() {
+        backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
+
         cameraButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .fillEqually
         topStackView.spacing = 16
@@ -76,21 +75,10 @@ class CallingActionsView: UIView {
         addSubview(verticalStackView)
         allButtons.forEach(topStackView.addArrangedSubview)
         handleView.layer.cornerRadius = 3.0
-        handleView.backgroundColor = UIColor(light: Asset.gray70, dark: Asset.gray70)
+        handleView.backgroundColor = SemanticColors.View.backgroundDragBarIndicator
         [handleView, topStackView].forEach(verticalStackView.addArrangedSubview) //add top handle
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         addSubview(cameraButtonDisabled)
-    }
-
-
-    private func setupAccessibility() {
-        typealias Voice = L10n.Localizable.Voice
-
-        microphoneButton.accessibilityLabel = Voice.MuteButton.title
-        cameraButton.accessibilityLabel = Voice.VideoButton.title
-        speakerButton.accessibilityLabel = Voice.SpeakerButton.title
-        flipCameraButton.accessibilityLabel = Voice.FlipVideoButton.title
-        acceptCallButton.accessibilityLabel = Voice.AcceptButton.title
     }
 
     private func createConstraints() {
@@ -108,7 +96,7 @@ class CallingActionsView: UIView {
             cameraButtonDisabled.topAnchor.constraint(equalTo: cameraButton.topAnchor),
             cameraButtonDisabled.bottomAnchor.constraint(equalTo: cameraButton.bottomAnchor),
             handleView.widthAnchor.constraint(equalToConstant: 129),
-            handleView.heightAnchor.constraint(equalToConstant: 6)
+            handleView.heightAnchor.constraint(equalToConstant: 5)
         ])
     }
 

@@ -41,21 +41,8 @@ enum CallActionIconType: IconLabelButtonInput {
         case .microphone: return Voice.MuteButton.title
         case .camera: return Voice.VideoButton.title
         case .speaker: return Voice.SpeakerButton.title
-        case .flipCamera: return Voice.FlipVideoButton.title
+        case .flipCamera: return DeveloperFlag.updatedCallingUI.isOn ? Voice.FlipCameraButton.title : Voice.FlipVideoButton.title
         case .endCall:  return Voice.EndCallButton.title
-        }
-    }
-
-    // TODO: remove it afterACC-143 is accepted
-    var updatedLabel: String {
-        typealias Voice = L10n.Localizable.Voice
-
-        switch self {
-        case .microphone: return Voice.MuteButton.title
-        case .camera: return Voice.VideoButton.title
-        case .speaker: return Voice.SpeakerButton.title
-        case .flipCamera: return Voice.FlipCameraButton.title
-        case .endCall:  return Voice.HangUpButton.title
         }
     }
 
@@ -66,6 +53,18 @@ enum CallActionIconType: IconLabelButtonInput {
         case .speaker: return "CallSpeakerButton"
         case .flipCamera: return "CallFlipCameraButton"
         case .endCall: return "EndCallButton"
+        }
+    }
+
+    var accessibilityLabel: String {
+        typealias Calling = L10n.Accessibility.Calling
+
+        switch self {
+        case .flipCamera: return Calling.FlipCameraButton.description
+        case .camera: return Calling.VideoButton.description
+        case .microphone: return Calling.MuteButton.description
+        case .speaker: return Calling.SpeakerButton.description
+        case .endCall: return Calling.HangUpButton.description
         }
     }
 
