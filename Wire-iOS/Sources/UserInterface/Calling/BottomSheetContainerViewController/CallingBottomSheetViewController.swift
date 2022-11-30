@@ -26,7 +26,7 @@ protocol CallInfoConfigurationObserver: AnyObject {
 }
 
 class CallingBottomSheetViewController: BottomSheetContainerViewController {
-    private let bottomSheetInitialOffset = 110.0
+    private let bottomSheetInitialOffset =  118.0/// (UIScreen.main.bounds.width < 390) ? 110.0 : 120
     private let bottomSheetMaxHeight = UIScreen.main.bounds.height * 0.7
 
     weak var delegate: ActiveCallViewControllerDelegate?
@@ -54,10 +54,23 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController.configurationObserver = callingActionsInfoViewController
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangeOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func didChangeOrientation() {
+        if UIDevice.current.orientation.isLandscape {
+            let newConfiguration = BottomSheetConfiguration(height: view.bounds.height, initialOffset: bottomSheetInitialOffset)
+            self.configuration = newConfiguration
+        } else {
+            let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetInitialOffset)
+            self.configuration = newConfiguration
+        }
+        hideBottomSheet()
     }
 
     func transition(to toViewController: UIViewController, from fromViewController: UIViewController) {

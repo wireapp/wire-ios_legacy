@@ -214,11 +214,19 @@ final class CallViewController: UIViewController {
     }
 
     private func setupViews() {
+        if isOverlayEnabled {
         [callGridViewController, callInfoRootViewController].forEach(addToSelf)
+        } else {
+            addToSelf(callGridViewController)
+        }
     }
 
     private func createConstraints() {
-        [callGridViewController, callInfoRootViewController].forEach { $0.view.fitIn(view: view) }
+        if isOverlayEnabled {
+            [callGridViewController, callInfoRootViewController].forEach { $0.view.fitIn(view: view) }
+        } else {
+            callGridViewController.view.fitIn(view: view)
+        }
     }
 
     private func setupObservers() {

@@ -71,6 +71,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         subtitleTransformLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleTransformLabel.textTransform = .upper
         subtitleTransformLabel.textAlignment = .center
+        subtitleTransformLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         titleLabel?.font = FontSpec(.small, .semibold).font!
         [blurView, iconButton, subtitleTransformLabel].forEach(addSubview)
     }
