@@ -137,6 +137,7 @@ extension UserCell: CallParticipantsListCellConfigurable {
             shouldPulse: activeSpeakerState.isSpeakingNow)
         )
         videoIconView.set(style: VideoIconStyle(state: videoState))
+        backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
 
 }

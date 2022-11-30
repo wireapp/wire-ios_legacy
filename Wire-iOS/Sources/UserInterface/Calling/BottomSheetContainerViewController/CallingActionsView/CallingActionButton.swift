@@ -23,37 +23,40 @@ class CallingActionButton: IconLabelButton {
 
     override init(input: IconLabelButtonInput) {
         super.init(input: input)
-        subtitleTransformLabel.text = input.updatedLabel
+
+        subtitleTransformLabel.text = input.label
         subtitleTransformLabel.textTransform = .capitalize
+        titleLabel?.font = DynamicFontLabel(fontSpec: .smallRegularFont, color: .sectionText).font
     }
 
     override func apply(_ configuration: CallActionAppearance) {
-        setTitleColor(configuration.iconColorNormal, for: .normal)
+        iconButton.borderWidth = 1
+
+        setTitleColor(configuration.textColorNormal, for: .normal)
+        iconButton.setBorderColor(configuration.borderColorNormal, for: .normal)
         iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
         iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
 
+        setTitleColor(configuration.textColorNormal, for: .selected)
+        iconButton.setBorderColor(configuration.borderColorSelected, for: .selected)
         iconButton.setIconColor(configuration.iconColorSelected, for: .selected)
         iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .selected)
 
-        setTitleColor(configuration.iconColorDisabled, for: .disabled)
+        setTitleColor(configuration.textColorDisabled, for: .disabled)
+        iconButton.setBorderColor(configuration.borderColorDisabled, for: .disabled)
         iconButton.setIconColor(configuration.iconColorDisabled, for: .disabled)
         iconButton.setBackgroundImageColor(configuration.backgroundColorDisabled, for: .disabled)
-
-        setTitleColor(configuration.iconColorNormal, for: .disabledAndSelected)
-        iconButton.setIconColor(configuration.iconColorSelected, for: .disabledAndSelected)
-        iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .disabledAndSelected)
-
-        iconButton.setBackgroundImageColor(configuration.backgroundColorSelectedAndHighlighted, for: .selectedAndHighlighted)
-        titleLabel?.font = FontSpec(.small, .regular).font!
     }
+
 }
 
-
 class EndCallButton: CallingActionButton {
+
     override func apply(_ configuration: CallActionAppearance) {
-        let redColor = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
-        setTitleColor(configuration.iconColorNormal, for: .normal)
-        iconButton.setIconColor(configuration.iconColorSelected, for: .normal)
+        let redColor = SemanticColors.Button.backgroundLikeHighlighted
+        setTitleColor(configuration.textColorNormal, for: .normal)
+        iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
         iconButton.setBackgroundImageColor(redColor, for: .normal)
     }
+
 }

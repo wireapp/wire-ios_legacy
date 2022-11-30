@@ -69,6 +69,32 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "advancedSettings.backButton.description")
       }
     }
+    internal enum Calling {
+      internal enum AcceptButton {
+        /// Accept
+        internal static let description = L10n.tr("Accessibility", "calling.acceptButton.description")
+      }
+      internal enum FlipCameraButton {
+        /// Flip
+        internal static let description = L10n.tr("Accessibility", "calling.flipCameraButton.description")
+      }
+      internal enum HangUpButton {
+        /// Hang Up
+        internal static let description = L10n.tr("Accessibility", "calling.hangUpButton.description")
+      }
+      internal enum MuteButton {
+        /// Microphone
+        internal static let description = L10n.tr("Accessibility", "calling.muteButton.description")
+      }
+      internal enum SpeakerButton {
+        /// Speaker
+        internal static let description = L10n.tr("Accessibility", "calling.speakerButton.description")
+      }
+      internal enum VideoButton {
+        /// Camera
+        internal static let description = L10n.tr("Accessibility", "calling.videoButton.description")
+      }
+    }
     internal enum ClientsList {
       internal enum DeviceDetails {
         /// Double tap to open device details
