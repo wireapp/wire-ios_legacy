@@ -20,7 +20,7 @@ import Foundation
 import avs
 import WireSyncEngine
 
-fileprivate extension VoiceChannel {
+extension VoiceChannel {
     func accessoryType() -> CallInfoViewControllerAccessoryType {
         switch state {
         case .incoming(_, shouldRing: true, _),

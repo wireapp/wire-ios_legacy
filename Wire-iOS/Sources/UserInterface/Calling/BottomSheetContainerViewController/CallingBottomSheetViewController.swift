@@ -26,21 +26,21 @@ protocol CallInfoConfigurationObserver: AnyObject {
 }
 
 class CallingBottomSheetViewController: BottomSheetContainerViewController {
-    private let bottomSheetInitialOffset =  118.0/// (UIScreen.main.bounds.width < 390) ? 110.0 : 120
+    private let bottomSheetInitialOffset =  118.0
     private let bottomSheetMaxHeight = UIScreen.main.bounds.height * 0.7
 
     weak var delegate: ActiveCallViewControllerDelegate?
     private var participantsObserverToken: Any?
     private let voiceChannel: VoiceChannel
-    private var cameraType: CaptureDevice = .front
+    private let headerBar = CallHeaderBar()
     
 
+    let callingActionsInfoViewController: CallingActionsInfoViewController
     var visibleVoiceChannelViewController: CallViewController{
         didSet {
             transition(to: visibleVoiceChannelViewController, from: oldValue)
         }
     }
-    let callingActionsInfoViewController: CallingActionsInfoViewController
 
     init(voiceChannel: VoiceChannel) {
         self.voiceChannel = voiceChannel
@@ -56,10 +56,36 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
+        addTopBar()
     }
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addTopBar() {
+        headerBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(headerBar)
+
+
+        NSLayoutConstraint.activate([
+            headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerBar.heightAnchor.constraint(equalToConstant: 64),
+            headerBar.topAnchor.constraint(equalTo: view.topAnchor),
+            headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
+        ])
+        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
+        guard case .avatar(let user) = voiceChannel.accessoryType(), let session = ZMUserSession.shared() else { return }
+        user.value.fetchProfileImage(session: session,
+                                     imageCache: UIImage.defaultUserImageCache,
+                                     sizeLimit: UserImageView.Size.small.rawValue,
+                                     isDesaturated: false,
+                                     completion: { [weak self] (image, cacheHit) in
+            // Don't set image if nil or if user has changed during fetch
+            guard let image = image else { return }
+            self?.headerBar.setAvatar(image)
+        })
     }
 
     @objc private func didChangeOrientation() {
