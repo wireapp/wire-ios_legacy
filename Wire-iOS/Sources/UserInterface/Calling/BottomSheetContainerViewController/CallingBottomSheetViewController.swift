@@ -26,21 +26,21 @@ protocol CallInfoConfigurationObserver: AnyObject {
 }
 
 class CallingBottomSheetViewController: BottomSheetContainerViewController {
-    private let bottomSheetInitialOffset = 110.0
+    private let bottomSheetInitialOffset =  118.0
     private let bottomSheetMaxHeight = UIScreen.main.bounds.height * 0.7
 
     weak var delegate: ActiveCallViewControllerDelegate?
     private var participantsObserverToken: Any?
     private let voiceChannel: VoiceChannel
-    private var cameraType: CaptureDevice = .front
+    private let headerBar = CallHeaderBar()
     
 
+    let callingActionsInfoViewController: CallingActionsInfoViewController
     var visibleVoiceChannelViewController: CallViewController{
         didSet {
             transition(to: visibleVoiceChannelViewController, from: oldValue)
         }
     }
-    let callingActionsInfoViewController: CallingActionsInfoViewController
 
     init(voiceChannel: VoiceChannel) {
         self.voiceChannel = voiceChannel
@@ -54,10 +54,48 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController.configurationObserver = callingActionsInfoViewController
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangeOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
+        addTopBar()
     }
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addTopBar() {
+        headerBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(headerBar)
+
+
+        NSLayoutConstraint.activate([
+            headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerBar.heightAnchor.constraint(equalToConstant: 74),
+            headerBar.topAnchor.constraint(equalTo: view.topAnchor),
+            headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
+        ])
+        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
+        guard case .avatar(let user) = voiceChannel.accessoryType(), let session = ZMUserSession.shared() else { return }
+        user.value.fetchProfileImage(session: session,
+                                     imageCache: UIImage.defaultUserImageCache,
+                                     sizeLimit: UserImageView.Size.small.rawValue,
+                                     isDesaturated: false,
+                                     completion: { [weak self] (image, cacheHit) in
+            guard let image = image else { return }
+            self?.headerBar.setAvatar(image)
+        })
+    }
+
+    @objc private func didChangeOrientation() {
+        if UIDevice.current.orientation.isLandscape {
+            let newConfiguration = BottomSheetConfiguration(height: view.bounds.height, initialOffset: bottomSheetInitialOffset)
+            self.configuration = newConfiguration
+        } else {
+            let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetInitialOffset)
+            self.configuration = newConfiguration
+        }
+        hideBottomSheet()
     }
 
     func transition(to toViewController: UIViewController, from fromViewController: UIViewController) {

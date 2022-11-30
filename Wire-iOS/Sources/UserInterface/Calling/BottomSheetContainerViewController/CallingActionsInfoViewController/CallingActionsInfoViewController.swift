@@ -21,6 +21,7 @@ import WireDataModel
 
 class CallingActionsInfoViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     private let actionsViewHeight = 150.0
+    private let participantsHeaderHeight: CGFloat = 42
     private let cellHeight: CGFloat = 56
     private var topConstraint: NSLayoutConstraint?
     private let selfUser: UserType
@@ -81,9 +82,12 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fillProportionally
+        stackView.alignment = .center
+        stackView.distribution = .fill
         stackView.spacing = 0
+
+        actionsView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        actionsView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -113,11 +117,14 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -actionsViewHeight),
-
-            participantsHeaderView.heightAnchor.constraint(equalToConstant: 42.0),
+            participantsHeaderView.heightAnchor.constraint(equalToConstant: participantsHeaderHeight),
             participantsHeaderLabel.leadingAnchor.constraint(equalTo: participantsHeaderView.leadingAnchor, constant: 16.0),
-            participantsHeaderLabel.centerYAnchor.constraint(equalTo: participantsHeaderView.centerYAnchor)
+            participantsHeaderLabel.centerYAnchor.constraint(equalTo: participantsHeaderView.centerYAnchor),
+
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            participantsHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            participantsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 

@@ -34,11 +34,17 @@ class BottomSheetContainerViewController : UIViewController {
 
     // MARK: - Variables
     private var topConstraint = NSLayoutConstraint()
-    private let configuration: BottomSheetConfiguration
     var state: BottomSheetState = .initial
+    private var visibleControllerBottomConstraint: NSLayoutConstraint!
 
     let contentViewController: UIViewController
     let bottomSheetViewController: UIViewController
+
+    var configuration: BottomSheetConfiguration {
+        didSet {
+            visibleControllerBottomConstraint = contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -configuration.initialOffset)
+        }
+    }
 
     lazy var panGesture: UIPanGestureRecognizer = {
         let pan = UIPanGestureRecognizer()
@@ -77,15 +83,15 @@ class BottomSheetContainerViewController : UIViewController {
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         bottomSheetViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
+        visibleControllerBottomConstraint = contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -configuration.initialOffset)
         NSLayoutConstraint.activate([
             contentViewController.view.leftAnchor
                 .constraint(equalTo: self.view.leftAnchor),
             contentViewController.view.rightAnchor
                 .constraint(equalTo: self.view.rightAnchor),
             contentViewController.view.topAnchor
-                .constraint(equalTo: self.view.topAnchor),
-            contentViewController.view.bottomAnchor
-                .constraint(equalTo: self.view.bottomAnchor)
+                .constraint(equalTo: self.view.topAnchor).withPriority(.defaultLow),
+            visibleControllerBottomConstraint
         ])
         contentViewController.didMove(toParent: self)
         topConstraint = bottomSheetViewController.view.topAnchor

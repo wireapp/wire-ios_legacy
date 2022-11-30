@@ -1172,6 +1172,8 @@
 		D35EEDC928C7E68100949F02 /* URLRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35EEDC728C7E68100949F02 /* URLRequestable.swift */; };
 		D35EEDCB28C7E95F00949F02 /* CookieProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */; };
 		D35EEDCC28C7E95F00949F02 /* CookieProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */; };
+		D36E027829374EEA006C3E5A /* NSLayoutConstraint+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */; };
+		D36E027A293758DD006C3E5A /* CallHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E0279293758DD006C3E5A /* CallHeaderBar.swift */; };
 		D38BC97628BF8AA700EB928F /* NotificationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455DF28AFC443005ACD74 /* NotificationServiceError.swift */; };
 		D3C34E6E28C1593C004A1AF1 /* AccessTokenEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */; };
 		D3C34E7628C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */; };
@@ -3114,6 +3116,8 @@
 		D35EEDC428C2374300949F02 /* NetworkSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionTests.swift; sourceTree = "<group>"; };
 		D35EEDC728C7E68100949F02 /* URLRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestable.swift; sourceTree = "<group>"; };
 		D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieProvider.swift; sourceTree = "<group>"; };
+		D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Helper.swift"; sourceTree = "<group>"; };
+		D36E0279293758DD006C3E5A /* CallHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHeaderBar.swift; sourceTree = "<group>"; };
 		D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenEndpointTests.swift; sourceTree = "<group>"; };
 		D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationByIDEndpointTests.swift; sourceTree = "<group>"; };
 		D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsView.swift; sourceTree = "<group>"; };
@@ -6855,6 +6859,7 @@
 				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
 				BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */,
 				635BAFE5262DB34400B986A4 /* Array+CallParticipant.swift */,
+				D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -6999,6 +7004,7 @@
 				D30880FC292E51EC00DDEAB0 /* CallingActionsInfoViewController */,
 				D3DE46042923BB13000F1055 /* BottomSheetContainerViewController.swift */,
 				D30880FA292CD8F200DDEAB0 /* CallingBottomSheetViewController.swift */,
+				D36E0279293758DD006C3E5A /* CallHeaderBar.swift */,
 			);
 			path = BottomSheetContainerViewController;
 			sourceTree = "<group>";
@@ -8724,6 +8730,7 @@
 				EFEE97C623229768007A4702 /* ConversationListContentDelegate.swift in Sources */,
 				871BC2501D34F8F800DF0793 /* MediaAsset.swift in Sources */,
 				871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */,
+				D36E027829374EEA006C3E5A /* NSLayoutConstraint+Helper.swift in Sources */,
 				54D355E025559BFC0004DAC7 /* ActiveCallRouter.swift in Sources */,
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
 				5E21344F21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift in Sources */,
@@ -8995,6 +9002,7 @@
 				5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */,
 				5E8FFC1821EF61A90052DF03 /* ClientUnregisterInvitationStepDescription.swift in Sources */,
 				5E21344621CCEF1700273D0D /* EmptyViewDescription.swift in Sources */,
+				D36E027A293758DD006C3E5A /* CallHeaderBar.swift in Sources */,
 				F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */,
 				A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */,
 				EFBCC9132154FF18006AAB70 /* CGFloat+Const.swift in Sources */,

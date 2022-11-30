@@ -42,7 +42,7 @@ enum CallActionIconType: IconLabelButtonInput {
         case .camera: return Voice.VideoButton.title
         case .speaker: return Voice.SpeakerButton.title
         case .flipCamera: return DeveloperFlag.updatedCallingUI.isOn ? Voice.FlipCameraButton.title : Voice.FlipVideoButton.title
-        case .endCall:  return Voice.EndCallButton.title
+        case .endCall:  return DeveloperFlag.updatedCallingUI.isOn ? Voice.HangUpButton.title : Voice.EndCallButton.title
         }
     }
 
