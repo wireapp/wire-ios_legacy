@@ -19,8 +19,9 @@
 import UIKit
 
 class CallHeaderBar: UIView {
-    private let titleLabel = DynamicFontLabel(fontSpec: .mediumSemiboldFont, color:  SemanticColors.Label.textDefault)
+    private let titleLabel = DynamicFontLabel(fontSpec: .largeSemiboldFont, color:  SemanticColors.Label.textDefault)
     private let avatarView = UIImageView()
+    private let avatarContainerView = UIView()
 
     init() {
         super.init(frame: .zero)
@@ -36,22 +37,33 @@ class CallHeaderBar: UIView {
     private func setupViews() {
         avatarView.backgroundColor = SemanticColors.View.backgroundAvatar
         avatarView.layer.masksToBounds = true
-        avatarView.layer.cornerRadius = 6.0
+        avatarView.layer.cornerRadius = 4.0
         avatarView.contentMode = .scaleToFill
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        avatarView.translatesAutoresizingMaskIntoConstraints = false
+        avatarContainerView.backgroundColor = SemanticColors.View.backgroundAvatar
+        avatarContainerView.layer.masksToBounds = true
+        avatarContainerView.layer.cornerRadius = 5.0
+        avatarContainerView.backgroundColor = .clear
+        avatarContainerView.layer.borderWidth = 2.0
+        avatarContainerView.layer.borderColor = SemanticColors.View.selectedBorder.cgColor
+
+        [avatarView, avatarContainerView, titleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         addSubview(titleLabel)
-        addSubview(avatarView)
+        addSubview(avatarContainerView)
+        avatarContainerView.addSubview(avatarView)
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
-            avatarView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-            avatarView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
-            avatarView.widthAnchor.constraint(equalToConstant: 26.0),
-            avatarView.heightAnchor.constraint(equalToConstant: 26.0)
+            avatarView.widthAnchor.constraint(equalToConstant: 24.0),
+            avatarView.heightAnchor.constraint(equalToConstant: 24.0),
+            avatarView.centerXAnchor.constraint(equalTo: avatarContainerView.centerXAnchor),
+            avatarView.centerYAnchor.constraint(equalTo: avatarContainerView.centerYAnchor),
+            avatarContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+            avatarContainerView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
+            avatarContainerView.widthAnchor.constraint(equalToConstant: 32.0),
+            avatarContainerView.heightAnchor.constraint(equalToConstant: 32.0)
         ])
     }
 

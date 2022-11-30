@@ -71,7 +71,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         NSLayoutConstraint.activate([
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerBar.heightAnchor.constraint(equalToConstant: 64),
+            headerBar.heightAnchor.constraint(equalToConstant: 74),
             headerBar.topAnchor.constraint(equalTo: view.topAnchor),
             headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
         ])
@@ -82,7 +82,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
                                      sizeLimit: UserImageView.Size.small.rawValue,
                                      isDesaturated: false,
                                      completion: { [weak self] (image, cacheHit) in
-            // Don't set image if nil or if user has changed during fetch
             guard let image = image else { return }
             self?.headerBar.setAvatar(image)
         })
