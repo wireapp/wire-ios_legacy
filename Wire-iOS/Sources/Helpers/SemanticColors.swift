@@ -98,8 +98,8 @@ public enum SemanticColors {
         static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
         static let backgroundPhoneCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let backgroundMissedPhoneCall = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
-        static let backgroundMuted = UIColor(light: Asset.white, dark: Asset.black)
-        static let foregroundMuted = UIColor(light: Asset.gray90, dark: Asset.gray90)
+        static let foregroundMicrophone = UIColor(light: Asset.gray90, dark: Asset.gray90)
+    }
 
     public enum View {
         static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
