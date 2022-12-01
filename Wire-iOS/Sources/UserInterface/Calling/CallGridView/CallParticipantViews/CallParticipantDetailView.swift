@@ -91,10 +91,6 @@ final class CallParticipantDetailsView: RoundedBlurView {
         }
     }
 
-    func hideMicrophonePermamently() {
-        microphoneImageView.widthAnchor.constraint(equalToConstant: 0).isActive = true
-    }
-
     override func createConstraints() {
         super.createConstraints()
         if DeveloperFlag.updatedCallingUI.isOn {

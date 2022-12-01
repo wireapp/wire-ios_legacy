@@ -51,8 +51,6 @@ final class SelfCallParticipantView: BaseCallParticipantView {
         scalableView.addSubview(previewView)
         insertSubview(scalableView, belowSubview: userDetailsView)
         self.scalableView = scalableView
-        // TODO Katerina check
-        userDetailsView.hideMicrophonePermamently()
     }
 
     override func createConstraints() {
