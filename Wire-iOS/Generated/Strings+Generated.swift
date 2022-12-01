@@ -69,6 +69,16 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "advancedSettings.backButton.description")
       }
     }
+    internal enum AudioMessage {
+      internal enum Pause {
+        /// Pause
+        internal static let value = L10n.tr("Accessibility", "audioMessage.pause.value")
+      }
+      internal enum Play {
+        /// Play
+        internal static let value = L10n.tr("Accessibility", "audioMessage.play.value")
+      }
+    }
     internal enum ClientsList {
       internal enum DeviceDetails {
         /// Double tap to open device details
@@ -360,6 +370,10 @@ internal enum L10n {
       }
     }
     internal enum ConversationSearch {
+      internal enum AudioMessage {
+        /// Audio
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.audioMessage.description")
+      }
       internal enum BackButton {
         /// Go back to search
         internal static let description = L10n.tr("Accessibility", "conversationSearch.backButton.description")
@@ -372,13 +386,25 @@ internal enum L10n {
         /// No results
         internal static let description = L10n.tr("Accessibility", "conversationSearch.emptyResult.description")
       }
+      internal enum FileName {
+        /// File name
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.fileName.description")
+      }
+      internal enum FileSize {
+        /// Size
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.fileSize.description")
+      }
+      internal enum FileType {
+        /// Type
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.fileType.description")
+      }
       internal enum FilesSection {
         /// Files in this conversation
         internal static let description = L10n.tr("Accessibility", "conversationSearch.filesSection.description")
       }
-      internal enum Image {
+      internal enum ImageMessage {
         /// Image
-        internal static let description = L10n.tr("Accessibility", "conversationSearch.image.description")
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.imageMessage.description")
       }
       internal enum ImagesSection {
         /// Pictures in this conversation
@@ -387,6 +413,10 @@ internal enum L10n {
       internal enum Item {
         /// Douple tap to open
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.item.hint")
+      }
+      internal enum ItemPlay {
+        /// Douple tap to play
+        internal static let hint = L10n.tr("Accessibility", "conversationSearch.itemPlay.hint")
       }
       internal enum LinksSection {
         /// Links in this conversation
@@ -400,9 +430,15 @@ internal enum L10n {
         /// Double tab to open all
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.section.hint")
       }
-      internal enum Video {
+      internal enum SendBy {
+        /// Send by %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationSearch.sendBy.description", String(describing: p1))
+        }
+      }
+      internal enum VideoMessage {
         /// Video
-        internal static let description = L10n.tr("Accessibility", "conversationSearch.video.description")
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.videoMessage.description")
       }
       internal enum VideosSection {
         /// Videos in this conversation

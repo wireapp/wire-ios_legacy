@@ -69,9 +69,16 @@
 "conversationSearch.section.hint" = "Double tab to open all";
 "conversationSearch.emptyResult.description" = "No results";
 "conversationSearch.noItems.description" = "No items in collection";
-"conversationSearch.image.description" = "Image";
-"conversationSearch.video.description" = "Video";
+"conversationSearch.imageMessage.description" = "Image";
+"conversationSearch.videoMessage.description" = "Video";
+"conversationSearch.audioMessage.description" = "Audio";
+"conversationSearch.sendBy.description" = "Send by %@";
+"conversationSearch.fileName.description" = "File name";
+"conversationSearch.fileSize.description" = "Size";
+"conversationSearch.fileType.description" = "Type";
+
 "conversationSearch.item.hint" = "Douple tap to open";
+"conversationSearch.itemPlay.hint" = "Douple tap to play";
 
 "createConversation.backButton.description" = "Go back to contact list";
 
@@ -87,6 +94,9 @@
 "messageAction.saveButton.description" = "Save picture";
 "messageAction.revealButton.description" = "Reveal in conversation";
 "messageAction.deleteButton.description" = "Delete picture";
+
+"audioMessage.pause.value" = "Pause";
+"audioMessage.play.value" = "Play";
 
 "sketch.selectPictureButton.description" = "Select picture";
 "sketch.drawButton.description" = "Draw or write";

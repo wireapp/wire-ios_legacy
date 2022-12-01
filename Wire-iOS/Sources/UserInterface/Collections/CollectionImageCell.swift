@@ -123,7 +123,7 @@ final class CollectionImageCell: CollectionCell {
     private func setupAccessibility() {
         typealias ConversationSearch = L10n.Accessibility.ConversationSearch
 
-        accessibilityLabel = ConversationSearch.Image.description
+        accessibilityLabel = ConversationSearch.ImageMessage.description
         accessibilityHint = ConversationSearch.Item.hint
     }
 }
