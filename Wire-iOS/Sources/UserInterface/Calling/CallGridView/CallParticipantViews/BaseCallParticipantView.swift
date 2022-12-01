@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import avs
 import WireSyncEngine
+import WireCommonComponents
 
 class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
 
@@ -124,7 +125,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         backgroundColor = .graphite
         avatarView.user = stream.user
         avatarView.userSession = userSession
-        userDetailsView.alpha = 0
+        userDetailsView.alpha = DeveloperFlag.updatedCallingUI.isOn ? 1 : 0
     }
 
     func createConstraints() {

@@ -98,6 +98,7 @@ public enum SemanticColors {
         static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
         static let backgroundPhoneCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let backgroundMissedPhoneCall = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let foregroundMicrophone = UIColor(light: Asset.gray90, dark: Asset.gray90)
     }
 
     public enum View {
@@ -120,7 +121,6 @@ public enum SemanticColors {
         static let borderInputBar = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundAvatar = UIColor(light: Asset.gray100, dark: Asset.gray50)
         static let backgroundDragBarIndicator = UIColor(light: Asset.gray70, dark: Asset.gray70)
-        static let selectedBorder = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
     }
 
     public enum TabBar {
