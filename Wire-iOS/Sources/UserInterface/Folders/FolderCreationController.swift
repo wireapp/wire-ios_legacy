@@ -122,7 +122,7 @@ final class FolderCreationController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: navBarColor)
 
         if navigationController?.viewControllers.count ?? 0 <= 1 {
-            navigationItem.leftBarButtonItem = navigationController?.updatedCloseItem()
+            navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
 
         let nextButtonItem = UIBarButtonItem(title: FolderCreationName.Button.create.capitalized,
