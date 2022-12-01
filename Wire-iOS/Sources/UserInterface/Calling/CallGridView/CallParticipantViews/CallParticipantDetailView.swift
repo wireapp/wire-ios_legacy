@@ -55,13 +55,10 @@ final class CallParticipantDetailsView: RoundedBlurView {
     }
 
     override init() {
-        if DeveloperFlag.updatedCallingUI.isOn {
-            nameLabel = DynamicFontLabel(fontSpec: .mediumRegularFont, color: .white)
-            super.init()
-        } else {
-            nameLabel = UILabel(key: nil, size: .medium, weight: .semibold, color: .textForeground, variant: .dark)
-            super.init()
-        }
+        nameLabel = DeveloperFlag.updatedCallingUI.isOn
+                    ? DynamicFontLabel(fontSpec: .mediumRegularFont, color: .white)
+                    : UILabel(key: nil, size: .medium, weight: .semibold, color: .textForeground, variant: .dark)
+        super.init()
     }
 
     override func setupViews() {
