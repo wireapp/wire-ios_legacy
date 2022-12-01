@@ -29,10 +29,12 @@ protocol InputBarEditViewDelegate: AnyObject {
 }
 
 final class InputBarEditView: UIView {
+typealias IconColors = SemanticColors.Icon
+
     private static var iconButtonTemplate: IconButton {
         let iconButton = IconButton()
-        iconButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
-        iconButton.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
+        iconButton.setIconColor(IconColors.foregroundDefaultBlack, for: .normal)
+        iconButton.setIconColor(IconColors.foregroundDefaultBlack.withAlphaComponent(0.6), for: .highlighted)
 
         return iconButton
     }
