@@ -107,6 +107,7 @@ public enum SemanticColors {
         static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let backgroundSeparatorEditView = UIColor(light: Asset.gray60, dark: Asset.gray70)
         static let backgroundBadgeCell = UIColor(light: Asset.black, dark: Asset.white)
         static let backgroundConversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
         static let backgroundConversationListTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
@@ -118,6 +119,12 @@ public enum SemanticColors {
         static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
         static let borderInputBar = UIColor(light: Asset.gray40, dark: Asset.gray100)
+        static let backgroundBlue = UIColor(light: Asset.blue100Light, dark: Asset.blue900Dark)
+        static let backgroundGreen = UIColor(light: Asset.green100Light, dark: Asset.green900Dark)
+        static let backgroundAmber = UIColor(light: Asset.amber100Light, dark: Asset.amber900Dark)
+        static let backgroundRed = UIColor(light: Asset.red100Light, dark: Asset.red900Dark)
+        static let backgroundPurple = UIColor(light: Asset.purple100Light, dark: Asset.purple900Dark)
+        static let backgroundTurqoise = UIColor(light: Asset.turquoise100Light, dark: Asset.turquoise900Dark)
     }
 
     public enum TabBar {
