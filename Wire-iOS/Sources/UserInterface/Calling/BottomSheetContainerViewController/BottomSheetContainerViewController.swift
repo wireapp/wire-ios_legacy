@@ -199,6 +199,10 @@ class BottomSheetContainerViewController : UIViewController {
 extension BottomSheetContainerViewController: UIGestureRecognizerDelegate {
 
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if let otherGestureView = otherGestureRecognizer.view as? UIScrollView,
+           otherGestureView.contentOffset.y > 0.0  {
+            return false
+        }
         return true
     }
 
