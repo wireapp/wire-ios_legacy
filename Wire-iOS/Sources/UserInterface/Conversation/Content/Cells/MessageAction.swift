@@ -235,10 +235,8 @@ enum MessageAction: CaseIterable {
             return MessageAction.LikeButton.description
         case .like:
             return MessageAction.UnlikeButton.description
-        case .forward:
-            return "Options"//MessageAction.ShareButton.description
         default:
-            return "Mother"//nil
+            return nil
         }
     }
 }
