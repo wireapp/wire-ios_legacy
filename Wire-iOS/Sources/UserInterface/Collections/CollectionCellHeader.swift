@@ -60,7 +60,6 @@ final class CollectionCellHeader: UIView {
 
     var nameLabel: UILabel = {
         let label = UILabel()
-        // TODO Katerina
         label.isAccessibilityElement = false
         label.font = .smallSemiboldFont
 
@@ -69,7 +68,6 @@ final class CollectionCellHeader: UIView {
 
     var dateLabel: UILabel = {
         let label = UILabel()
-        // TODO Katerina
         label.isAccessibilityElement = false
         label.font = .smallLightFont
         label.textColor = .from(scheme: .textDimmed)

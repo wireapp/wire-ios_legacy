@@ -93,7 +93,6 @@ final class AudioMessageView: UIView, TransferView {
         backgroundColor = .from(scheme: .placeholderBackground)
 
         playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
-        // TODO Katerina
         //playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
         playButton.accessibilityIdentifier = "AudioActionButton"
         playButton.layer.masksToBounds = true
@@ -209,9 +208,6 @@ final class AudioMessageView: UIView, TransferView {
             playerProgressView.setProgress(0, animated: false)
             waveformProgressView.setProgress(0, animated: false)
         }
-        // TODO Katerina
-//        playButton.accessibilityLabel = "send by \(fileMessage?.senderName), \(timeLabel.text), audio"
-//        playButton.accessibilityHint = L10n.Accessibility.ConversationSearch.Item.hint
         timeLabel.isAccessibilityElement = false
     }
 

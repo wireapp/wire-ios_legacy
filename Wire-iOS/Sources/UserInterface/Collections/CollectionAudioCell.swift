@@ -35,9 +35,7 @@ final class CollectionAudioCell: CollectionCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadView()
-        // TODO Katerina
-        isAccessibilityElement = true
-        accessibilityTraits = .button
+        setupAccessibility()
     }
 
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
@@ -57,14 +55,11 @@ final class CollectionAudioCell: CollectionCell {
             restrictionView.configure()
         }
 
-        // TODO Katerina
-        accessibilityLabel = ConversationSearch.SendBy.description(message.senderName) + ", \(message.serverTimestamp?.formattedDate), " + ConversationSearch.AudioMessage.description
+        accessibilityLabel = ConversationSearch.SendBy.description(message.senderName) + ", \(message.serverTimestamp?.formattedDate ?? ""), " + ConversationSearch.AudioMessage.description
         accessibilityHint = ConversationSearch.ItemPlay.hint
     }
 
     func loadView() {
-        // TODO Katerina
-        headerView.isAccessibilityElement = false
         headerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -103,6 +98,11 @@ final class CollectionAudioCell: CollectionCell {
             view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -4),
             view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -4)
         ])
+    }
+
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 }
 
