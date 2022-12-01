@@ -585,7 +585,7 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "messageAction.saveButton.description")
       }
       internal enum ShareButton {
-        /// Share picture 1111
+        /// Share picture
         internal static let description = L10n.tr("Accessibility", "messageAction.shareButton.description")
       }
       internal enum SketchButton {
@@ -673,6 +673,34 @@ internal enum L10n {
         internal static func hint(_ p1: Any) -> String {
           return L10n.tr("Accessibility", "settings.deviceCount.hint", String(describing: p1))
         }
+      }
+    }
+    internal enum Sketch {
+      internal enum CloseButton {
+        /// Close sketch
+        internal static let description = L10n.tr("Accessibility", "sketch.closeButton.description")
+      }
+      internal enum DrawButton {
+        /// Draw or write
+        internal static let description = L10n.tr("Accessibility", "sketch.drawButton.description")
+        /// Double tap to enable or disable
+        internal static let hint = L10n.tr("Accessibility", "sketch.drawButton.hint")
+      }
+      internal enum SelectEmojiButton {
+        /// Select emoji
+        internal static let description = L10n.tr("Accessibility", "sketch.selectEmojiButton.description")
+      }
+      internal enum SelectPictureButton {
+        /// Select picture
+        internal static let description = L10n.tr("Accessibility", "sketch.selectPictureButton.description")
+      }
+      internal enum SendButton {
+        /// Send
+        internal static let description = L10n.tr("Accessibility", "sketch.sendButton.description")
+      }
+      internal enum UndoButton {
+        /// Undo last step
+        internal static let description = L10n.tr("Accessibility", "sketch.undoButton.description")
       }
     }
     internal enum SupportSettings {
@@ -1245,7 +1273,7 @@ internal enum L10n {
         internal static let details = L10n.tr("Localizable", "content.message.details")
         /// Download
         internal static let download = L10n.tr("Localizable", "content.message.download")
-        /// Share house
+        /// Share
         internal static let forward = L10n.tr("Localizable", "content.message.forward")
         /// Reveal
         internal static let goToConversation = L10n.tr("Localizable", "content.message.go_to_conversation")

@@ -709,6 +709,7 @@ extension CollectionsViewController: CollectionCellDelegate {
 
                 let backButton = CollectionsView.backButton()
                 backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
+                backButton.accessibilityLabel = L10n.Accessibility.ConversationSearch.BackButton.description
 
                 let closeButton = CollectionsView.closeButton()
                 closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
