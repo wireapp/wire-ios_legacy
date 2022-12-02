@@ -55,7 +55,9 @@ final class CollectionAudioCell: CollectionCell {
             restrictionView.configure()
         }
 
-        accessibilityLabel = ConversationSearch.SendBy.description(message.senderName) + ", \(message.serverTimestamp?.formattedDate ?? ""), " + ConversationSearch.AudioMessage.description
+        accessibilityLabel = ConversationSearch.SendBy.description(message.senderName)
+                            + ", \(message.serverTimestamp?.formattedDate ?? ""), "
+                            + ConversationSearch.AudioMessage.description
         accessibilityHint = ConversationSearch.ItemPlay.hint
     }
 

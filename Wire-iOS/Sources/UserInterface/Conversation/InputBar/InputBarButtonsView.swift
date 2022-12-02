@@ -129,7 +129,17 @@ final class InputBarButtonsView: UIView {
         if multilineLayout {
             let firstRowButtons = [UIButton](buttons.prefix(customButtonCount))
             let secondRowButtons = [UIButton](buttons.suffix(buttons.count - customButtonCount))
-            buttons.forEach { $0.isAccessibilityElement = currentRow == 0 ? firstRowButtons.contains($0) : secondRowButtons.contains($0) }
+            
+            buttons.forEach {
+                var isAccessibilityElement = false
+                if currentRow == 0 {
+                    isAccessibilityElement = firstRowButtons.contains($0)
+                } else {
+                    isAccessibilityElement = secondRowButtons.contains($0)
+                }
+                $0.isAccessibilityElement = isAccessibilityElement
+
+            }
         }
     }
 
