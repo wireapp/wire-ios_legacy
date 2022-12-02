@@ -27,25 +27,48 @@ class CallingActionButton: IconLabelButton {
         subtitleTransformLabel.text = input.label
         subtitleTransformLabel.textTransform = .capitalize
         titleLabel?.font = DynamicFontLabel(fontSpec: .smallRegularFont, color: .sectionText).font
+        subtitleTransformLabel.font = titleLabel?.font
+
     }
 
     override func apply(_ configuration: CallActionAppearance) {
         iconButton.borderWidth = 1
 
         setTitleColor(configuration.textColorNormal, for: .normal)
-        iconButton.setBorderColor(configuration.borderColorNormal, for: .normal)
-        iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
-        iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
+        //iconButton.layer.borderColor = SemanticColors.Button.borderCallingNormal.cgColor
+        iconButton.setBorderColor(SemanticColors.Button.borderCallingNormal, for: .normal)
+        iconButton.setIconColor(SemanticColors.Button.iconCallingNormal, for: .normal)
+        iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingNormal, for: .normal)
+        //        iconButton.setBorderColor(configuration.borderColorNormal, for: .normal)
+        //        iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
+        //        iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
 
         setTitleColor(configuration.textColorNormal, for: .selected)
-        iconButton.setBorderColor(configuration.borderColorSelected, for: .selected)
-        iconButton.setIconColor(configuration.iconColorSelected, for: .selected)
-        iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .selected)
+        iconButton.setBorderColor(/*SemanticColors.Button.borderCallingSelected*/ .yellow, for: .selected)
+        iconButton.setIconColor(SemanticColors.Button.iconCallingSelected, for: .selected)
+        iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingSelected, for: .selected)
+        //        iconButton.setBorderColor(configuration.borderColorSelected, for: .selected)
+        //        iconButton.setIconColor(configuration.iconColorSelected, for: .selected)
+        //        iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .selected)
+
 
         setTitleColor(configuration.textColorDisabled, for: .disabled)
-        iconButton.setBorderColor(configuration.borderColorDisabled, for: .disabled)
-        iconButton.setIconColor(configuration.iconColorDisabled, for: .disabled)
-        iconButton.setBackgroundImageColor(configuration.backgroundColorDisabled, for: .disabled)
+        iconButton.setBorderColor(SemanticColors.Button.borderCallingDisabled, for: .disabled)
+        iconButton.setIconColor(SemanticColors.Button.iconCallingDisabled, for: .disabled)
+        iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingDisabled, for: .disabled)
+        //        iconButton.setIconColor(configuration.iconColorDisabled, for: .disabled)
+        //        iconButton.setBackgroundImageColor(configuration.backgroundColorDisabled, for: .disabled)
+        //        iconButton.setBorderColor(configuration.borderColorDisabled, for: .disabled)
+
+        iconButton.setBorderColor(.blue, for: .highlighted)
+        iconButton.setBorderColor(.green, for: .selectedAndHighlighted)
+        iconButton.setBorderColor(.red, for: .normalAndHighlighted)
+        iconButton.setBorderColor(.purple, for: UIControl.State(rawValue: 3))
+
+        print("Border colors arrary")
+        print(iconButton.titleLabel?.text)
+        print(iconButton.borderColorByState)
+
     }
 
 }
@@ -54,7 +77,8 @@ class EndCallButton: CallingActionButton {
 
     override func apply(_ configuration: CallActionAppearance) {
         let redColor = SemanticColors.Button.backgroundLikeHighlighted
-        setTitleColor(configuration.textColorNormal, for: .normal)
+//        setTitleColor(configuration.textColorNormal, for: .normal)
+        setTitleColor(SemanticColors.Button.textCallingNormal, for: .normal)
         iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
         iconButton.setBackgroundImageColor(redColor, for: .normal)
     }

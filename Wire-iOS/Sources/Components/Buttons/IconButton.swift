@@ -76,7 +76,7 @@ class IconButton: ButtonWithLargerHitArea {
     var adjustBackgroundImageWhenHighlighted = false
 
     private var iconColorsByState: [UIControl.State: UIColor] = [:]
-    private var borderColorByState: [UIControl.State: UIColor] = [:]
+    var borderColorByState: [UIControl.State: UIColor] = [:]
     private var iconDefinitionsByState: [UIControl.State: IconDefinition] = [:]
     private var priorState: UIControl.State?
 
@@ -326,6 +326,8 @@ class IconButton: ButtonWithLargerHitArea {
                     expandedState == .normal {
                     borderColorByState[.highlighted] = color?.mix(.black, amount: 0.4)
                 }
+            } else {
+                borderColorByState[expandedState] = .yellow
             }
         }
 

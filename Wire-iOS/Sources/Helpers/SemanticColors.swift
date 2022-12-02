@@ -151,6 +151,7 @@ public enum SemanticColors {
         static let borderBarItem = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundLikeEnabled = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundLikeHighlighted = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let backgroundAmberlighted = UIColor(light: Asset.amber500Light, dark: Asset.amber500Dark)
         static let backgroundSendDisabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
         static let backgroundInputBarItemEnabled = UIColor(light: Asset.white, dark: Asset.gray90)
         static let backgroundInputBarItemHighlighted = UIColor(light: Asset.blue50Light, dark: Asset.blue800Dark)
@@ -166,7 +167,7 @@ public enum SemanticColors {
         static let backgroundCallingDisabled = UIColor(light: Asset.gray20, dark: Asset.gray95)
 
         static let borderCallingNormal = UIColor(light: Asset.gray40, dark: Asset.gray100)
-        static let borderCallingSelected = UIColor(light: Asset.black, dark: Asset.white)
+        static let borderCallingSelected = UIColor(light: Asset.amber400Dark, dark: Asset.white)
         static let borderCallingDisabled = UIColor(light: Asset.gray40, dark: Asset.gray95)
 
         static let iconCallingNormal = UIColor(light: Asset.black, dark: Asset.white)
