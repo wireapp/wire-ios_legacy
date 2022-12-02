@@ -115,10 +115,12 @@ private extension MessageDestructionTimeoutValue {
     var accessibilityValue: String? {
         typealias Conversation = L10n.Accessibility.Conversation
 
-        guard self != .none,
-              let timeoutValue = shortDisplayString else {
-                  return nil
-              }
+        guard 
+           self != .none,
+           let timeoutValue = shortDisplayString
+        else {
+           return nil
+        }
         switch self {
         case .tenSeconds:
             return Conversation.TimerForSelfDeletingMessagesSeconds.value(timeoutValue)
