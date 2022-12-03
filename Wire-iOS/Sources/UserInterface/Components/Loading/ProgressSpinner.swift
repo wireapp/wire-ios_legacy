@@ -48,7 +48,11 @@ final class ProgressSpinner: UIView {
                 return
             }
 
-            isAnimating ? startAnimationInternal() : stopAnimationInternal()
+            if isAnimating {
+                startAnimationInternal()
+            } else {
+                stopAnimationInternal()
+            }
         }
     }
 

@@ -103,7 +103,7 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             options: [.curveLinear, .allowUserInteraction],
             animations: animations) { success in
                 transitionContext.complete(success)
-        }
+            }
     }
 
 }
@@ -138,7 +138,11 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
             cancel()
         case .ended:
             interactionInProgress = false
-            !shouldCompleteTransition ? cancel() : finish()
+            if !shouldCompleteTransition {
+                cancel()
+            } else {
+                finish()
+            }
         default: break
         }
     }
@@ -193,17 +197,17 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
 
     private func createConstraints() {
         if let childViewControllerView = viewController.view {
-        [childViewControllerView, dimView].prepareForLayout()
-        NSLayoutConstraint.activate([
-          childViewControllerView.topAnchor.constraint(equalTo: view.topAnchor),
-          childViewControllerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-          childViewControllerView.leftAnchor.constraint(equalTo: view.leftAnchor),
-          childViewControllerView.rightAnchor.constraint(equalTo: view.rightAnchor),
-          dimView.topAnchor.constraint(equalTo: view.topAnchor),
-          dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-          dimView.leftAnchor.constraint(equalTo: view.leftAnchor),
-          dimView.rightAnchor.constraint(equalTo: view.rightAnchor)
-        ])
+            [childViewControllerView, dimView].prepareForLayout()
+            NSLayoutConstraint.activate([
+                childViewControllerView.topAnchor.constraint(equalTo: view.topAnchor),
+                childViewControllerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                childViewControllerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                childViewControllerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                dimView.topAnchor.constraint(equalTo: view.topAnchor),
+                dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                dimView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                dimView.rightAnchor.constraint(equalTo: view.rightAnchor)
+            ])
         }
     }
 

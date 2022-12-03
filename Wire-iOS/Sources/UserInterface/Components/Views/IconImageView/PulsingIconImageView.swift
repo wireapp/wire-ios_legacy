@@ -69,6 +69,10 @@ class PulsingIconImageView: IconImageView {
 
     private func refreshPulsing() {
         guard let style = style as? PulsingIconImageStyle else { return }
-        style.shouldPulse ? startPulsing() : stopPulsing()
+        if style.shouldPulse {
+            startPulsing()
+        } else {
+            stopPulsing()
+        }
     }
 }

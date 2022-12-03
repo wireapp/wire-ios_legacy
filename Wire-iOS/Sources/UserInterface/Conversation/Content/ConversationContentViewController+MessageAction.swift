@@ -97,9 +97,11 @@ extension ConversationContentViewController {
             }
         case .digitallySign:
             dataSource.selectedMessage = message
-            message.isFileDownloaded()
-                ? signPDFDocument(for: message, observer: self)
-                : presentDownloadNecessaryAlert(for: message)
+            if message.isFileDownloaded() {
+                signPDFDocument(for: message, observer: self)
+            } else {
+                presentDownloadNecessaryAlert(for: message)
+            }
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
@@ -223,10 +225,12 @@ extension ConversationContentViewController: SignatureObserver {
 
     func didFailSignature(errorType: SignatureStatus.ErrorYpe) {
         isLoadingViewVisible = false
-        isDigitalSignatureVerificationShown
-            ? dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert(errorType: errorType)
+        if isDigitalSignatureVerificationShown {
+            dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert(errorType: errorType)
             })
-            : presentDigitalSignatureErrorAlert(errorType: errorType)
+        } else {
+            presentDigitalSignatureErrorAlert(errorType: errorType)
+        }
     }
 
     // MARK: - Helpers
