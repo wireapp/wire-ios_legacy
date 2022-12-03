@@ -32,19 +32,19 @@ final class CollectionHeaderView: UICollectionReusableView {
 
             switch section {
             case CollectionsSectionSet.images:
-                titleLabel.text = Section.Images.title.capitalized
+                titleLabel.text = Section.Images.title.uppercased()
                 titleLabel.accessibilityLabel = ConversationSearch.ImagesSection.description
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                titleLabel.text = Section.Files.title.capitalized
+                titleLabel.text = Section.Files.title.uppercased()
                 titleLabel.accessibilityLabel = ConversationSearch.FilesSection.description
                 icon = .document
             case CollectionsSectionSet.videos:
-                titleLabel.text = Section.Videos.title.capitalized
+                titleLabel.text = Section.Videos.title.uppercased()
                 titleLabel.accessibilityLabel = ConversationSearch.VideosSection.description
                 icon = .movie
             case CollectionsSectionSet.links:
-                titleLabel.text = Section.Links.title.capitalized
+                titleLabel.text = Section.Links.title.uppercased()
                 titleLabel.accessibilityLabel = ConversationSearch.LinksSection.description
                 icon = .link
             default: fatal("Unknown section")
