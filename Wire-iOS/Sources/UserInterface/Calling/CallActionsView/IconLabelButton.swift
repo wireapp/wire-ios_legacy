@@ -116,7 +116,6 @@ class IconLabelButton: ButtonWithLargerHitArea {
     override var isSelected: Bool {
         didSet {
             iconButton.isSelected = isSelected
-          //  apply(appearance)
             updateState()
         }
     }
@@ -155,5 +154,4 @@ class IconLabelButton: ButtonWithLargerHitArea {
  extension UIControl.State {
     static let disabledAndSelected: UIControl.State = [.disabled, .selected]
     static let selectedAndHighlighted: UIControl.State = [.highlighted, .selected]
-    static let normalAndHighlighted: UIControl.State = [.highlighted, .normal]
 }

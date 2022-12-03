@@ -59,16 +59,6 @@ class CallingActionButton: IconLabelButton {
         //        iconButton.setIconColor(configuration.iconColorDisabled, for: .disabled)
         //        iconButton.setBackgroundImageColor(configuration.backgroundColorDisabled, for: .disabled)
         //        iconButton.setBorderColor(configuration.borderColorDisabled, for: .disabled)
-
-        iconButton.setBorderColor(.blue, for: .highlighted)
-        iconButton.setBorderColor(.green, for: .selectedAndHighlighted)
-        iconButton.setBorderColor(.red, for: .normalAndHighlighted)
-        iconButton.setBorderColor(.purple, for: UIControl.State(rawValue: 3))
-
-        print("Border colors arrary")
-        print(iconButton.titleLabel?.text)
-        print(iconButton.borderColorByState)
-
     }
 
 }
@@ -77,7 +67,6 @@ class EndCallButton: CallingActionButton {
 
     override func apply(_ configuration: CallActionAppearance) {
         let redColor = SemanticColors.Button.backgroundLikeHighlighted
-//        setTitleColor(configuration.textColorNormal, for: .normal)
         setTitleColor(SemanticColors.Button.textCallingNormal, for: .normal)
         iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
         iconButton.setBackgroundImageColor(redColor, for: .normal)
