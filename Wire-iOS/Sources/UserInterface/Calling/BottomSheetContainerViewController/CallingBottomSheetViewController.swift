@@ -51,7 +51,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: bottomSheetInitialOffset))
 
         callingActionsInfoViewController.actionsDelegate = visibleVoiceChannelViewController
-        visibleVoiceChannelViewController.configurationObserver = callingActionsInfoViewController
+        visibleVoiceChannelViewController.configurationObserver = self
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
 
@@ -123,7 +123,19 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser())
         visibleVoiceChannelViewController.delegate = self
     }
+}
 
+extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
+    func didUpdateConfiguration(configuration: CallInfoConfiguration) {
+        callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
+        visibleVoiceChannelViewController.view.layoutSubviews()
+        guard let navigationBar  = self.navigationController?.navigationBar else { return }
+        navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: configuration.effectiveColorVariant)
+        navigationBar.isTranslucent = true
+        navigationBar.barTintColor = .clear
+        navigationBar.setBackgroundImage(UIImage.singlePixelImage(with: .clear), for: .default)
+
+    }
 }
 
 extension CallingBottomSheetViewController: WireCallCenterCallParticipantObserver {
@@ -133,7 +145,7 @@ extension CallingBottomSheetViewController: WireCallCenterCallParticipantObserve
 }
 
 extension CallingBottomSheetViewController: WireCallCenterCallStateObserver {
-
+    // TODO: needed?
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateVisibleVoiceChannelViewController()
     }

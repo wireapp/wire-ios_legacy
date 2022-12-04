@@ -17,6 +17,7 @@
 //
 
 import WireSyncEngine
+import WireCommonComponents
 
 struct CallGridConfiguration: CallGridViewControllerInput, Equatable {
 
@@ -192,6 +193,7 @@ extension VoiceChannel {
     }
 
     fileprivate var shouldShowActiveSpeakerFrame: Bool {
+        if DeveloperFlag.updatedCallingUI.isOn { return true }
         return connectedParticipants.count > 2 && videoGridPresentationMode == .allVideoStreams
     }
 

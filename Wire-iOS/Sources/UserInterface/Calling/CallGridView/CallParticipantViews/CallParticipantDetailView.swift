@@ -33,12 +33,13 @@ final class CallParticipantDetailsView: RoundedBlurView {
 
     private let labelContainerView = UIView()
     private let microphoneImageView = UIImageView()
+    private var microphoneWidth: NSLayoutConstraint!
 
     var microphoneIconStyle: MicrophoneIconStyle = .hidden {
         didSet {
             microphoneIconView.set(style: microphoneIconStyle)
             guard DeveloperFlag.updatedCallingUI.isOn else { return }
-            microphoneImageView.isHidden = true
+            makeMicrophone(hidden: true)
             labelContainerView.backgroundColor = .black
             nameLabel.textColor = .white
 
@@ -47,7 +48,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
                 labelContainerView.backgroundColor = UIColor.accent()
                 nameLabel.textColor = SemanticColors.Label.textDefaultWhite
             case .muted:
-                microphoneImageView.isHidden = false
+                makeMicrophone(hidden: false)
             case .unmuted, .hidden:
                 break
             }
@@ -63,14 +64,13 @@ final class CallParticipantDetailsView: RoundedBlurView {
 
     override func setupViews() {
         super.setupViews()
-        setCornerRadius(12)
-
         if DeveloperFlag.updatedCallingUI.isOn {
             [microphoneImageView, labelContainerView].forEach {
                 $0.translatesAutoresizingMaskIntoConstraints = false
                 addSubview($0)
             }
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
+            nameLabel.lineBreakMode = .byTruncatingTail
             labelContainerView.addSubview(nameLabel)
             labelContainerView.backgroundColor = .black
             labelContainerView.layer.cornerRadius = 3.0
@@ -83,6 +83,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
             microphoneImageView.layer.masksToBounds = true
             blurView.alpha = 0
         } else {
+            setCornerRadius(12)
             microphoneIconView.set(size: .tiny, color: .white)
             [microphoneIconView, nameLabel].forEach {
                 $0.translatesAutoresizingMaskIntoConstraints = false
@@ -108,15 +109,24 @@ final class CallParticipantDetailsView: RoundedBlurView {
             microphoneIconView.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
+
+    private func makeMicrophone(hidden: Bool) {
+            self.microphoneWidth.constant = hidden ? 0 : 22
+            self.setNeedsDisplay()
+    }
+
     private func createUpdatedUIContraints() {
+        labelContainerView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        microphoneWidth = microphoneImageView.widthAnchor.constraint(equalToConstant: 22)
         NSLayoutConstraint.activate([
+            labelContainerView.centerXAnchor.constraint(equalTo: centerXAnchor).withPriority(.defaultLow),
             labelContainerView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            labelContainerView.leadingAnchor.constraint(greaterThanOrEqualTo: microphoneImageView.trailingAnchor, constant: 4),
-            labelContainerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelContainerView.leadingAnchor.constraint(greaterThanOrEqualTo: microphoneImageView.trailingAnchor, constant: 2.0),
+            labelContainerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
             microphoneImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            microphoneImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
-            microphoneImageView.widthAnchor.constraint(equalToConstant: 22),
-            microphoneImageView.heightAnchor.constraint(equalToConstant: 22)
+            microphoneImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            microphoneImageView.heightAnchor.constraint(equalToConstant: 22),
+            microphoneWidth
         ])
         NSLayoutConstraint.activate(
             NSLayoutConstraint.forView(view: nameLabel,
