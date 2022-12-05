@@ -500,6 +500,7 @@ final class ConversationInputBarViewController: UIViewController,
                                isEphemeralTimeoutForced: conversation.isSelfDeletingMessageTimeoutForced)
 
         sendButton.isEnabled = sendButtonState.sendButtonEnabled
+        sendButton.isHidden = sendButtonState.sendButtonHidden
         ephemeralIndicatorButton.isHidden = sendButtonState.ephemeralIndicatorButtonHidden
         ephemeralIndicatorButton.isEnabled = sendButtonState.ephemeralIndicatorButtonEnabled
 
