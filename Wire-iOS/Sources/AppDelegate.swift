@@ -39,7 +39,10 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var voIPPushManager: VoIPPushManager = {
-        return VoIPPushManager(requiredPushTokenType: requiredPushTokenType)
+        return VoIPPushManager(
+            application: UIApplication.shared,
+            requiredPushTokenType: requiredPushTokenType
+        )
     }()
 
     // MARK: - Private Property
