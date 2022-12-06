@@ -135,25 +135,18 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
         contentHandler(mutabaleContent)
     }
 
-    public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval, callerName: String) {
+    public func reportCallEvent(
+        _ callEvent: CallEventPayload,
+        currentTimestamp: TimeInterval
+    ) {
         Self.logger.trace("report call event")
-        guard
-            let accountID = session?.accountIdentifier,
-            let conversationID = event.conversationUUID,
-            let callContent = CallEventContent(from: event)
-        else {
-            Self.logger.warning("fail: report call event")
-            return
-        }
-
-        // TODO: add caller name and has video.
 
         callEventHandler.reportIncomingVoIPCall([
-            "accountID": accountID.uuidString,
-            "conversationID": conversationID.uuidString,
-            "shouldRing": callContent.initiatesRinging,
-            "callerName": callerName,
-            "hasVideo": callContent.isVideo
+            "accountID": callEvent.accountID,
+            "conversationID": callEvent.conversationID,
+            "shouldRing": callEvent.shouldRing,
+            "callerName": callEvent.callerName,
+            "hasVideo": callEvent.hasVideo
         ])
   }
 
