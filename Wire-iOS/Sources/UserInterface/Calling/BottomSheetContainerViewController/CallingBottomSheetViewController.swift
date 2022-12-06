@@ -123,7 +123,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser())
         visibleVoiceChannelViewController.delegate = self
     }
-
 }
 
 extension CallingBottomSheetViewController: WireCallCenterCallParticipantObserver {
@@ -133,7 +132,7 @@ extension CallingBottomSheetViewController: WireCallCenterCallParticipantObserve
 }
 
 extension CallingBottomSheetViewController: WireCallCenterCallStateObserver {
-
+    // TODO: needed?
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateVisibleVoiceChannelViewController()
     }
