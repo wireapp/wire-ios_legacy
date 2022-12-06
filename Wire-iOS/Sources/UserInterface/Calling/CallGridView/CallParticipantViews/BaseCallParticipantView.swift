@@ -126,6 +126,9 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         avatarView.user = stream.user
         avatarView.userSession = userSession
         userDetailsView.alpha = DeveloperFlag.updatedCallingUI.isOn ? 1 : 0
+        guard DeveloperFlag.updatedCallingUI.isOn else { return }
+        layer.cornerRadius = 6
+        layer.masksToBounds = true
     }
 
     func createConstraints() {
@@ -202,7 +205,8 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         let showBorderForActiveSpeaker = shouldShowActiveSpeakerFrame && stream.isParticipantUnmutedAndSpeakingNow
         let showBorderForAudioParticipant = shouldShowBorderWhenVideoIsStopped && !stream.isSharingVideo
 
-        layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? 1 : 0
+        let borderWidth = DeveloperFlag.updatedCallingUI.isOn ? 2.0 : 1.0
+        layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? borderWidth : 0
         layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
     }
 
