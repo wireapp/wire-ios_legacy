@@ -70,7 +70,6 @@ final class CallParticipantDetailsView: RoundedBlurView {
                 addSubview($0)
             }
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
-            nameLabel.lineBreakMode = .byTruncatingTail
             labelContainerView.addSubview(nameLabel)
             labelContainerView.backgroundColor = .black
             labelContainerView.layer.cornerRadius = 3.0
