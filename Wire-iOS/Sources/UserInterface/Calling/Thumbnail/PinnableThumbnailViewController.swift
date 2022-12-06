@@ -58,6 +58,7 @@ final class PinnableThumbnailViewController: UIViewController {
 
         self.thumbnailContentSize = contentSize
         updateThumbnailFrame(animated: false, parentSize: thumbnailContainerView.frame.size)
+        pinningBehavior.updateFields(in: thumbnailContainerView.bounds)
     }
 
     func updateThumbnailContentSize(_ newSize: CGSize, animated: Bool) {
