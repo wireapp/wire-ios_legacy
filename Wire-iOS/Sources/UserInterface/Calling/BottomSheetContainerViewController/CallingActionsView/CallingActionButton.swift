@@ -58,5 +58,14 @@ class EndCallButton: CallingActionButton {
         iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
         iconButton.setBackgroundImageColor(redColor, for: .normal)
     }
+}
 
+class PickUpButton: CallingActionButton {
+
+    override func apply(_ configuration: CallActionAppearance) {
+        let greenColor = SemanticColors.Button.backgroundPickUp
+        setTitleColor(configuration.textColorNormal, for: .normal)
+        iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
+        iconButton.setBackgroundImageColor(greenColor, for: .normal)
+    }
 }

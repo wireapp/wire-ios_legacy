@@ -29,6 +29,16 @@ enum CallStatusViewState: Equatable {
     case terminating // "Ending call..."
 }
 
+extension CallStatusViewState {
+    var isIncoming: Bool {
+        if case .ringingIncoming(_) = self {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
 final class CallStatusView: UIView {
 
     private let titleLabel = UILabel()

@@ -31,10 +31,12 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     private let stackView = UIStackView(axis: .vertical)
     private var participantsHeaderView = UIView()
     private var participantsHeaderLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .sectionText)
+    private lazy var incomingCallActionsView: IncomingCallActionsView = IncomingCallActionsView()
 
     weak var actionsDelegate: CallingActionsViewDelegate? {
         didSet {
             actionsView.delegate = actionsDelegate
+            incomingCallActionsView.delegate = actionsDelegate
         }
     }
 
@@ -44,7 +46,21 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
             participantsHeaderLabel.text = L10n.Localizable.Call.Participants.showAll(participants.count).uppercased()
         }
     }
-    let showParticipants: Bool
+    var isIncomingCall: Bool = false {
+        didSet {
+            guard isIncomingCall != oldValue else { return }
+            stackView.removeSubviews()
+            if isIncomingCall {
+                let springView = UIView()
+                springView.setContentCompressionResistancePriority(.required, for: .vertical)
+                [actionsView, incomingCallActionsView, springView].forEach(stackView.addArrangedSubview)
+            } else {
+                [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
+            }
+            createConstraints()
+        }
+    }
+
 
     var variant: ColorSchemeVariant = .light {
         didSet {
@@ -53,10 +69,8 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     }
 
     init(participants: CallParticipantsList,
-         showParticipants: Bool,
          selfUser: UserType) {
         self.participants = participants
-        self.showParticipants = showParticipants
         self.selfUser = selfUser
         super.init(nibName: nil, bundle: nil)
     }
@@ -69,6 +83,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        createStackViewConstraints()
         createConstraints()
         view.backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
     }
@@ -84,7 +99,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .fill
-        stackView.spacing = 0
+        stackView.spacing = 6
 
         actionsView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         actionsView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
@@ -102,30 +117,42 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
 
         let collectionView = CallParticipantsListView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.bounces = showParticipants
+        collectionView.bounces = true
         collectionView.delegate = self
         self.collectionView = collectionView
-        [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
+            [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
         CallParticipantsListCellConfiguration.prepare(collectionView)
     }
 
 
-    private func createConstraints() {
+    private func createStackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: view.topAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
-            participantsHeaderView.heightAnchor.constraint(equalToConstant: participantsHeaderHeight),
-            participantsHeaderLabel.leadingAnchor.constraint(equalTo: participantsHeaderView.leadingAnchor, constant: 16.0),
-            participantsHeaderLabel.centerYAnchor.constraint(equalTo: participantsHeaderView.centerYAnchor),
-
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            participantsHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            participantsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+
+
+    private func createConstraints() {
+        if !isIncomingCall {
+            NSLayoutConstraint.activate([
+                participantsHeaderView.heightAnchor.constraint(equalToConstant: participantsHeaderHeight),
+                participantsHeaderLabel.leadingAnchor.constraint(equalTo: participantsHeaderView.leadingAnchor, constant: 16.0),
+                participantsHeaderLabel.centerYAnchor.constraint(equalTo: participantsHeaderView.centerYAnchor),
+
+                collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                participantsHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                participantsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                incomingCallActionsView.widthAnchor.constraint(equalTo: view.widthAnchor),
+                actionsView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            ])
+        }
     }
 
     private func updateRows() {
@@ -151,6 +178,8 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
 
 extension CallingActionsInfoViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
+        isIncomingCall = configuration.state.isIncoming
+        actionsView.isIncomingCall = isIncomingCall
         actionsView.update(with: configuration)
     }
 }

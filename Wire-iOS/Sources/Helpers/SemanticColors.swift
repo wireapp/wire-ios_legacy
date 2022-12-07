@@ -175,6 +175,8 @@ public enum SemanticColors {
 
         static let textCallingNormal = UIColor(light: Asset.black, dark: Asset.white)
         static let textCallingDisabled = UIColor(light: Asset.gray60, dark: Asset.gray70)
+
+        static let backgroundPickUp = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
     }
 }
 

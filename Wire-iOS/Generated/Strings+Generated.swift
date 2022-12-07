@@ -5084,6 +5084,10 @@ internal enum L10n {
         /// No Internet Connection
         internal static let title = L10n.tr("Localizable", "voice.network_error.title")
       }
+      internal enum PickUpButton {
+        /// Pick Up
+        internal static let title = L10n.tr("Localizable", "voice.pick_up_button.title")
+      }
       internal enum SpeakerButton {
         /// Speaker
         internal static let title = L10n.tr("Localizable", "voice.speaker_button.title")

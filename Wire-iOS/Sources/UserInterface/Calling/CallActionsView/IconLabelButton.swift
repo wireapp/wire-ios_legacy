@@ -80,8 +80,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private func createConstraints() {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            iconButton.widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            iconButton.heightAnchor.constraint(equalToConstant: IconLabelButton.width),
+            iconButton.widthAnchor.constraint(equalTo: widthAnchor),
+            iconButton.heightAnchor.constraint(equalTo: iconButton.heightAnchor),
             blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
             blurView.trailingAnchor.constraint(equalTo: iconButton.trailingAnchor),
             blurView.topAnchor.constraint(equalTo: iconButton.topAnchor),

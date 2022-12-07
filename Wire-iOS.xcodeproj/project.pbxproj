@@ -1174,6 +1174,7 @@
 		D35EEDCC28C7E95F00949F02 /* CookieProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */; };
 		D36E027829374EEA006C3E5A /* NSLayoutConstraint+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */; };
 		D36E027A293758DD006C3E5A /* CallHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E0279293758DD006C3E5A /* CallHeaderBar.swift */; };
+		D36E027C294092E7006C3E5A /* IncomingCallActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */; };
 		D38BC97628BF8AA700EB928F /* NotificationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455DF28AFC443005ACD74 /* NotificationServiceError.swift */; };
 		D3C34E6E28C1593C004A1AF1 /* AccessTokenEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */; };
 		D3C34E7628C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */; };
@@ -3118,6 +3119,7 @@
 		D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieProvider.swift; sourceTree = "<group>"; };
 		D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Helper.swift"; sourceTree = "<group>"; };
 		D36E0279293758DD006C3E5A /* CallHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHeaderBar.swift; sourceTree = "<group>"; };
+		D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallActionsView.swift; sourceTree = "<group>"; };
 		D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenEndpointTests.swift; sourceTree = "<group>"; };
 		D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationByIDEndpointTests.swift; sourceTree = "<group>"; };
 		D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsView.swift; sourceTree = "<group>"; };
@@ -7005,6 +7007,7 @@
 				D3DE46042923BB13000F1055 /* BottomSheetContainerViewController.swift */,
 				D30880FA292CD8F200DDEAB0 /* CallingBottomSheetViewController.swift */,
 				D36E0279293758DD006C3E5A /* CallHeaderBar.swift */,
+				D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */,
 			);
 			path = BottomSheetContainerViewController;
 			sourceTree = "<group>";
@@ -8284,6 +8287,7 @@
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
 				5E8FFC2221EF86000052DF03 /* EmailLinkVerificationStepDescription.swift in Sources */,
 				EF6E9FF0231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift in Sources */,
+				D36E027C294092E7006C3E5A /* IncomingCallActionsView.swift in Sources */,
 				F19F067021ECC62A00426BD1 /* UIImage+Decoding.swift in Sources */,
 				55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */,
 				E9F3183B28D9B03100FDB244 /* UIButton+RoundedCorners.swift in Sources */,

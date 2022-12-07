@@ -60,7 +60,7 @@ final class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     func testThatItRendersViewControllerCorrectlyState_Recording() {
         // when
         XCTAssertEqual(sut.recordingState, AudioRecordState.recording)
-
+x
         // then
         verify()
     }
