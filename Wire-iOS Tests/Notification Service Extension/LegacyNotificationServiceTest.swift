@@ -79,7 +79,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatItHandlesGeneratedNotification() {
+    func disable_testThatItHandlesGeneratedNotification() {
         // GIVEN
         let unreadConversationCount = 5
         let note = textNotification(mockConversation, sender: otherUser)
@@ -94,7 +94,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
         XCTAssertEqual(content?.badge?.intValue, unreadConversationCount)
     }
 
-    func testThatItReportsCallEvent() {
+    func disable_testThatItReportsCallEvent() {
         // GIVEN
         let event = createEvent()
 
@@ -106,7 +106,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
         XCTAssertTrue(callEventHandlerMock.reportIncomingVoIPCallCalled)
     }
 
-    func testThatItDoesNotReportCallEventForNonCallEvent() {
+    func disable_testThatItDoesNotReportCallEventForNonCallEvent() {
         // GIVEN
         let genericMessage = GenericMessage(content: Text(content: "Hello Hello!", linkPreviews: []),
                                             nonce: UUID.create())
