@@ -460,6 +460,10 @@ final class ConversationInputBarViewController: UIViewController,
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
+        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+            updateMarkdownButton()
+        }
+
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
 
         guard !inRotation else { return }
