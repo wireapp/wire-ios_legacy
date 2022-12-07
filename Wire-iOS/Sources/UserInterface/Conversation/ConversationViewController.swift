@@ -517,7 +517,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         let button = IconButton()
         button.setIcon(showingSearchResults ? .activeSearch : .search, size: .tiny, for: .normal)
         button.accessibilityIdentifier = "collection"
-        button.accessibilityLabel = "conversation.action.search".localized
+        button.accessibilityLabel = L10n.Accessibility.Conversation.SearchButton.description
 
         button.addTarget(self, action: action, for: .touchUpInside)
 
