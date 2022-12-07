@@ -524,7 +524,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         button.backgroundColor = SemanticColors.Button.backgroundBarItem
         button.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         button.layer.borderWidth = 1
-        button.setBorderColor(SemanticColors.Button.borderBarItem, for: .normal)
+        button.setBorderColor(SemanticColors.Button.borderBarItem.resolvedColor(with: traitCollection), for: .normal)
         button.layer.cornerRadius = 12
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
