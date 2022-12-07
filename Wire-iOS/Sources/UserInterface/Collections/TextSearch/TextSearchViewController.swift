@@ -100,6 +100,7 @@ final class TextSearchViewController: NSObject {
         resultsView.isHidden = query.isEmpty
 
         resultsView.tableView.reloadData()
+        setupAccessibility()
     }
 
     @objc
@@ -110,6 +111,13 @@ final class TextSearchViewController: NSObject {
     fileprivate func hideLoadingSpinner() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(showLoadingSpinner), object: nil)
         searchBar.isLoading = false
+    }
+
+    fileprivate func setupAccessibility() {
+        /// If noResultsView is not hidden, we should hide elements in the collectionView that are not currently visible.
+        if let superview = resultsView.superview as? CollectionsView {
+            superview.collectionView.accessibilityElementsHidden = !resultsView.noResultsView.isHidden
+        }
     }
 
 }

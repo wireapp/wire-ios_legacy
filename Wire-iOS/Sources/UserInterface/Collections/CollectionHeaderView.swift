@@ -23,22 +23,29 @@ import WireSystem
 
 final class CollectionHeaderView: UICollectionReusableView {
 
+    typealias Section = L10n.Localizable.Collections.Section
+    typealias ConversationSearch = L10n.Accessibility.ConversationSearch
+
     var section: CollectionsSectionSet = .none {
         didSet {
             let icon: StyleKitIcon
 
             switch section {
             case CollectionsSectionSet.images:
-                titleLabel.text = "collections.section.images.title".localized(uppercased: true)
+                titleLabel.text = Section.Images.title.uppercased()
+                titleLabel.accessibilityLabel = ConversationSearch.ImagesSection.description
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                titleLabel.text = "collections.section.files.title".localized(uppercased: true)
+                titleLabel.text = Section.Files.title.uppercased()
+                titleLabel.accessibilityLabel = ConversationSearch.FilesSection.description
                 icon = .document
             case CollectionsSectionSet.videos:
-                titleLabel.text = "collections.section.videos.title".localized(uppercased: true)
+                titleLabel.text = Section.Videos.title.uppercased()
+                titleLabel.accessibilityLabel = ConversationSearch.VideosSection.description
                 icon = .movie
             case CollectionsSectionSet.links:
-                titleLabel.text = "collections.section.links.title".localized(uppercased: true)
+                titleLabel.text = Section.Links.title.uppercased()
+                titleLabel.accessibilityLabel = ConversationSearch.LinksSection.description
                 icon = .link
             default: fatal("Unknown section")
             }
@@ -50,6 +57,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     var totalItemsCount: UInt = 0 {
         didSet {
             actionButton.isHidden = totalItemsCount == 0
+            titleLabel.accessibilityHint = actionButton.isHidden ? "" : ConversationSearch.Section.hint
 
             let totalCountText = String(format: "collections.section.all.button".localized, totalItemsCount)
             actionButton.setTitle(totalCountText, for: .normal)
@@ -87,7 +95,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         addSubview(titleLabel)
 
         actionButton.contentHorizontalAlignment = .right
-        actionButton.accessibilityLabel = "open all"
+        actionButton.isAccessibilityElement = false
         actionButton.addTarget(self, action: #selector(CollectionHeaderView.didSelect(_:)), for: .touchUpInside)
         addSubview(actionButton)
 
