@@ -253,7 +253,7 @@ final class PasscodeSetupViewController: UIViewController {
     // MARK: - close button
 
     lazy var closeItem: UIBarButtonItem = {
-        let closeItem = UIBarButtonItem.createUpdatedCloseItem()
+        let closeItem = UIBarButtonItem.createCloseItem()
         closeItem.accessibilityIdentifier = "closeButton"
 
         closeItem.target = self
