@@ -35,6 +35,7 @@ extension Notification.Name {
 }
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
+private let pushLog = ZMSLog(tag: "Push")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -103,7 +104,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        SessionManager.shared?.updateDeviceToken(deviceToken)
+        pushLog.safePublic("application did register for remote notifications, storing standard token")
+        PushTokenStorage.pushToken = .createAPNSToken(from: deviceToken)
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
