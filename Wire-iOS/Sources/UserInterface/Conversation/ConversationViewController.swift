@@ -181,6 +181,14 @@ final class ConversationViewController: UIViewController {
         }
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+            updateRightNavigationItemsButtons()
+        }
+    }
+
     func createOutgoingConnectionViewController() {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
