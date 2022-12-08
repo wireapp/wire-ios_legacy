@@ -462,6 +462,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
             updateMarkdownButton()
+            inputBar.updateColors()
         }
 
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
