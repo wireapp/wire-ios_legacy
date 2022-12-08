@@ -430,10 +430,10 @@ internal enum L10n {
         /// Double tab to open all
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.section.hint")
       }
-      internal enum SendBy {
-        /// Send by %@
+      internal enum SentBy {
+        /// Sent by %@
         internal static func description(_ p1: Any) -> String {
-          return L10n.tr("Accessibility", "conversationSearch.sendBy.description", String(describing: p1))
+          return L10n.tr("Accessibility", "conversationSearch.sentBy.description", String(describing: p1))
         }
       }
       internal enum VideoMessage {

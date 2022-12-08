@@ -72,7 +72,7 @@
 "conversationSearch.imageMessage.description" = "Image";
 "conversationSearch.videoMessage.description" = "Video";
 "conversationSearch.audioMessage.description" = "Audio";
-"conversationSearch.sendBy.description" = "Sent by %@";
+"conversationSearch.sentBy.description" = "Sent by %@";
 "conversationSearch.fileName.description" = "File name";
 "conversationSearch.fileSize.description" = "Size";
 "conversationSearch.fileType.description" = "Type";
