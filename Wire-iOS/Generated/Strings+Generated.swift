@@ -69,6 +69,16 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "advancedSettings.backButton.description")
       }
     }
+    internal enum AudioMessage {
+      internal enum Pause {
+        /// Pause
+        internal static let value = L10n.tr("Accessibility", "audioMessage.pause.value")
+      }
+      internal enum Play {
+        /// Play
+        internal static let value = L10n.tr("Accessibility", "audioMessage.play.value")
+      }
+    }
     internal enum ClientsList {
       internal enum DeviceDetails {
         /// Double tap to open device details
@@ -126,13 +136,77 @@ internal enum L10n {
       }
     }
     internal enum Conversation {
+      internal enum AudioButton {
+        /// Record an audio message
+        internal static let description = L10n.tr("Accessibility", "conversation.audioButton.description")
+      }
       internal enum BackButton {
         /// Go back to conversation list
         internal static let description = L10n.tr("Accessibility", "conversation.backButton.description")
       }
+      internal enum BoldButton {
+        /// Use bolded text
+        internal static let description = L10n.tr("Accessibility", "conversation.boldButton.description")
+      }
+      internal enum BulletListButton {
+        /// Use bullet list
+        internal static let description = L10n.tr("Accessibility", "conversation.bulletListButton.description")
+      }
+      internal enum CameraButton {
+        /// Take or select a photo
+        internal static let description = L10n.tr("Accessibility", "conversation.cameraButton.description")
+      }
+      internal enum CodeButton {
+        /// Use code format
+        internal static let description = L10n.tr("Accessibility", "conversation.codeButton.description")
+      }
+      internal enum EmphemeralButton {
+        /// Set a timer for self-deleting messages
+        internal static let description = L10n.tr("Accessibility", "conversation.emphemeralButton.description")
+      }
+      internal enum GifButton {
+        /// Select a GIF
+        internal static let description = L10n.tr("Accessibility", "conversation.gifButton.description")
+      }
+      internal enum HeaderButton {
+        /// Use a heading
+        internal static let description = L10n.tr("Accessibility", "conversation.headerButton.description")
+      }
+      internal enum HideFormattingButton {
+        /// Hide formatting options
+        internal static let description = L10n.tr("Accessibility", "conversation.hideFormattingButton.description")
+      }
+      internal enum ItalicButton {
+        /// Use italic text
+        internal static let description = L10n.tr("Accessibility", "conversation.italicButton.description")
+      }
       internal enum LegalHoldIcon {
         /// Legal hold
         internal static let description = L10n.tr("Accessibility", "conversation.legalHoldIcon.description")
+      }
+      internal enum LocationButton {
+        /// Share your location
+        internal static let description = L10n.tr("Accessibility", "conversation.locationButton.description")
+      }
+      internal enum MentionButton {
+        /// Mention someone
+        internal static let description = L10n.tr("Accessibility", "conversation.mentionButton.description")
+      }
+      internal enum MoreButton {
+        /// Open more messaging options
+        internal static let description = L10n.tr("Accessibility", "conversation.moreButton.description")
+      }
+      internal enum NumberListButton {
+        /// Use number list
+        internal static let description = L10n.tr("Accessibility", "conversation.numberListButton.description")
+      }
+      internal enum OpenFormattingButton {
+        /// Open formatting options
+        internal static let description = L10n.tr("Accessibility", "conversation.openFormattingButton.description")
+      }
+      internal enum PingButton {
+        /// Send a ping
+        internal static let description = L10n.tr("Accessibility", "conversation.pingButton.description")
       }
       internal enum ProfileImage {
         /// Profile picture
@@ -144,6 +218,54 @@ internal enum L10n {
         /// Open search
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
       }
+      internal enum SendButton {
+        /// Send this message
+        internal static let description = L10n.tr("Accessibility", "conversation.sendButton.description")
+      }
+      internal enum SketchButton {
+        /// Open sketch to draw or write
+        internal static let description = L10n.tr("Accessibility", "conversation.sketchButton.description")
+      }
+      internal enum TimerButton {
+        /// Set a timer for self-deleting messages
+        internal static let description = L10n.tr("Accessibility", "conversation.timerButton.description")
+      }
+      internal enum TimerForSelfDeletingMessagesDay {
+        /// %@ day
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesDay.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesHour {
+        /// %@ hour
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesHour.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesMinutes {
+        /// %@ minutes
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesMinutes.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesSeconds {
+        /// %@ seconds
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesSeconds.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesWeek {
+        /// %@ week
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesWeek.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesWeeks {
+        /// %@ weeks
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesWeeks.value", String(describing: p1))
+        }
+      }
       internal enum TitleViewForGroup {
         /// Double tap to open conversation details
         internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForGroup.hint")
@@ -152,9 +274,17 @@ internal enum L10n {
         /// Double tap to open profile
         internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForOneToOne.hint")
       }
+      internal enum UploadFileButton {
+        /// Share a file
+        internal static let description = L10n.tr("Accessibility", "conversation.uploadFileButton.description")
+      }
       internal enum VerifiedIcon {
         /// Verified
         internal static let description = L10n.tr("Accessibility", "conversation.verifiedIcon.description")
+      }
+      internal enum VideoButton {
+        /// Record a video
+        internal static let description = L10n.tr("Accessibility", "conversation.videoButton.description")
       }
     }
     internal enum ConversationAnnouncement {
@@ -237,6 +367,82 @@ internal enum L10n {
       internal enum ShowParticipantsButton {
         /// Double tap to open participant list
         internal static let hint = L10n.tr("Accessibility", "conversationDetails.showParticipantsButton.hint")
+      }
+    }
+    internal enum ConversationSearch {
+      internal enum AudioMessage {
+        /// Audio
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.audioMessage.description")
+      }
+      internal enum BackButton {
+        /// Go back to search
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.backButton.description")
+      }
+      internal enum CloseButton {
+        /// Close search
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.closeButton.description")
+      }
+      internal enum EmptyResult {
+        /// No results
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.emptyResult.description")
+      }
+      internal enum FileName {
+        /// File name
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.fileName.description")
+      }
+      internal enum FileSize {
+        /// Size
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.fileSize.description")
+      }
+      internal enum FileType {
+        /// Type
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.fileType.description")
+      }
+      internal enum FilesSection {
+        /// Files in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.filesSection.description")
+      }
+      internal enum ImageMessage {
+        /// Image
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.imageMessage.description")
+      }
+      internal enum ImagesSection {
+        /// Pictures in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.imagesSection.description")
+      }
+      internal enum Item {
+        /// Douple tap to open
+        internal static let hint = L10n.tr("Accessibility", "conversationSearch.item.hint")
+      }
+      internal enum ItemPlay {
+        /// Douple tap to play
+        internal static let hint = L10n.tr("Accessibility", "conversationSearch.itemPlay.hint")
+      }
+      internal enum LinksSection {
+        /// Links in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.linksSection.description")
+      }
+      internal enum NoItems {
+        /// No items in collection
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.noItems.description")
+      }
+      internal enum Section {
+        /// Double tab to open all
+        internal static let hint = L10n.tr("Accessibility", "conversationSearch.section.hint")
+      }
+      internal enum SendBy {
+        /// Send by %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationSearch.sendBy.description", String(describing: p1))
+        }
+      }
+      internal enum VideoMessage {
+        /// Video
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.videoMessage.description")
+      }
+      internal enum VideosSection {
+        /// Videos in this conversation
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.videosSection.description")
       }
     }
     internal enum ConversationsList {
@@ -385,6 +591,48 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "licenseInformationSettings.backButton.description")
       }
     }
+    internal enum MessageAction {
+      internal enum CopyButton {
+        /// Copy picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.copyButton.description")
+      }
+      internal enum DeleteButton {
+        /// Delete picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.deleteButton.description")
+      }
+      internal enum EmojiButton {
+        /// Sketch emoji over picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.emojiButton.description")
+      }
+      internal enum LikeButton {
+        /// Like the picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.likeButton.description")
+      }
+      internal enum MoreButton {
+        /// Open more messaging options
+        internal static let description = L10n.tr("Accessibility", "messageAction.moreButton.description")
+      }
+      internal enum RevealButton {
+        /// Reveal in conversation
+        internal static let description = L10n.tr("Accessibility", "messageAction.revealButton.description")
+      }
+      internal enum SaveButton {
+        /// Save picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.saveButton.description")
+      }
+      internal enum ShareButton {
+        /// Share picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.shareButton.description")
+      }
+      internal enum SketchButton {
+        /// Sketch over picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.sketchButton.description")
+      }
+      internal enum UnlikeButton {
+        /// Unlike the picture
+        internal static let description = L10n.tr("Accessibility", "messageAction.unlikeButton.description")
+      }
+    }
     internal enum NotificationConversationSettings {
       internal enum CloseButton {
         /// Close notification settings
@@ -395,6 +643,12 @@ internal enum L10n {
       internal enum BackButton {
         /// Go back to Options
         internal static let description = L10n.tr("Accessibility", "optionsSettings.backButton.description")
+      }
+    }
+    internal enum PictureView {
+      internal enum CloseButton {
+        /// Close picture view
+        internal static let description = L10n.tr("Accessibility", "pictureView.closeButton.description")
       }
     }
     internal enum Profile {
@@ -455,6 +709,34 @@ internal enum L10n {
         internal static func hint(_ p1: Any) -> String {
           return L10n.tr("Accessibility", "settings.deviceCount.hint", String(describing: p1))
         }
+      }
+    }
+    internal enum Sketch {
+      internal enum CloseButton {
+        /// Close sketch
+        internal static let description = L10n.tr("Accessibility", "sketch.closeButton.description")
+      }
+      internal enum DrawButton {
+        /// Draw or write
+        internal static let description = L10n.tr("Accessibility", "sketch.drawButton.description")
+        /// Double tap to enable or disable
+        internal static let hint = L10n.tr("Accessibility", "sketch.drawButton.hint")
+      }
+      internal enum SelectEmojiButton {
+        /// Select emoji
+        internal static let description = L10n.tr("Accessibility", "sketch.selectEmojiButton.description")
+      }
+      internal enum SelectPictureButton {
+        /// Select picture
+        internal static let description = L10n.tr("Accessibility", "sketch.selectPictureButton.description")
+      }
+      internal enum SendButton {
+        /// Send
+        internal static let description = L10n.tr("Accessibility", "sketch.sendButton.description")
+      }
+      internal enum UndoButton {
+        /// Undo last step
+        internal static let description = L10n.tr("Accessibility", "sketch.undoButton.description")
       }
     }
     internal enum SupportSettings {
