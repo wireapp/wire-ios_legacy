@@ -80,6 +80,21 @@
 "conversationSearch.item.hint" = "Douple tap to open";
 "conversationSearch.itemPlay.hint" = "Douple tap to play";
 
+"audioRecord.stopButton.description" = "Stop recording";
+"audioRecord.startButton.description" = "Start recording";
+"audioRecord.startButton.hint" = "Double tap to record";
+"audioRecord.sendButton.description" = "Send";
+"audioRecord.cancelButton.description" = "Delete audio recording";
+"audioRecord.redoButton.description" = "Redo audio recording";
+"audioRecord.normalEffectButton.description" = "Normal";
+"audioRecord.heliumEffectButton.description" = "Helium";
+"audioRecord.deepVoiceEffectButton.description" = "Deep voice";
+"audioRecord.quickEffectButton.description" = "Quick";
+"audioRecord.hallEffectButton.description" = "Hall effect";
+"audioRecord.alienEffectButton.description" = "Alien";
+"audioRecord.roboticEffectButton.description" = "Robotic";
+"audioRecord.highToDeepEffectButton.description" = "High to deep";
+
 "createConversation.backButton.description" = "Go back to contact list";
 
 "pictureView.closeButton.description" = "Close picture view";
