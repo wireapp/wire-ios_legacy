@@ -36,6 +36,7 @@ class BottomSheetContainerViewController : UIViewController {
     private var topConstraint = NSLayoutConstraint()
     var state: BottomSheetState = .initial
     private var visibleControllerBottomConstraint: NSLayoutConstraint!
+    private var bottomViewHeightConstraint: NSLayoutConstraint!
 
     let contentViewController: UIViewController
     let bottomSheetViewController: UIViewController
@@ -43,6 +44,8 @@ class BottomSheetContainerViewController : UIViewController {
     var configuration: BottomSheetConfiguration {
         didSet {
             visibleControllerBottomConstraint = contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -configuration.initialOffset)
+            bottomViewHeightConstraint.constant = configuration.height
+            view.setNeedsLayout()
         }
     }
 
@@ -98,9 +101,11 @@ class BottomSheetContainerViewController : UIViewController {
             .constraint(equalTo: self.view.bottomAnchor,
                         constant: -configuration.initialOffset)
 
+
+        bottomViewHeightConstraint = bottomSheetViewController.view.heightAnchor
+            .constraint(equalToConstant: configuration.height)
         NSLayoutConstraint.activate([
-            bottomSheetViewController.view.heightAnchor
-                .constraint(equalToConstant: configuration.height),
+            bottomViewHeightConstraint,
             bottomSheetViewController.view.leftAnchor
                 .constraint(equalTo: self.view.leftAnchor),
             bottomSheetViewController.view.rightAnchor

@@ -5034,6 +5034,10 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "voice.call_error.unsupported_version.title")
         }
       }
+      internal enum Calling {
+        /// Calling...
+        internal static let title = L10n.tr("Localizable", "voice.calling.title")
+      }
       internal enum CancelButton {
         /// Cancel
         internal static let title = L10n.tr("Localizable", "voice.cancel_button.title")
