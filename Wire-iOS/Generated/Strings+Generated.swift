@@ -136,6 +136,10 @@ internal enum L10n {
       }
     }
     internal enum ClientsList {
+      internal enum BackButton {
+        /// Go back to device list
+        internal static let description = L10n.tr("Accessibility", "clientsList.backButton.description")
+      }
       internal enum DeviceDetails {
         /// Double tap to open device details
         internal static let hint = L10n.tr("Accessibility", "clientsList.deviceDetails.hint")

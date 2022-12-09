@@ -165,6 +165,7 @@
 "clientsList.keyFingerprint.description" = "Key fingerprint";
 "clientsList.deviceVerified.description" = "Verified";
 "clientsList.deviceNotVerified.description" = "Not Verified";
+"clientsList.backButton.description" = "Go back to device list";
 
 "deviceDetails.whyVerifyFingerprint.hint" = "Double tap to learn more about verifications";
 "deviceDetails.howToVerifyFingerprint.hint" = "Learn more about fingerprint verification";
