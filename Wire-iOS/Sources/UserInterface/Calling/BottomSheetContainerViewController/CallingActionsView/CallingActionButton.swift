@@ -44,7 +44,7 @@ class CallingActionButton: IconLabelButton {
         //        iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
 
         setTitleColor(configuration.textColorNormal, for: .selected)
-        iconButton.setBorderColor(/*SemanticColors.Button.borderCallingSelected*/ .yellow, for: .selected)
+        iconButton.setBorderColor(SemanticColors.Button.borderCallingSelected, for: .selected)
         iconButton.setIconColor(SemanticColors.Button.iconCallingSelected, for: .selected)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingSelected, for: .selected)
         //        iconButton.setBorderColor(configuration.borderColorSelected, for: .selected)
