@@ -101,6 +101,9 @@
                   Identifier = "DeveloperOptionsControllerSnapshotTests/testForInitState()">
                </Test>
                <Test
+                  Identifier = "GroupDetailsNotificationOptionsCellTests">
+               </Test>
+               <Test
                   Identifier = "IconLabelButtonTests">
                </Test>
                <Test
@@ -110,7 +113,34 @@
                   Identifier = "LandingViewControllerSnapshotTests/testForInitState()">
                </Test>
                <Test
+                  Identifier = "LocationPreviewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "LocationSendViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ModalTopBarTests">
+               </Test>
+               <Test
+                  Identifier = "NetworkStatusViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "NetworkStatusViewControllerSnapshotTests/testOnlineSynchronizing()">
+               </Test>
+               <Test
+                  Identifier = "ProfileClientViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ProfileClientViewControllerTests/testTestForLightTheme()">
+               </Test>
+               <Test
                   Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
+               </Test>
+               <Test
+                  Identifier = "ProfileFooterViewTests">
+               </Test>
+               <Test
+                  Identifier = "SettingsTableViewControllerSnapshotTests">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
@@ -146,10 +176,19 @@
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
                </Test>
                <Test
+                  Identifier = "URL_WireTests/testThatAccountURLsAreLoadedCorrectly()">
+               </Test>
+               <Test
                   Identifier = "UserCellTests/testUserInsideOngoingVideoCall()">
                </Test>
                <Test
                   Identifier = "UserCellTests/testUserScreenSharingInsideOngoingVideoCall()">
+               </Test>
+               <Test
+                  Identifier = "UserClientCellTests">
+               </Test>
+               <Test
+                  Identifier = "UserNameTakeOverViewControllerTests">
                </Test>
             </SkippedTests>
          </TestableReference>
