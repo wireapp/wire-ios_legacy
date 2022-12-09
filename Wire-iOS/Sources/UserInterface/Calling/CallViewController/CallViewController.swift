@@ -250,6 +250,7 @@ final class CallViewController: UIViewController {
     fileprivate func minimizeOverlay() {
         delegate?.callViewControllerDidDisappear(self, for: conversation)
     }
+    private lazy var incomingCallStatusView = IncomingCallStatusView()
 
     fileprivate func acceptDegradedCall() {
         guard let userSession = ZMUserSession.shared() else { return }
@@ -287,7 +288,6 @@ final class CallViewController: UIViewController {
         showIncomingCallStatusViewIfNeeded(forState: callInfoConfiguration.state)
     }
 
-    private var incomingCallStatusView = IncomingCallStatusView()
     private func showIncomingCallStatusViewIfNeeded(forState state: CallStatusViewState) {
         guard state.isIncoming else {
             incomingCallStatusView.removeFromSuperview()
@@ -297,7 +297,7 @@ final class CallViewController: UIViewController {
         incomingCallStatusView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(incomingCallStatusView)
         NSLayoutConstraint.activate([
-            incomingCallStatusView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20.0),
+            incomingCallStatusView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0),
             incomingCallStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             incomingCallStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0)
         ])
@@ -305,7 +305,7 @@ final class CallViewController: UIViewController {
         incomingCallStatusView.setCallerName(name: user.value.name ?? "")
         user.value.fetchProfileImage(session: session,
                                      imageCache: UIImage.defaultUserImageCache,
-                                     sizeLimit: UserImageView.Size.small.rawValue,
+                                     sizeLimit: UserImageView.Size.big.rawValue,
                                      isDesaturated: false,
                                      completion: { [weak self] (image, cacheHit) in
             self?.incomingCallStatusView.setProfileImage(image)

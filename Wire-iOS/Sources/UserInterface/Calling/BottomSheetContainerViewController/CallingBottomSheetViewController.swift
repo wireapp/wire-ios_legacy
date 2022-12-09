@@ -128,6 +128,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
+        headerBar.setContent(hidden: configuration.state.isIncoming)
         let offset = configuration.state.isIncoming ? 280.0 : bottomSheetInitialOffset
         guard self.configuration.initialOffset != offset else { return }
         let height = configuration.state.isIncoming ? offset : view.bounds.height * 0.7

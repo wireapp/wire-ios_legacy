@@ -75,4 +75,9 @@ class CallHeaderBar: UIView {
     func setAvatar(_ avatar: UIImage) {
         avatarView.image = avatar
     }
+
+    func setContent(hidden: Bool) {
+        avatarContainerView.isHidden = hidden
+        titleLabel.isHidden = hidden
+    }
 }
