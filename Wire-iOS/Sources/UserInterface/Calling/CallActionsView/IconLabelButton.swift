@@ -34,6 +34,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
     var appearance: CallActionAppearance = .dark(blurred: false) {
+//    var appearance: CallActionAppearance = .adaptive {
         didSet {
             updateState()
         }
@@ -57,7 +58,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        updateState()
+        apply(appearance)
     }
 
     private func setupViews() {
@@ -98,9 +99,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
     }
 
     private func updateState() {
-        apply(appearance)
-        subtitleTransformLabel.font = titleLabel?.font
         if !DeveloperFlag.updatedCallingUI.isOn {
+            apply(appearance)
+            subtitleTransformLabel.font = titleLabel?.font
             subtitleTransformLabel.textColor = titleColor(for: state)
         }
     }

@@ -121,8 +121,8 @@ class CallingActionsView: UIView {
         updateToLayoutSize(layoutSize)
         setNeedsLayout()
         layoutIfNeeded()
-        print(ColorScheme.default.variant == .dark)
     }
+
     // MARK: - State Input
 
     // Single entry point for all state changes.
@@ -138,7 +138,8 @@ class CallingActionsView: UIView {
         flipCameraButton.isEnabled = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
         speakerButton.isEnabled = canToggleSpeakerButton(input)
-        [microphoneButton, cameraButton, flipCameraButton, speakerButton].forEach { $0.appearance = .adaptive }
+
+//        [microphoneButton, cameraButton, flipCameraButton, speakerButton].forEach { $0.appearance = .adaptive }
         updateToLayoutSize(layoutSize, animated: true)
         updateAccessibilityElements(with: input)
         setNeedsLayout()
