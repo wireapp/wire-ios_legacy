@@ -59,6 +59,8 @@
 "conversation.numberListButton.description" = "Use number list";
 "conversation.bulletListButton.description" = "Use bullet list";
 "conversation.codeButton.description" = "Use code format";
+"conversation.messageInfo.hint" = "Double tap to hide or show message info";
+"conversation.messageOptions.hint" = "Triple tap to open messaging options";
 
 "conversationSearch.closeButton.description" = "Close search";
 "conversationSearch.backButton.description" = "Go back to search";
@@ -66,19 +68,20 @@
 "conversationSearch.filesSection.description" = "Files in this conversation";
 "conversationSearch.videosSection.description" = "Videos in this conversation";
 "conversationSearch.linksSection.description" = "Links in this conversation";
-"conversationSearch.section.hint" = "Double tab to open all";
+"conversationSearch.section.hint" = "Double tap to open all";
 "conversationSearch.emptyResult.description" = "No results";
 "conversationSearch.noItems.description" = "No items in collection";
 "conversationSearch.imageMessage.description" = "Image";
-"conversationSearch.videoMessage.description" = "Video";
-"conversationSearch.audioMessage.description" = "Audio";
-"conversationSearch.sendBy.description" = "Send by %@";
+"conversationSearch.videoMessage.description" = "Video message";
+"conversationSearch.audioMessage.description" = "Audio message";
+"conversationSearch.linkMessage.description" = "Link";
+"conversationSearch.sentBy.description" = "Sent by %@";
 "conversationSearch.fileName.description" = "File name";
 "conversationSearch.fileSize.description" = "Size";
 "conversationSearch.fileType.description" = "Type";
 
-"conversationSearch.item.hint" = "Douple tap to open";
-"conversationSearch.itemPlay.hint" = "Douple tap to play";
+"conversationSearch.item.hint" = "Double tap to open";
+"conversationSearch.itemPlay.hint" = "Double tap to play";
 
 "audioRecord.stopButton.description" = "Stop recording";
 "audioRecord.startButton.description" = "Start recording";

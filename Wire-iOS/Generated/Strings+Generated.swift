@@ -252,6 +252,14 @@ internal enum L10n {
         /// Mention someone
         internal static let description = L10n.tr("Accessibility", "conversation.mentionButton.description")
       }
+      internal enum MessageInfo {
+        /// Double tap to hide or show message info
+        internal static let hint = L10n.tr("Accessibility", "conversation.messageInfo.hint")
+      }
+      internal enum MessageOptions {
+        /// Triple tap to open messaging options
+        internal static let hint = L10n.tr("Accessibility", "conversation.messageOptions.hint")
+      }
       internal enum MoreButton {
         /// Open more messaging options
         internal static let description = L10n.tr("Accessibility", "conversation.moreButton.description")
@@ -431,7 +439,7 @@ internal enum L10n {
     }
     internal enum ConversationSearch {
       internal enum AudioMessage {
-        /// Audio
+        /// Audio message
         internal static let description = L10n.tr("Accessibility", "conversationSearch.audioMessage.description")
       }
       internal enum BackButton {
@@ -471,12 +479,16 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversationSearch.imagesSection.description")
       }
       internal enum Item {
-        /// Douple tap to open
+        /// Double tap to open
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.item.hint")
       }
       internal enum ItemPlay {
-        /// Douple tap to play
+        /// Double tap to play
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.itemPlay.hint")
+      }
+      internal enum LinkMessage {
+        /// Link
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.linkMessage.description")
       }
       internal enum LinksSection {
         /// Links in this conversation
@@ -487,17 +499,17 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversationSearch.noItems.description")
       }
       internal enum Section {
-        /// Double tab to open all
+        /// Double tap to open all
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.section.hint")
       }
-      internal enum SendBy {
-        /// Send by %@
+      internal enum SentBy {
+        /// Sent by %@
         internal static func description(_ p1: Any) -> String {
-          return L10n.tr("Accessibility", "conversationSearch.sendBy.description", String(describing: p1))
+          return L10n.tr("Accessibility", "conversationSearch.sentBy.description", String(describing: p1))
         }
       }
       internal enum VideoMessage {
-        /// Video
+        /// Video message
         internal static let description = L10n.tr("Accessibility", "conversationSearch.videoMessage.description")
       }
       internal enum VideosSection {
