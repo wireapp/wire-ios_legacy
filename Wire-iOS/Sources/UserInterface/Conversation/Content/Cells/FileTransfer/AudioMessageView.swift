@@ -25,6 +25,8 @@ import WireCommonComponents
 private let zmLog = ZMSLog(tag: "UI")
 
 final class AudioMessageView: UIView, TransferView {
+
+    typealias AudioMessage = L10n.Accessibility.AudioMessage
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
     private weak var mediaPlaybackManager: MediaPlaybackManager?
@@ -91,7 +93,6 @@ final class AudioMessageView: UIView, TransferView {
         backgroundColor = .from(scheme: .placeholderBackground)
 
         playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
-        playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
         playButton.accessibilityIdentifier = "AudioActionButton"
         playButton.layer.masksToBounds = true
 
@@ -206,6 +207,7 @@ final class AudioMessageView: UIView, TransferView {
             playerProgressView.setProgress(0, animated: false)
             waveformProgressView.setProgress(0, animated: false)
         }
+        timeLabel.isAccessibilityElement = false
     }
 
     func willDeleteMessage() {
@@ -244,7 +246,7 @@ final class AudioMessageView: UIView, TransferView {
         if let viewsState = state.viewsStateForAudio() {
             playButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
             playButton.backgroundColor = viewsState.playButtonBackgroundColor
-            playButton.accessibilityValue = viewsState.playButtonIcon == .play ? "play" : "pause"
+            playButton.accessibilityValue = viewsState.playButtonIcon == .play ? AudioMessage.Play.value : AudioMessage.Pause.value
         }
 
         updateVisibleViews(allViews, visibleViews: visibleViews, animated: !loadingView.isHidden)
@@ -285,17 +287,17 @@ final class AudioMessageView: UIView, TransferView {
 
         if audioTrackPlayer.isPlaying {
             playButton.setIcon(.pause, size: .tiny, for: [])
-            playButton.accessibilityValue = "pause"
+            playButton.accessibilityValue = AudioMessage.Pause.value
         } else {
             playButton.setIcon(.play, size: .tiny, for: [])
-            playButton.accessibilityValue = "play"
+            playButton.accessibilityValue = AudioMessage.Play.value
         }
     }
 
     private func updateInactivePlayer() {
         playButton.backgroundColor = FileMessageViewState.normalColor
         playButton.setIcon(.play, size: .tiny, for: [])
-        playButton.accessibilityValue = "play"
+        playButton.accessibilityValue = AudioMessage.Play.value
 
         playerProgressView.setProgress(0, animated: false)
         waveformProgressView.setProgress(0, animated: false)

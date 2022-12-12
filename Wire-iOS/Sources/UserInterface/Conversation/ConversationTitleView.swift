@@ -39,7 +39,6 @@ final class ConversationTitleView: TitleView {
     func configure() {
         titleColor = SemanticColors.Label.textDefault
         titleFont = .normalSemiboldFont
-        accessibilityHint = "conversation_details.open_button.accessibility_hint".localized
 
         var attachments: [NSTextAttachment] = []
 
@@ -69,8 +68,6 @@ final class ConversationTitleView: TitleView {
     private func setupAccessibility() {
         typealias Conversation = L10n.Accessibility.Conversation
 
-        accessibilityTraits = .button
-
         var components: [String] = []
         components.append(conversation.displayName.capitalized)
 
@@ -88,10 +85,15 @@ final class ConversationTitleView: TitleView {
 
         accessibilityLabel = components.joined(separator: ", ")
 
-        accessibilityHint = conversation.conversationType == .oneOnOne
-                            ? Conversation.TitleViewForOneToOne.hint
-                            : Conversation.TitleViewForGroup.hint
+        guard interactive else {
+            accessibilityTraits = .header
+            return
+        }
 
+        accessibilityTraits = .button
+        accessibilityHint = conversation.conversationType == .oneOnOne
+        ? Conversation.TitleViewForOneToOne.hint
+        : Conversation.TitleViewForGroup.hint
     }
 
 }
