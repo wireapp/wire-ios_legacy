@@ -86,6 +86,9 @@
                   Identifier = "CallInfoViewControllerSnapshotTests">
                </Test>
                <Test
+                  Identifier = "CallParticipantViewTests">
+               </Test>
+               <Test
                   Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Dark()">
                </Test>
                <Test
