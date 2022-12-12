@@ -116,5 +116,14 @@ final class CollectionImageCell: CollectionCell {
             view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
+        isAccessibilityElement = true
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias ConversationSearch = L10n.Accessibility.ConversationSearch
+
+        accessibilityLabel = ConversationSearch.ImageMessage.description
+        accessibilityHint = ConversationSearch.Item.hint
     }
 }

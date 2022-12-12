@@ -370,7 +370,7 @@ final class InputBar: UIView {
         if let availabilityPlaceholder = availabilityPlaceholder {
             placeholder = availabilityPlaceholder
         } else if inputBarState.isEphemeral {
-            placeholder  = NSAttributedString(string: ConversationInputBar.placeholderEphemeral) && ephemeralColor
+            placeholder = NSAttributedString(string: ConversationInputBar.placeholderEphemeral) && ephemeralColor
         }
         if state.isEditing {
             return nil
