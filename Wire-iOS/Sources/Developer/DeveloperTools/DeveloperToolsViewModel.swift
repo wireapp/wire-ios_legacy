@@ -219,15 +219,6 @@ final class DeveloperToolsViewModel: ObservableObject {
         action.send(in: context)
     }
 
-    // MARK: - View generation
-
-    func alertView() -> Alert {
-        Alert(
-            title: Text(alertTitle ?? ""),
-            message: Text(alertBody ?? "")
-        )
-    }
-
     // MARK: - Helpers
 
     private var appVersion: String {
