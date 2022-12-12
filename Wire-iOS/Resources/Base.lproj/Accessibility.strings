@@ -66,13 +66,13 @@
 "conversationSearch.filesSection.description" = "Files in this conversation";
 "conversationSearch.videosSection.description" = "Videos in this conversation";
 "conversationSearch.linksSection.description" = "Links in this conversation";
-"conversationSearch.section.hint" = "Double tab to open all";
+"conversationSearch.section.hint" = "Double tap to open all";
 "conversationSearch.emptyResult.description" = "No results";
 "conversationSearch.noItems.description" = "No items in collection";
 "conversationSearch.imageMessage.description" = "Image";
 "conversationSearch.videoMessage.description" = "Video";
 "conversationSearch.audioMessage.description" = "Audio";
-"conversationSearch.sendBy.description" = "Send by %@";
+"conversationSearch.sentBy.description" = "Sent by %@";
 "conversationSearch.fileName.description" = "File name";
 "conversationSearch.fileSize.description" = "Size";
 "conversationSearch.fileType.description" = "Type";
