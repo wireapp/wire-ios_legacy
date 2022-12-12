@@ -55,9 +55,7 @@ class IncomingCallActionsView: UIView {
             horizontalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             horizontalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             horizontalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
-            horizontalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            endCallButton.trailingAnchor.constraint(equalTo:endCallButton.leadingAnchor, constant: 180),
-//            pickUpButton.widthAnchor.constraint(equalToConstant: 80).withPriority(.required)
+            horizontalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }
 

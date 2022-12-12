@@ -307,7 +307,7 @@ final class CallViewController: UIViewController {
                                      imageCache: UIImage.defaultUserImageCache,
                                      sizeLimit: UserImageView.Size.big.rawValue,
                                      isDesaturated: false,
-                                     completion: { [weak self] (image, cacheHit) in
+                                     completion: { [weak self] (image, _) in
             self?.incomingCallStatusView.setProfileImage(image)
         })
     }

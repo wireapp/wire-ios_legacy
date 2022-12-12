@@ -113,10 +113,6 @@ class CallingActionsView: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-//        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-//            let appearance: CallActionAppearance = (traitCollection.userInterfaceStyle == .light) ? .light : .dark(blurred: false)
-//            allButtons.forEach{$0.apply(appearance)}
-//                }
         guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
         setNeedsLayout()
         layoutIfNeeded()

@@ -127,9 +127,9 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private func setupViews() {
         if DeveloperFlag.updatedCallingUI.isOn {
-        gridView.backgroundColor = UIColor.from(scheme: .background, variant: ColorScheme.default.variant)
+            gridView.backgroundColor = UIColor.from(scheme: .background, variant: ColorScheme.default.variant)
         }
-            
+        
         gridView.dataSource = self
         gridView.gridViewDelegate = self
         view.addSubview(gridView)
