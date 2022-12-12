@@ -122,7 +122,6 @@ final class ConversationListBottomBarController: UIViewController {
         setupStackViews()
         addTargetForStackViews()
         createConstraints()
-        addObservers()
     }
 
     override func viewDidLoad() {
