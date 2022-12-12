@@ -140,6 +140,9 @@
                   Identifier = "NetworkStatusViewControllerSnapshotTests/testOnlineSynchronizing()">
                </Test>
                <Test
+                  Identifier = "NetworkStatusViewSnapShotTests">
+               </Test>
+               <Test
                   Identifier = "ProfileClientViewControllerTests">
                </Test>
                <Test
@@ -150,6 +153,9 @@
                </Test>
                <Test
                   Identifier = "ProfileFooterViewTests">
+               </Test>
+               <Test
+                  Identifier = "SearchResultLabelTests">
                </Test>
                <Test
                   Identifier = "SettingsTableViewControllerSnapshotTests">
