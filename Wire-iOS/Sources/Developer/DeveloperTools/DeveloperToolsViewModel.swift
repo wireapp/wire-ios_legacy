@@ -203,18 +203,17 @@ final class DeveloperToolsViewModel: ObservableObject {
             case .success([]):
                 self.alertTitle = "No registered tokens"
                 self.alertBody = nil
-                self.isPresentingAlert = true
 
             case let .success(tokens):
                 self.alertTitle = "Registered push tokens"
                 self.alertBody = tokens.map(\.debugDescription).joined(separator: "\n\n")
-                self.isPresentingAlert = true
 
             case let .failure(error):
                 self.alertTitle = "Registered push tokens"
                 self.alertBody = "Failed to fetch push tokens: \(String(describing: error))"
-                self.isPresentingAlert = true
             }
+
+            self.isPresentingAlert = true
         }
 
         action.send(in: context)
