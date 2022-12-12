@@ -35,30 +35,20 @@ class CallingActionButton: IconLabelButton {
         iconButton.borderWidth = 1
 
         setTitleColor(configuration.textColorNormal, for: .normal)
-        //iconButton.layer.borderColor = SemanticColors.Button.borderCallingNormal.cgColor
         iconButton.setBorderColor(SemanticColors.Button.borderCallingNormal, for: .normal)
         iconButton.setIconColor(SemanticColors.Button.iconCallingNormal, for: .normal)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingNormal, for: .normal)
-        //        iconButton.setBorderColor(configuration.borderColorNormal, for: .normal)
-        //        iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
-        //        iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
 
         setTitleColor(configuration.textColorNormal, for: .selected)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingSelected, for: .selected)
         iconButton.setIconColor(SemanticColors.Button.iconCallingSelected, for: .selected)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingSelected, for: .selected)
-        //        iconButton.setBorderColor(configuration.borderColorSelected, for: .selected)
-        //        iconButton.setIconColor(configuration.iconColorSelected, for: .selected)
-        //        iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .selected)
 
 
         setTitleColor(configuration.textColorDisabled, for: .disabled)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingDisabled, for: .disabled)
         iconButton.setIconColor(SemanticColors.Button.iconCallingDisabled, for: .disabled)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingDisabled, for: .disabled)
-        //        iconButton.setIconColor(configuration.iconColorDisabled, for: .disabled)
-        //        iconButton.setBackgroundImageColor(configuration.backgroundColorDisabled, for: .disabled)
-        //        iconButton.setBorderColor(configuration.borderColorDisabled, for: .disabled)
     }
 
 }
@@ -71,5 +61,14 @@ class EndCallButton: CallingActionButton {
         iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
         iconButton.setBackgroundImageColor(redColor, for: .normal)
     }
+}
 
+class PickUpButton: CallingActionButton {
+
+    override func apply(_ configuration: CallActionAppearance) {
+        let greenColor = SemanticColors.Button.backgroundPickUp
+        setTitleColor(configuration.textColorNormal, for: .normal)
+        iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
+        iconButton.setBackgroundImageColor(greenColor, for: .normal)
+    }
 }

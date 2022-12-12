@@ -38,15 +38,28 @@ class CallingActionsView: UIView {
     // Buttons
     private let microphoneButton = CallingActionButton.microphoneButton()
     private let cameraButton = CallingActionButton.cameraButton()
-    private let cameraButtonDisabled = UIView()
     private let speakerButton = CallingActionButton.speakerButton()
     private let flipCameraButton = CallingActionButton.flipCameraButton()
     private let endCallButton =  EndCallButton.endCallButton()
-    private let acceptCallButton = IconButton.acceptCall()
     private let handleView = UIView()
 
     private var allButtons: [IconLabelButton] {
         return [flipCameraButton, cameraButton, microphoneButton, speakerButton, endCallButton]
+    }
+
+    var isIncomingCall: Bool = false {
+        didSet {
+            guard oldValue != isIncomingCall else { return }
+            topStackView.removeSubviews()
+            handleView.isHidden = isIncomingCall
+            if isIncomingCall  {
+                [microphoneButton, cameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
+            } else {
+                allButtons.forEach(topStackView.addArrangedSubview)
+            }
+            topStackView.distribution = isIncomingCall ? .equalSpacing : .fillEqually
+            setNeedsDisplay()
+        }
     }
 
     // MARK: - Setup
@@ -57,7 +70,6 @@ class CallingActionsView: UIView {
         videoButtonDisabledTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(performButtonAction))
         setupViews()
         createConstraints()
-        updateToLayoutSize(layoutSize)
     }
 
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
@@ -66,8 +78,6 @@ class CallingActionsView: UIView {
 
     private func setupViews() {
         backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
-
-        cameraButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .fillEqually
         topStackView.spacing = 16
         verticalStackView.alignment = .center
@@ -78,36 +88,22 @@ class CallingActionsView: UIView {
         handleView.backgroundColor = SemanticColors.View.backgroundDragBarIndicator
         [handleView, topStackView].forEach(verticalStackView.addArrangedSubview) //add top handle
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
-        addSubview(cameraButtonDisabled)
     }
 
     private func createConstraints() {
-        [verticalStackView, cameraButtonDisabled].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
             verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             topStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
-            cameraButtonDisabled.leftAnchor.constraint(equalTo: cameraButton.leftAnchor),
-            cameraButtonDisabled.rightAnchor.constraint(equalTo: cameraButton.rightAnchor),
-            cameraButtonDisabled.topAnchor.constraint(equalTo: cameraButton.topAnchor),
-            cameraButtonDisabled.bottomAnchor.constraint(equalTo: cameraButton.bottomAnchor),
             handleView.widthAnchor.constraint(equalToConstant: 129),
             handleView.heightAnchor.constraint(equalToConstant: 5)
         ])
     }
 
     // MARK: - Orientation
-
-    func updateToLayoutSize(_ layoutSize: LayoutSize, animated: Bool = false) {
-        let canAcceptCall = input?.callState.canAccept ?? false
-        let isCompact = layoutSize == .compact
-        acceptCallButton.isHidden = isCompact || !canAcceptCall
-    }
-
     private var layoutSize: LayoutSize {
         LayoutSize(
             isConnected: input?.callState.isConnected ?? false,
@@ -118,7 +114,6 @@ class CallingActionsView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
-        updateToLayoutSize(layoutSize)
         setNeedsLayout()
         layoutIfNeeded()
     }
@@ -131,16 +126,12 @@ class CallingActionsView: UIView {
         self.input = input
         microphoneButton.isSelected = !input.isMuted
         microphoneButton.isEnabled = canToggleMuteButton(input)
-        cameraButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
         videoButtonDisabledTapRecognizer?.isEnabled = !input.canToggleMediaType
         cameraButton.isEnabled = input.canToggleMediaType
         cameraButton.isSelected = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
         flipCameraButton.isEnabled = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
         speakerButton.isEnabled = canToggleSpeakerButton(input)
-
-//        [microphoneButton, cameraButton, flipCameraButton, speakerButton].forEach { $0.appearance = .adaptive }
-        updateToLayoutSize(layoutSize, animated: true)
         updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
@@ -172,7 +163,6 @@ class CallingActionsView: UIView {
         case speakerButton: return .toggleSpeakerState
         case flipCameraButton: return .flipCamera
         case endCallButton: return .terminateCall
-        case acceptCallButton: return .acceptCall
         default: fatalError("Unexpected Button: \(button)")
         }
     }
@@ -185,14 +175,11 @@ class CallingActionsView: UIView {
         microphoneButton.accessibilityLabel = input.isMuted ? Label.toggleMuteOff: Label.toggleMuteOn
         flipCameraButton.accessibilityLabel = Label.flipCamera
         speakerButton.accessibilityLabel = input.mediaState.isSpeakerEnabled ? Label.toggleSpeakerOff: Label.toggleSpeakerOn
-        acceptCallButton.accessibilityLabel = Label.acceptCall
         endCallButton.accessibilityLabel = input.callState.canAccept ? Label.rejectCall: Label.terminateCall
-//        cameraButtonDisabled.accessibilityLabel = Label.toggleVideoOn
         cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Label.toggleVideoOff: Label.toggleVideoOn
         flipCameraButton.accessibilityLabel = input.cameraType == .front ? Label.switchToBackCamera: Label.switchToFrontCamera
 
     }
-
 }
 
 extension CallingActionsView {

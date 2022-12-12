@@ -33,7 +33,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
 
     private let labelContainerView = UIView()
     private let microphoneImageView = UIImageView()
-    private var microphoneWidth: NSLayoutConstraint!
+    private var microphoneWidth: NSLayoutConstraint?
 
     var microphoneIconStyle: MicrophoneIconStyle = .hidden {
         didSet {
@@ -110,7 +110,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
     }
 
     private func makeMicrophone(hidden: Bool) {
-            self.microphoneWidth.constant = hidden ? 0 : 22
+            self.microphoneWidth?.constant = hidden ? 0 : 22
             self.setNeedsDisplay()
     }
 
@@ -125,7 +125,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
             microphoneImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             microphoneImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             microphoneImageView.heightAnchor.constraint(equalToConstant: 22),
-            microphoneWidth
+            microphoneWidth!
         ])
         NSLayoutConstraint.activate(
             NSLayoutConstraint.forView(view: nameLabel,

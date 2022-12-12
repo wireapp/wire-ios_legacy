@@ -250,6 +250,7 @@ final class CallViewController: UIViewController {
     fileprivate func minimizeOverlay() {
         delegate?.callViewControllerDidDisappear(self, for: conversation)
     }
+    private lazy var incomingCallStatusView = IncomingCallStatusView()
 
     fileprivate func acceptDegradedCall() {
         guard let userSession = ZMUserSession.shared() else { return }
@@ -283,6 +284,32 @@ final class CallViewController: UIViewController {
         updateAppearance()
         updateIdleTimer()
         configurationObserver?.didUpdateConfiguration(configuration: callInfoConfiguration)
+        guard DeveloperFlag.updatedCallingUI.isOn else { return }
+        showIncomingCallStatusViewIfNeeded(forState: callInfoConfiguration.state)
+    }
+
+    private func showIncomingCallStatusViewIfNeeded(forState state: CallStatusViewState) {
+        guard state.isIncoming else {
+            incomingCallStatusView.removeFromSuperview()
+            return
+        }
+        guard incomingCallStatusView.superview == nil else { return }
+        incomingCallStatusView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(incomingCallStatusView)
+        NSLayoutConstraint.activate([
+            incomingCallStatusView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0),
+            incomingCallStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
+            incomingCallStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0)
+        ])
+        guard case .avatar(let user) = voiceChannel.accessoryType(), let session = ZMUserSession.shared() else { return }
+        incomingCallStatusView.setCallerName(name: user.value.name ?? "")
+        user.value.fetchProfileImage(session: session,
+                                     imageCache: UIImage.defaultUserImageCache,
+                                     sizeLimit: UserImageView.Size.big.rawValue,
+                                     isDesaturated: false,
+                                     completion: { [weak self] (image, _) in
+            self?.incomingCallStatusView.setProfileImage(image)
+        })
     }
 
     private func updateIdleTimer() {

@@ -5034,6 +5034,10 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "voice.call_error.unsupported_version.title")
         }
       }
+      internal enum Calling {
+        /// Calling...
+        internal static let title = L10n.tr("Localizable", "voice.calling.title")
+      }
       internal enum CancelButton {
         /// Cancel
         internal static let title = L10n.tr("Localizable", "voice.cancel_button.title")
@@ -5083,6 +5087,10 @@ internal enum L10n {
         internal static let body = L10n.tr("Localizable", "voice.network_error.body")
         /// No Internet Connection
         internal static let title = L10n.tr("Localizable", "voice.network_error.title")
+      }
+      internal enum PickUpButton {
+        /// Pick Up
+        internal static let title = L10n.tr("Localizable", "voice.pick_up_button.title")
       }
       internal enum SpeakerButton {
         /// Speaker
