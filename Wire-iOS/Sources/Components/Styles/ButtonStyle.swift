@@ -22,8 +22,8 @@ public struct ButtonStyle {
 
     typealias ButtonColors = SemanticColors.Button
 
-    private(set) var normalStateColors: (background: UIColor, title: UIColor, border: UIColor)
-    private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor)
+    private(set) var normalStateColors: (background: UIColor, title: UIColor, border: UIColor?)
+    private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor?)
     private(set) var selectedStateColors: (background: UIColor, title: UIColor, border: UIColor)?
 
     static let secondaryTextButtonStyle = ButtonStyle(normalStateColors: (
@@ -47,29 +47,47 @@ public struct ButtonStyle {
     static let accentColorTextButtonStyle = ButtonStyle(normalStateColors: (
                                                          background: UIColor.accent(),
                                                          title: ButtonColors.textPrimaryEnabled,
-                                                         border: .clear),
+                                                         border: nil),
                                                         highlightedStateColors: (
                                                          background: UIColor.accentDarken,
                                                          title: ButtonColors.textPrimaryEnabled,
-                                                         border: .clear))
+                                                         border: nil))
+
+    static let addParticipantsButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: UIColor.accent(),
+                                                         title: SemanticColors.Label.textDefaultWhite,
+                                                         border: nil),
+                                                        highlightedStateColors: (
+                                                         background: UIColor.accentDarken,
+                                                         title: SemanticColors.Label.textDefaultWhite,
+                                                         border: nil))
+
+    static let addParticipantsDisabledButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: SemanticColors.Button.backgroundPrimaryDisabled,
+                                                         title: SemanticColors.Button.textPrimaryDisabled,
+                                                         border: nil),
+                                                        highlightedStateColors: (
+                                                         background: SemanticColors.Button.backgroundPrimaryDisabled,
+                                                         title: SemanticColors.Button.textPrimaryDisabled,
+                                                         border: nil))
 
     static let primaryTextButtonStyle = ButtonStyle(normalStateColors: (
                                                          background: ButtonColors.backgroundPrimaryEnabled,
                                                          title: ButtonColors.textPrimaryEnabled,
-                                                         border: .clear),
+                                                         border: nil),
                                                         highlightedStateColors: (
                                                          background: ButtonColors.backgroundPrimaryHighlighted,
                                                          title: ButtonColors.textPrimaryEnabled,
-                                                         border: .clear))
+                                                         border: nil))
 
     static let emptyTextButtonStyle = ButtonStyle(normalStateColors: (
                                                          background: .clear,
                                                          title: ButtonColors.textEmptyEnabled,
-                                                         border: .clear),
+                                                         border: nil),
                                                         highlightedStateColors: (
                                                          background: .clear,
                                                          title: ButtonColors.textEmptyEnabled,
-                                                         border: .clear))
+                                                         border: nil))
 
     static let iconButtonStyle = ButtonStyle(normalStateColors: (
                                                          background: ButtonColors.backgroundInputBarItemEnabled,
