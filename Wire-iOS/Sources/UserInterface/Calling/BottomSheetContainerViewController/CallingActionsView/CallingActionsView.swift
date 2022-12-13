@@ -180,17 +180,14 @@ class CallingActionsView: UIView {
     // MARK: - Accessibility
 
     private func updateAccessibilityElements(with input: CallActionsViewInputType) {
-        typealias Label = L10n.Localizable.Call.Actions.Label
+        typealias Calling = L10n.Accessibility.Calling
 
-        microphoneButton.accessibilityLabel = input.isMuted ? Label.toggleMuteOff: Label.toggleMuteOn
-        flipCameraButton.accessibilityLabel = Label.flipCamera
-        speakerButton.accessibilityLabel = input.mediaState.isSpeakerEnabled ? Label.toggleSpeakerOff: Label.toggleSpeakerOn
-        acceptCallButton.accessibilityLabel = Label.acceptCall
-        endCallButton.accessibilityLabel = input.callState.canAccept ? Label.rejectCall: Label.terminateCall
-//        cameraButtonDisabled.accessibilityLabel = Label.toggleVideoOn
-        cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Label.toggleVideoOff: Label.toggleVideoOn
-        flipCameraButton.accessibilityLabel = input.cameraType == .front ? Label.switchToBackCamera: Label.switchToFrontCamera
-
+        microphoneButton.accessibilityLabel = input.isMuted ?  Calling.MicrophoneOnButton.description : Calling.MicrophoneOffButton.description
+        speakerButton.accessibilityLabel = input.mediaState.isSpeakerEnabled ? Calling.SpeakerOffButton.description : Calling.SpeakerOnButton.description
+        endCallButton.accessibilityLabel = Calling.HangUpButton.description
+        acceptCallButton.accessibilityLabel = Calling.AcceptButton.description
+        cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Calling.VideoOffButton.description : Calling.VideoOnButton.description
+        flipCameraButton.accessibilityLabel = input.cameraType == .front ? Calling.FlipCameraBackButton.description : Calling.FlipCameraFrontButton.description
     }
 
 }

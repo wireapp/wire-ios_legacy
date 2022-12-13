@@ -32,6 +32,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             updateBorderStyle()
             updateVideoKind()
             hideVideoViewsIfNeeded()
+            setupAccessibility()
         }
     }
 
@@ -103,6 +104,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         hideVideoViewsIfNeeded()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
+        setupAccessibility()
     }
 
     @available(*, unavailable)
@@ -116,6 +118,18 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         userDetailsView.name = stream.user?.name
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.activeSpeakerState.isSpeakingNow)
         userDetailsView.alpha = userDetailsAlpha
+    }
+    private func setupAccessibility() {
+        guard let userName = userDetailsView.name else {
+            return
+        }
+        isAccessibilityElement = true
+       // accessibilityTraits = .button
+        let isCameraSharing = stream.isSharingVideo ? L10n.Accessibility.Calling.CameraOn.description : L10n.Accessibility.Calling.CameraOff.description
+        let isActiveSpeaker = stream.isParticipantUnmutedAndSpeakingNow ? L10n.Accessibility.Calling.ActiveSpeaker.description: ""
+        let isScreenSharing = stream.isSharingVideo ? L10n.Accessibility.Calling.SharesScreen.description : ""
+        accessibilityLabel = "\(userName), \(userDetailsView.microphoneIconStyle.accessibilityLabel), \(isCameraSharing), \(isActiveSpeaker), \(isScreenSharing)"
+        //accessibilityHint = L10n.Accessibility.Calling.UserCellFullscreen.hint
     }
 
     func setupViews() {

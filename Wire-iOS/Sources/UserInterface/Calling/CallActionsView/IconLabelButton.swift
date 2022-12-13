@@ -21,9 +21,9 @@ import WireCommonComponents
 
 protocol IconLabelButtonInput {
     func icon(forState state: UIControl.State) -> StyleKitIcon
+    func accessibilityLabel(forState state: UIControl.State) -> String
     var label: String { get }
     var accessibilityIdentifier: String { get }
-    var accessibilityLabel: String { get }
 }
 
 class IconLabelButton: ButtonWithLargerHitArea {
@@ -32,6 +32,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private(set) var iconButton = IconButton()
     private(set) var subtitleTransformLabel = TransformLabel()
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+   // private var accessibilityLabelByState: [UIControl.State: String] = [:]
 
     var appearance: CallActionAppearance = .dark(blurred: false) {
 //    var appearance: CallActionAppearance = .adaptive {
@@ -48,7 +49,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
         iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
         subtitleTransformLabel.text = input.label
         accessibilityIdentifier = input.accessibilityIdentifier
-        accessibilityLabel = input.accessibilityLabel
+//        accessibilityLabelByState[.normal] = input.accessibilityLabel(forState: .normal)
+//        accessibilityLabelByState[.selected] = input.accessibilityLabel(forState: .selected)
+
     }
 
     @available(*, unavailable)
@@ -106,6 +109,12 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
+//    private func updateAccessibility() {
+//        if DeveloperFlag.updatedCallingUI.isOn {
+//            accessibilityLabel = accessibilityLabelByState[self.state]
+//        }
+//    }
+
     override var isHighlighted: Bool {
         didSet {
             iconButton.isHighlighted = isHighlighted
@@ -117,6 +126,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         didSet {
             iconButton.isSelected = isSelected
             updateState()
+//            updateAccessibility()
         }
     }
 

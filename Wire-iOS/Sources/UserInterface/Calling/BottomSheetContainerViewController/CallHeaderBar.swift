@@ -50,6 +50,7 @@ class CallHeaderBar: UIView {
         addSubview(titleLabel)
         addSubview(avatarContainerView)
         avatarContainerView.addSubview(avatarView)
+        titleLabel.accessibilityTraits = .header
     }
 
     private func setupConstraints() {

@@ -74,25 +74,81 @@ internal enum L10n {
         /// Accept
         internal static let description = L10n.tr("Accessibility", "calling.acceptButton.description")
       }
-      internal enum FlipCameraButton {
-        /// Flip
-        internal static let description = L10n.tr("Accessibility", "calling.flipCameraButton.description")
+      internal enum ActiveSpeaker {
+        /// Active speaker
+        internal static let description = L10n.tr("Accessibility", "calling.activeSpeaker.description")
+      }
+      internal enum BottomViewHide {
+        /// Double tap to swipe down and hide participant’s details
+        internal static let hint = L10n.tr("Accessibility", "calling.bottomViewHide.hint")
+      }
+      internal enum BottomViewShow {
+        /// Double tap to swipe up and view all participant’s details
+        internal static let hint = L10n.tr("Accessibility", "calling.bottomViewShow.hint")
+      }
+      internal enum CameraOff {
+        /// Camera off
+        internal static let description = L10n.tr("Accessibility", "calling.cameraOff.description")
+      }
+      internal enum CameraOn {
+        /// Camera on
+        internal static let description = L10n.tr("Accessibility", "calling.cameraOn.description")
+      }
+      internal enum FlipCameraBackButton {
+        /// Flip to back camera
+        internal static let description = L10n.tr("Accessibility", "calling.flipCameraBackButton.description")
+      }
+      internal enum FlipCameraFrontButton {
+        /// Flip to front camera
+        internal static let description = L10n.tr("Accessibility", "calling.flipCameraFrontButton.description")
       }
       internal enum HangUpButton {
-        /// Hang Up
+        /// End call
         internal static let description = L10n.tr("Accessibility", "calling.hangUpButton.description")
       }
-      internal enum MuteButton {
-        /// Microphone
-        internal static let description = L10n.tr("Accessibility", "calling.muteButton.description")
+      internal enum MicrophoneOff {
+        /// Microphone off
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOff.description")
       }
-      internal enum SpeakerButton {
-        /// Speaker
-        internal static let description = L10n.tr("Accessibility", "calling.speakerButton.description")
+      internal enum MicrophoneOffButton {
+        /// Turn off microphone
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOffButton.description")
       }
-      internal enum VideoButton {
-        /// Camera
-        internal static let description = L10n.tr("Accessibility", "calling.videoButton.description")
+      internal enum MicrophoneOn {
+        /// Microphone on
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOn.description")
+      }
+      internal enum MicrophoneOnButton {
+        /// Turn on microphone
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOnButton.description")
+      }
+      internal enum SharesScreen {
+        /// Shares screen
+        internal static let description = L10n.tr("Accessibility", "calling.sharesScreen.description")
+      }
+      internal enum SpeakerOffButton {
+        /// Turn off speaker
+        internal static let description = L10n.tr("Accessibility", "calling.speakerOffButton.description")
+      }
+      internal enum SpeakerOnButton {
+        /// Turn on speaker
+        internal static let description = L10n.tr("Accessibility", "calling.speakerOnButton.description")
+      }
+      internal enum UserCellFullscreen {
+        /// Double tap for full screen
+        internal static let hint = L10n.tr("Accessibility", "calling.userCellFullscreen.hint")
+      }
+      internal enum UserCellMinimize {
+        /// Double tap to minimize view
+        internal static let hint = L10n.tr("Accessibility", "calling.userCellMinimize.hint")
+      }
+      internal enum VideoOffButton {
+        /// Turn off camera
+        internal static let description = L10n.tr("Accessibility", "calling.videoOffButton.description")
+      }
+      internal enum VideoOnButton {
+        /// Turn on camera
+        internal static let description = L10n.tr("Accessibility", "calling.videoOnButton.description")
       }
     }
     internal enum ClientsList {
