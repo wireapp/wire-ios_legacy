@@ -154,10 +154,11 @@ final class ConversationVideoMessageCellDescription: ConversationMessageCellDesc
         return configuration.isObfuscated ? "ObfuscatedVideoCell" : "VideoCell"
     }
 
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage) {
         self.configuration = View.Configuration(message: message)
+        accessibilityLabel = L10n.Accessibility.ConversationSearch.VideoMessage.description
     }
 
 }
