@@ -62,7 +62,6 @@ extension UIColor {
     static var blackAlpha80: UIColor = UIColor(white: 0.0, alpha: 0.8)
     static var amberAlpha48: UIColor = UIColor(rgba: (254, 191, 2, 0.48))
     static var amberAlpha80: UIColor = UIColor(rgba: (254, 191, 2, 0.8))
-    static var iconBackgroundDark: UIColor = UIColor(rgba: (52, 55, 61, 0.8))
     static var iconDark: UIColor = UIColor(rgba: (52, 56, 69, 1))
     static var iconHilighted: UIColor = UIColor(rgba: (159, 161, 167, 1))
     static var iconDarkHilighted: UIColor = UIColor(rgba: (103, 107, 113, 1))

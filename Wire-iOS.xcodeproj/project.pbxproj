@@ -1176,7 +1176,7 @@
 		D36E027A293758DD006C3E5A /* CallHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E0279293758DD006C3E5A /* CallHeaderBar.swift */; };
 		D36E027C294092E7006C3E5A /* IncomingCallActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */; };
 		D38BC97628BF8AA700EB928F /* NotificationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455DF28AFC443005ACD74 /* NotificationServiceError.swift */; };
-		D3A74DBD29432E8B00DD272F /* IncomingCallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DBC29432E8B00DD272F /* IncomingCallStatusView.swift */; };
+		D3A74DBD29432E8B00DD272F /* EstablishingCallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */; };
 		D3C34E6E28C1593C004A1AF1 /* AccessTokenEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */; };
 		D3C34E7628C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */; };
 		D3DA6E7B292F67680045CC57 /* CallingActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */; };
@@ -3121,7 +3121,7 @@
 		D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Helper.swift"; sourceTree = "<group>"; };
 		D36E0279293758DD006C3E5A /* CallHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHeaderBar.swift; sourceTree = "<group>"; };
 		D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallActionsView.swift; sourceTree = "<group>"; };
-		D3A74DBC29432E8B00DD272F /* IncomingCallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallStatusView.swift; sourceTree = "<group>"; };
+		D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishingCallStatusView.swift; sourceTree = "<group>"; };
 		D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenEndpointTests.swift; sourceTree = "<group>"; };
 		D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationByIDEndpointTests.swift; sourceTree = "<group>"; };
 		D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsView.swift; sourceTree = "<group>"; };
@@ -7010,7 +7010,7 @@
 				D30880FA292CD8F200DDEAB0 /* CallingBottomSheetViewController.swift */,
 				D36E0279293758DD006C3E5A /* CallHeaderBar.swift */,
 				D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */,
-				D3A74DBC29432E8B00DD272F /* IncomingCallStatusView.swift */,
+				D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */,
 			);
 			path = BottomSheetContainerViewController;
 			sourceTree = "<group>";
@@ -9184,7 +9184,7 @@
 				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
 				A93C96BB251CD3DE00EBD4D8 /* AnalyticsDecryptionFailedObserver.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* CallGridConfiguration.swift in Sources */,
-				D3A74DBD29432E8B00DD272F /* IncomingCallStatusView.swift in Sources */,
+				D3A74DBD29432E8B00DD272F /* EstablishingCallStatusView.swift in Sources */,
 				EFDC36DC2257ACE800F916F3 /* StartUIInviteActionBar.swift in Sources */,
 				EFA145F6231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift in Sources */,
 				637387CD26458EDB004FEF79 /* ScalableView.swift in Sources */,

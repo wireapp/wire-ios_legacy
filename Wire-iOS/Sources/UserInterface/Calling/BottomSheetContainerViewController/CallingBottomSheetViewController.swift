@@ -67,7 +67,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         headerBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(headerBar)
 
-
         NSLayoutConstraint.activate([
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
