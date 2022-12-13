@@ -304,8 +304,8 @@ final class CallViewController: UIViewController {
             establishingCallStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             establishingCallStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0)
         ])
-        guard case .avatar(let user) = voiceChannel.accessoryType(), let session = ZMUserSession.shared() else { return }
-        user.value.fetchProfileImage(session: session,
+        guard let user = voiceChannel.getSecondParticipant(), let session = ZMUserSession.shared() else { return }
+        user.fetchProfileImage(session: session,
                                      imageCache: UIImage.defaultUserImageCache,
                                      sizeLimit: UserImageView.Size.big.rawValue,
                                      isDesaturated: false,
@@ -648,5 +648,4 @@ extension CallViewController {
         voiceChannel.videoState = raisedToEar ? .paused : .started
         updateConfiguration()
     }
-
 }

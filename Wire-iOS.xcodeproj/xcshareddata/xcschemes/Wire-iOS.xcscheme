@@ -80,9 +80,6 @@
                   Identifier = "CallInfoRootViewControllerTests">
                </Test>
                <Test
-                  Identifier = "CallInfoViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Dark()">
                </Test>
                <Test
