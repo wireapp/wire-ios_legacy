@@ -79,7 +79,67 @@ internal enum L10n {
         internal static let value = L10n.tr("Accessibility", "audioMessage.play.value")
       }
     }
+    internal enum AudioRecord {
+      internal enum AlienEffectButton {
+        /// Alien
+        internal static let description = L10n.tr("Accessibility", "audioRecord.alienEffectButton.description")
+      }
+      internal enum CancelButton {
+        /// Delete audio recording
+        internal static let description = L10n.tr("Accessibility", "audioRecord.cancelButton.description")
+      }
+      internal enum DeepVoiceEffectButton {
+        /// Deep voice
+        internal static let description = L10n.tr("Accessibility", "audioRecord.deepVoiceEffectButton.description")
+      }
+      internal enum HallEffectButton {
+        /// Hall effect
+        internal static let description = L10n.tr("Accessibility", "audioRecord.hallEffectButton.description")
+      }
+      internal enum HeliumEffectButton {
+        /// Helium
+        internal static let description = L10n.tr("Accessibility", "audioRecord.heliumEffectButton.description")
+      }
+      internal enum HighToDeepEffectButton {
+        /// High to deep
+        internal static let description = L10n.tr("Accessibility", "audioRecord.highToDeepEffectButton.description")
+      }
+      internal enum NormalEffectButton {
+        /// Normal
+        internal static let description = L10n.tr("Accessibility", "audioRecord.normalEffectButton.description")
+      }
+      internal enum QuickEffectButton {
+        /// Quick
+        internal static let description = L10n.tr("Accessibility", "audioRecord.quickEffectButton.description")
+      }
+      internal enum RedoButton {
+        /// Redo audio recording
+        internal static let description = L10n.tr("Accessibility", "audioRecord.redoButton.description")
+      }
+      internal enum RoboticEffectButton {
+        /// Robotic
+        internal static let description = L10n.tr("Accessibility", "audioRecord.roboticEffectButton.description")
+      }
+      internal enum SendButton {
+        /// Send
+        internal static let description = L10n.tr("Accessibility", "audioRecord.sendButton.description")
+      }
+      internal enum StartButton {
+        /// Start recording
+        internal static let description = L10n.tr("Accessibility", "audioRecord.startButton.description")
+        /// Double tap to record
+        internal static let hint = L10n.tr("Accessibility", "audioRecord.startButton.hint")
+      }
+      internal enum StopButton {
+        /// Stop recording
+        internal static let description = L10n.tr("Accessibility", "audioRecord.stopButton.description")
+      }
+    }
     internal enum ClientsList {
+      internal enum BackButton {
+        /// Go back to device list
+        internal static let description = L10n.tr("Accessibility", "clientsList.backButton.description")
+      }
       internal enum DeviceDetails {
         /// Double tap to open device details
         internal static let hint = L10n.tr("Accessibility", "clientsList.deviceDetails.hint")
@@ -191,6 +251,14 @@ internal enum L10n {
       internal enum MentionButton {
         /// Mention someone
         internal static let description = L10n.tr("Accessibility", "conversation.mentionButton.description")
+      }
+      internal enum MessageInfo {
+        /// Double tap to hide or show message info
+        internal static let hint = L10n.tr("Accessibility", "conversation.messageInfo.hint")
+      }
+      internal enum MessageOptions {
+        /// Triple tap to open messaging options
+        internal static let hint = L10n.tr("Accessibility", "conversation.messageOptions.hint")
       }
       internal enum MoreButton {
         /// Open more messaging options
@@ -371,7 +439,7 @@ internal enum L10n {
     }
     internal enum ConversationSearch {
       internal enum AudioMessage {
-        /// Audio
+        /// Audio message
         internal static let description = L10n.tr("Accessibility", "conversationSearch.audioMessage.description")
       }
       internal enum BackButton {
@@ -411,12 +479,16 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversationSearch.imagesSection.description")
       }
       internal enum Item {
-        /// Douple tap to open
+        /// Double tap to open
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.item.hint")
       }
       internal enum ItemPlay {
-        /// Douple tap to play
+        /// Double tap to play
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.itemPlay.hint")
+      }
+      internal enum LinkMessage {
+        /// Link
+        internal static let description = L10n.tr("Accessibility", "conversationSearch.linkMessage.description")
       }
       internal enum LinksSection {
         /// Links in this conversation
@@ -427,7 +499,7 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversationSearch.noItems.description")
       }
       internal enum Section {
-        /// Double tab to open all
+        /// Double tap to open all
         internal static let hint = L10n.tr("Accessibility", "conversationSearch.section.hint")
       }
       internal enum SentBy {
@@ -437,7 +509,7 @@ internal enum L10n {
         }
       }
       internal enum VideoMessage {
-        /// Video
+        /// Video message
         internal static let description = L10n.tr("Accessibility", "conversationSearch.videoMessage.description")
       }
       internal enum VideosSection {
