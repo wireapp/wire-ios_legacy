@@ -100,8 +100,8 @@ final class DeveloperToolsViewModel: ObservableObject {
     @Published
     var isPresentingAlert = false
 
-    private var alertTitle: String?
-    private var alertBody: String?
+    var alertTitle: String?
+    var alertBody: String?
 
     // MARK: - Life cycle
 
