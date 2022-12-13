@@ -524,5 +524,4 @@ final class LandingViewController: AuthenticationStepViewController {
     func displayError(_ error: Error) {
         // no-op
     }
-
 }
