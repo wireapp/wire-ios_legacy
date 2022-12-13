@@ -119,16 +119,20 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.activeSpeakerState.isSpeakingNow)
         userDetailsView.alpha = userDetailsAlpha
     }
+
     private func setupAccessibility() {
+        typealias Calling = L10n.Accessibility.Calling
+
         guard let userName = userDetailsView.name else {
             return
         }
         isAccessibilityElement = true
        // accessibilityTraits = .button
-        let isCameraSharing = stream.isSharingVideo ? L10n.Accessibility.Calling.CameraOn.description : L10n.Accessibility.Calling.CameraOff.description
-        let isActiveSpeaker = stream.isParticipantUnmutedAndSpeakingNow ? L10n.Accessibility.Calling.ActiveSpeaker.description: ""
-        let isScreenSharing = stream.isSharingVideo ? L10n.Accessibility.Calling.SharesScreen.description : ""
-        accessibilityLabel = "\(userName), \(userDetailsView.microphoneIconStyle.accessibilityLabel), \(isCameraSharing), \(isActiveSpeaker), \(isScreenSharing)"
+        let microphoneState = userDetailsView.microphoneIconStyle.accessibilityLabel
+        let sharingVideo = stream.isSharingVideo ? Calling.CameraOn.description : Calling.CameraOff.description
+        let activeSpeaker = stream.isParticipantUnmutedAndSpeakingNow ? Calling.ActiveSpeaker.description : ""
+        let screenSharing = stream.isScreenSharing ? Calling.SharesScreen.description : ""
+        accessibilityLabel = "\(userName), \(microphoneState), \(sharingVideo), \(activeSpeaker), \(screenSharing)"
         //accessibilityHint = L10n.Accessibility.Calling.UserCellFullscreen.hint
     }
 

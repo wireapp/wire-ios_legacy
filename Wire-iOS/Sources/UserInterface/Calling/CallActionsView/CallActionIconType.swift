@@ -75,35 +75,4 @@ enum CallActionIconType: IconLabelButtonInput {
         case .endCall: return .endCall
         }
     }
-
-    func accessibilityLabel(forState state: UIControl.State) -> String {
-        switch state {
-        case .selected: return selectedAccessibilityLabel
-        default: return normalAccessibilityLabel
-        }
-    }
-
-    private var normalAccessibilityLabel: String {
-        typealias Calling = L10n.Accessibility.Calling
-
-        switch self {
-        case .microphone: return Calling.MicrophoneOnButton.description
-        case .camera: return Calling.VideoOnButton.description
-        case .speaker: return Calling.SpeakerOnButton.description
-        case .flipCamera: return Calling.FlipCameraFrontButton.description
-        case .endCall: return Calling.HangUpButton.description
-        }
-    }
-
-    private var selectedAccessibilityLabel: String {
-        typealias Calling = L10n.Accessibility.Calling
-
-        switch self {
-        case .microphone: return Calling.MicrophoneOffButton.description
-        case .camera: return Calling.VideoOffButton.description
-        case .speaker: return Calling.SpeakerOffButton.description
-        case .flipCamera: return Calling.FlipCameraBackButton.description
-        case .endCall: return Calling.HangUpButton.description
-        }
-    }
 }
