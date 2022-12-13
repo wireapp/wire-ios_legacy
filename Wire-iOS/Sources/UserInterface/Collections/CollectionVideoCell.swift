@@ -33,7 +33,9 @@ final class CollectionVideoCell: CollectionCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.loadView()
+
+        loadView()
+        setupAccessibility()
     }
 
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
@@ -85,6 +87,13 @@ final class CollectionVideoCell: CollectionCell {
             view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
+    }
+
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        accessibilityLabel = L10n.Accessibility.ConversationSearch.VideoMessage.description
+        accessibilityHint = L10n.Accessibility.ConversationSearch.ItemPlay.hint
     }
 }
 
