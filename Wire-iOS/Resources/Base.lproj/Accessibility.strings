@@ -59,6 +59,8 @@
 "conversation.numberListButton.description" = "Use number list";
 "conversation.bulletListButton.description" = "Use bullet list";
 "conversation.codeButton.description" = "Use code format";
+"conversation.messageInfo.hint" = "Double tap to hide or show message info";
+"conversation.messageOptions.hint" = "Triple tap to open messaging options";
 
 "conversationSearch.closeButton.description" = "Close search";
 "conversationSearch.backButton.description" = "Go back to search";
@@ -70,15 +72,31 @@
 "conversationSearch.emptyResult.description" = "No results";
 "conversationSearch.noItems.description" = "No items in collection";
 "conversationSearch.imageMessage.description" = "Image";
-"conversationSearch.videoMessage.description" = "Video";
-"conversationSearch.audioMessage.description" = "Audio";
+"conversationSearch.videoMessage.description" = "Video message";
+"conversationSearch.audioMessage.description" = "Audio message";
+"conversationSearch.linkMessage.description" = "Link";
 "conversationSearch.sentBy.description" = "Sent by %@";
 "conversationSearch.fileName.description" = "File name";
 "conversationSearch.fileSize.description" = "Size";
 "conversationSearch.fileType.description" = "Type";
 
-"conversationSearch.item.hint" = "Douple tap to open";
-"conversationSearch.itemPlay.hint" = "Douple tap to play";
+"conversationSearch.item.hint" = "Double tap to open";
+"conversationSearch.itemPlay.hint" = "Double tap to play";
+
+"audioRecord.stopButton.description" = "Stop recording";
+"audioRecord.startButton.description" = "Start recording";
+"audioRecord.startButton.hint" = "Double tap to record";
+"audioRecord.sendButton.description" = "Send";
+"audioRecord.cancelButton.description" = "Delete audio recording";
+"audioRecord.redoButton.description" = "Redo audio recording";
+"audioRecord.normalEffectButton.description" = "Normal";
+"audioRecord.heliumEffectButton.description" = "Helium";
+"audioRecord.deepVoiceEffectButton.description" = "Deep voice";
+"audioRecord.quickEffectButton.description" = "Quick";
+"audioRecord.hallEffectButton.description" = "Hall effect";
+"audioRecord.alienEffectButton.description" = "Alien";
+"audioRecord.roboticEffectButton.description" = "Robotic";
+"audioRecord.highToDeepEffectButton.description" = "High to deep";
 
 "createConversation.backButton.description" = "Go back to contact list";
 
@@ -150,6 +168,7 @@
 "clientsList.keyFingerprint.description" = "Key fingerprint";
 "clientsList.deviceVerified.description" = "Verified";
 "clientsList.deviceNotVerified.description" = "Not Verified";
+"clientsList.backButton.description" = "Go back to device list";
 
 "deviceDetails.whyVerifyFingerprint.hint" = "Double tap to learn more about verifications";
 "deviceDetails.howToVerifyFingerprint.hint" = "Learn more about fingerprint verification";
