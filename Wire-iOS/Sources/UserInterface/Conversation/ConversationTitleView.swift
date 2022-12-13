@@ -90,7 +90,6 @@ final class ConversationTitleView: TitleView {
             return
         }
 
-
         accessibilityTraits = .button
         accessibilityHint = conversation.conversationType == .oneOnOne
         ? Conversation.TitleViewForOneToOne.hint
