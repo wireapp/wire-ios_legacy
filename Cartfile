@@ -7,5 +7,5 @@ github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 16.0.0
 github "wireapp/wire-ios-notification-engine" ~> 13.0.0
 github "wireapp/wire-ios-share-engine" ~> 253.0.0
-github "wireapp/wire-ios-sync-engine" ~> 433.0.0
+github "wireapp/wire-ios-sync-engine" ~> 434.0.0
 github "wireapp/wire-ios-ziphy" ~> 19.0.0
