@@ -112,6 +112,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
                                               target: self,
                                               action: #selector(CanvasViewController.close))
         closeButtonItem.accessibilityIdentifier = "closeButton"
+        closeButtonItem.accessibilityLabel = L10n.Accessibility.Sketch.CloseButton.description
 
         let undoButtonItem = UIBarButtonItem(image: undoImage,
                                              style: .plain,
@@ -119,6 +120,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
                                              action: #selector(Canvas.undo))
         undoButtonItem.isEnabled = false
         undoButtonItem.accessibilityIdentifier = "undoButton"
+        undoButtonItem.accessibilityLabel = L10n.Accessibility.Sketch.UndoButton.description
 
         navigationItem.leftBarButtonItem = undoButtonItem
         navigationItem.rightBarButtonItem = closeButtonItem
@@ -126,27 +128,33 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
     func configureButtons() {
 
+        typealias Sketch = L10n.Accessibility.Sketch
         let hitAreaPadding = CGSize(width: 16, height: 16)
 
         sendButton.addTarget(self, action: #selector(exportImage), for: .touchUpInside)
         sendButton.isEnabled = false
         sendButton.hitAreaPadding = hitAreaPadding
+        sendButton.accessibilityLabel = Sketch.SendButton.description
 
         drawButton.setIcon(.brush, size: .tiny, for: .normal)
         drawButton.addTarget(self, action: #selector(toggleDrawTool), for: .touchUpInside)
         drawButton.hitAreaPadding = hitAreaPadding
         drawButton.accessibilityIdentifier = "drawButton"
+        drawButton.accessibilityLabel = Sketch.DrawButton.description
+        drawButton.accessibilityHint = Sketch.DrawButton.hint
 
         photoButton.setIcon(.photo, size: .tiny, for: .normal)
         photoButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
         photoButton.hitAreaPadding = hitAreaPadding
         photoButton.accessibilityIdentifier = "photoButton"
+        photoButton.accessibilityLabel = Sketch.SelectPictureButton.description
         photoButton.isHidden = !MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).hasAccessToCameraRoll
 
         emojiButton.setIcon(.emoji, size: .tiny, for: .normal)
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)
         emojiButton.hitAreaPadding = hitAreaPadding
         emojiButton.accessibilityIdentifier = "emojiButton"
+        emojiButton.accessibilityLabel = Sketch.SelectEmojiButton.description
 
         [photoButton, drawButton, emojiButton].forEach { iconButton in
             iconButton.layer.cornerRadius = 12

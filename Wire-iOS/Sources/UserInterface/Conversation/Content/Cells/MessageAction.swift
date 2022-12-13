@@ -216,23 +216,25 @@ enum MessageAction: CaseIterable {
     }
 
     var accessibilityLabel: String? {
+        typealias MessageAction = L10n.Accessibility.MessageAction
+
         switch self {
         case .copy:
-            return "copy"
+            return MessageAction.CopyButton.description
         case .save:
-            return "save"
+            return MessageAction.SaveButton.description
         case .sketchDraw:
-            return "sketch over image"
+            return MessageAction.SketchButton.description
         case .sketchEmoji:
-            return "sketch emoji over image"
+            return MessageAction.EmojiButton.description
         case .showInConversation:
-            return "reveal in conversation"
+            return MessageAction.RevealButton.description
         case .delete:
-            return "delete"
+            return MessageAction.DeleteButton.description
         case .unlike:
-            return "unlike"
+            return MessageAction.LikeButton.description
         case .like:
-            return "like"
+            return MessageAction.UnlikeButton.description
         default:
             return nil
         }
