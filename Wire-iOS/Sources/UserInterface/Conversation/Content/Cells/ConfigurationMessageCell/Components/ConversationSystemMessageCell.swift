@@ -72,7 +72,9 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         titleLabel.attributedText = object.title
         attributedText = object.message
         imageView.image = object.icon
+        imageView.isAccessibilityElement = false
         selectedUsers = object.selectedUsers
+        accessibilityLabel = object.title?.string
     }
 
 }
