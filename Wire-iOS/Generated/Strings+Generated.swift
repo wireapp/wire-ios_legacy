@@ -3621,7 +3621,7 @@ internal enum L10n {
       /// Search by name or username
       internal static let searchPlaceholder = L10n.tr("Localizable", "peoplepicker.search_placeholder")
       internal enum Button {
-        /// Add Participants to Group
+        /// Add Participants
         internal static let addToConversation = L10n.tr("Localizable", "peoplepicker.button.add_to_conversation")
         /// Create group
         internal static let createConversation = L10n.tr("Localizable", "peoplepicker.button.create_conversation")

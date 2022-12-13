@@ -266,7 +266,7 @@ final class ConversationCreationController: UIViewController {
                 values.participants = parts
             }
 
-            let participantsController = AddParticipantsViewController(context: .create(values), variant: colorSchemeVariant)
+            let participantsController = AddParticipantsViewController(context: .create(values))
             participantsController.conversationCreationDelegate = self
             navigationController?.pushViewController(participantsController, animated: true)
         }
