@@ -24,6 +24,26 @@ protocol EmailPasswordTextFieldDelegate: AnyObject {
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
+class RevisedEmailPasswordTextField: EmailPasswordTextField {
+
+    override func configureConstraints() {
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // dimensions
+            passwordField.heightAnchor.constraint(equalToConstant: 48),
+            emailField.heightAnchor.constraint(equalToConstant: 48),
+
+            // contentStack
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 31),
+            contentStack.topAnchor.constraint(equalTo: topAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -31),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+
+}
+
 class EmailPasswordTextField: UIView, MagicTappable {
 
     let emailField = ValidatedTextField(kind: .email, cornerRadius: 12, setNewColors: true, style: .default)
@@ -78,7 +98,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
         emailField.delegate = self
         emailField.textFieldValidationDelegate = self
-        emailField.placeholder = "email.placeholder".localized(uppercased: true)
+        emailField.placeholder = L10n.Localizable.Email.placeholder.capitalized
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         emailField.colorSchemeVariant = colorSchemeVariant
@@ -90,7 +110,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
         passwordField.delegate = self
         passwordField.textFieldValidationDelegate = self
-        passwordField.placeholder = "password.placeholder".localized(uppercased: true)
+        passwordField.placeholder = L10n.Localizable.Password.placeholder.capitalized
         passwordField.bindConfirmationButton(to: emailField)
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
@@ -103,7 +123,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         contentStack.addArrangedSubview(passwordField)
     }
 
-    private func configureConstraints() {
+     func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -112,9 +132,9 @@ class EmailPasswordTextField: UIView, MagicTappable {
             emailField.heightAnchor.constraint(equalToConstant: 48),
 
             // contentStack
-            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 31),
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentStack.topAnchor.constraint(equalTo: topAnchor),
-            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -31),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
@@ -182,7 +202,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     // MARK: - Submission
 
-    @objc private func confirmButtonTapped() {
+    @objc func confirmButtonTapped() {
         guard emailValidationError == nil && passwordValidationError == nil else {
             delegate?.textFieldDidSubmitWithValidationError(self)
             return
@@ -208,6 +228,10 @@ class EmailPasswordTextField: UIView, MagicTappable {
         }
 
         delegate?.textFieldDidUpdateText(self)
+    }
+
+    var hasValidInput: Bool {
+        return emailField.isInputValid && passwordField.isInputValid
     }
 
 }

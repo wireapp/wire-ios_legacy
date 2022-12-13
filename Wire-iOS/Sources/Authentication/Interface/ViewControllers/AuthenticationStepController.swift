@@ -182,6 +182,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         }
 
         secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
+        secondaryViewsStackView.axis = .vertical
         secondaryViewsStackView.distribution = .equalCentering
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -261,6 +262,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
             mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: AuthenticationStepController.mainViewHeight),
             secondaryViewsStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 13),
             errorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 19)
+
         ])
 
         if stepDescription.footerView != nil {

@@ -53,7 +53,6 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText)
     static let placeholderFont = FontSpec(.small, .regular)
     static let ConfirmButtonWidth: CGFloat = 32
-    static let GuidanceDotWidth: CGFloat = 8
 
     typealias TextFieldColors = SemanticColors.SearchBar
 

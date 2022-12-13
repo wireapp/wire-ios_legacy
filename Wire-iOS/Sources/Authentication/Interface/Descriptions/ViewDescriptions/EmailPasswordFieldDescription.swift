@@ -19,7 +19,7 @@
 import UIKit
 
 final class EmailPasswordFieldDescription: ValueSubmission {
-    let textField = EmailPasswordTextField()
+    let textField = RevisedEmailPasswordTextField()
 
     var forRegistration: Bool
     var prefilledEmail: String?

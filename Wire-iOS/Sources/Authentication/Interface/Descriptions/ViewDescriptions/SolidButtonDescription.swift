@@ -39,8 +39,9 @@ class SolidButtonDescription: ValueSubmission {
 
 extension SolidButtonDescription: ViewDescriptor {
     func create() -> UIView {
+
         let button = IconButton(fontSpec: .normalSemiboldFont)
-        button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
         button.applyStyle(.accentColorTextButtonStyle)
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
@@ -55,6 +56,7 @@ extension SolidButtonDescription: ViewDescriptor {
         buttonContainer.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            button.heightAnchor.constraint(equalToConstant: 48),
             button.widthAnchor.constraint(equalToConstant: 300),
             button.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
             button.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor),
