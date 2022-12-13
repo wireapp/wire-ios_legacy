@@ -103,14 +103,6 @@ class CallingActionsView: UIView {
         ])
     }
 
-    // MARK: - Orientation
-    private var layoutSize: LayoutSize {
-        LayoutSize(
-            isConnected: input?.callState.isConnected ?? false,
-            isCompactVerticalSizeClass: traitCollection.verticalSizeClass == .compact
-        )
-    }
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
@@ -179,18 +171,5 @@ class CallingActionsView: UIView {
         cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Label.toggleVideoOff: Label.toggleVideoOn
         flipCameraButton.accessibilityLabel = input.cameraType == .front ? Label.switchToBackCamera: Label.switchToFrontCamera
 
-    }
-}
-
-extension CallingActionsView {
-    enum LayoutSize {
-        case compact
-        case regular
-    }
-}
-
-extension CallingActionsView.LayoutSize {
-    init(isConnected: Bool, isCompactVerticalSizeClass: Bool) {
-        self = (isConnected && isCompactVerticalSizeClass) ? .compact : .regular
     }
 }

@@ -67,7 +67,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         headerBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(headerBar)
 
-
         NSLayoutConstraint.activate([
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -76,8 +75,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
             headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
         ])
         headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
-        guard case .avatar(let user) = voiceChannel.accessoryType(), let session = ZMUserSession.shared() else { return }
-        user.value.fetchProfileImage(session: session,
+        guard !voiceChannel.isGroupCall, let user = voiceChannel.getSecondParticipant(), let session = ZMUserSession.shared() else { return }
+        user.fetchProfileImage(session: session,
                                      imageCache: UIImage.defaultUserImageCache,
                                      sizeLimit: UserImageView.Size.small.rawValue,
                                      isDesaturated: false,

@@ -25,4 +25,13 @@ extension VoiceChannel {
         mute(toggled, userSession: userSession)
     }
 
+    func getSecondParticipant() -> ZMUser? {
+        guard let participants = self.conversation?.participants as? [ZMUser] else { return nil }
+        let selfUserID = ZMUser.selfUser().remoteIdentifier
+        return participants.first(where: { $0.remoteIdentifier != selfUserID })
+    }
+
+    var isGroupCall: Bool {
+        return conversation?.conversationType == .group
+    }
 }
