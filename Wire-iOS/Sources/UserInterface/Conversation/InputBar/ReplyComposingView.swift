@@ -26,21 +26,22 @@ protocol ReplyComposingViewDelegate: AnyObject {
 
 fileprivate extension ZMConversationMessage {
     var accessibilityDescription: String {
+        typealias ConversationInputBarMessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
         let contentDescriptionText: String
         let senderDescriptionText = senderUser?.name ?? ""
 
         if let textData = textMessageData {
             contentDescriptionText = textData.messageText ?? ""
         } else if isImage {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.image_message".localized
+            contentDescriptionText = ConversationInputBarMessagePreview.Accessibility.imageMessage
         } else if let locationData = locationMessageData {
-            contentDescriptionText = locationData.name ?? "conversation.input_bar.message_preview.accessibility.location_message".localized
+            contentDescriptionText = locationData.name ?? ConversationInputBarMessagePreview.Accessibility.locationMessage
         } else if isVideo {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.video_message".localized
+            contentDescriptionText = ConversationInputBarMessagePreview.Accessibility.videoMessage
         } else if isAudio {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.audio_message".localized
+            contentDescriptionText = ConversationInputBarMessagePreview.Accessibility.audioMessage
         } else if let fileData = fileMessageData {
-            contentDescriptionText = String(format: "conversation.input_bar.message_preview.accessibility.file_message".localized, fileData.filename ?? "")
+            contentDescriptionText = ConversationInputBarMessagePreview.Accessibility.fileMessage(fileData.filename ?? "")
         } else {
             contentDescriptionText = "conversation.input_bar.message_preview.accessibility.unknown_message".localized
         }
