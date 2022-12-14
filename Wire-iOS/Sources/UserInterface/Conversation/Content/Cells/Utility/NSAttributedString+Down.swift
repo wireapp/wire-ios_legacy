@@ -51,7 +51,7 @@ extension NSAttributedString {
     /// - Parameter numberOfLinesLimit: number of line reserved
     /// - Returns: the trimmed NSAttributedString. If not excess limit, return the original NSAttributedString
     func trimmedToNumberOfLines(numberOfLinesLimit: Int) -> NSAttributedString {
-        /// trim the string to first four lines to prevent last line narrower spacing issue
+        // Trim the string to first four lines to prevent last line narrower spacing issue
         let lines = string.components(separatedBy: ["\n"])
         if lines.count > numberOfLinesLimit {
             let headLines = lines.prefix(numberOfLinesLimit).joined(separator: "\n")

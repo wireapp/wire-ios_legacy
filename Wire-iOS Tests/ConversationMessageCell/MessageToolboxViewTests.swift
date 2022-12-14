@@ -125,7 +125,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         readReceipt.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
         message.readReceipts = [readReceipt]
 
-        /// liked after read
+        // Liked after read
         let users = MockUser.mockUsers().first(where: { !$0.isSelfUser })!
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [users]]
 

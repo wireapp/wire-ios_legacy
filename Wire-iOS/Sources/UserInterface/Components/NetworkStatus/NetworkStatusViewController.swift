@@ -135,7 +135,7 @@ final class NetworkStatusViewController: UIViewController {
         case .onlineSynchronizing:
             return .onlineSynchronizing
         @unknown default:
-            /// TODO: ZMNetworkState change to NS_CLOSED_ENUM
+            // TODO: ZMNetworkState change to NS_CLOSED_ENUM
             fatalError()
         }
     }
@@ -199,7 +199,7 @@ extension NetworkStatusViewController {
             if shouldShowOnIPad() {
                 networkStatusView.update(state: state, animated: false)
             } else {
-                /// when size class changes and delegate view controller disabled to show networkStatusView, hide the networkStatusView
+                // When size class changes and delegate view controller disabled to show networkStatusView, hide the networkStatusView
                 networkStatusView.update(state: .online, animated: false)
             }
         case .compact, .unspecified:

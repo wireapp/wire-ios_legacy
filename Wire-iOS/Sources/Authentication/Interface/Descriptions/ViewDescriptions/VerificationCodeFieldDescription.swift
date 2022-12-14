@@ -26,7 +26,7 @@ final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
     var constraints: [NSLayoutConstraint] = []
 }
 
-fileprivate final class ResponderContainer<Child: UIView>: UIView {
+private final class ResponderContainer<Child: UIView>: UIView {
     private let responder: Child
 
     init(responder: Child) {
@@ -68,7 +68,7 @@ extension ResponderContainer: TextContainer where Child: TextContainer {
 
 extension VerificationCodeFieldDescription: ViewDescriptor {
     func create() -> UIView {
-        /// get the with from keyWindow for iPad non full screen modes.
+        // Get the with from keyWindow for iPad non full screen modes.
         let window = UIApplication.shared.firstKeyWindow
         let width = window?.frame.width ?? UIScreen.main.bounds.size.width
         let size = CGSize(width: width, height: AuthenticationStepController.mainViewHeight)
