@@ -145,7 +145,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, sender: UserType) {
         let senderText = sender.isSelfUser ? "content.ping.text.you".localized : (sender.name ?? "")
@@ -158,6 +158,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
 
         let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
         self.configuration = View.Configuration(pingColor: pingColor, pingText: text, message: message)
+        accessibilityLabel = text.string
         actionController = nil
     }
 

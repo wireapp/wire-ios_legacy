@@ -103,6 +103,10 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         fatalError("init(coder:) has not been implemented")
     }
 
+    override public func viewDidLoad() {
+        UIAccessibility.post(notification: .layoutChanged, argument: self)
+    }
+
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recorder.stopRecording()
@@ -180,6 +184,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         self.tipLabel.font = FontSpec(.small, .light).font!
         self.tipLabel.textColor = color
         self.tipLabel.textAlignment = .center
+        self.tipLabel.isAccessibilityElement = false
     }
 
     private func createButtons() {
@@ -188,31 +193,38 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed), for: .touchUpInside)
         self.recordButton.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
         self.recordButton.layer.masksToBounds = true
-        self.recordButton.accessibilityLabel = "record"
 
         self.stopRecordButton.setIcon(.stopRecording, size: .tiny, for: [])
         self.stopRecordButton.setIconColor(.white, for: [])
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed), for: .touchUpInside)
         self.stopRecordButton.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
         self.stopRecordButton.layer.masksToBounds = true
-        self.stopRecordButton.accessibilityLabel = "stopRecording"
 
         self.confirmButton.setIcon(.checkmark, size: .tiny, for: [])
         self.confirmButton.setIconColor(.white, for: [])
         self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
         self.confirmButton.setBackgroundImageColor(SemanticColors.LegacyColors.strongLimeGreen, for: .normal)
         self.confirmButton.layer.masksToBounds = true
-        self.confirmButton.accessibilityLabel = "confirmRecording"
 
         self.redoButton.setIcon(.undo, size: .tiny, for: [])
         self.redoButton.setIconColor(.white, for: [])
         self.redoButton.addTarget(self, action: #selector(redoButtonPressed), for: .touchUpInside)
-        self.redoButton.accessibilityLabel = "redoRecording"
 
         self.cancelButton.setIcon(.cross, size: .tiny, for: [])
         self.cancelButton.setIconColor(.white, for: [])
         self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
-        self.cancelButton.accessibilityLabel = "cancelRecording"
+
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias AudioRecord = L10n.Accessibility.AudioRecord
+
+        self.recordButton.accessibilityLabel = AudioRecord.StartButton.description
+        self.stopRecordButton.accessibilityLabel = AudioRecord.StopButton.description
+        self.confirmButton.accessibilityLabel = AudioRecord.SendButton.description
+        self.redoButton.accessibilityLabel = AudioRecord.RedoButton.description
+        self.cancelButton.accessibilityLabel = AudioRecord.CancelButton.description
     }
 
     private func createConstraints() {
