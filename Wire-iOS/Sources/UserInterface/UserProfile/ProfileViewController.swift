@@ -317,7 +317,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
                                     footerView: ProfileFooterView) -> UIAlertAction {
         return UIAlertAction(title: action.buttonText,
                              style: .default) { _ in
-                                self.performAction(action, targetView: footerView)
+            self.performAction(action, targetView: footerView)
         }
     }
 
@@ -334,9 +334,11 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         case .deleteContents:
             presentDeleteConfirmationPrompt(from: targetView)
         case let .block(isBlocked):
-            isBlocked
-                ? handleBlockAndUnblock()
-                : presentBlockActionSheet(from: targetView)
+            if isBlocked {
+                handleBlockAndUnblock()
+            } else {
+                presentBlockActionSheet(from: targetView)
+            }
         case .openOneToOne:
             viewModel.openOneToOneConversation()
         case .removeFromGroup:

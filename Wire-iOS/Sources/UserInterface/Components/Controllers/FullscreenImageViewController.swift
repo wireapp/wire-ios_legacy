@@ -214,10 +214,10 @@ final class FullscreenImageViewController: UIViewController {
         let topBarHeight: CGFloat = navigationController?.navigationBar.frame.maxY ?? 0
 
         NSLayoutConstraint.activate([
-        snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
-        snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width),
-        snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height)
+            snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
+            snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width),
+            snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height)
         ])
         snapshotBackgroundView.alpha = 0
 
@@ -539,9 +539,12 @@ final class FullscreenImageViewController: UIViewController {
 
             highlightLayer = layer
 
-            animated ?
-            UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure) :
-            blackLayerClosure()
+            if animated {
+                UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure)
+            } else {
+                blackLayerClosure()
+            }
+
         } else {
 
             let removeLayerClosure: Completion = {
