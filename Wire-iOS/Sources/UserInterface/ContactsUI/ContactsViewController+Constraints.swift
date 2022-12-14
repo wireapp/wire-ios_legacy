@@ -88,7 +88,7 @@ extension ContactsViewController {
             inviteOthersButton.trailingAnchor.constraint(equalTo: inviteOthersButton.superview!.trailingAnchor, constant: -standardOffset)
         ]
 
-        constraints += [inviteOthersButton.heightAnchor.constraint(equalToConstant: 28)]
+        constraints += [inviteOthersButton.heightAnchor.constraint(equalToConstant: 56)]
 
         NSLayoutConstraint.activate(constraints)
     }

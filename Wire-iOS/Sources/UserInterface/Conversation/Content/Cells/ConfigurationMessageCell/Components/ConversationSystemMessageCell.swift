@@ -72,7 +72,9 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         titleLabel.attributedText = object.title
         attributedText = object.message
         imageView.image = object.icon
+        imageView.isAccessibilityElement = false
         selectedUsers = object.selectedUsers
+        accessibilityLabel = object.title?.string
     }
 
 }
@@ -396,7 +398,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let color = SemanticColors.Icon.backgroundIconDefaultConversationView
@@ -404,6 +406,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
 
         let model = ParticipantsCellViewModel(font: .mediumFont, largeFont: .largeSemiboldFont, textColor: textColor, iconColor: color, message: message)
         configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true, warning: model.warning())
+        accessibilityLabel = model.attributedTitle()?.string
         actionController = nil
     }
 }
@@ -424,7 +427,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType, newName: String) {
         let senderText = message.senderName
@@ -435,6 +438,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
         let conversationName = NSAttributedString(string: newName, attributes: [.font: UIFont.normalSemiboldFont, .foregroundColor: SemanticColors.Label.textDefault])
         configuration = View.Configuration(attributedText: title, newConversationName: conversationName)
         actionController = nil
+        accessibilityLabel = "\(titleString), \(newName)"
     }
 
 }
@@ -455,7 +459,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
         let viewModel = CallCellViewModel(
@@ -468,6 +472,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
         )
 
         configuration = View.Configuration(icon: viewModel.image(), attributedText: viewModel.attributedTitle(), showLine: false)
+        accessibilityLabel = viewModel.attributedTitle()?.string
         actionController = nil
     }
 
@@ -496,7 +501,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: UserType) {
         let senderText = message.senderName
@@ -515,6 +520,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
 
         let icon = StyleKitIcon.hourglass.makeImage(size: 16, color: SemanticColors.Icon.backgroundIconDefaultConversationView)
         configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
+        accessibilityLabel = updateText?.string
         actionController = nil
     }
 
@@ -536,7 +542,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init() {
         let title = NSAttributedString(
@@ -545,6 +551,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
         )
 
         configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
+        accessibilityLabel = title.string
         actionController = nil
     }
 }
@@ -615,7 +622,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let title = ConversationMissingMessagesSystemMessageCellDescription.makeAttributedString(systemMessageData: data)
@@ -623,6 +630,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
                                                                                          color: SemanticColors.Icon.backgroundMissedPhoneCall),
                                             attributedText: title,
                                             showLine: true)
+        accessibilityLabel = title.string
         actionController = nil
     }
 
@@ -671,12 +679,13 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, user: UserType) {
         let title = ConversationIgnoredDeviceSystemMessageCellDescription.makeAttributedString(systemMessage: data, user: user)
 
-        configuration =  View.Configuration(attributedText: title, icon: WireStyleKit.imageOfShieldnotverified, linkTarget: .user(user))
+        configuration = View.Configuration(attributedText: title, icon: WireStyleKit.imageOfShieldnotverified, linkTarget: .user(user))
+        accessibilityLabel = configuration.attributedText?.string
         actionController = nil
     }
 
@@ -714,9 +723,11 @@ class ConversationSessionResetSystemMessageCellDescription: ConversationMessageC
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType) {
         let icon = StyleKitIcon.envelope.makeImage(size: .tiny, color: UIColor.Wire.primaryLabel)
+        let title = Self.makeAttributedString(sender)
         configuration = View.Configuration(icon: icon,
-                                           attributedText: Self.makeAttributedString(sender),
+                                           attributedText: title,
                                            showLine: true)
+        accessibilityLabel = title.string
     }
 
     static func makeAttributedString(_ sender: UserType) -> NSAttributedString {
@@ -750,7 +761,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType) {
         let icon: UIImage
@@ -769,6 +780,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         configuration = View.Configuration(icon: icon,
                                            attributedText: title,
                                            showLine: false)
+        accessibilityLabel = title.string
         actionController = nil
     }
 
@@ -886,10 +898,11 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, systemMessageData: ZMSystemMessageData, conversation: ZMConversation) {
         configuration = ConversationNewDeviceSystemMessageCellDescription.configuration(for: systemMessageData, in: conversation)
+        accessibilityLabel = configuration.attributedText?.string
         actionController = nil
     }
 

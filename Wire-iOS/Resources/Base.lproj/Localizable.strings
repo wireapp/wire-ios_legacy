@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "Create group";
-"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
+"peoplepicker.button.add_to_conversation" = "Add Participants";
 "peoplepicker.header.conversations" = "Groups";
 "peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invite";
@@ -1023,8 +1023,8 @@
 
 "self.settings.account_picture_group.picture" = "Profile picture";
 "self.settings.account_picture_group.alert.title" = "Change your profile picture";
-"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
-"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
+"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
 "self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";

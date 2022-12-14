@@ -19,6 +19,7 @@
 import UIKit
 import Down
 import WireDataModel
+import WireCommonComponents
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
@@ -103,8 +104,11 @@ private struct InputBarConstants {
 
 final class InputBar: UIView {
 
+    typealias ConversationInputBar = L10n.Localizable.Conversation.InputBar
+
     private let inputBarVerticalInset: CGFloat = 34
     static let rightIconSize: CGFloat = 32
+    private let textViewFont = FontSpec.normalRegularFont.font!
 
     let textView = MarkdownTextView(with: DownStyle.compact)
     let leftAccessoryView  = UIView()
@@ -133,10 +137,13 @@ final class InputBar: UIView {
 
     let markdownView = MarkdownBarView()
 
-    var editingBackgroundColor = SemanticColors.LegacyColors.brightYellow
+    var editingBackgroundColor: UIColor {
+        return .lowAccentColor()
+    }
 
     var barBackgroundColor: UIColor? = SemanticColors.SearchBar.backgroundInputView
     var writingSeparatorColor: UIColor? = SemanticColors.View.backgroundSeparatorCell
+    var editingSeparatorColor: UIColor? = SemanticColors.View.backgroundSeparatorEditView
 
     var ephemeralColor: UIColor {
         return .accent()
@@ -250,10 +257,10 @@ final class InputBar: UIView {
         textView.placeholderTextContainerInset = UIEdgeInsets(top: 21, left: 10, bottom: 21, right: 0)
         textView.keyboardType = .default
         textView.keyboardAppearance = .default
-        textView.placeholderTextTransform = .upper
+        textView.placeholderTextTransform = .none
         textView.tintAdjustmentMode = .automatic
-        textView.font = .normalLightFont
-        textView.placeholderFont = .smallSemiboldFont
+        textView.font = textViewFont
+        textView.placeholderFont = textViewFont
         textView.backgroundColor = .clear
 
         markdownView.delegate = textView
@@ -358,12 +365,12 @@ final class InputBar: UIView {
 
     func placeholderText(for state: InputBarState) -> NSAttributedString? {
 
-        var placeholder = NSAttributedString(string: "conversation.input_bar.placeholder".localized)
+        var placeholder = NSAttributedString(string: ConversationInputBar.placeholder)
 
         if let availabilityPlaceholder = availabilityPlaceholder {
             placeholder = availabilityPlaceholder
         } else if inputBarState.isEphemeral {
-            placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized) && ephemeralColor
+            placeholder = NSAttributedString(string: ConversationInputBar.placeholderEphemeral) && ephemeralColor
         }
         if state.isEditing {
             return nil
@@ -446,7 +453,7 @@ final class InputBar: UIView {
 
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
         guard let writingColor = barBackgroundColor else { return nil }
-        return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingBackgroundColor, amount: 0.16)
+        return state.isWriting || state.isMarkingDown ? writingColor : editingBackgroundColor
     }
 
     fileprivate func updatePlaceholderColors() {
@@ -459,15 +466,15 @@ final class InputBar: UIView {
         }
     }
 
-    fileprivate func updateColors() {
+     func updateColors() {
 
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
-        buttonRowSeparator.backgroundColor = writingSeparatorColor
+        buttonRowSeparator.backgroundColor = isEditing ? editingSeparatorColor : writingSeparatorColor
 
         updatePlaceholderColors()
 
         textView.tintColor = .accent()
-        textView.updateTextColor(base: textColor)
+        textView.updateTextColor(base: isEditing ? SemanticColors.Label.textDefault : textColor)
 
         var buttons = self.buttonsView.buttons
 

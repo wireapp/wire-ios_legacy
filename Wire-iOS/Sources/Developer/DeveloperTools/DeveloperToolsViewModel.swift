@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireRequestStrategy
 import WireSyncEngine
 import WireTransport
 import UIKit
@@ -95,6 +97,12 @@ final class DeveloperToolsViewModel: ObservableObject {
 
     var sections: [Section]
 
+    @Published
+    var isPresentingAlert = false
+
+    var alertTitle: String?
+    var alertBody: String?
+
     // MARK: - Life cycle
 
     init(onDismiss: (() -> Void)? = nil) {
@@ -150,7 +158,8 @@ final class DeveloperToolsViewModel: ObservableObject {
                 header: "Push token",
                 items: [
                     .text(TextItem(title: "Token type", value: String(describing: pushToken.tokenType))),
-                    .text(TextItem(title: "Token data", value: pushToken.deviceTokenString))
+                    .text(TextItem(title: "Token data", value: pushToken.deviceTokenString)),
+                    .button(ButtonItem(title: "Check registered tokens", action: checkRegisteredTokens))
                 ]
             ))
         }
@@ -180,6 +189,36 @@ final class DeveloperToolsViewModel: ObservableObject {
         DebugLogSender.sendLogsByEmail(message: "Send logs")
     }
 
+    private func checkRegisteredTokens() {
+        guard
+            let selfClient = selfClient,
+            let clientID = selfClient.remoteIdentifier,
+            let context = selfClient.managedObjectContext?.notificationContext
+        else {
+            return
+        }
+
+        let action = GetPushTokensAction(clientID: clientID) { result in
+            switch result {
+            case .success([]):
+                self.alertTitle = "No registered tokens"
+                self.alertBody = nil
+
+            case let .success(tokens):
+                self.alertTitle = "Registered push tokens"
+                self.alertBody = tokens.map(\.debugDescription).joined(separator: "\n\n")
+
+            case let .failure(error):
+                self.alertTitle = "Registered push tokens"
+                self.alertBody = "Failed to fetch push tokens: \(String(describing: error))"
+            }
+
+            self.isPresentingAlert = true
+        }
+
+        action.send(in: context)
+    }
+
     // MARK: - Helpers
 
     private var appVersion: String {
@@ -195,16 +234,16 @@ final class DeveloperToolsViewModel: ObservableObject {
     }
 
     private var backendDomain: String {
-        return APIVersion.domain ?? "None"
+        return BackendInfo.domain ?? "None"
     }
 
     private var apiVersion: String {
-        guard let version = APIVersion.current else { return "None" }
+        guard let version = BackendInfo.apiVersion else { return "None" }
         return String(describing: version.rawValue)
     }
 
     private var isFederationEnabled: String {
-        return String(describing: APIVersion.isFederationEnabled)
+        return String(describing: BackendInfo.isFederationEnabled)
     }
 
     private var selfUser: ZMUser? {
@@ -230,6 +269,20 @@ extension PushToken.TokenType: CustomStringConvertible {
             return "VoIP"
 
         }
+    }
+
+}
+
+
+extension PushToken: CustomDebugStringConvertible {
+
+    public var debugDescription: String {
+        return """
+        token: \(deviceTokenString),
+        type: \(tokenType),
+        transport: \(transportType)
+        app: \(appIdentifier)
+        """
     }
 
 }

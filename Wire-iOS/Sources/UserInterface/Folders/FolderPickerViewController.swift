@@ -30,9 +30,9 @@ final class FolderPickerViewController: UIViewController {
 
     fileprivate var conversationDirectory: ConversationDirectoryType
     fileprivate var items: [LabelType] = []
-    fileprivate let colorSchemeVariant = ColorScheme.default.variant
     fileprivate let conversation: ZMConversation
-    private let hintLabel = DynamicFontLabel(fontSpec: .mediumSemiboldFont, color: .textForeground)
+    private let hintLabel = DynamicFontLabel(fontSpec: .mediumSemiboldFont,
+                                             color: SemanticColors.Label.textDefault)
     private let collectionViewLayout = UICollectionViewFlowLayout()
 
     private lazy var collectionView: UICollectionView = {
@@ -65,16 +65,22 @@ final class FolderPickerViewController: UIViewController {
         super.viewWillAppear(animated)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
+        return overrideUserInterfaceStyle == .light ? .compatibleDarkContent : .lightContent
     }
 
     private func configureNavbar() {
-        title = "folder.picker.title".localized(uppercased: true)
+        let navigationTitleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Folder.Picker.title.capitalized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
 
-        let newFolderItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(createNewFolder))
+        let newFolderItem = UIBarButtonItem(icon: .plus,
+                                            target: self,
+                                            action: #selector(createNewFolder))
         newFolderItem.accessibilityIdentifier = "button.newfolder.create"
 
+        navigationItem.titleView = navigationTitleLabel
         navigationItem.leftBarButtonItem = navigationController?.closeItem()
         navigationItem.rightBarButtonItem = newFolderItem
     }
@@ -89,10 +95,8 @@ final class FolderPickerViewController: UIViewController {
     }
 
     private func configureSubviews() {
-
         hintLabel.text = "folder.picker.empty.hint".localized
         hintLabel.numberOfLines = 0
-        hintLabel.textColor = UIColor.from(scheme: .textForeground)
         hintLabel.textAlignment = .center
 
         collectionView.dataSource = self

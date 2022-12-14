@@ -78,6 +78,8 @@
 	<string>${MAX_NUMBER_ACCOUNTS}</string>
 	<key>FileSharingEnabled</key>
 	<string>${FILE_SHARING_ENABLED}</string>
+	<key>ForceCallKitDisabled</key>
+	<string>${FORCE_CALLKIT_DISABLED}</string>
 	<key>CountlyAppKey</key>
 	<string>$(COUNTLY_APP_KEY)</string>
 	<key>CountlyHost</key>

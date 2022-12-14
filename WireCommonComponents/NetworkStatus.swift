@@ -114,7 +114,7 @@ public final class NetworkStatus {
 
     // MARK: - Utilities
 
-    private var reachabilityCallback: SCNetworkReachabilityCallBack = { (_ : SCNetworkReachability, _ : SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
+    private var reachabilityCallback: SCNetworkReachabilityCallBack = { (_: SCNetworkReachability, _: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
         guard let info = info else {
             assert(false, "info was NULL in ReachabilityCallback")
             return

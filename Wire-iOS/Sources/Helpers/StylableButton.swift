@@ -28,6 +28,7 @@ class StylableButton: UIButton, Stylable {
 
         setTitleColor(style.normalStateColors.title, for: .normal)
         setTitleColor(style.highlightedStateColors.title, for: .highlighted)
+        setTitleColor(style.selectedStateColors?.title, for: .selected)
 
         applyStyleToNonDynamicProperties(style: style)
     }
@@ -35,9 +36,21 @@ class StylableButton: UIButton, Stylable {
     private func applyStyleToNonDynamicProperties(style: ButtonStyle) {
         setBackgroundImageColor(style.normalStateColors.background, for: .normal)
         setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
+        setBackgroundImageColor(style.selectedStateColors?.background, for: .selected)
 
+        setBorder(for: style)
+    }
+
+    private func setBorder(for style: ButtonStyle) {
+        guard style.highlightedStateColors.border != nil ||
+                style.normalStateColors.border != nil ||
+                style.selectedStateColors?.border != nil else { return }
+        let normalStateColor = style.normalStateColors.border?.cgColor ?? UIColor.clear.cgColor
+        let highlightedStateColor = style.highlightedStateColors.border?.cgColor ?? UIColor.clear.cgColor
+        let selectedStateColor = style.selectedStateColors?.border.cgColor ?? UIColor.clear.cgColor
         self.layer.borderWidth = 1
-        self.layer.borderColor = isHighlighted ? style.normalStateColors.border.cgColor : style.highlightedStateColors.border.cgColor
+        self.layer.borderColor = isHighlighted ? highlightedStateColor : normalStateColor
+        self.layer.borderColor = isSelected ? selectedStateColor : normalStateColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

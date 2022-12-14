@@ -80,7 +80,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatItHandlesGeneratedNotification() {
+    func disable_testThatItHandlesGeneratedNotification() {
         // GIVEN
         let unreadConversationCount = 5
         let note = textNotification(mockConversation, sender: otherUser)
@@ -95,7 +95,6 @@ final class LegacyNotificationServiceTests: XCTestCase {
         XCTAssertEqual(content?.badge?.intValue, unreadConversationCount)
     }
 
-    // TODO: re-enable
     func testThatItReportsCallEvent() {
         // GIVEN
         let event = CallEventPayload(

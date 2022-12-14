@@ -22,10 +22,11 @@ import WireDataModel
 final class GroupParticipantsDetailViewController: UIViewController {
 
     private let collectionView = UICollectionView(forGroupedSections: ())
-    private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
+    private let searchViewController = SearchHeaderViewController(userSelection: .init())
     let viewModel: GroupParticipantsDetailViewModel
     private let collectionViewController: SectionCollectionViewController
-    private let variant: ColorSchemeVariant
+
+    typealias PeoplePicker = L10n.Localizable.Peoplepicker
 
     // used for scrolling and fading selected cells
     private var firstLayout = true
@@ -39,15 +40,8 @@ final class GroupParticipantsDetailViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
     init(selectedParticipants: [UserType],
-         conversation: GroupParticipantsDetailConversation,
-         variant: ColorSchemeVariant = ColorScheme.default.variant) {
-
-        self.variant = variant
+         conversation: GroupParticipantsDetailConversation) {
 
         viewModel = GroupParticipantsDetailViewModel(
             selectedParticipants: selectedParticipants,
@@ -107,7 +101,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
 
         collectionView.accessibilityIdentifier = "group_details.full_list"
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        title = "participants.all.title".localized(uppercased: true)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Participants.All.title.capitalized)
         view.backgroundColor = SemanticColors.View.backgroundDefault
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
@@ -128,8 +122,8 @@ final class GroupParticipantsDetailViewController: UIViewController {
         collectionViewController.sections = computeSections()
         collectionViewController.collectionView?.reloadData()
 
-        let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search_results".localized() : ""
-        collectionViewController.collectionView?.setEmptyMessage(emptyResultMessage, variant: self.variant)
+         let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? PeoplePicker.noSearchResults : ""
+        collectionViewController.collectionView?.setEmptyMessage(emptyResultMessage)
     }
 
     private func scrollToFirstHighlightedUser() {

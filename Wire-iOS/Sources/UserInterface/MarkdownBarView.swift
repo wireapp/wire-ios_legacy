@@ -68,10 +68,10 @@ final class MarkdownBarView: UIView {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
 
-    private func setupViews() {
+     func setupViews() {
 
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
+         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: buttonMargin, bottom: 0, right: buttonMargin)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -113,17 +113,40 @@ final class MarkdownBarView: UIView {
 
         addSubview(stackView)
 
+         let buttonMaxWidth = 100
+         let stackViewMaxWidth = CGFloat(buttonMaxWidth * buttons.count)
+
+         let stackViewWidth = stackView.widthAnchor.constraint(lessThanOrEqualToConstant: stackViewMaxWidth)
+         stackViewWidth.priority = .defaultHigh
+
+         let stackViewTrailingConstraint = stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
+         stackViewTrailingConstraint.priority = .defaultLow
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           stackView.topAnchor.constraint(equalTo: topAnchor),
           stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-          stackView.leftAnchor.constraint(equalTo: leftAnchor),
-          stackView.rightAnchor.constraint(equalTo: rightAnchor)
+          stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+          stackViewWidth,
+          stackViewTrailingConstraint
         ])
 
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
         headerButton.delegate = self
         headerButton.setupView()
+
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias Conversation = L10n.Accessibility.Conversation
+
+        headerButton.accessibilityLabel = Conversation.HeaderButton.description
+        boldButton.accessibilityLabel = Conversation.BoldButton.description
+        italicButton.accessibilityLabel = Conversation.ItalicButton.description
+        numberListButton.accessibilityLabel = Conversation.NumberListButton.description
+        bulletListButton.accessibilityLabel = Conversation.BulletListButton.description
+        codeButton.accessibilityLabel = Conversation.CodeButton.description
     }
 
     @objc func textViewDidChangeActiveMarkdown(note: Notification) {
@@ -182,6 +205,11 @@ final class MarkdownBarView: UIView {
             $0.setBackgroundImageColor(enabledStateBackgroundColor, for: .normal)
         }
     }
+
+    func updateAccessibilityElements(isAccessible: Bool) {
+        buttons.forEach { $0.isAccessibilityElement = isAccessible }
+    }
+
 }
 
 extension MarkdownBarView: PopUpIconButtonDelegate {

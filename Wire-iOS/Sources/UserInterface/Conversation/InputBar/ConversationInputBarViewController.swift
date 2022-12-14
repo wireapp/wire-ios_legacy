@@ -460,6 +460,11 @@ final class ConversationInputBarViewController: UIViewController,
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
+        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+            updateMarkdownButton()
+            inputBar.updateColors()
+        }
+
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
 
         guard !inRotation else { return }
@@ -500,6 +505,7 @@ final class ConversationInputBarViewController: UIViewController,
                                isEphemeralTimeoutForced: conversation.isSelfDeletingMessageTimeoutForced)
 
         sendButton.isEnabled = sendButtonState.sendButtonEnabled
+        sendButton.isHidden = sendButtonState.sendButtonHidden
         ephemeralIndicatorButton.isHidden = sendButtonState.ephemeralIndicatorButtonHidden
         ephemeralIndicatorButton.isEnabled = sendButtonState.ephemeralIndicatorButtonEnabled
 
@@ -822,7 +828,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
         let viewController = CanvasViewController()
         viewController.delegate = self
-        viewController.title = conversation.displayName.uppercased()
+        viewController.navigationItem.setupNavigationBarTitle(title: conversation.displayName.capitalized)
 
         parent?.present(viewController.wrapInNavigationController(setBackgroundColor: true), animated: true)
     }
@@ -942,6 +948,23 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         view.addSubview(inputBar)
 
         inputBar.editingView.delegate = self
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias Conversation = L10n.Accessibility.Conversation
+
+        photoButton.accessibilityLabel = Conversation.CameraButton.description
+        mentionButton.accessibilityLabel = Conversation.MentionButton.description
+        sketchButton.accessibilityLabel = Conversation.SketchButton.description
+        gifButton.accessibilityLabel = Conversation.GifButton.description
+        audioButton.accessibilityLabel = Conversation.AudioButton.description
+        pingButton.accessibilityLabel = Conversation.PingButton.description
+        uploadFileButton.accessibilityLabel = Conversation.UploadFileButton.description
+        locationButton.accessibilityLabel = Conversation.LocationButton.description
+        videoButton.accessibilityLabel = Conversation.VideoButton.description
+        hourglassButton.accessibilityLabel = Conversation.TimerButton.description
+        sendButton.accessibilityLabel = Conversation.SendButton.description
     }
 
     private func createConstraints() {

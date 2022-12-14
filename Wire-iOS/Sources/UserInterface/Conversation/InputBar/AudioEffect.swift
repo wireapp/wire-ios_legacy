@@ -113,6 +113,31 @@ extension AVSAudioEffectType: CustomStringConvertible {
         }
     }
 
+    public var accessibilityLabel: String {
+        typealias AudioRecord = L10n.Accessibility.AudioRecord
+
+        switch self {
+        case .none:
+            return AudioRecord.NormalEffectButton.description
+        case .pitchupInsane:
+            return AudioRecord.HeliumEffectButton.description
+        case .pitchdownInsane:
+            return AudioRecord.DeepVoiceEffectButton.description
+        case .paceupMed:
+            return AudioRecord.QuickEffectButton.description
+        case .reverbMax:
+            return AudioRecord.HallEffectButton.description
+        case .chorusMax:
+            return AudioRecord.AlienEffectButton.description
+        case .vocoderMed:
+            return AudioRecord.RoboticEffectButton.description
+        case .pitchUpDownMax:
+            return AudioRecord.HighToDeepEffectButton.description
+        default:
+            return description
+        }
+    }
+
     static let displayedEffects: [AVSAudioEffectType] = [.none,
                                                                 .pitchupInsane,
                                                                 .pitchdownInsane,

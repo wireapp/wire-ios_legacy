@@ -19,6 +19,27 @@
 import UIKit
 import WireCommonComponents
 
+// This is temporary until we finish with the accessibility project
+// This is named NonLegacyIconButton for the simple reason to keep
+// file changes to the minimum instead of renaming the oroginal IconButton
+// class to something else and then had to make changes in a lot more files
+
+// TODO: - [AGIS] Get rid of this class as soon as we make all the appropriate changes to the original class
+class NonLegacyIconButton: IconButton {
+
+    override var isSelected: Bool {
+        didSet {
+            applyStyle(.iconButtonStyle)
+        }
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            applyStyle(.iconButtonStyle)
+        }
+    }
+}
+
 enum IconButtonStyle {
     case `default`
     case circular
@@ -159,6 +180,7 @@ class IconButton: ButtonWithLargerHitArea {
 
     func setBackgroundImageColor(_ color: UIColor,
                                  for state: UIControl.State) {
+        let color = color.resolvedColor(with: traitCollection)
         setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
 
         if adjustBackgroundImageWhenHighlighted && state.contains(.normal) {
@@ -297,6 +319,7 @@ class IconButton: ButtonWithLargerHitArea {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
+        let color = color?.resolvedColor(with: traitCollection)
         state.expanded.forEach { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color

@@ -35,17 +35,22 @@ extension Notification.Name {
 }
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
+private let pushLog = ZMSLog(tag: "Push")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    // MARK: - Private Property
 
     private lazy var voIPPushManager: VoIPPushManager = {
         return VoIPPushManager(
             application: UIApplication.shared,
-            requiredPushTokenType: requiredPushTokenType
+            requiredPushTokenType: requiredPushTokenType,
+            pushTokenService: pushTokenService
         )
     }()
 
-    // MARK: - Private Property
+    private let pushTokenService = PushTokenService()
+
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
         TrackingOperation(),
@@ -56,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutomationHelperOperation(),
         MediaManagerOperation(),
         FileBackupExcluderOperation(),
-        APIVersionOperation(),
+        BackendInfoOperation(),
         FontSchemeOperation(),
         VoIPPushHelperOperation(),
         CleanUpDebugStateOperation()
@@ -113,7 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        SessionManager.shared?.updateDeviceToken(deviceToken)
+        pushLog.safePublic("application did register for remote notifications, storing standard token")
+        pushTokenService.storeLocalToken(.createAPNSToken(from: deviceToken))
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -283,7 +289,6 @@ private extension AppDelegate {
         /// get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
-        // TODO: [John] Pass in voip manager reference.
         let sessionManager = SessionManager(
             maxNumberAccounts: maxNumberAccounts,
             appVersion: appVersion,
@@ -295,12 +300,12 @@ private extension AppDelegate {
             configuration: configuration,
             detector: jailbreakDetector,
             requiredPushTokenType: requiredPushTokenType,
-            callKitManager: voIPPushManager.callKitManager
+            pushTokenService: pushTokenService,
+            callKitManager: voIPPushManager.callKitManager,
+            isDeveloperModeEnabled: Bundle.developerModeEnabled
         )
 
-        // TODO: remove this, it should be set in the session manager.
-        voIPPushManager.setDelegate(sessionManager)
-
+        voIPPushManager.delegate = sessionManager
         return sessionManager
     }
 
