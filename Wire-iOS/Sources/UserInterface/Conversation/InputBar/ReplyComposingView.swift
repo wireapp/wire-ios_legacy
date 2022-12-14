@@ -43,10 +43,10 @@ fileprivate extension ZMConversationMessage {
         } else if let fileData = fileMessageData {
             contentDescriptionText = ConversationInputBarMessagePreview.Accessibility.fileMessage(fileData.filename ?? "")
         } else {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.unknown_message".localized
+            contentDescriptionText = ConversationInputBarMessagePreview.Accessibility.unknownMessage
         }
 
-        return String(format: "conversation.input_bar.message_preview.accessibility.message_from".localized, contentDescriptionText, senderDescriptionText)
+        return ConversationInputBarMessagePreview.Accessibility.messageFrom(contentDescriptionText, senderDescriptionText)
     }
 }
 
