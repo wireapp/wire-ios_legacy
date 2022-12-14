@@ -180,6 +180,7 @@ class IconButton: ButtonWithLargerHitArea {
 
     func setBackgroundImageColor(_ color: UIColor,
                                  for state: UIControl.State) {
+        let color = color.resolvedColor(with: traitCollection)
         setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
 
         if adjustBackgroundImageWhenHighlighted && state.contains(.normal) {
@@ -318,6 +319,7 @@ class IconButton: ButtonWithLargerHitArea {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
+        let color = color?.resolvedColor(with: traitCollection)
         state.expanded.forEach { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color

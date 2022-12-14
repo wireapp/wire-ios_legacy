@@ -109,10 +109,6 @@ final class AudioMessageView: UIView, TransferView {
 
         createConstraints()
 
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [playButton, timeLabel])
-        accessibilityElements = currentElements
-
         setNeedsLayout()
         layoutIfNeeded()
 

@@ -78,23 +78,21 @@ final class SearchResultLabelTests: ZMSnapshotTestCase {
             }.count, 0, line: #line)
     }
 
-    func prepareForTest(variant: ColorSchemeVariant) {
+    func prepareForTest(variant: ColorSchemeVariant, mode: UIUserInterfaceStyle) {
         ColorScheme.default.variant = variant
-
         sut = SearchResultLabel()
+        sut.overrideUserInterfaceStyle = mode
         sut.font = UIFont.systemFont(ofSize: 17)
     }
 
     func testThatItShowsStringWithoutHighlightInDarkTheme() {
 
-        prepareForTest(variant: .dark)
-
+        prepareForTest(variant: .dark, mode: .dark)
         performTest()
     }
 
     func testThatItShowsStringWithoutHighlight() {
-        prepareForTest(variant: .light)
-
+        prepareForTest(variant: .light, mode: .light)
         performTest()
     }
 }
