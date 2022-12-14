@@ -51,6 +51,7 @@ class ProfileFooterViewTests: ZMSnapshotTestCase {
 
     func testWithOneAction() {
         let view = ProfileFooterView()
+        view.overrideUserInterfaceStyle = .light
         view.configure(with: [.openOneToOne])
         view.frame.size = view.systemLayoutSizeFitting(CGSize(width: 375, height: 0))
         verify(view: view)
@@ -58,6 +59,7 @@ class ProfileFooterViewTests: ZMSnapshotTestCase {
 
     func testWithMultipleActions() {
         let view = ProfileFooterView()
+        view.overrideUserInterfaceStyle = .light
         view.configure(with: [.openOneToOne, .archive])
         view.frame.size = view.systemLayoutSizeFitting(CGSize(width: 375, height: 0))
         verify(view: view)
@@ -65,6 +67,7 @@ class ProfileFooterViewTests: ZMSnapshotTestCase {
 
     func testThatItUpdates() {
         let view = ProfileFooterView()
+        view.overrideUserInterfaceStyle = .light
         view.configure(with: [.openOneToOne, .archive])
         view.configure(with: [.createGroup])
         view.frame.size = view.systemLayoutSizeFitting(CGSize(width: 375, height: 0))
