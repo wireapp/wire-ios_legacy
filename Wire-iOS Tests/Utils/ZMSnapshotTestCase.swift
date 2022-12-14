@@ -380,9 +380,11 @@ extension ZMSnapshotTestCase {
                                  line: UInt = #line) {
         if var themeable = view as? Themeable {
             themeable.colorSchemeVariant = .light
+            view.overrideUserInterfaceStyle = .light
             snapshotBackgroundColor = .white
             verify(view: view, tolerance: tolerance, identifier: "LightTheme", file: file, line: line)
             themeable.colorSchemeVariant = .dark
+            view.overrideUserInterfaceStyle = .light
             snapshotBackgroundColor = .black
             verify(view: view, tolerance: tolerance, identifier: "DarkTheme", file: file, line: line)
         } else {

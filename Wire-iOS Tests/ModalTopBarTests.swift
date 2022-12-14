@@ -25,6 +25,7 @@ class ModalTopBarTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ModalTopBar()
+        sut.overrideUserInterfaceStyle = .light
     }
 
     override func tearDown() {
