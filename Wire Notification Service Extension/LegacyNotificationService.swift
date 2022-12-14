@@ -32,16 +32,10 @@ public protocol CallEventHandlerProtocol {
 
 class CallEventHandler: CallEventHandlerProtocol {
 
-    private static let logger = Logger(subsystem: "VoIP Push", category: "CallEventHandler")
-
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
         Self.logger.trace("report incoming voip call, payload: \(payload)")
         guard #available(iOS 14.5, *) else { return }
-        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-            if let error = error {
-                Self.logger.info("fail: report incoming voip call: \(error)")
-            }
-        }
+        CXProvider.reportNewIncomingVoIPPushPayload(payload) { _ in }
     }
 
 }
@@ -49,8 +43,6 @@ class CallEventHandler: CallEventHandlerProtocol {
 public class LegacyNotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
     // MARK: - Properties
-
-    private static let logger = Logger(subsystem: "VoIP Push", category: "LegacyNotificationService")
 
     public var callEventHandler: CallEventHandlerProtocol = CallEventHandler()
 
@@ -139,8 +131,6 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
         _ callEvent: CallEventPayload,
         currentTimestamp: TimeInterval
     ) {
-        Self.logger.trace("report call event")
-
         callEventHandler.reportIncomingVoIPCall([
             "accountID": callEvent.accountID,
             "conversationID": callEvent.conversationID,
