@@ -80,9 +80,6 @@
                   Identifier = "CallInfoRootViewControllerTests">
                </Test>
                <Test
-                  Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Dark()">
-               </Test>
-               <Test
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
                </Test>
                <Test
@@ -96,9 +93,6 @@
                </Test>
                <Test
                   Identifier = "DeveloperOptionsControllerSnapshotTests/testForInitState()">
-               </Test>
-               <Test
-                  Identifier = "IconLabelButtonTests">
                </Test>
                <Test
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
@@ -141,12 +135,6 @@
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
-               </Test>
-               <Test
-                  Identifier = "UserCellTests/testUserInsideOngoingVideoCall()">
-               </Test>
-               <Test
-                  Identifier = "UserCellTests/testUserScreenSharingInsideOngoingVideoCall()">
                </Test>
             </SkippedTests>
          </TestableReference>

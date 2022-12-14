@@ -28,6 +28,8 @@ class CallingActionButton: IconLabelButton {
         subtitleTransformLabel.textTransform = .capitalize
         titleLabel?.font = DynamicFontLabel(fontSpec: .smallRegularFont, color: .sectionText).font
         subtitleTransformLabel.font = titleLabel?.font
+        iconButton.setIcon(input.icon(forState: .normal), size: .medium, for: .normal)
+        iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
 
     }
 

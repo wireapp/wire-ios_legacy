@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import WireCommonComponents
 
 typealias CallParticipantsList = [CallParticipantsListCellConfiguration]
 
@@ -137,6 +138,7 @@ extension UserCell: CallParticipantsListCellConfigurable {
             shouldPulse: activeSpeakerState.isSpeakingNow)
         )
         videoIconView.set(style: VideoIconStyle(state: videoState))
+        guard DeveloperFlag.updatedCallingUI.isOn else { return }
         backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
 

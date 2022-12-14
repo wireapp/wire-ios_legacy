@@ -20,7 +20,7 @@ import UIKit
 
 enum CallActionAppearance: Equatable {
 
-    case light, dark(blurred: Bool)//, adaptive
+    case light, dark(blurred: Bool)
 
     var showBlur: Bool {
         switch self {
