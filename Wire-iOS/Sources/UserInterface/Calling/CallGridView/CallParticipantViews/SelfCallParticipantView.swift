@@ -83,7 +83,11 @@ final class SelfCallParticipantView: BaseCallParticipantView {
     func updateCaptureState(with newVideoState: VideoState?) {
         guard newVideoState != self.videoState else { return }
 
-        newVideoState == .some(.started) ? startCapture() : stopCapture()
+        if newVideoState == .some(.started) {
+            startCapture()
+        } else {
+            stopCapture()
+        }
         self.videoState = newVideoState
     }
 
