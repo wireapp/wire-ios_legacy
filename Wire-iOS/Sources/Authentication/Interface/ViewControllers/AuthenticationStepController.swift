@@ -32,6 +32,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     weak var authenticationCoordinator: AuthenticationCoordinator? {
         didSet {
             stepDescription.secondaryView?.actioner = authenticationCoordinator
+            stepDescription.footerView?.actioner = authenticationCoordinator
         }
     }
 
@@ -47,10 +48,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     // MARK: - Views
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .compatibleDarkContent
-    }
-
     private var contentStack: CustomSpacingStackView!
 
     private var headlineLabel: DynamicFontLabel!
@@ -62,8 +59,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
     fileprivate var errorLabelContainer: ContentInsetView!
 
     fileprivate var secondaryViews: [UIView] = []
+    fileprivate var footerViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
     fileprivate var secondaryViewsStackView: UIStackView!
+    fileprivate var footerViewStackView: UIStackView!
 
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
@@ -100,7 +99,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         createViews()
         createConstraints()
@@ -138,11 +137,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     private func createViews() {
         let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
+        let labelColor = SemanticColors.Label.textDefault
 
         headlineLabel = DynamicFontLabel(fontSpec: .largeLightWithTextStyleFont, color: .textForeground)
         headlineLabelContainer = ContentInsetView(headlineLabel, inset: textPadding)
         headlineLabel.textAlignment = .center
-        headlineLabel.textColor = UIColor.Team.textColor
+        headlineLabel.textColor = labelColor
         headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
         headlineLabel.numberOfLines = 0
@@ -155,18 +155,19 @@ class AuthenticationStepController: AuthenticationStepViewController {
             subtextLabel.textAlignment = .center
             subtextLabel.text = stepDescription.subtext
             subtextLabel.font = AuthenticationStepController.subtextFont
-            subtextLabel.textColor = UIColor.Team.subtitleColor
+            subtextLabel.textColor = labelColor
             subtextLabel.numberOfLines = 0
             subtextLabel.lineBreakMode = .byWordWrapping
             subtextLabelContainer.isHidden = stepDescription.subtext == nil
         }
 
         errorLabel = UILabel()
-        let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + ValidatedTextField.ConfirmButtonWidth)
+        let errorInsets = UIEdgeInsets(top: 0, left: 31, bottom: 0, right: 31)
         errorLabelContainer = ContentInsetView(errorLabel, inset: errorInsets)
-        errorLabel.textAlignment = .left
+        errorLabel.textAlignment = .center
         errorLabel.numberOfLines = 0
         errorLabel.font = AuthenticationStepController.errorMessageFont
+        errorLabel.textColor = SemanticColors.Label.textErrorDefault
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         updateValidation(initialValidation)
 
@@ -176,10 +177,21 @@ class AuthenticationStepController: AuthenticationStepViewController {
             secondaryViews = secondaryView.views.map { $0.create() }
         }
 
+        if let footerView = stepDescription.footerView {
+            footerViews = footerView.views.map { $0.create() }
+        }
+
         secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
+        secondaryViewsStackView.axis = .vertical
         secondaryViewsStackView.distribution = .equalCentering
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        footerViewStackView = UIStackView(arrangedSubviews: footerViews)
+        footerViewStackView.distribution = .equalCentering
+        footerViewStackView.axis = .vertical
+        footerViewStackView.spacing = 26
+        footerViewStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let subviews = [headlineLabelContainer, subtextLabelContainer, mainView, errorLabelContainer, secondaryViewsStackView].compactMap { $0 }
 
@@ -189,6 +201,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         contentStack.alignment = .fill
 
         view.addSubview(contentStack)
+        view.addSubview(footerViewStackView)
     }
 
     func setSecondaryViewHidden(_ isHidden: Bool) {
@@ -249,7 +262,16 @@ class AuthenticationStepController: AuthenticationStepViewController {
             mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: AuthenticationStepController.mainViewHeight),
             secondaryViewsStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 13),
             errorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 19)
+
         ])
+
+        if stepDescription.footerView != nil {
+            NSLayoutConstraint.activate([
+                footerViewStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31),
+                footerViewStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -31),
+                footerViewStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+            ])
+        }
 
         // Adaptive Constraints
         mainViewWidthRegular = mainView.widthAnchor.constraint(equalToConstant: 375)

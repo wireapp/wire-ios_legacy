@@ -173,6 +173,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 
         navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+
         navigationController.navigationBar.tintColor = navigationTextColor
         navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: navigationTextColor)
         navigationController.navigationBar.barTintColor = navigationBackgroundColor
