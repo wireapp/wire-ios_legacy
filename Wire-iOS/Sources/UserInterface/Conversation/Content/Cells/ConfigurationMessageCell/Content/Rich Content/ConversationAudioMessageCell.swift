@@ -139,10 +139,11 @@ final class ConversationAudioMessageCellDescription: ConversationMessageCellDesc
         return configuration.isObfuscated ? "ObfuscatedAudioCell" : "AudioCell"
     }
 
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage) {
         self.configuration = View.Configuration(message: message)
+        accessibilityLabel = L10n.Accessibility.ConversationSearch.AudioMessage.description
     }
 
 }
