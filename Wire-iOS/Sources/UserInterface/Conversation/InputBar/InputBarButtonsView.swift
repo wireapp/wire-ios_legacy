@@ -46,7 +46,6 @@ final class InputBarButtonsView: UIView {
     let expandRowButton = IconButton()
     var buttons: [UIButton] {
         didSet {
-            buttonInnerContainer.subviews.forEach({ $0.removeFromSuperview() })
             layoutAndConstrainButtonRows()
         }
     }

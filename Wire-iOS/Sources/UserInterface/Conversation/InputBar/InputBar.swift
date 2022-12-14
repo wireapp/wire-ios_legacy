@@ -466,7 +466,7 @@ final class InputBar: UIView {
         }
     }
 
-    fileprivate func updateColors() {
+     func updateColors() {
 
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
         buttonRowSeparator.backgroundColor = isEditing ? editingSeparatorColor : writingSeparatorColor

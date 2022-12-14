@@ -32,6 +32,12 @@ struct DeveloperToolsView: View {
         List(viewModel.sections, rowContent: sectionView(for:))
             .navigationTitle("Developer tools")
             .navigationBarItems(trailing: dismissButton)
+            .alert(isPresented: $viewModel.isPresentingAlert) {
+                Alert(
+                    title: Text(viewModel.alertTitle ?? ""),
+                    message: Text(viewModel.alertBody ?? "")
+                )
+            }
     }
 
     private func sectionView(for section: DeveloperToolsViewModel.Section) -> some View {
