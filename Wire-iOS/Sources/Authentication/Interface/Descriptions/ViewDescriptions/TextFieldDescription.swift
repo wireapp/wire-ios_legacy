@@ -27,16 +27,14 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     var valueValidated: ValueValidated?
     var acceptsInput: Bool = true
     var validationError: TextFieldValidator.ValidationError?
-    let uppercasePlaceholder: Bool
     var showConfirmButton: Bool = true
     var canSubmit: (() -> Bool)?
     var textField: ValidatedTextField?
     var useDeferredValidation: Bool = false
 
-    init(placeholder: String, actionDescription: String, kind: ValidatedTextField.Kind, uppercasePlaceholder: Bool = true) {
+    init(placeholder: String, actionDescription: String, kind: ValidatedTextField.Kind) {
         self.placeholder = placeholder
         self.actionDescription = actionDescription
-        self.uppercasePlaceholder = uppercasePlaceholder
         self.kind = kind
         validationError = .tooShort(kind: kind)
         super.init()
@@ -49,10 +47,10 @@ final class TextFieldDescription: NSObject, ValueSubmission {
 
 extension TextFieldDescription: ViewDescriptor {
     func create() -> UIView {
-        let textField = ValidatedTextField(kind: kind)
+        let textField = ValidatedTextField(kind: kind, style: .default)
         textField.enablesReturnKeyAutomatically = true
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = uppercasePlaceholder ? self.placeholder.localizedUppercase : self.placeholder
+        textField.placeholder = self.placeholder
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
@@ -69,7 +67,20 @@ extension TextFieldDescription: ViewDescriptor {
         }
 
         self.textField = textField
-        return textField
+
+        let textfieldContainer = UIView()
+        textfieldContainer.addSubview(textField)
+        textfieldContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: textfieldContainer.topAnchor),
+            textField.bottomAnchor.constraint(equalTo: textfieldContainer.bottomAnchor),
+            textField.centerXAnchor.constraint(equalTo: textfieldContainer.centerXAnchor),
+            textField.leadingAnchor.constraint(equalTo: textfieldContainer.leadingAnchor, constant: 31),
+            textField.leadingAnchor.constraint(equalTo: textfieldContainer.trailingAnchor, constant: -31)
+        ])
+
+        return textfieldContainer
     }
 }
 
@@ -84,7 +95,6 @@ extension TextFieldDescription: UITextFieldDelegate {
         // If we use deferred validation, remove the error when the text changes
         guard useDeferredValidation else { return }
         self.valueValidated?(nil)
-        sender.hideGuidanceDot()
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -106,7 +116,6 @@ extension TextFieldDescription: UITextFieldDelegate {
 
     func submitValue(with text: String) {
         if let error = validationError {
-            textField?.showGuidanceDot()
             self.valueValidated?(.error(error, showVisualFeedback: textField?.input.isEmpty == false))
         } else {
             self.valueValidated?(nil)

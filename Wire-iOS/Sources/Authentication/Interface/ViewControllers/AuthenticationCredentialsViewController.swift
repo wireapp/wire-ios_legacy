@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import WireSystem
 import WireTransport
+import WireCommonComponents
 
 /**
  * The view controller to use to ask the user to enter their credentials.
@@ -32,6 +33,9 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
                                                      TabBarDelegate,
                                                      TextFieldValidationDelegate,
                                                      UITextFieldDelegate {
+
+    typealias Registration = L10n.Localizable.Registration
+    weak var actioner: AuthenticationActioner?
 
     /// Types of flow provided by the view controller.
     enum FlowType {
@@ -74,6 +78,12 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         }
     }
 
+    weak override var authenticationCoordinator: AuthenticationCoordinator? {
+        didSet {
+            actioner = authenticationCoordinator
+        }
+    }
+
     private var emailFieldValidationError: TextFieldValidator.ValidationError? = .tooShort(kind: .email)
 
     convenience init(flowType: FlowType) {
@@ -102,17 +112,44 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     let contentStack = UIStackView()
 
     let emailPasswordInputField = EmailPasswordTextField()
-    let emailInputField = ValidatedTextField(kind: .email)
+    let emailInputField = ValidatedTextField(kind: .email, style: .default)
     let phoneInputView = PhoneNumberInputView()
+    let loginButton = Button(style: .accentColorTextButtonStyle,
+                             cornerRadius: 16,
+                             fontSpec: .normalSemiboldFont)
 
     let tabBar: TabBar = {
-        let emailTab = UITabBarItem(title: "registration.register_by_email".localized(uppercased: true), image: nil, selectedImage: nil)
+        let emailTab = UITabBarItem(title: Registration.registerByEmail.capitalized,
+                                    image: nil,
+                                    selectedImage: nil)
         emailTab.accessibilityIdentifier = "UseEmail"
 
-        let passwordTab = UITabBarItem(title: "registration.register_by_phone".localized(uppercased: true), image: nil, selectedImage: nil)
+        let passwordTab = UITabBarItem(title: Registration.registerByPhone.capitalized,
+                                       image: nil,
+                                       selectedImage: nil)
         passwordTab.accessibilityIdentifier = "UsePhone"
 
         return TabBar(items: [emailTab, passwordTab])
+    }()
+
+    lazy var forgotPasswordButton: Button = {
+        let button = Button(fontSpec: .smallLightFont)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontSpec.smallSemiboldFont.font!,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+
+        let attributeString = NSMutableAttributedString(
+            string: L10n.Localizable.Signin.forgotPassword.capitalized,
+            attributes: attributes
+        )
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAttributedTitle(attributeString, for: .normal)
+        button.addTarget(self, action: #selector(forgotPasswordTapped), for: .touchUpInside)
+
+        return button
     }()
 
     // MARK: - Lifecycle
@@ -136,6 +173,14 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         contentStack.addArrangedSubview(emailInputField)
         contentStack.addArrangedSubview(emailPasswordInputField)
         contentStack.addArrangedSubview(phoneInputView)
+        contentStack.addArrangedSubview(forgotPasswordButton)
+        contentStack.addArrangedSubview(loginButton)
+
+        // log in button
+        loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        updateLoginButtonState()
+        createConstraints()
 
         // Phone Number View
         phoneInputView.delegate = self
@@ -144,20 +189,41 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
         // Email Password Input View
         emailPasswordInputField.allowEditingPrefilledValue = !isReauthenticating
+        emailPasswordInputField.passwordField.showConfirmButton = false
         emailPasswordInputField.delegate = self
 
         // Email input view
         emailInputField.delegate = self
         emailInputField.textFieldValidationDelegate = self
-        emailInputField.placeholder = "email.placeholder".localized(uppercased: true)
+        emailInputField.placeholder = L10n.Localizable.Email.placeholder.capitalized
         emailInputField.addTarget(self, action: #selector(emailTextInputDidChange), for: .editingChanged)
-        emailInputField.confirmButton.addTarget(self, action: #selector(emailConfirmButtonTapped), for: .touchUpInside)
 
-        emailInputField.enableConfirmButton = { [weak self] in
-            self?.emailFieldValidationError == nil
+        contentStack.isLayoutMarginsRelativeArrangement = true
+        contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 31, bottom: 0, trailing: 31)
+
+        if isRegistering {
+            contentStack.isLayoutMarginsRelativeArrangement = true
+            contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 31, bottom: 0, trailing: 31)
         }
-
         return contentStack
+    }
+
+    func createConstraints() {
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            loginButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+
+    @objc
+    func loginButtonTapped(sender: UIButton) {
+        emailPasswordInputField.confirmButtonTapped()
+    }
+
+    @objc
+    func forgotPasswordTapped(sender: UIButton) {
+        actioner?.executeAction(.openURL(.wr_passwordReset))
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -226,12 +292,16 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         case .email:
             emailPasswordInputField.isHidden = isRegistering
             emailInputField.isHidden = !isRegistering
+            loginButton.isHidden = isRegistering
+            forgotPasswordButton.isHidden = isRegistering
             phoneInputView.isHidden = true
             tabBar.setSelectedIndex(0, animated: false)
             setSecondaryViewHidden(false)
 
         case .phone:
             phoneInputView.isHidden = false
+            loginButton.isHidden = true
+            forgotPasswordButton.isHidden = true
             emailPasswordInputField.isHidden = true
             emailInputField.isHidden = true
             tabBar.setSelectedIndex(1, animated: false)
@@ -292,7 +362,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     // MARK: - Email / Password Input
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-        // no-op: we do not update the UI depending on the validity of the input
+        updateLoginButtonState()
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
@@ -300,7 +370,11 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     }
 
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {
-        // no-op: we do not update the UI depending on the validity of the input
+
+    }
+
+    private func updateLoginButtonState() {
+        loginButton.isEnabled = emailPasswordInputField.hasValidInput
     }
 
     // MARK: - Phone Number Input
@@ -319,7 +393,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     }
 
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError?) {
-        // no-op: handled by the input view directly
+        phoneInputView.loginButton.isEnabled = validationError == nil
     }
 
     func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country) {
