@@ -143,7 +143,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
 
         emailPasswordCell.textField.setBackgroundColor(.clear)
         emailPasswordCell.textField.setTextColor(.white)
-        emailPasswordCell.textField.setSeparatorColor(.white)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: EmailAccountSection.Change.save.capitalized,
@@ -166,7 +165,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
         if let passwordError = state.passwordValidationError {
             validationCell.updateValidation(.error(passwordError, showVisualFeedback: true))
-            emailPasswordCell.textField.passwordField.showGuidanceDot()
             return
         }
 
@@ -282,7 +280,6 @@ extension ChangeEmailViewController: EmailPasswordTextFieldDelegate {
         // Re-enable the buttons if needed
         updateSaveButtonState()
         validationCell.updateValidation(nil)
-        textField.passwordField.hideGuidanceDot()
     }
 
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {

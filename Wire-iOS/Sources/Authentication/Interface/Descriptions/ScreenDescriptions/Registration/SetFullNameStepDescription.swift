@@ -20,17 +20,23 @@ import Foundation
 
 final class SetFullNameStepDescription: AuthenticationStepDescription {
 
+    typealias TeamFullName = L10n.Localizable.Team.FullName
+
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.full_name.textfield.placeholder".localized, actionDescription: "general.next".localized, kind: .name(isTeam: false))
-        headline = "team.full_name.headline".localized
+        mainView = TextFieldDescription(placeholder: TeamFullName.Textfield.placeholder.capitalized,
+                                        actionDescription: L10n.Localizable.General.next,
+                                        kind: .name(isTeam: false))
+        headline = TeamFullName.headline
         subtext = nil
         secondaryView = nil
+        footerView = nil
     }
 }

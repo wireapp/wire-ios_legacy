@@ -49,6 +49,7 @@ public enum SemanticColors {
     public enum Label {
         static let textDefault = UIColor(light: Asset.black, dark: Asset.white)
         static let textDefaultWhite = UIColor(light: Asset.white, dark: Asset.black)
+        static let textWhite = UIColor(light: Asset.white, dark: Asset.white)
         static let textSectionFooter = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textSectionHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
@@ -70,7 +71,9 @@ public enum SemanticColors {
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
-        static let textWarning = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let textErrorDefault = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let textPasswordRulesCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
+
     }
 
     public enum SearchBar {
@@ -96,6 +99,7 @@ public enum SemanticColors {
         static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let foregroundAvailabilityBusy = UIColor(light: Asset.amber500Light, dark: Asset.amber500Dark)
         static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let backgroundPasswordRuleCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
         static let backgroundPhoneCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let backgroundMissedPhoneCall = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
     }
@@ -118,6 +122,8 @@ public enum SemanticColors {
         static let backgroundSeparatorConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
+        static let borderCharacterInputField = UIColor(light: Asset.gray80, dark: Asset.gray40)
+        static let borderCharacterInputFieldEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let borderInputBar = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundBlue = UIColor(light: Asset.blue100Light, dark: Asset.blue900Dark)
         static let backgroundGreen = UIColor(light: Asset.green100Light, dark: Asset.green900Dark)
@@ -147,6 +153,7 @@ public enum SemanticColors {
         static let textEmptyEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let textBottomBarNormal = UIColor(light: Asset.gray90, dark: Asset.gray50)
         static let textBottomBarSelected = UIColor(light: Asset.white, dark: Asset.black)
+        static let textUnderlineEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let borderBarItem = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundLikeEnabled = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundLikeHighlighted = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
@@ -157,7 +164,7 @@ public enum SemanticColors {
         static let borderInputBarItemHighlighted = UIColor(light: Asset.blue300Light, dark: Asset.blue700Dark)
         static let textInputBarItemEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let textInputBarItemHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.white)
-        static let textUnderlineEnabled = UIColor(light: Asset.black, dark: Asset.white)
+        static let textUnderlineEnabledDefault = UIColor(light: Asset.black, dark: Asset.white)
     }
 }
 

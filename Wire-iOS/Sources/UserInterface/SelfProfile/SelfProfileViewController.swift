@@ -233,14 +233,13 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         }
 
         self.callback = callback
-        let passcodeSetupViewController = PasscodeSetupViewController(variant: .dark,
-                                                                      context: .createPasscode,
+        let passcodeSetupViewController = PasscodeSetupViewController(context: .createPasscode,
                                                                       callback: callback)
         passcodeSetupViewController.passcodeSetupViewControllerDelegate = self
 
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
 
-        let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
+        let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
 
         let closeItem = passcodeSetupViewController.closeItem
 

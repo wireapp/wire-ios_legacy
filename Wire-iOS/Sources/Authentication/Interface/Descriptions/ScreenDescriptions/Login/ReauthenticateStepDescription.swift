@@ -29,6 +29,7 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(prefilledCredentials: AuthenticationPrefilledCredentials?) {
         backButton = BackButtonDescription()
@@ -52,7 +53,8 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
             subtext = "signin_logout.subheadline".localized
         }
 
-        secondaryView = LoginSecondaryView()
+        secondaryView = nil
+        footerView = nil
     }
 
 }
