@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 import SnapshotTesting
+import WireCommonComponents
 
 struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
 
@@ -72,6 +73,7 @@ final class CallGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         )
 
         CallingConfiguration.config = .largeConferenceCalls
+        UserDefaults.applicationGroup.set(false, forKey: DeveloperFlag.updatedCallingUI.rawValue)
     }
 
     override func tearDown() {
