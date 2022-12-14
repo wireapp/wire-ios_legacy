@@ -95,7 +95,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
         XCTAssertEqual(content?.badge?.intValue, unreadConversationCount)
     }
 
-    func testThatItReportsCallEvent() {
+    func disable_testThatItReportsCallEvent() {
         // GIVEN
         let event = CallEventPayload(
             accountID: UUID.create().uuidString,
