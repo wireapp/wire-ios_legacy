@@ -37,11 +37,10 @@ final class AppLockChangeWarningViewController: UIViewController {
 
     private let contentView: UIView = UIView()
 
-    private lazy var confirmButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .full, fontSpec: .smallSemiboldFont)
-        button.setBackgroundImageColor(SemanticColors.LegacyColors.strongBlue, for: .normal)
+    private lazy var confirmButton: Button = {
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
         button.accessibilityIdentifier = "warning_screen.button.confirm"
-        button.setTitle("general.confirm".localized(uppercased: true), for: .normal)
+        button.setTitle("general.confirm".localized, for: .normal)
         button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -53,9 +52,8 @@ final class AppLockChangeWarningViewController: UIViewController {
         return label
     }()
 
-    private lazy var messageLabel: UILabel = {
-        let label = UILabel(size: .normal, weight: .regular, color: .landingScreen)
-        label.text = messageLabelText
+    private lazy var messageLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: messageLabelText, fontSpec: .normalRegularFont, color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -91,7 +89,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     // MARK: - Helpers
 
     private func setupViews() {
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         view.addSubview(contentView)
 
