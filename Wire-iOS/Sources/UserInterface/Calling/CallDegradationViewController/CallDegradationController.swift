@@ -55,7 +55,7 @@ final class CallDegradationController: UIViewController {
             visibleAlertController = UIAlertController.degradedCall(degradedUser: degradeduser?.value, confirmationBlock: { [weak self] (continueDegradedCall) in
                 continueDegradedCall ? self?.delegate?.continueDegradedCall(): self?.delegate?.cancelDegradedCall()
             })
-        case .none, .incoming(degradedUser: _):
+        case .none, .incoming:
             return
         }
         presentAlertIfNeeded()

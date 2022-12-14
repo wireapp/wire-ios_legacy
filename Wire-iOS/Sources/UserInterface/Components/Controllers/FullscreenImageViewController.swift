@@ -605,7 +605,7 @@ final class FullscreenImageViewController: UIViewController {
 
         hideMenu()
 
-        /// Notice: fix the case the the image is just fit on the screen and call scrollView.zoom causes images move outside the frame issue
+        // Notice: fix the case the the image is just fit on the screen and call scrollView.zoom causes images move outside the frame issue
         guard scrollView.minimumZoomScale != scrollView.maximumZoomScale else {
             return
         }
@@ -751,7 +751,7 @@ extension FullscreenImageViewController: MessageActionResponder {
     fileprivate func perform(action: MessageAction) {
         let sourceView: UIView
 
-        /// iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
+        // iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
         if action == .delete,
            let conversationImagesViewController = delegate as? ConversationImagesViewController {
             sourceView = conversationImagesViewController.deleteButton

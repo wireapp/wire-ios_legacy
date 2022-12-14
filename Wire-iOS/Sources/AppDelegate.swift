@@ -266,7 +266,7 @@ private extension AppDelegate {
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
         let jailbreakDetector = JailbreakDetector()
 
-        /// get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
+        // Get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
         return SessionManager(
