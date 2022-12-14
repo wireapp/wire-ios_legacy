@@ -112,7 +112,6 @@ final class LegacyNotificationServiceTests: XCTestCase {
         // THEN
         XCTAssertTrue(callEventHandlerMock.reportIncomingVoIPCallCalled)
     }
-
 }
 
 // MARK: - Helpers
