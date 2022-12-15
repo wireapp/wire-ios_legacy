@@ -105,7 +105,7 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
             dismissPresentedAndPresentActiveCall(modalViewController: modalVC, animated: animated)
         } else {
             presentActiveCall(modalViewController: modalVC, animated: animated)
-        }   
+        }
     }
 
     func dismissActiveCall(animated: Bool = true, completion: Completion? = nil) {

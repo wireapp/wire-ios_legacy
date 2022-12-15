@@ -41,6 +41,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Private Property
 
+    private lazy var voIPPushManager: VoIPPushManager = {
+        return VoIPPushManager(
+            application: UIApplication.shared,
+            requiredPushTokenType: requiredPushTokenType,
+            pushTokenService: pushTokenService
+        )
+    }()
+
     private let pushTokenService = PushTokenService()
 
     private var launchOperations: [LaunchSequenceOperation] = [
@@ -112,6 +120,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        voIPPushManager.registerForVoIPPushes()
+
         ZMSLog.switchCurrentLogToPrevious()
 
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
@@ -269,7 +279,7 @@ private extension AppDelegate {
         // Get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
-        return SessionManager(
+        let sessionManager = SessionManager(
             maxNumberAccounts: maxNumberAccounts,
             appVersion: appVersion,
             mediaManager: mediaManager,
@@ -280,9 +290,13 @@ private extension AppDelegate {
             configuration: configuration,
             detector: jailbreakDetector,
             requiredPushTokenType: requiredPushTokenType,
-            isDeveloperModeEnabled: Bundle.developerModeEnabled,
-            pushTokenService: pushTokenService
+            pushTokenService: pushTokenService,
+            callKitManager: voIPPushManager.callKitManager,
+            isDeveloperModeEnabled: Bundle.developerModeEnabled
         )
+
+        voIPPushManager.delegate = sessionManager
+        return sessionManager
     }
 
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
