@@ -25,7 +25,7 @@ final class ReplyRoundCornersView: UIControl {
 
     let containedView: UIView
     private let grayBoxView = UIView()
-    let highlightLayer = UIView()
+    private let highlightLayer = UIView()
 
     // MARK: - Init
     init(containedView: UIView) {
