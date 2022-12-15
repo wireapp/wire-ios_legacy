@@ -198,7 +198,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         emailInputField.placeholder = L10n.Localizable.Email.placeholder.capitalized
         emailInputField.addTarget(self, action: #selector(emailTextInputDidChange), for: .editingChanged)
         emailInputField.confirmButton.addTarget(self, action: #selector(emailConfirmButtonTapped), for: .touchUpInside)
-        
+
         emailInputField.enableConfirmButton = { [weak self] in
             self?.emailFieldValidationError == nil
         }
