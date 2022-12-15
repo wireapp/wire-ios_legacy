@@ -19,6 +19,8 @@
 import WireSyncEngine
 import UIKit
 
+private typealias ConversationInputBarMessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
+
 protocol ReplyComposingViewDelegate: AnyObject {
     func composingViewDidCancel(composingView: ReplyComposingView)
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
@@ -26,7 +28,7 @@ protocol ReplyComposingViewDelegate: AnyObject {
 
 fileprivate extension ZMConversationMessage {
     var accessibilityDescription: String {
-        typealias ConversationInputBarMessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
+
         let contentDescriptionText: String
         let senderDescriptionText = senderUser?.name ?? ""
 
@@ -84,7 +86,7 @@ final class ReplyComposingView: UIView {
 
     private func buildAccessibilityLabel() -> String {
         let messageDescription = message.accessibilityDescription
-        return String(format: "conversation.input_bar.message_preview.accessibility_description".localized, messageDescription)
+        return ConversationInputBarMessagePreview.accessibilityDescription(messageDescription)
     }
 
     private func setupSubviews() {
@@ -104,7 +106,7 @@ final class ReplyComposingView: UIView {
 
         closeButton.isAccessibilityElement = true
         closeButton.accessibilityIdentifier = "cancelReply"
-        closeButton.accessibilityLabel = "conversation.input_bar.close_reply".localized
+        closeButton.accessibilityLabel = L10n.Localizable.Conversation.InputBar.closeReply
         closeButton.setIcon(.cross, size: .tiny, for: .normal)
         closeButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         closeButton.addCallback(for: .touchUpInside) { [weak self] _ in
