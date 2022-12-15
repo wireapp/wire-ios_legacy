@@ -18,12 +18,14 @@
 import SnapshotTesting
 import XCTest
 @testable import Wire
+import WireCommonComponents
 
-final class CallInfoViewControllerSnapshotTests: XCTestCase {
+final class CallInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
         CallingConfiguration.config = .largeConferenceCalls
+        UserDefaults.applicationGroup.set(false, forKey: DeveloperFlag.updatedCallingUI.rawValue)
     }
 
     override func tearDown() {
