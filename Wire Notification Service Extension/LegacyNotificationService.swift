@@ -33,7 +33,6 @@ public protocol CallEventHandlerProtocol {
 class CallEventHandler: CallEventHandlerProtocol {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
-        Self.logger.trace("report incoming voip call, payload: \(payload)")
         guard #available(iOS 14.5, *) else { return }
         CXProvider.reportNewIncomingVoIPPushPayload(payload) { _ in }
     }
