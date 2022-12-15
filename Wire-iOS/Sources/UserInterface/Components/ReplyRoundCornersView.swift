@@ -49,7 +49,7 @@ final class ReplyRoundCornersView: UIControl {
 
         highlightLayer.alpha = 0
 
-        highlightLayer.backgroundColor = ViewColors.backgroundReplyMessageViewHighlighted
+        highlightLayer.backgroundColor = ViewColors.backgroundReplyMessageViewHighlighted.withAlphaComponent(0.48)
         grayBoxView.backgroundColor = ViewColors.backgroundSeparatorCell
 
         addSubview(containedView)
