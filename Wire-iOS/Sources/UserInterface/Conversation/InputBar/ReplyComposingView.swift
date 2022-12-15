@@ -90,7 +90,7 @@ final class ReplyComposingView: UIView {
     }
 
     private func setupSubviews() {
-        backgroundColor = .from(scheme: .barBackground)
+        backgroundColor = SemanticColors.SearchBar.backgroundInputView
 
         previewView = message.replyPreview()!
         previewView.isUserInteractionEnabled = false
@@ -108,7 +108,7 @@ final class ReplyComposingView: UIView {
         closeButton.accessibilityIdentifier = "cancelReply"
         closeButton.accessibilityLabel = L10n.Localizable.Conversation.InputBar.closeReply
         closeButton.setIcon(.cross, size: .tiny, for: .normal)
-        closeButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        closeButton.setIconColor(SemanticColors.Icon.foregroundDefaultBlack, for: .normal)
         closeButton.addCallback(for: .touchUpInside) { [weak self] _ in
             self?.delegate?.composingViewDidCancel(composingView: self!)
         }
@@ -127,9 +127,9 @@ final class ReplyComposingView: UIView {
             leftSideView.bottomAnchor.constraint(equalTo: bottomAnchor),
             leftSideView.widthAnchor.constraint(equalToConstant: margins.left),
             closeButton.centerXAnchor.constraint(equalTo: leftSideView.centerXAnchor),
-            closeButton.topAnchor.constraint(equalTo: leftSideView.topAnchor, constant: 16),
-            messagePreviewContainer.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            messagePreviewContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+            closeButton.topAnchor.constraint(equalTo: leftSideView.topAnchor, constant: 8),
+            messagePreviewContainer.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            messagePreviewContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
             messagePreviewContainer.leadingAnchor.constraint(equalTo: leftSideView.trailingAnchor),
             messagePreviewContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margins.right),
             heightAnchor.constraint(greaterThanOrEqualToConstant: 48)

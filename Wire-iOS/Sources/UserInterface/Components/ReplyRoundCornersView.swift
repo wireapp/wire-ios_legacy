@@ -20,9 +20,12 @@ import Foundation
 import UIKit
 
 final class ReplyRoundCornersView: UIControl {
+
+    typealias ViewColors = SemanticColors.View
+
     let containedView: UIView
     private let grayBoxView = UIView()
-    private let highlightLayer = UIView()
+    let highlightLayer = UIView()
 
     init(containedView: UIView) {
         self.containedView = containedView
@@ -34,13 +37,13 @@ final class ReplyRoundCornersView: UIControl {
     private func setupSubviews() {
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.from(scheme: .replyBorder).cgColor
+        layer.borderColor = ViewColors.backgroundSeparatorCell.cgColor
         layer.masksToBounds = true
 
         highlightLayer.alpha = 0
 
-        highlightLayer.backgroundColor = .from(scheme: .replyHighlight)
-        grayBoxView.backgroundColor = .from(scheme: .replyBorder)
+        highlightLayer.backgroundColor = ViewColors.backgroundReplyMessageViewHighlighted
+        grayBoxView.backgroundColor = ViewColors.backgroundSeparatorCell
 
         addSubview(containedView)
         addSubview(grayBoxView)
@@ -103,7 +106,6 @@ final class ReplyRoundCornersView: UIControl {
     private func setHighlighted(_ isHighlighted: Bool, animated: Bool) {
         let changes = {
             self.highlightLayer.alpha = isHighlighted ? 1 : 0
-            self.layer.borderWidth = isHighlighted ? 0 : 1
         }
 
         if animated {
