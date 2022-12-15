@@ -21,11 +21,13 @@ import UIKit
 
 private typealias ConversationInputBarMessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
 
+// MARK: - ReplyComposingViewDelegate
 protocol ReplyComposingViewDelegate: AnyObject {
     func composingViewDidCancel(composingView: ReplyComposingView)
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
 }
 
+// MARK: - ZMConversationMessage Extension
 fileprivate extension ZMConversationMessage {
     var accessibilityDescription: String {
 
@@ -52,7 +54,9 @@ fileprivate extension ZMConversationMessage {
     }
 }
 
+// MARK: - ReplyComposingView
 final class ReplyComposingView: UIView {
+    // MARK: - Properties
     let message: ZMConversationMessage
     let closeButton = IconButton()
     private let leftSideView = UIView(frame: .zero)
@@ -61,6 +65,7 @@ final class ReplyComposingView: UIView {
     weak var delegate: ReplyComposingViewDelegate?
     private var observerToken: Any?
 
+    // MARK: - Init
     init(message: ZMConversationMessage) {
         require(message.canBeQuoted)
         require(message.conversationLike != nil)
@@ -78,17 +83,14 @@ final class ReplyComposingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup Message Observer
     private func setupMessageObserver() {
         if let userSession = ZMUserSession.shared() {
             observerToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
         }
     }
 
-    private func buildAccessibilityLabel() -> String {
-        let messageDescription = message.accessibilityDescription
-        return ConversationInputBarMessagePreview.accessibilityDescription(messageDescription)
-    }
-
+    // MARK: - Setup Views and Constraints
     private func setupSubviews() {
         backgroundColor = SemanticColors.SearchBar.backgroundInputView
 
@@ -118,6 +120,11 @@ final class ReplyComposingView: UIView {
         leftSideView.addSubview(closeButton)
     }
 
+    private func buildAccessibilityLabel() -> String {
+        let messageDescription = message.accessibilityDescription
+        return ConversationInputBarMessagePreview.accessibilityDescription(messageDescription)
+    }
+
     private func setupConstraints() {
         let margins = directionAwareConversationLayoutMargins
 
@@ -138,12 +145,14 @@ final class ReplyComposingView: UIView {
         NSLayoutConstraint.activate(constraints)
     }
 
+    // MARK: - Actions
     @objc func onTap() {
         self.delegate?.composingViewWantsToShowMessage(composingView: self, message: message)
     }
 
 }
 
+// MARK: - ReplyComposingView Extension
 extension ReplyComposingView: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
         if changeInfo.message.hasBeenDeleted {
