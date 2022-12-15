@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Nach Name oder Benutzername suchen";
 "peoplepicker.header.top_people" = "Top Kontakte";
 "peoplepicker.button.create_conversation" = "Gruppe erstellen";
-"peoplepicker.button.add_to_conversation" = "Teilnehmer zur Gruppe hinzufügen";
+"peoplepicker.button.add_to_conversation" = "Teilnehmer hinzufügen";
 "peoplepicker.header.conversations" = "Gruppen";
 "peoplepicker.header.team_conversations" = "%@ Gruppen";
 "peoplepicker.header.send_invitation" = "Einladen";
@@ -905,13 +905,13 @@
 "device.type.unknown" = "Unbekannt";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Dienst entfernen";
 
 // Group details
 "group_details.guest_options_cell.title" = "Gäste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
-"group_details.services_options_cell.title" = "Services";
+"group_details.services_options_cell.title" = "Dienste";
 "group_details.services_options_cell.enabled" = "An";
 "group_details.services_options_cell.disabled" = "Aus";
 "group_details.timeout_options_cell.title" = "Selbstlöschende Nachrichten";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Kennwort erstellen";
-"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie es vergessen, **kann es nicht wiederhergestellt werden.**";
-"create_passcode.info_label_forced_applock" = "Erstellen Sie einen Kennwort, um Wire zu entsperren. Merken Sie es sich, da **es nicht wiederhergestellt werden kann**.";
-"create_passcode.create_button.title" = "Kennwort erstellen";
+"create_passcode.title_label" = "Kennwort festlegen";
+"create_passcode.info_label" = "Die App wird nach einer bestimmten Zeit der Inaktivität gesperrt. Um die App zu entsperren, müssen Sie dieses Kennwort eingeben. Bitte merken Sie es sich, da es keine Möglichkeit gibt, es wiederherzustellen.";
+"create_passcode.info_label_forced_applock" = "Die App wird nach einer bestimmten Zeit der Inaktivität gesperrt. Um die App zu entsperren, müssen Sie dieses Kennwort eingeben. Bitte merken Sie es sich, da es keine Möglichkeit gibt, es wiederherzustellen.";
+"create_passcode.create_button.title" = "Kennwort festlegen";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Mindestens 8 Zeichen lang";
@@ -1885,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Geben Sie Ihr Kennwort ein";
 "unlock.title_label" = "Kennwort zum Entsperren eingeben";
-"unlock.wipe_button" = "Zugang als neues Gerät";
+"unlock.wipe_button" = "Kennwort der App-Sperre vergessen?";
 "unlock.error_label" = "Falsches Kennwort";
-"unlock.submit_button.title" = "entsperren";
+"unlock.submit_button.title" = "Entsperren";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Es gab eine Änderung bei Wire";
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Zugang als neues Gerät";
-"wipe_database.info_label" = "Auf die gespeicherten Daten kann nur mit Ihrem Kennwort zugegriffen werden.\n\nWenn Sie Ihr Kennwort vergessen haben, können Sie die Datenbank löschen, um sich erneut anzumelden.\n\nDurch Löschung der Datenbank, ";
+"wipe_database.title_label" = "Kennwort der App-Sperre vergessen?";
+"wipe_database.info_label" = "Der Zugang zu auf diesem Gerät gespeicherten Daten ist nur mit Ihrem App-Sperre-Kennwort möglich. Wenn Sie Ihr Kennwort vergessen haben, können Sie das Gerät zurücksetzen. Bitte geben Sie das Passwort Ihres Wire-Benutzerkonto ein, um dieses Gerät zurückzusetzen und sich erneut anzumelden. Indem Sie Ihr Gerät zurücksetzen, ";
 "wipe_database.info_label.highlighted" = "werden alle lokalen Daten und Nachrichten für dieses Konto dauerhaft gelöscht.";
 
-"wipe_database.button.title" = "Ich möchte die Datenbank löschen";
+"wipe_database.button.title" = "Gerät zurücksetzen";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Löschung der Daten bestätigen";
-"wipe_database.alert.message" = "Geben Sie \"Löschen\" ein, um zu bestätigen, dass Sie alle Daten auf diesem Gerät löschen möchten.";
+"wipe_database.alert.description" = "Gerät zurücksetzen";
+"wipe_database.alert.message" = "Geben Sie 'Löschen' ein, um zu bestätigen, dass Sie alle Daten auf diesem Gerät löschen möchten,\num dieses Gerät zurückzusetzen und sich erneut anzumelden";
 "wipe_database.alert.placeholder" = "\"Löschen\" eingeben";
 "wipe_database.alert.confirm" = "Löschen";
 "wipe_database.alert.confirm_input" = "Löschen";
