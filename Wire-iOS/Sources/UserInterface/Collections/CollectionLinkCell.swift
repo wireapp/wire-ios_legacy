@@ -25,6 +25,16 @@ final class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none
     private var headerView = CollectionCellHeader()
 
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupAccessibility()
+    }
+
     func createArticleView(with textMessageData: ZMTextMessageData) {
         let articleView = ArticleView(withImagePlaceholder: textMessageData.linkPreviewHasImage)
         articleView.isUserInteractionEnabled = false
@@ -62,6 +72,8 @@ final class CollectionLinkCell: CollectionCell {
     }
 
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
+        typealias ConversationSearch = L10n.Accessibility.ConversationSearch
+
         super.updateForMessage(changeInfo: changeInfo)
 
         guard let message = message, let textMessageData = message.textMessageData, textMessageData.linkPreview != nil else {
@@ -82,6 +94,10 @@ final class CollectionLinkCell: CollectionCell {
 
             createArticleView(with: textMessageData)
         }
+        accessibilityLabel = ConversationSearch.SentBy.description(message.senderName)
+                            + ", \(message.serverTimestamp?.formattedDate ?? ""), "
+                            + ConversationSearch.LinkMessage.description
+        accessibilityHint = ConversationSearch.Item.hint
     }
 
     override func copyDisplayedContent(in pasteboard: UIPasteboard) {
@@ -92,5 +108,10 @@ final class CollectionLinkCell: CollectionCell {
     public override func prepareForReuse() {
         super.prepareForReuse()
         message = .none
+    }
+
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 }

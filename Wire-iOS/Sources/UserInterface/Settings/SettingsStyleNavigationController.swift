@@ -26,7 +26,7 @@ final class SettingsStyleNavigationController: UINavigationController {
         self.navigationBar.setBackgroundImage(UIImage(color: .black, andSize: CGSize(width: 1, height: 1)), for: .default)
         self.navigationBar.isTranslucent = false
         self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
+        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes()
 
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
 

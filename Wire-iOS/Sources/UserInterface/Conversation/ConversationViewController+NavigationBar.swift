@@ -44,7 +44,7 @@ extension ConversationViewController {
 
         button.backgroundColor = ButtonColors.backgroundBarItem
         button.layer.borderWidth = 1
-        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
+        button.setBorderColor(ButtonColors.borderBarItem.resolvedColor(with: traitCollection), for: .normal)
         button.layer.cornerRadius = 12
         button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
 
@@ -67,7 +67,7 @@ extension ConversationViewController {
 
         button.backgroundColor = ButtonColors.backgroundBarItem
         button.layer.borderWidth = 1
-        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
+        button.setBorderColor(ButtonColors.borderBarItem.resolvedColor(with: traitCollection), for: .normal)
         button.layer.cornerRadius = 12
         button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
 
@@ -117,7 +117,7 @@ extension ConversationViewController {
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let button = UIBarButtonItem(icon: icon, target: self, action: action)
         button.accessibilityIdentifier = "ConversationBackButton"
-        button.accessibilityLabel = "general.back".localized
+        button.accessibilityLabel = L10n.Accessibility.Conversation.BackButton.description
 
         if hasUnreadInOtherConversations {
             button.tintColor = UIColor.accent()

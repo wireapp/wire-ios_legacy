@@ -64,7 +64,8 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
         senderView.translatesAutoresizingMaskIntoConstraints = false
         indicatorImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        indicatorImageViewTrailing = indicatorImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -conversationHorizontalMargins.right)
+        indicatorImageViewTrailing = indicatorImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor,
+                                                                                  constant: -conversationHorizontalMargins.right)
 
         NSLayoutConstraint.activate([
             // indicatorImageView

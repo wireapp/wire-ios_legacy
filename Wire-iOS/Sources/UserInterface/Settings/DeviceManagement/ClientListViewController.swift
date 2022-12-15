@@ -160,6 +160,7 @@ final class ClientListViewController: UIViewController,
         self.createConstraints()
 
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        self.navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.ClientsList.BackButton.description
         setColor()
     }
 

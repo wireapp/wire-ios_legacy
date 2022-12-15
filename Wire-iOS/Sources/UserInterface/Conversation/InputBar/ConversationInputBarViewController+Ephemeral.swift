@@ -98,6 +98,45 @@ extension ConversationInputBarViewController {
     func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
         let title = conversation.activeMessageDestructionTimeoutValue?.shortDisplayString
         button.setTitle(title, for: .normal)
+        setupAccessibility(button)
+    }
+
+    private func setupAccessibility(_ button: ButtonWithLargerHitArea) {
+        button.accessibilityLabel = L10n.Accessibility.Conversation.EmphemeralButton.description
+        if let value = conversation.activeMessageDestructionTimeoutValue?.accessibilityValue {
+            button.accessibilityValue = value
+        }
+    }
+
+}
+
+private extension MessageDestructionTimeoutValue {
+
+    var accessibilityValue: String? {
+        typealias Conversation = L10n.Accessibility.Conversation
+
+        guard 
+           self != .none,
+           let timeoutValue = shortDisplayString
+        else {
+           return nil
+        }
+        switch self {
+        case .tenSeconds:
+            return Conversation.TimerForSelfDeletingMessagesSeconds.value(timeoutValue)
+        case .fiveMinutes:
+            return Conversation.TimerForSelfDeletingMessagesMinutes.value(timeoutValue)
+        case .oneHour:
+            return Conversation.TimerForSelfDeletingMessagesHour.value(timeoutValue)
+        case .oneDay:
+            return Conversation.TimerForSelfDeletingMessagesDay.value(timeoutValue)
+        case .oneWeek:
+            return Conversation.TimerForSelfDeletingMessagesWeek.value(timeoutValue)
+        case .fourWeeks:
+            return Conversation.TimerForSelfDeletingMessagesWeeks.value(timeoutValue)
+        default:
+            return nil
+        }
     }
 
 }

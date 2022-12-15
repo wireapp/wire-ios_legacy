@@ -20,16 +20,15 @@ import Foundation
 import WireCommonComponents
 import UIKit
 
-/**
- * Top-level structure overview:
- * Settings group (screen) @c SettingsGroupCellDescriptorType contains
- * |--Settings section (table view section) @c SettingsSectionDescriptorType
- * |   |--Cell @c SettingsCellDescriptorType
- * |   |--Subgroup @c SettingsGroupCellDescriptorType
- * |   |  \..
- * |   \..
- * \...
- */
+// * Top-level structure overview:
+// * Settings group (screen) @c SettingsGroupCellDescriptorType contains
+// * |--Settings section (table view section) @c SettingsSectionDescriptorType
+// * |   |--Cell @c SettingsCellDescriptorType
+// * |   |--Subgroup @c SettingsGroupCellDescriptorType
+// * |   |  \..
+// * |   \..
+// * \...
+// *
 
 // MARK: - Protocols
 

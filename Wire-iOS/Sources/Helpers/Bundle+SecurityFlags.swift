@@ -26,6 +26,7 @@ enum SecurityFlags {
     case backup
     case maxNumberAccounts
     case fileSharing
+    case forceCallKitDisabled
 
     /// Whether encryption at rest is enabled and can't be disabled.
 
@@ -49,6 +50,8 @@ enum SecurityFlags {
             return "ForceEncryptionAtRestEnabled"
         case .fileSharing:
             return "FileSharingEnabled"
+        case .forceCallKitDisabled:
+            return "ForceCallKitDisabled"
         }
     }
 

@@ -95,6 +95,11 @@ final class SenderCellComponent: UIView {
         avatar.size = .badge
         avatar.translatesAutoresizingMaskIntoConstraints = false
         avatar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnAvatar)))
+        avatar.accessibilityElementsHidden = false
+        avatar.isAccessibilityElement = true
+        avatar.accessibilityTraits = .button
+        avatar.accessibilityLabel = L10n.Accessibility.Conversation.ProfileImage.description
+        avatar.accessibilityHint = L10n.Accessibility.Conversation.ProfileImage.hint
 
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false

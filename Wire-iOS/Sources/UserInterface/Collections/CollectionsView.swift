@@ -55,7 +55,8 @@ final class CollectionsView: UIView {
         collectionView.backgroundColor = UIColor.clear
         addSubview(collectionView)
 
-        noResultsView.label.accessibilityLabel = "no items"
+        noResultsView.label.accessibilityTraits = .header
+        noResultsView.label.accessibilityLabel = L10n.Accessibility.ConversationSearch.NoItems.description
         noResultsView.label.text = "collections.section.no_items".localized(uppercased: true)
         noResultsView.icon = .library
         noResultsView.isHidden = true

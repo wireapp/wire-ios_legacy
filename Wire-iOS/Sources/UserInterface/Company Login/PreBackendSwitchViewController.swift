@@ -29,6 +29,8 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     var authenticationCoordinator: AuthenticationCoordinator?
     var backendURL: URL?
 
+    typealias Login = L10n.Localizable.Login.Sso.BackendSwitch
+
     var delegate: PreBackendSwitchViewControllerDelegate? {
         return authenticationCoordinator
     }
@@ -39,7 +41,7 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     static let informationBackgroundBlue = UIColor(red: 220/255, green: 237/255, blue: 248/255, alpha: 1)
 
     // MARK: - UI Elements
-    let wireLogoInfoView = WireLogoInfoView(title: "login.sso.backend_switch.title".localized, subtitle: "login.sso.backend_switch.subtitle".localized)
+    let wireLogoInfoView = WireLogoInfoView(title: Login.title, subtitle: Login.subtitle)
 
     let progressView: TimedCircularProgressView = {
         let progress = TimedCircularProgressView()
@@ -52,12 +54,11 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     }()
 
     let informationLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec(.normal, .semibold).font!
+        let label = DynamicFontLabel(text: Login.information,
+                                     fontSpec: .normalSemiboldFont,
+                                     color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = .black
-        label.text = "login.sso.backend_switch.information".localized
         label.accessibilityValue = label.text
         return label
     }()
@@ -65,7 +66,7 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         navigationController?.navigationBar.barStyle = .black
 
         configureSubviews()

@@ -458,7 +458,10 @@ extension AppRootRouter {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
         colorScheme.variant = Settings.shared.colorSchemeVariant
-        UIApplication.shared.firstKeyWindow?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
+
+        UIApplication.shared.windows.forEach { window in
+            window.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
+        }
 
     }
 

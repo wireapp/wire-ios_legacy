@@ -61,7 +61,7 @@ final class VideoMessageView: UIView, TransferView {
 
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityIdentifier = "VideoActionButton"
-        self.playButton.accessibilityLabel = "VideoActionButton"
+        self.playButton.accessibilityLabel = L10n.Accessibility.AudioMessage.Play.value
         self.playButton.layer.masksToBounds = true
 
         self.progressView.isUserInteractionEnabled = false
@@ -79,9 +79,6 @@ final class VideoMessageView: UIView, TransferView {
         self.allViews.forEach(self.addSubview)
 
         createConstraints()
-        var currentElements = self.accessibilityElements ?? []
-        currentElements.append(contentsOf: [previewImageView, playButton, timeLabel, progressView])
-        self.accessibilityElements = currentElements
 
         setNeedsLayout()
         layoutIfNeeded()

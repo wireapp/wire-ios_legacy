@@ -30,7 +30,6 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
         accentColor = .strongBlue
         teamIdentifier = UUID()
         selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: teamIdentifier)

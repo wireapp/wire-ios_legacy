@@ -166,7 +166,7 @@ final class CollectionsViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-        /// Prevent content overlaps navi bar
+        // Prevent content overlaps navi bar
         navigationController?.navigationBar.isTranslucent = false
     }
 
@@ -293,6 +293,7 @@ final class CollectionsViewController: UIViewController {
         navigationItem.titleView = titleViewWrapper
 
         let button = CollectionsView.closeButton()
+        button.accessibilityLabel = L10n.Accessibility.ConversationSearch.CloseButton.description
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 
@@ -708,6 +709,7 @@ extension CollectionsViewController: CollectionCellDelegate {
 
                 let backButton = CollectionsView.backButton()
                 backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
+                backButton.accessibilityLabel = L10n.Accessibility.ConversationSearch.BackButton.description
 
                 let closeButton = CollectionsView.closeButton()
                 closeButton.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
