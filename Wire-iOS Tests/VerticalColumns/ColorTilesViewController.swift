@@ -17,7 +17,7 @@
 //
 
 import UIKit
-@testable import WireCommonComponents
+import WireCommonComponents
 @testable import Wire
 
 struct ColorTile {

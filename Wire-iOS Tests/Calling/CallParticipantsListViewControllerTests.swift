@@ -19,7 +19,7 @@
 import Foundation
 import SnapshotTesting
 import XCTest
-@testable import WireCommonComponents
+import WireCommonComponents
 @testable import Wire
 
 final class CallParticipantsListHelper {

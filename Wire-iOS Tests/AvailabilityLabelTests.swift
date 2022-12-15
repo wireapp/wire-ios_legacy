@@ -18,7 +18,7 @@
 
 import XCTest
 @testable import Wire
-@testable import WireCommonComponents
+import WireCommonComponents
 
 class AvailabilityLabelTests: ZMSnapshotTestCase {
 
