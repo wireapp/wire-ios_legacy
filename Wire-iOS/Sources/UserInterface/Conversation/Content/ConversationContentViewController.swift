@@ -42,7 +42,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     var searchQueries: [String]? {
         didSet {
             guard let searchQueries = searchQueries,
-                !searchQueries.isEmpty else { return }
+                  !searchQueries.isEmpty else { return }
 
             dataSource.searchQueries = searchQueries
         }
@@ -129,7 +129,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
             bottomContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        ])
         let heightCollapsingConstraint = bottomContainer.heightAnchor.constraint(equalToConstant: 0)
         heightCollapsingConstraint.priority = .defaultHigh
         heightCollapsingConstraint.isActive = true
@@ -305,7 +305,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
     var isScrolledToBottom: Bool {
         return !dataSource.hasNewerMessagesToLoad &&
-               tableView.contentOffset.y + tableView.correctedContentInset.bottom <= 0
+        tableView.contentOffset.y + tableView.correctedContentInset.bottom <= 0
     }
 
     // MARK: - Actions
@@ -321,8 +321,8 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         // We should not update last read if the view is not visible to the user
 
         guard let window = view.window,
-            window.convert(view.bounds, from: view).intersects(window.bounds) else {
-                return
+              window.convert(view.bounds, from: view).intersects(window.bounds) else {
+            return
         }
 
         guard !view.isHidden, view.alpha != 0 else {
@@ -340,7 +340,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
             conversation.markMessagesAsRead(until: lastVisibleMessage)
         }
 
-        /// update media bar visiblity
+        // Update media bar visiblity
         updateMediaBar()
     }
 
@@ -355,14 +355,14 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     }
 
     // MARK: - MediaPlayer
-
+    /// Update media bar visiblity
     private func updateMediaBar() {
         let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
 
         if let mediaPlayingMessage = mediaPlayingMessage,
-            mediaPlayingMessage.conversationLike === conversation,
-            !displaysMessage(mediaPlayingMessage),
-            !mediaPlayingMessage.isVideo {
+           mediaPlayingMessage.conversationLike === conversation,
+           !displaysMessage(mediaPlayingMessage),
+           !mediaPlayingMessage.isVideo {
             DispatchQueue.main.async(execute: {
                 self.delegate?.conversationContentViewController(self, didEndDisplayingActiveMediaPlayerFor: mediaPlayingMessage)
             })

@@ -68,7 +68,7 @@ final class MarkdownBarView: UIView {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
 
-    private func setupViews() {
+     func setupViews() {
 
         stackView.axis = .horizontal
          stackView.distribution = .fillEqually

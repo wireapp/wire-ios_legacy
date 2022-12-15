@@ -78,7 +78,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
 
         sut.setBoundsSizeAsIPhone4_7Inch()
 
-        /// calls viewWillAppear
+        // Calls viewWillAppear
         sut.beginAppearanceTransition(true, animated: false)
 
         verify(view: navigatorController.view)

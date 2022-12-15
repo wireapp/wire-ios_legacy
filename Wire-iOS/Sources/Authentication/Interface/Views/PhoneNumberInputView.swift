@@ -34,6 +34,8 @@ protocol PhoneNumberInputViewDelegate: AnyObject {
 
 class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate, TextContainer {
 
+    typealias RegistrationEnterPhoneNumber = L10n.Localizable.Registration.EnterPhoneNumber
+
     /// The object receiving notifications about events from this view.
     weak var delegate: PhoneNumberInputViewDelegate?
 
@@ -79,8 +81,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private let countryPickerButton = IconButton()
 
     private let inputStack = UIStackView()
+    let loginButton = Button(style: .accentColorTextButtonStyle,
+                             cornerRadius: 16,
+                             fontSpec: .normalSemiboldFont)
     private let countryCodeInputView = IconButton()
-    private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8)
+    private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8, style: .default)
 
     // MARK: - Initialization
 
@@ -99,7 +104,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private func configureSubviews() {
         // countryPickerButton
         countryPickerButton.accessibilityIdentifier = "CountryPickerButton"
-        countryPickerButton.titleLabel?.font = UIFont.normalLightFont
+        countryPickerButton.titleLabel?.font = FontSpec.normalLightFont.font!
         countryPickerButton.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
         countryPickerButton.addTarget(self, action: #selector(handleCountryButtonTap), for: .touchUpInside)
         countryPickerButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -107,9 +112,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         // countryCodeButton
         countryCodeInputView.setContentHuggingPriority(.required, for: .horizontal)
-        countryCodeInputView.setBackgroundImageColor(.white, for: .normal)
-        countryCodeInputView.setTitleColor(UIColor.Team.textColor, for: .normal)
-        countryCodeInputView.titleLabel?.font = FontSpec(.normal, .regular, .inputText).font
+        countryCodeInputView.setTitleColor(SemanticColors.Label.textDefault, for: .normal)
+        countryCodeInputView.titleLabel?.font = FontSpec.normalRegularFontWithInputTextStyle.font!
         countryCodeInputView.titleEdgeInsets.top = -1
         countryCodeInputView.isUserInteractionEnabled = false
         countryCodeInputView.accessibilityTraits = [.staticText]
@@ -123,46 +127,60 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         addSubview(inputStack)
 
         // textField
-        textField.textInsets.left = 0
-        textField.placeholder = "registration.enter_phone_number.placeholder".localized(uppercased: true)
-        textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
+        textField.textInsets.left = 10
+        textField.placeholder = RegistrationEnterPhoneNumber.placeholder.capitalized
+        textField.accessibilityLabel = RegistrationEnterPhoneNumber.placeholder.capitalized
         textField.accessibilityIdentifier = "PhoneNumberField"
-        textField.tintColor = UIColor.Team.activeButtonColor
-        textField.confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
+        textField.showConfirmButton = false
+
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.defaultCountry)
+
+        // loginButton
+        loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
+        loginButton.addTarget(self, action: #selector(handleLoginButtonTap), for: .touchUpInside)
+
+        if let text = textField.text, text.isEmpty {
+            loginButton.isEnabled = false
+        }
+
+        addSubview(loginButton)
+
+        backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     private func configureConstraints() {
-        inputStack.translatesAutoresizingMaskIntoConstraints = false
-        countryPickerButton.translatesAutoresizingMaskIntoConstraints = false
+        [inputStack, countryPickerButton, loginButton].prepareForLayout()
 
         NSLayoutConstraint.activate([
             // countryPickerStack
-            countryPickerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            countryPickerButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             countryPickerButton.topAnchor.constraint(equalTo: topAnchor),
-            countryPickerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            countryPickerButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             countryPickerButton.heightAnchor.constraint(equalToConstant: 28),
 
             // inputStack
             inputStack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            inputStack.topAnchor.constraint(equalTo: countryPickerButton.bottomAnchor, constant: 16),
+            inputStack.topAnchor.constraint(equalTo: countryPickerButton.bottomAnchor, constant: 20),
             inputStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            inputStack.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            // dimentions
-            textField.heightAnchor.constraint(equalToConstant: 56),
-            countryCodeInputView.widthAnchor.constraint(equalToConstant: 60)
+            // dimensions
+            textField.heightAnchor.constraint(equalToConstant: 48),
+            countryCodeInputView.widthAnchor.constraint(equalToConstant: 60),
+
+            // loginButton
+            loginButton.topAnchor.constraint(equalTo: inputStack.bottomAnchor, constant: 20),
+            loginButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            loginButton.heightAnchor.constraint(equalToConstant: 48),
+            loginButton.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
     private func configureValidation() {
-        textField.enableConfirmButton = { [weak self] in
-            self?.validationError == nil
-        }
 
         textField.textFieldValidator.customValidator = { input in
             let phoneNumber = self.country.e164PrefixString + input
@@ -185,17 +203,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     // MARK: - Customization
 
-    var inputBackgroundColor: UIColor = .white {
-        didSet {
-            countryCodeInputView.setBackgroundImageColor(inputBackgroundColor, for: .normal)
-            textField.backgroundColor = inputBackgroundColor
-        }
-    }
-
-    var textColor: UIColor = UIColor.Team.textColor {
+    var textColor: UIColor = SemanticColors.Label.textDefault {
         didSet {
             countryCodeInputView.setTitleColor(textColor, for: .normal)
-            textField.textColor = textColor
             updateCountryButtonLabel()
         }
     }
@@ -233,10 +243,10 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         updateCountryButtonLabel()
 
         countryPickerButton.accessibilityValue = country.displayName
-        countryPickerButton.accessibilityLabel = "registration.phone_country".localized
+        countryPickerButton.accessibilityLabel = L10n.Localizable.Registration.phoneCountry
 
         countryCodeInputView.setTitle(country.e164PrefixString, for: .normal)
-        countryCodeInputView.accessibilityLabel = "registration.phone_code".localized
+        countryCodeInputView.accessibilityLabel = L10n.Localizable.Registration.phoneCode
         countryCodeInputView.accessibilityValue = country.e164PrefixString
     }
 
@@ -304,11 +314,13 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     // MARK: - Events
 
-    @objc private func handleCountryButtonTap() {
+    @objc
+    private func handleCountryButtonTap() {
         delegate?.phoneNumberInputViewDidRequestCountryPicker(self)
     }
 
-    @objc private func handleConfirmButtonTap() {
+    @objc
+    private func handleLoginButtonTap() {
         submitValue()
     }
 

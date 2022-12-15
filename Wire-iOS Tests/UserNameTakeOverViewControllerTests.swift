@@ -29,7 +29,7 @@ class UserNameTakeOverViewControllerTests: ZMSnapshotTestCase {
 
     func testThatItRendersCorrectInitally() {
         let sut = UserNameTakeOverViewController(suggestedHandle: "joseluis4839", name: "Jose Luis")
-
+        sut.overrideUserInterfaceStyle = .light
         sut.setNeedsStatusBarAppearanceUpdate()
 
         verifyInIPhoneSize(view: sut.view, size: XCTestCase.DeviceSizeIPhone6)

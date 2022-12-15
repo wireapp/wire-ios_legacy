@@ -921,7 +921,7 @@ internal enum L10n {
     }
     internal enum AppLockModule {
       internal enum GoToSettingsButton {
-        /// Go to settings
+        /// Go to Settings
         internal static let title = L10n.tr("Localizable", "appLockModule.goToSettingsButton.title")
       }
       internal enum Message {
@@ -2379,14 +2379,14 @@ internal enum L10n {
       }
     }
     internal enum CreatePasscode {
-      /// It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**
+      /// The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.
       internal static let infoLabel = L10n.tr("Localizable", "create_passcode.info_label")
-      /// Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**
+      /// The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.
       internal static let infoLabelForcedApplock = L10n.tr("Localizable", "create_passcode.info_label_forced_applock")
-      /// Create a passcode
+      /// Set a passcode
       internal static let titleLabel = L10n.tr("Localizable", "create_passcode.title_label")
       internal enum CreateButton {
-        /// create passcode
+        /// Set a Passcode
         internal static let title = L10n.tr("Localizable", "create_passcode.create_button.title")
       }
       internal enum Textfield {
@@ -3647,7 +3647,7 @@ internal enum L10n {
       /// Search by name or username
       internal static let searchPlaceholder = L10n.tr("Localizable", "peoplepicker.search_placeholder")
       internal enum Button {
-        /// Add Participants to Group
+        /// Add Participants
         internal static let addToConversation = L10n.tr("Localizable", "peoplepicker.button.add_to_conversation")
         /// Create group
         internal static let createConversation = L10n.tr("Localizable", "peoplepicker.button.create_conversation")
@@ -5235,10 +5235,10 @@ internal enum L10n {
       internal static let errorLabel = L10n.tr("Localizable", "unlock.error_label")
       /// Enter passcode to unlock Wire
       internal static let titleLabel = L10n.tr("Localizable", "unlock.title_label")
-      /// Access as new device
+      /// Forgot your app lock passcode?
       internal static let wipeButton = L10n.tr("Localizable", "unlock.wipe_button")
       internal enum SubmitButton {
-        /// unlock
+        /// Unlock
         internal static let title = L10n.tr("Localizable", "unlock.submit_button.title")
       }
       internal enum Textfield {
@@ -5513,28 +5513,25 @@ internal enum L10n {
       }
     }
     internal enum WipeDatabase {
-      /// The data stored on this device can only be accessed with your passcode.
-      /// 
-      /// If you have forgotten your passcode, you can delete the database to log in again as a new device.
-      /// 
-      /// By deleting the database, 
+      /// The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,
       internal static let infoLabel = L10n.tr("Localizable", "wipe_database.info_label")
-      /// Access as new device
+      /// Forgot your app lock passcode?
       internal static let titleLabel = L10n.tr("Localizable", "wipe_database.title_label")
       internal enum Alert {
         /// Delete
         internal static let confirm = L10n.tr("Localizable", "wipe_database.alert.confirm")
         /// Delete
         internal static let confirmInput = L10n.tr("Localizable", "wipe_database.alert.confirm_input")
-        /// Confirm database deletion
+        /// Reset Device
         internal static let description = L10n.tr("Localizable", "wipe_database.alert.description")
-        /// Type 'Delete' to verify you want to delete all data in this device.
+        /// Type 'Delete' to verify you want to delete all data in this device,
+        /// to reset this device and log in again
         internal static let message = L10n.tr("Localizable", "wipe_database.alert.message")
         /// Type 'Delete'
         internal static let placeholder = L10n.tr("Localizable", "wipe_database.alert.placeholder")
       }
       internal enum Button {
-        /// I want to delete the database
+        /// Reset Device
         internal static let title = L10n.tr("Localizable", "wipe_database.button.title")
       }
       internal enum InfoLabel {

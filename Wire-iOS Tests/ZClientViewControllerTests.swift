@@ -38,21 +38,21 @@ final class ZClientViewControllerTests: XCTestCase {
     }
 
     func testForShowDataUsagePermissionDialogIfNeeded() {
-        /// alert is not shown before the flags are set
+        // Alert is not shown before the flags are set
         var alert = sut.createDataUsagePermissionDialogIfNeeded()
         XCTAssertNil(alert)
 
-        /// GIVEN
+        // GIVEN
         sut.needToShowDataUsagePermissionDialog = true
         sut.isComingFromRegistration = true
 
         alert = sut.createDataUsagePermissionDialogIfNeeded()
         XCTAssertNotNil(alert)
 
-        /// WHEN
+        // WHEN
         sut.dataUsagePermissionDialogDisplayed = true
 
-        /// should not show alert for the second time
+        // Should not show alert for the second time
         alert = sut.createDataUsagePermissionDialogIfNeeded()
         XCTAssertNil(alert)
     }

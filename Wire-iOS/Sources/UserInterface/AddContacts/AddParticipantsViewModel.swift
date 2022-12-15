@@ -21,11 +21,9 @@ import WireDataModel
 
 struct AddParticipantsViewModel {
     let context: AddParticipantsViewController.Context
-    let variant: ColorSchemeVariant
 
-    init(with context: AddParticipantsViewController.Context, variant: ColorSchemeVariant) {
+    init(with context: AddParticipantsViewController.Context) {
         self.context = context
-        self.variant = variant
     }
 
     var botCanBeAdded: Bool {

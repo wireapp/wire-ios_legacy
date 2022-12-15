@@ -44,7 +44,7 @@ extension ConversationViewController {
 
         button.backgroundColor = ButtonColors.backgroundBarItem
         button.layer.borderWidth = 1
-        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
+        button.setBorderColor(ButtonColors.borderBarItem.resolvedColor(with: traitCollection), for: .normal)
         button.layer.cornerRadius = 12
         button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
 
@@ -67,7 +67,7 @@ extension ConversationViewController {
 
         button.backgroundColor = ButtonColors.backgroundBarItem
         button.layer.borderWidth = 1
-        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
+        button.setBorderColor(ButtonColors.borderBarItem.resolvedColor(with: traitCollection), for: .normal)
         button.layer.cornerRadius = 12
         button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
 

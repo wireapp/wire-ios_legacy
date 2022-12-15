@@ -107,7 +107,7 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
         warningLabel.numberOfLines = 0
         warningLabel.isAccessibilityElement = true
         warningLabel.font = FontSpec(.small, .regular).font
-        warningLabel.textColor = SemanticColors.Label.textWarning
+        warningLabel.textColor = SemanticColors.Label.textErrorDefault
         bottomContentView.addSubview(warningLabel)
     }
 

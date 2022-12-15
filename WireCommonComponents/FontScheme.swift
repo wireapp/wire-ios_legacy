@@ -192,8 +192,7 @@ public enum FontScheme {
                                             fontTextStyle: .inputText,
                                             contentSizeCategory: contentSizeCategory)
 
-        /// fontTextStyle: none
-
+        // fontTextStyle: none
         fontsByFontSpec[FontSpec(.large, .none, .none)]      = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .light)
         fontsByFontSpec[FontSpec(.large, .medium, .none)]    = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .medium)
         fontsByFontSpec[FontSpec(.large, .semibold, .none)]  = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .semibold)
@@ -227,7 +226,6 @@ public enum FontScheme {
 
         fontsByFontSpec[FontSpec(.titleThree, .semibold, .none)] = .systemFont(ofSize: 20, contentSizeCategory: contentSizeCategory, weight: .semibold)
         fontsByFontSpec[FontSpec(.subHeadline, .regular, .none)] = .systemFont(ofSize: 15, contentSizeCategory: contentSizeCategory, weight: .regular)
-
     }
 
     public static func font(for fontType: FontSpec) -> UIFont? {
