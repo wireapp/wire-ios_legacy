@@ -115,7 +115,6 @@ extension CallParticipantsListView: UICollectionViewDataSource {
                                        variant: colorSchemeVariant,
                                        selfUser: selfUser)
         }
-
         return cell
     }
 
@@ -130,7 +129,6 @@ extension UserCell: CallParticipantsListCellConfigurable {
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
-        configure(with: user.value, selfUser: selfUser)
         accessoryIconView.isHidden = true
         microphoneIconView.set(style: MicrophoneIconStyle(
             state: microphoneState,
@@ -138,6 +136,7 @@ extension UserCell: CallParticipantsListCellConfigurable {
         )
         videoIconView.set(style: VideoIconStyle(state: videoState))
         backgroundColor = SemanticColors.View.backgroundDefaultWhite
+        configure(with: user.value, selfUser: selfUser)
     }
 
 }

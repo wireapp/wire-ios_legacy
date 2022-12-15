@@ -127,13 +127,16 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             return
         }
         isAccessibilityElement = true
-       // accessibilityTraits = .button
+        //accessibilityTraits = .allowsDirectInteraction
+        //accessibilityTraits = .button
         let microphoneState = userDetailsView.microphoneIconStyle.accessibilityLabel
-        let sharingVideo = stream.isSharingVideo ? Calling.CameraOn.description : Calling.CameraOff.description
+        let cameraState = stream.isSharingVideo ? Calling.CameraOn.description : Calling.CameraOff.description
         let activeSpeaker = stream.isParticipantUnmutedAndSpeakingNow ? Calling.ActiveSpeaker.description : ""
         let screenSharing = stream.isScreenSharing ? Calling.SharesScreen.description : ""
-        accessibilityLabel = "\(userName), \(microphoneState), \(sharingVideo), \(activeSpeaker), \(screenSharing)"
-        //accessibilityHint = L10n.Accessibility.Calling.UserCellFullscreen.hint
+        accessibilityLabel = "\(userName), \(microphoneState), \(cameraState), \(activeSpeaker), \(screenSharing)"
+        accessibilityHint = L10n.Accessibility.Calling.UserCellFullscreen.hint
+
+
     }
 
     func setupViews() {

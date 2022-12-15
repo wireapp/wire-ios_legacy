@@ -182,7 +182,7 @@ class CallingActionsView: UIView {
     private func updateAccessibilityElements(with input: CallActionsViewInputType) {
         typealias Calling = L10n.Accessibility.Calling
 
-        microphoneButton.accessibilityLabel = input.isMuted ?  Calling.MicrophoneOnButton.description : Calling.MicrophoneOffButton.description
+        microphoneButton.accessibilityLabel = input.isMuted ? Calling.MicrophoneOnButton.description : Calling.MicrophoneOffButton.description
         speakerButton.accessibilityLabel = input.mediaState.isSpeakerEnabled ? Calling.SpeakerOffButton.description : Calling.SpeakerOnButton.description
         endCallButton.accessibilityLabel = Calling.HangUpButton.description
         acceptCallButton.accessibilityLabel = Calling.AcceptButton.description
