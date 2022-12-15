@@ -31,6 +31,100 @@
 "conversation.legalHoldIcon.description" = "Юридические ограничения";
 "conversation.verifiedIcon.description" = "Верифицировано";
 
+"conversation.sendButton.description" = "Отправить это сообщение";
+"conversation.openFormattingButton.description" = "Открыть параметры форматирования";
+"conversation.hideFormattingButton.description" = "Скрыть параметры форматирования";
+"conversation.timerButton.description" = "Установите таймер для самоудаления сообщений";
+"conversation.mentionButton.description" = "Упомянуть кого-нибудь";
+"conversation.cameraButton.description" = "Сделать или выбрать фото";
+"conversation.sketchButton.description" = "Открыть скетч для рисования или записи";
+"conversation.gifButton.description" = "Выбрать GIF";
+"conversation.audioButton.description" = "Запись аудиосообщения";
+"conversation.pingButton.description" = "Отправить пинг";
+"conversation.uploadFileButton.description" = "Поделиться файлом";
+"conversation.locationButton.description" = "Поделиться местоположением";
+"conversation.videoButton.description" = "Записать видео";
+"conversation.moreButton.description" = "Открыть дополнительные параметры обмена сообщениями";
+"conversation.emphemeralButton.description" = "Установите таймер для самоудаления сообщений";
+"conversation.timerForSelfDeletingMessagesSeconds.value" = "%@ сек.";
+"conversation.timerForSelfDeletingMessagesMinutes.value" = "%@ мин.";
+"conversation.timerForSelfDeletingMessagesHour.value" = "%@ час.";
+"conversation.timerForSelfDeletingMessagesDay.value" = "%@ дн.";
+"conversation.timerForSelfDeletingMessagesWeek.value" = "%@ нед.";
+"conversation.timerForSelfDeletingMessagesWeeks.value" = "%@ нед.";
+
+"conversation.headerButton.description" = "Использовать заголовок";
+"conversation.boldButton.description" = "Использовать полужирный текст";
+"conversation.italicButton.description" = "Использовать курсив";
+"conversation.numberListButton.description" = "Использовать нумерованный список";
+"conversation.bulletListButton.description" = "Использовать маркированный список";
+"conversation.codeButton.description" = "Использовать кодовый формат";
+"conversation.messageInfo.hint" = "Нажмите дважды, чтобы скрыть или показать информацию о сообщении";
+"conversation.messageOptions.hint" = "Нажмите трижды, чтобы открыть параметры обмена сообщениями";
+
+"conversationSearch.closeButton.description" = "Закрыть поиск";
+"conversationSearch.backButton.description" = "Вернуться к поиску";
+"conversationSearch.imagesSection.description" = "Изображения в этой беседе";
+"conversationSearch.filesSection.description" = "Файлы в этой беседе";
+"conversationSearch.videosSection.description" = "Видео в этой беседе";
+"conversationSearch.linksSection.description" = "Ссылки в этой беседе";
+"conversationSearch.section.hint" = "Нажмите дважды, чтобы открыть все";
+"conversationSearch.emptyResult.description" = "Нет результатов";
+"conversationSearch.noItems.description" = "Ничего нет";
+"conversationSearch.imageMessage.description" = "Изображение";
+"conversationSearch.videoMessage.description" = "Видеосообщение";
+"conversationSearch.audioMessage.description" = "Аудиосообщение";
+"conversationSearch.linkMessage.description" = "Ссылка";
+"conversationSearch.sentBy.description" = "Отправлено %@";
+"conversationSearch.fileName.description" = "Имя файла";
+"conversationSearch.fileSize.description" = "Размер";
+"conversationSearch.fileType.description" = "Тип";
+
+"conversationSearch.item.hint" = "Нажмите дважды, чтобы открыть";
+"conversationSearch.itemPlay.hint" = "Нажмите дважды, чтобы воспроизвести";
+
+"audioRecord.stopButton.description" = "Остановить запись";
+"audioRecord.startButton.description" = "Начать запись";
+"audioRecord.startButton.hint" = "Нажмите дважды, чтобы записать";
+"audioRecord.sendButton.description" = "Отправить";
+"audioRecord.cancelButton.description" = "Удалить аудиозапись";
+"audioRecord.redoButton.description" = "Повторить аудиозапись";
+"audioRecord.normalEffectButton.description" = "Оригинал";
+"audioRecord.heliumEffectButton.description" = "Гелий";
+"audioRecord.deepVoiceEffectButton.description" = "Глубокий голос";
+"audioRecord.quickEffectButton.description" = "Скорость";
+"audioRecord.hallEffectButton.description" = "Зал";
+"audioRecord.alienEffectButton.description" = "Пришелец";
+"audioRecord.roboticEffectButton.description" = "Робот";
+"audioRecord.highToDeepEffectButton.description" = "В глубину";
+
+"createConversation.backButton.description" = "Вернуться к списку контактов";
+
+"pictureView.closeButton.description" = "ССКИЙ
+Закрыть изображение";
+
+"messageAction.unlikeButton.description" = "Не нравится изображение";
+"messageAction.likeButton.description" = "Нравится изображение";
+"messageAction.shareButton.description" = "Поделиться изображением";
+"messageAction.sketchButton.description" = "Скетч поверх рисунка";
+"messageAction.emojiButton.description" = "Скетч смайлика поверх рисунка";
+"messageAction.copyButton.description" = "Скопировать изображение";
+"messageAction.moreButton.description" = "Открыть дополнительные параметры обмена сообщениями";
+"messageAction.saveButton.description" = "Сохранить изображение";
+"messageAction.revealButton.description" = "Показать в беседе";
+"messageAction.deleteButton.description" = "Удалить изображение";
+
+"audioMessage.pause.value" = "Пауза";
+"audioMessage.play.value" = "Воспроизвести";
+
+"sketch.selectPictureButton.description" = "Выбрать изображение";
+"sketch.drawButton.description" = "Нарисовать или написать";
+"sketch.drawButton.hint" = "Нажмите дважды для включения или отключения";
+"sketch.selectEmojiButton.description" = "Выбрать смайлик";
+"sketch.sendButton.description" = "Отправить";
+"sketch.undoButton.description" = "Отменить последний шаг";
+"sketch.closeButton.description" = "Закрыть скетч";
+
 "conversationDetails.messageTimeoutState.description" = "Выбрано";
 "selfDeletingMessagesConversationSettings.closeButton.description" = "Закрыть настройки самоудаляющихся сообщений";
 "notificationConversationSettings.closeButton.description" = "Закрыть настройки уведомлений";
@@ -75,6 +169,7 @@
 "clientsList.keyFingerprint.description" = "Отпечаток ключа";
 "clientsList.deviceVerified.description" = "Верифицировано";
 "clientsList.deviceNotVerified.description" = "Не верифицировано";
+"clientsList.backButton.description" = "Вернуться к списку устройств";
 
 "deviceDetails.whyVerifyFingerprint.hint" = "Нажмите дважды, чтобы узнать больше о верификации";
 "deviceDetails.howToVerifyFingerprint.hint" = "Узнать больше о верификации отпечатком";

@@ -125,7 +125,7 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.origin.x, 0)
     }
 
-    func testThatPanRightViewToMoreThanHalfWouldRevealLeftView() {
+    func testThatPanRightViewToMoreThanHalfWouldNotRevealLeftViewIfVelocityDoesNotMatch() {
         // GIVEN
         setupLeftView(isLeftViewControllerRevealed: false)
 
@@ -146,7 +146,7 @@ final class SplitViewControllerTests: XCTestCase {
         sut.onHorizontalPan(endedGestureRecognizer)
 
         // THEN
-        XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width, "rightView should stop at the right edge of the sut.view!")
+        XCTAssertEqual(sut.rightView.frame.origin.x, 0, "rightView should stop at the left edge of the sut.view!")
     }
 
     /// TODO

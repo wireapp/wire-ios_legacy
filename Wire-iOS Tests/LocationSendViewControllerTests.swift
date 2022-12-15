@@ -26,6 +26,7 @@ final class LocationSendViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = LocationSendViewController()
+        sut.overrideUserInterfaceStyle = .light
     }
 
     override func tearDown() {

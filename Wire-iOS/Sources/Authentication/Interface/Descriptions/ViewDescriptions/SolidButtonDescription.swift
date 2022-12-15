@@ -39,26 +39,25 @@ class SolidButtonDescription: ValueSubmission {
 
 extension SolidButtonDescription: ViewDescriptor {
     func create() -> UIView {
+
         let button = IconButton(fontSpec: .normalSemiboldFont)
-        button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(UIColor(white: 1, alpha: 0.6), for: .highlighted)
-        button.setBackgroundImageColor(UIColor.Team.activeButton, for: .normal)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.applyStyle(.accentColorTextButtonStyle)
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         button.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title.localizedUppercase, for: .normal)
+        button.setTitle(title, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
-        button.addTarget(self, action: #selector(ButtonDescription.buttonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(SolidButtonDescription.buttonTapped(_:)), for: .touchUpInside)
 
         let buttonContainer = UIView()
         buttonContainer.addSubview(button)
         buttonContainer.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: 200),
+            button.heightAnchor.constraint(equalToConstant: 48),
+            button.widthAnchor.constraint(equalToConstant: 300),
             button.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
             button.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor),
             button.centerXAnchor.constraint(equalTo: buttonContainer.centerXAnchor)

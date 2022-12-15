@@ -33,24 +33,24 @@ protocol UnlockViewControllerDelegate: AnyObject {
 final class UnlockViewController: UIViewController {
 
     typealias Session = ZMUserSessionInterface & UserSessionAppLockInterface
+    typealias Unlock = L10n.Localizable.Unlock
 
     weak var delegate: UnlockViewControllerDelegate?
 
     private let selfUser: UserType
     private var userSession: Session?
 
-    private let shieldView = UIView.shieldView()
-    private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
-
     private let stackView: UIStackView = UIStackView.verticalStackView()
     private let upperStackView = UIStackView.verticalStackView()
 
     private let contentView: UIView = UIView()
 
-    private lazy var unlockButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .fullMonochrome, fontSpec: .smallSemiboldFont)
+    private static let errorFont = FontSpec.smallLightFont.font!
 
-        button.setTitle("unlock.submit_button.title".localized, for: .normal)
+    private lazy var unlockButton: Button = {
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
+
+        button.setTitle(Unlock.SubmitButton.title, for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(onUnlockButtonPressed(sender:)), for: .touchUpInside)
         button.accessibilityIdentifier = "unlock_screen.button.unlock"
@@ -59,8 +59,8 @@ final class UnlockViewController: UIViewController {
     }()
 
     lazy var validatedTextField: ValidatedTextField = {
-        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
-        textField.placeholder = "unlock.textfield.placeholder".localized
+        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self, setNewColors: true)
+        textField.placeholder = Unlock.Textfield.placeholder
         textField.delegate = self
         textField.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
 
@@ -68,7 +68,9 @@ final class UnlockViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
+        let label = DynamicFontLabel(text: Unlock.titleLabel,
+                                     fontSpec: .largeSemiboldFont,
+                                     color: SemanticColors.Label.textDefault)
 
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -94,9 +96,8 @@ final class UnlockViewController: UIViewController {
     }()
 
     private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec(.medium, .regular).font!
-        label.textColor = ColorScheme.default.color(named: .textForeground, variant: .dark)
+        let label = DynamicFontLabel(fontSpec: .mediumRegularFont,
+                                     color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
@@ -104,22 +105,18 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
-    private static let errorFont = FontSpec(.small, .light).font!.withSize(10)
     private let errorLabel: UILabel = {
-        let label = UILabel()
+        let label = DynamicFontLabel(fontSpec: .smallLightFont,
+                                     color: SemanticColors.Label.textErrorDefault)
         label.text = " "
-        label.font = errorFont
-        label.textColor = UIColor.PasscodeUnlock.error
 
         return label
     }()
 
-    private lazy var wipeButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = FontSpec(.medium, .medium).font!.withSize(14)
-        button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
+    private lazy var wipeButton: Button = {
+        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumRegularFont)
 
-        button.setTitle("unlock.wipe_button".localized, for: .normal)
+        button.setTitle(Unlock.wipeButton, for: .normal)
 
         button.addTarget(self, action: #selector(onWipeButtonPressed(sender:)), for: .touchUpInside)
 
@@ -132,9 +129,9 @@ final class UnlockViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        view.backgroundColor = .black
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
-        [shieldView, blurView, contentView].forEach {
+        [contentView].forEach {
             view.addSubview($0)
         }
 
@@ -143,18 +140,11 @@ final class UnlockViewController: UIViewController {
         // stackview for horizonal spacing except unlockButton
         upperStackView.distribution = .fillProportionally
 
-        upperStackView.isLayoutMarginsRelativeArrangement = true
-
-        upperStackView.layoutMargins = UIEdgeInsets(top: 0,
-                                                    left: CGFloat.PasscodeUnlock.textFieldPadding,
-                                                    bottom: 0,
-                                                    right: CGFloat.PasscodeUnlock.textFieldPadding)
-
         contentView.addSubview(stackView)
 
         [accountIndicator,
          titleLabel,
-         UILabel.createHintLabel(variant: .dark),
+         UILabel.createHintLabel(),
          validatedTextField,
          errorLabel,
          wipeButton].forEach(upperStackView.addArrangedSubview)
@@ -168,11 +158,6 @@ final class UnlockViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - status bar
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -183,8 +168,6 @@ final class UnlockViewController: UIViewController {
 
         [userImageView,
          nameLabel,
-         shieldView,
-         blurView,
          contentView,
          upperStackView,
          stackView].prepareForLayout()
@@ -194,18 +177,6 @@ final class UnlockViewController: UIViewController {
         let contentPadding: CGFloat = 24
 
         NSLayoutConstraint.activate([
-            // nibView
-            shieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            shieldView.topAnchor.constraint(equalTo: view.topAnchor),
-            shieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            shieldView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
-            // blurView
-            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurView.topAnchor.constraint(equalTo: view.topAnchor),
-            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
             // content view
             widthConstraint,
             contentView.widthAnchor.constraint(lessThanOrEqualToConstant: CGFloat.iPhone4_7Inch.width),
@@ -258,13 +229,14 @@ final class UnlockViewController: UIViewController {
     }
 
     func showWrongPasscodeMessage() {
+
         let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle,
-                                                             with: UIColor.PasscodeUnlock.error,
+                                                             with: SemanticColors.Label.textErrorDefault,
                                                              iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize,
                                                              verticalCorrection: -1,
                                                              insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
 
-        let attributedString = NSAttributedString(string: "unlock.error_label".localized) && UnlockViewController.errorFont
+        let attributedString = NSAttributedString(string: Unlock.errorLabel) && UnlockViewController.errorFont
 
         errorLabel.attributedText = NSAttributedString(attachment: textAttachment) + attributedString
         unlockButton.isEnabled = false

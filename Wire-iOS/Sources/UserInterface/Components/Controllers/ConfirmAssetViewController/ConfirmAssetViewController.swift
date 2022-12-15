@@ -157,7 +157,7 @@ final class ConfirmAssetViewController: UIViewController {
         switch asset {
         case .image(let mediaAsset):
             return mediaAsset is UIImage
-        case .video(url: _):
+        case .video:
             return false
         }
     }
@@ -166,7 +166,7 @@ final class ConfirmAssetViewController: UIViewController {
         switch asset {
         case .image(let image):
             return image.size.width > 192 && image.size.height > 96
-        case .video(url: _):
+        case .video:
             return false
         }
     }

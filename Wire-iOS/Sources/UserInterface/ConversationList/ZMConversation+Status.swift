@@ -363,7 +363,7 @@ final class SecurityAlertMatcher: ConversationStatusMatcher {
     }
 
     func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
-        return nil /// TODO: icon for poll message
+        return nil // TODO: icon for poll message
     }
 
     var combinesWith: [ConversationStatusMatcher] = []

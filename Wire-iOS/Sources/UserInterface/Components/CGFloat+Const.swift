@@ -52,7 +52,6 @@ extension CGFloat {
         static let textFieldHeight: CGFloat = 40
         static let buttonHeight: CGFloat = 40
         static let buttonPadding: CGFloat = 24
-        static let textFieldPadding: CGFloat = 19
     }
 
     enum AccessoryTextField {

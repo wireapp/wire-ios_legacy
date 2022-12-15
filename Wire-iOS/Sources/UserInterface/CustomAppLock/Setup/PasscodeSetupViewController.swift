@@ -53,10 +53,10 @@ final class PasscodeSetupViewController: UIViewController {
     private let contentView: UIView = UIView()
 
     private lazy var createButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .full, fontSpec: .smallSemiboldFont)
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
         button.accessibilityIdentifier = "createPasscodeButton"
 
-        button.setTitle("create_passcode.create_button.title".localized(uppercased: true), for: .normal)
+        button.setTitle("create_passcode.create_button.title".localized, for: .normal)
         button.isEnabled = false
 
         button.addTarget(self, action: #selector(onCreateCodeButtonPressed(sender:)), for: .touchUpInside)
@@ -65,7 +65,7 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     lazy var passcodeTextField: ValidatedTextField = {
-        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self)
+        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: true), delegate: self, setNewColors: true)
         textField.placeholder = "create_passcode.textfield.placeholder".localized
         textField.delegate = self
 
@@ -75,7 +75,7 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     private lazy var titleLabel: UILabel = {
-        let label = UILabel.createMultiLineCenterdLabel(variant: variant)
+        let label = UILabel.createMultiLineCenterdLabel()
         switch context {
         case .createPasscode:
             label.text = "create_passcode.title_label".localized
@@ -91,7 +91,7 @@ final class PasscodeSetupViewController: UIViewController {
     private let useCompactLayout: Bool
 
     private lazy var infoLabel: UILabel = {
-        let style = DownStyle.infoLabelStyle(compact: useCompactLayout, variant: variant)
+        let style = DownStyle.infoLabelStyle(compact: useCompactLayout)
         let label = UILabel()
         label.configMultipleLineLabel()
         label.attributedText = .markdown(from: context.infoLabelString, style: style)
@@ -111,7 +111,6 @@ final class PasscodeSetupViewController: UIViewController {
     }()
 
     private var callback: ResultHandler?
-    private let variant: ColorSchemeVariant
     private let context: Context
 
     @available(*, unavailable)
@@ -125,12 +124,10 @@ final class PasscodeSetupViewController: UIViewController {
     ///   - useCompactLayout: Set this to true for reduce font size and spacing for iPhone 4 inch screen. Set to nil to follow current window's height
     ///   - context: context  for this screen. Depending on the context, there are a different title and info message.
     ///   - callback: callback for storing passcode result.
-    required init(variant: ColorSchemeVariant = ColorScheme.default.variant,
-                  useCompactLayout: Bool? = nil,
+    required init(useCompactLayout: Bool? = nil,
                   context: Context,
                   callback: ResultHandler?) {
         self.callback = callback
-        self.variant = variant
         self.context = context
 
         self.useCompactLayout = useCompactLayout ??
@@ -141,13 +138,8 @@ final class PasscodeSetupViewController: UIViewController {
         setupViews()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     private func setupViews() {
-        view.backgroundColor = ColorScheme.default.color(named: .contentBackground,
-                                                         variant: variant)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         view.addSubview(contentView)
 
@@ -158,7 +150,7 @@ final class PasscodeSetupViewController: UIViewController {
         [titleLabel,
          SpacingView(useCompactLayout ? 1 : 10),
          infoLabel,
-         UILabel.createHintLabel(variant: variant),
+         UILabel.createHintLabel(),
          passcodeTextField,
          SpacingView(useCompactLayout ? 2 : 16)].forEach {
             stackView.addArrangedSubview($0)
@@ -166,8 +158,8 @@ final class PasscodeSetupViewController: UIViewController {
 
         PasscodeError.allCases.forEach {
             if let label = validationLabels[$0] {
-                label.font = UIFont.smallSemiboldFont
-                label.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
+                label.font = FontSpec.smallSemiboldFont.font!
+                label.textColor = SemanticColors.Label.textPasswordRulesCheck
                 label.numberOfLines = 0
                 label.attributedText = $0.descriptionWithInvalidIcon
                 label.isEnabled = false
@@ -246,8 +238,7 @@ final class PasscodeSetupViewController: UIViewController {
     static func createKeyboardAvoidingFullScreenView(variant: ColorSchemeVariant = ColorScheme.default.variant,
                                                      context: Context,
                                                      delegate: PasscodeSetupViewControllerDelegate? = nil) -> KeyboardAvoidingAuthenticationCoordinatedViewController {
-        let passcodeSetupViewController = PasscodeSetupViewController(variant: variant,
-                                                                      context: context,
+        let passcodeSetupViewController = PasscodeSetupViewController(context: context,
                                                                       callback: nil)
 
         passcodeSetupViewController.passcodeSetupViewControllerDelegate = delegate
@@ -264,7 +255,6 @@ final class PasscodeSetupViewController: UIViewController {
     lazy var closeItem: UIBarButtonItem = {
         let closeItem = UIBarButtonItem.createCloseItem()
         closeItem.accessibilityIdentifier = "closeButton"
-        closeItem.tintColor = .white
 
         closeItem.target = self
         closeItem.action = #selector(PasscodeSetupViewController.closeTapped)
@@ -355,10 +345,10 @@ extension PasscodeSetupViewController: UIAdaptivePresentationControllerDelegate 
 
 private extension DownStyle {
 
-    static func infoLabelStyle(compact: Bool, variant: ColorSchemeVariant) -> DownStyle {
+    static func infoLabelStyle(compact: Bool) -> DownStyle {
         let style = DownStyle()
-        style.baseFont = compact ? .smallRegularFont : .normalRegularFont
-        style.baseFontColor = .from(scheme: .textForeground, variant: variant)
+        style.baseFont = compact ? FontSpec.smallRegularFont.font! : FontSpec.normalRegularFont.font!
+        style.baseFontColor = SemanticColors.Label.textDefault
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = compact ? 14 : 20

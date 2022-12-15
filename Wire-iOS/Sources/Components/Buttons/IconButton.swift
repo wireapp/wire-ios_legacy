@@ -180,6 +180,7 @@ class IconButton: ButtonWithLargerHitArea {
 
     func setBackgroundImageColor(_ color: UIColor,
                                  for state: UIControl.State) {
+        let color = color.resolvedColor(with: traitCollection)
         setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
 
         if adjustBackgroundImageWhenHighlighted && state.contains(.normal) {
@@ -283,7 +284,7 @@ class IconButton: ButtonWithLargerHitArea {
     private func updateCircularCornerRadius() {
         guard circular else { return }
 
-        /// Create a circular mask. It would also mask subviews.
+        // Create a circular mask. It would also mask subviews.
 
         let radius: CGFloat = bounds.size.height / 2
         let maskPath = UIBezierPath(roundedRect: bounds,
@@ -296,7 +297,7 @@ class IconButton: ButtonWithLargerHitArea {
 
         layer.mask = maskLayer
 
-        /// When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
+        // When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
         layer.cornerRadius = borderWidth > 0 ? radius : 0
     }
 
@@ -318,6 +319,7 @@ class IconButton: ButtonWithLargerHitArea {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
+        let color = color?.resolvedColor(with: traitCollection)
         state.expanded.forEach { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color
