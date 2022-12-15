@@ -91,7 +91,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         set {
-            // no op
+            super.accessibilityLabel = newValue
         }
     }
 
@@ -101,7 +101,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         set {
-            // no op
+            super.accessibilityValue = newValue
         }
     }
 }

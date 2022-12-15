@@ -35,7 +35,8 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
     func configure(with object: Configuration, animated: Bool) {
         self.configuration = object
         attributedText = object.pingText
-        imageView.setIcon(.ping, size: 20, color: object.pingColor)
+        imageView.setTemplateIcon(.ping, size: 20)
+        imageView.tintColor = object.pingColor
         lineView.isHidden = true
     }
 
@@ -144,7 +145,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, sender: UserType) {
         let senderText = sender.isSelfUser ? "content.ping.text.you".localized : (sender.name ?? "")
@@ -152,11 +153,12 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
 
         let text = NSAttributedString(string: pingText, attributes: [
             .font: UIFont.mediumFont,
-            .foregroundColor: UIColor.from(scheme: .textForeground)
-            ]).adding(font: .mediumSemiboldFont, to: senderText)
+            .foregroundColor: SemanticColors.Label.textDefault
+            ])
 
         let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
         self.configuration = View.Configuration(pingColor: pingColor, pingText: text, message: message)
+        accessibilityLabel = text.string
         actionController = nil
     }
 

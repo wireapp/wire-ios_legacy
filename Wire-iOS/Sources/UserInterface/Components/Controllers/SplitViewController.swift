@@ -96,7 +96,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     var leftView: UIView = UIView(frame: UIScreen.main.bounds)
     var rightView: UIView = {
         let view = PlaceholderConversationView(frame: UIScreen.main.bounds)
-        view.backgroundColor = UIColor.from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         return view
     }()
@@ -526,10 +526,10 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
             }
         case .cancelled,
              .ended:
-            let isRevealed = openPercentage > 0.5
-            let didCompleteTransition = isRevealed != isLeftViewControllerRevealed
+            let isRevealing = gestureRecognizer.velocity(in: view).x > 0
+            let didCompleteTransition = isRevealing != isLeftViewControllerRevealed
 
-            setLeftViewControllerRevealed(isRevealed, animated: true) { [weak self] in
+            setLeftViewControllerRevealed(isRevealing, animated: true) { [weak self] in
                 if didCompleteTransition {
                     self?.leftViewController?.endAppearanceTransition()
                     self?.rightViewController?.endAppearanceTransition()

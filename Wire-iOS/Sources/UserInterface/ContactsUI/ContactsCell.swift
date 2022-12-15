@@ -38,27 +38,13 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-
-    // if nil the background color is the default content background color for the theme
-    var contentBackgroundColor: UIColor? {
-        didSet {
-            guard oldValue != contentBackgroundColor else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-
-    final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
-    }
+    var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant
 
     static let boldFont: FontSpec = .smallRegularFont
     static let lightFont: FontSpec = .smallLightFont
+
+    typealias ViewColors = SemanticColors.View
+    typealias LabelColors = SemanticColors.Label
 
     let avatar: BadgeUserImageView = {
         let badgeUserImageView = BadgeUserImageView()
@@ -76,7 +62,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .normalLightFont
+        label.font = FontSpec.normalLightFont.font!
         label.accessibilityIdentifier = "contact_cell.name"
 
         return label
@@ -85,7 +71,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .smallRegularFont
+        label.font = FontSpec.smallRegularFont.font!
         label.accessibilityIdentifier = "contact_cell.username"
 
         return label
@@ -97,7 +83,9 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    let actionButton: LegacyButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
+    let actionButton: Button = Button(style: .accentColorTextButtonStyle,
+                                      cornerRadius: 4,
+                                      fontSpec: .mediumSemiboldFont)
 
     var actionButtonHandler: ContactsCellActionButtonHandler?
 
@@ -174,7 +162,14 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
 
         createSeparatorConstraints()
 
-        applyColorScheme(ColorScheme.default.variant)
+        separator.backgroundColor = ViewColors.backgroundSeparatorCell
+
+        backgroundColor = ViewColors.backgroundUserCell
+
+        titleLabel.textColor = LabelColors.textCellTitle
+        subtitleLabel.textColor = LabelColors.textCellSubtitle
+
+        updateTitleLabel()
     }
 
     private func createConstraints() {
@@ -192,16 +187,16 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -buttonMargin)
-            ])
+        ])
 
         [actionButton, buttonSpacer].prepareForLayout()
         NSLayoutConstraint.activate([
-          buttonSpacer.topAnchor.constraint(equalTo: actionButton.topAnchor),
-          buttonSpacer.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor),
+            buttonSpacer.topAnchor.constraint(equalTo: actionButton.topAnchor),
+            buttonSpacer.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor),
 
-          actionButton.widthAnchor.constraint(equalToConstant: actionButtonWidth),
-          buttonSpacer.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor),
-          buttonSpacer.leadingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -buttonMargin)
+            actionButton.widthAnchor.constraint(equalToConstant: actionButtonWidth),
+            buttonSpacer.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor),
+            buttonSpacer.leadingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -buttonMargin)
         ])
     }
 
@@ -223,7 +218,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             return
         }
 
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), selfUser: ZMUser.selfUser())
+        titleLabel.attributedText = user.nameIncludingAvailability(color: LabelColors.textDefault, selfUser: ZMUser.selfUser())
     }
 
     @objc func actionButtonPressed(sender: Any?) {
@@ -233,19 +228,10 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     }
 }
 
+// TODO: [AGIS] Remove that extension and function as soon as we remove ColorSchemeVariant
+// from UserCellSubtitleProtocol
 extension ContactsCell: Themeable {
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        separator.backgroundColor = UIColor.from(scheme: .separator, variant: colorSchemeVariant)
-
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        subtitleLabel.textColor = sectionTextColor
-
-        updateTitleLabel()
-    }
-
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) { }
 }
 
 extension ContactsCell: UserCellSubtitleProtocol {
@@ -253,6 +239,8 @@ extension ContactsCell: UserCellSubtitleProtocol {
 }
 
 extension ContactsCell {
+
+    typealias ContactsUIActionButton = L10n.Localizable.ContactsUi.ActionButton
 
     enum Action {
 
@@ -262,9 +250,9 @@ extension ContactsCell {
         var localizedDescription: String {
             switch self {
             case .open:
-                return "contacts_ui.action_button.open".localized
+                return ContactsUIActionButton.open.capitalized
             case .invite:
-                return "contacts_ui.action_button.invite".localized
+                return ContactsUIActionButton.invite.capitalized
             }
         }
     }

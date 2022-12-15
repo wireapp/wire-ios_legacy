@@ -28,7 +28,7 @@ class AccountSelectionViewController: UITableViewController {
     fileprivate var accounts: [Account]
     fileprivate var current: Account?
 
-    var selectionHandler : ((_ account: Account) -> Void)?
+    var selectionHandler: ((_ account: Account) -> Void)?
 
     init(accounts: [Account], current: Account?) {
         self.accounts = accounts

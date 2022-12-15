@@ -177,9 +177,9 @@ enum DebugActions {
 
         let message = """
         Max supported version: \((APIVersion.allCases.max()?.rawValue).description(else: "None"))
-        Currently selected version: \((APIVersion.current?.rawValue).description(else: "None"))
-        Local domain: \(APIVersion.domain.description(else: "None"))
-        Is federation enabled: \(APIVersion.isFederationEnabled)
+        Currently selected version: \((BackendInfo.apiVersion?.rawValue).description(else: "None"))
+        Local domain: \(BackendInfo.domain.description(else: "None"))
+        Is federation enabled: \(BackendInfo.isFederationEnabled)
         """
 
         let alert = UIAlertController(

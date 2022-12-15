@@ -18,85 +18,85 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
+// MARK: - PermissionDeniedViewControllerDelegate
 protocol PermissionDeniedViewControllerDelegate: AnyObject {
     func continueWithoutPermission(_ viewController: PermissionDeniedViewController)
 }
 
+// MARK: - PermissionDeniedViewController
 final class PermissionDeniedViewController: UIViewController {
 
-    var backgroundBlurDisabled = false {
-        didSet {
-            backgroundBlurView.isHidden = backgroundBlurDisabled
-        }
-    }
+    // MARK: - Properties
     weak var delegate: PermissionDeniedViewControllerDelegate?
-
     private var initialConstraintsCreated = false
     private let heroLabel: UILabel = UILabel.createHeroLabel()
     private var settingsButton: LegacyButton!
     private var laterButton: UIButton!
-    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
 
+    // MARK: - addressBookAccessDeniedViewController
     class func addressBookAccessDeniedViewController() -> PermissionDeniedViewController {
+        // MARK: - Properties
+        typealias RegistrationAddressBookDenied = L10n.Localizable.Registration.AddressBookAccessDenied
         let vc = PermissionDeniedViewController()
-        let title = "registration.address_book_access_denied.hero.title".localized
-        let paragraph1 = "registration.address_book_access_denied.hero.paragraph1".localized
-        let paragraph2 = "registration.address_book_access_denied.hero.paragraph2".localized
+        let title = RegistrationAddressBookDenied.Hero.title
+        let paragraph1 = RegistrationAddressBookDenied.Hero.paragraph1
+        let paragraph2 = RegistrationAddressBookDenied.Hero.paragraph2
 
         let text = [title, paragraph1, paragraph2].joined(separator: "\u{2029}")
 
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeThinFont
-            ], range: (text as NSString).range(of: [paragraph1, paragraph2].joined(separator: "\u{2029}")))
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
+        ], range: (text as NSString).range(of: [paragraph1, paragraph2].joined(separator: "\u{2029}")))
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeSemiboldFont
-            ], range: (text as NSString).range(of: title))
+            NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
+        ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
-        vc.settingsButton.setTitle("registration.address_book_access_denied.settings_button.title".localized.uppercased(), for: .normal)
+        vc.settingsButton.setTitle(RegistrationAddressBookDenied.SettingsButton.title.capitalized, for: .normal)
 
-        vc.laterButton.setTitle("registration.address_book_access_denied.maybe_later_button.title".localized.uppercased(), for: .normal)
+        vc.laterButton.setTitle(RegistrationAddressBookDenied.MaybeLaterButton.title.capitalized, for: .normal)
 
         return vc
     }
 
+    // MARK: - pushDeniedViewController
     class func pushDeniedViewController() -> PermissionDeniedViewController {
+        // MARK: - Properties
+        typealias RegistrationPushAccessDenied = L10n.Localizable.Registration.PushAccessDenied
         let vc = PermissionDeniedViewController()
-        let title = "registration.push_access_denied.hero.title".localized
-        let paragraph1 = "registration.push_access_denied.hero.paragraph1".localized
+        let title = RegistrationPushAccessDenied.Hero.title
+        let paragraph1 = RegistrationPushAccessDenied.Hero.paragraph1
 
         let text = [title, paragraph1].joined(separator: "\u{2029}")
 
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeThinFont
-            ], range: (text as NSString).range(of: paragraph1))
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
+        ], range: (text as NSString).range(of: paragraph1))
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeSemiboldFont
-            ], range: (text as NSString).range(of: title))
+            NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
+        ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
-        vc.settingsButton.setTitle("registration.push_access_denied.settings_button.title".localized.uppercased(), for: .normal)
+        vc.settingsButton.setTitle(RegistrationPushAccessDenied.SettingsButton.title.capitalized, for: .normal)
 
-        vc.laterButton.setTitle("registration.push_access_denied.maybe_later_button.title".localized.uppercased(), for: .normal)
+        vc.laterButton.setTitle(RegistrationPushAccessDenied.MaybeLaterButton.title.capitalized, for: .normal)
 
         return vc
     }
 
+    // MARK: - Initialization
     required init() {
         super.init(nibName: nil, bundle: nil)
-
-        view.addSubview(backgroundBlurView)
-        backgroundBlurView.isHidden = backgroundBlurDisabled
 
         view.addSubview(heroLabel)
         createSettingsButton()
         createLaterButton()
-        createConstraints()
 
         updateViewConstraints()
     }
@@ -106,18 +106,20 @@ final class PermissionDeniedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup Buttons
     private func createSettingsButton() {
-        settingsButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
+        settingsButton = Button(style: .accentColorTextButtonStyle,
+                                cornerRadius: 16,
+                                fontSpec: .normalSemiboldFont)
         settingsButton.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
 
         view.addSubview(settingsButton)
     }
 
     private func createLaterButton() {
-        laterButton = UIButton(type: .custom)
-        laterButton.titleLabel?.font = UIFont.smallLightFont
-        laterButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
-        laterButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .highlighted)
+        laterButton = Button(style: .secondaryTextButtonStyle,
+                             cornerRadius: 16,
+                             fontSpec: .normalSemiboldFont)
         laterButton.addTarget(self, action: #selector(continueWithoutAccess(_:)), for: .touchUpInside)
 
         view.addSubview(laterButton)
@@ -136,11 +138,7 @@ final class PermissionDeniedViewController: UIViewController {
         delegate?.continueWithoutPermission(self)
     }
 
-    private func createConstraints() {
-        backgroundBlurView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundBlurView.fitIn(view: view)
-    }
-
+    // MARK: - Constraints
     override func updateViewConstraints() {
         super.updateViewConstraints()
 
@@ -156,14 +154,17 @@ final class PermissionDeniedViewController: UIViewController {
                            heroLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28)]
 
         constraints += [settingsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 28),
-                        settingsButton.heightAnchor.constraint(equalToConstant: 40)]
+                        settingsButton.heightAnchor.constraint(equalToConstant: 56)]
 
         constraints += [settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
                         settingsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28)]
 
         constraints += [laterButton.topAnchor.constraint(equalTo: settingsButton.bottomAnchor, constant: 28),
                         laterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -28),
-                        laterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
+                        laterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                        laterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+                        laterButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+                        laterButton.heightAnchor.constraint(equalToConstant: 56)]
 
         NSLayoutConstraint.activate(constraints)
 

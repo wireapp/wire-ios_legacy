@@ -78,7 +78,7 @@ private final class MockImageManager: ImageManagerProtocol {
     static var defaultInstance: ImageManagerProtocol = MockImageManager()
 }
 
-fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
+private final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
     override var shouldBlockCallingRelatedActions: Bool {
         return true
     }

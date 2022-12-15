@@ -55,7 +55,7 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
         selfUser = nil
         SelfUser.provider = nil
         Settings.shared.reset()
-        APIVersion.isFederationEnabled = false
+        BackendInfo.isFederationEnabled = false
         super.tearDown()
 	}
 
@@ -71,7 +71,7 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
                                      file: StaticString = #file,
                                      testName: String = #function,
                                      line: UInt = #line) {
-        APIVersion.isFederationEnabled = federated
+        BackendInfo.isFederationEnabled = federated
 
         MockUserRight.isPermitted = !disabledEditing
         let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: true)

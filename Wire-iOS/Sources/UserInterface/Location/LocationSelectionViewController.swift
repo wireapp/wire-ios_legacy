@@ -33,11 +33,10 @@ final class LocationSelectionViewController: UIViewController {
         let button = IconButton()
         button.setIcon(.location, size: .tiny, for: [])
         button.borderWidth = 0.5
-        button.setBorderColor(.from(scheme: .separator), for: .normal)
+        button.setBorderColor(SemanticColors.View.borderInputBar, for: .normal)
         button.circular = true
-        button.backgroundColor = .from(scheme: .background)
-        button.setIconColor(.from(scheme: .iconNormal), for: .normal)
-        button.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
+        button.backgroundColor = SemanticColors.View.backgroundDefault
+        button.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
 
         return button
     }()

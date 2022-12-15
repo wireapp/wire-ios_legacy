@@ -23,7 +23,8 @@ final class EmptySearchResultsViewTests: XCTestCase {
 
     func testNoResultsForUsers() {
         // given
-        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        let sut = EmptySearchResultsView(isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.overrideUserInterfaceStyle = .dark
         sut.updateStatus(searchingForServices: false, hasFilter: true)
         configureBounds(for: sut)
 
@@ -33,7 +34,8 @@ final class EmptySearchResultsViewTests: XCTestCase {
 
     func testNoResultsForUsers_WhenFederationIsEnabled() {
         // given
-        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: true)
+        let sut = EmptySearchResultsView(isSelfUserAdmin: false, isFederationEnabled: true)
+        sut.overrideUserInterfaceStyle = .dark
         sut.updateStatus(searchingForServices: false, hasFilter: true)
         configureBounds(for: sut)
 
@@ -44,7 +46,8 @@ final class EmptySearchResultsViewTests: XCTestCase {
 
     func testNoResultsForUsers_WhenEveryoneHaveBeenAdded() {
         // given
-        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        let sut = EmptySearchResultsView(isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.overrideUserInterfaceStyle = .dark
         sut.updateStatus(searchingForServices: false, hasFilter: false)
         configureBounds(for: sut)
 
@@ -54,7 +57,8 @@ final class EmptySearchResultsViewTests: XCTestCase {
 
     func testNoResultsForServices() {
         // given
-        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        let sut = EmptySearchResultsView(isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.overrideUserInterfaceStyle = .dark
         sut.updateStatus(searchingForServices: true, hasFilter: true)
         configureBounds(for: sut)
 
@@ -64,7 +68,8 @@ final class EmptySearchResultsViewTests: XCTestCase {
 
     func testServicesNotEnabled() {
         // given
-        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: false, isFederationEnabled: false)
+        let sut = EmptySearchResultsView(isSelfUserAdmin: false, isFederationEnabled: false)
+        sut.overrideUserInterfaceStyle = .dark
         sut.updateStatus(searchingForServices: true, hasFilter: false)
         configureBounds(for: sut)
 
@@ -74,7 +79,8 @@ final class EmptySearchResultsViewTests: XCTestCase {
 
     func testServicesNotEnabled_WhenAdmin() {
         // given
-        let sut = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: true, isFederationEnabled: false)
+        let sut = EmptySearchResultsView(isSelfUserAdmin: true, isFederationEnabled: false)
+        sut.overrideUserInterfaceStyle = .dark
         sut.updateStatus(searchingForServices: true, hasFilter: false)
         configureBounds(for: sut)
 
@@ -90,6 +96,7 @@ final class EmptySearchResultsViewTests: XCTestCase {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
+        view.backgroundColor = .black
     }
 
 }

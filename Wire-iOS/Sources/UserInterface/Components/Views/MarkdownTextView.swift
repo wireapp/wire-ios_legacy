@@ -215,7 +215,7 @@ final class MarkdownTextView: NextResponderTextView {
 
     /// Updates the color of the text.
     func updateTextColor(base: UIColor?) {
-        let baseColor = base ?? UIColor.from(scheme: .textForeground)
+        let baseColor = base ?? SemanticColors.Label.textDefault
         self.textColor = baseColor
         self.style.baseFontColor = baseColor
     }
@@ -629,7 +629,7 @@ extension DownStyle {
     static var systemMessage: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.medium, .none).font!
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = ParagraphStyleDescriptor.paragraphSpacing(CGFloat.MessageCell.paragraphSpacing).style
         style.listItemPrefixSpacing = 8
@@ -640,8 +640,8 @@ extension DownStyle {
     /// The style used within the conversation message cells.
     static var normal: DownStyle = {
         let style = DownStyle()
-        style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFont = FontSpec.normalLightFont.font!
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8
@@ -651,8 +651,8 @@ extension DownStyle {
     /// The style used within search components.
     static var search: DownStyle = {
         let style = DownStyle()
-        style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        style.baseFont = FontSpec.normalLightFont.font!
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8
@@ -662,8 +662,8 @@ extension DownStyle {
     /// The style used within the input bar.
     static var compact: DownStyle = {
         let style = DownStyle()
-        style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFont = FontSpec.normalLightFont.font!
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8
@@ -679,7 +679,7 @@ extension DownStyle {
     static var preview: DownStyle = {
         let style = DownStyle()
         style.baseFont = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8

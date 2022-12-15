@@ -136,7 +136,7 @@ class Settings {
         return .standard
     }
 
-    /// These settings are not actually persisted, just kept in memory
+    // These settings are not actually persisted, just kept in memory
     // Max audio recording duration in seconds
     var maxRecordingDurationDebug: TimeInterval = 0.0
 

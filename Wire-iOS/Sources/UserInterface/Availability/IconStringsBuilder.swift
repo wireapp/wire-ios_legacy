@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 public class IconStringsBuilder {
 
@@ -30,7 +31,7 @@ public class IconStringsBuilder {
         return iconString(with: icon == nil ? [] : [icon!], title: title, interactive: interactive, color: color)
     }
 
-    static func iconString(with icons: [NSTextAttachment], title: String, interactive: Bool, color: UIColor) -> NSAttributedString {
+    static func iconString(with icons: [NSTextAttachment], title: String, interactive: Bool, color: UIColor, titleFont: UIFont? = nil) -> NSAttributedString {
 
         var components: [NSAttributedString] = []
 
@@ -42,7 +43,24 @@ public class IconStringsBuilder {
 
         // Adds the down arrow if the view is interactive
         if interactive {
-            components.append(NSAttributedString(attachment: .downArrow(color: color)))
+            if let titleFont = titleFont {
+                let iconImage: UIImage = StyleKitIcon.downArrow.makeImage(
+                    size: .custom(15),
+                    color: SemanticColors.Icon.foregroundPlainDownArrow).withRenderingMode(.alwaysTemplate)
+
+                let icon = NSTextAttachment()
+                let iconBounds = CGRect(x: 0,
+                                        y: (titleFont.capHeight - iconImage.size.height).rounded() / 2,
+                                        width: iconImage.size.width,
+                                        height: iconImage.size.height)
+
+                icon.bounds = iconBounds
+                icon.image = iconImage
+                let iconString = NSAttributedString(attachment: icon)
+                components.append(iconString)
+            } else {
+                components.append(NSAttributedString(attachment: .downArrow(color: color, size: .custom(15))))
+            }
         }
 
         // Mirror elements if in a RTL layout

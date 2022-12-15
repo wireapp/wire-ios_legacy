@@ -65,7 +65,7 @@ final class ConversationListTopBarViewController: UIViewController {
     override func viewDidLoad() {
         topBar?.splitSeparator = false
         view.backgroundColor = SemanticColors.View.backgroundConversationList
-        view.addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
+        view.addBorder(for: .bottom)
 
         availabilityViewController?.didMove(toParent: self)
 
@@ -83,7 +83,6 @@ final class ConversationListTopBarViewController: UIViewController {
     private func createTitleView() -> UIView {
         if selfUser.isTeamMember {
             let availabilityViewController = AvailabilityTitleViewController(user: selfUser, options: .header)
-            availabilityViewController.availabilityTitleView?.colorSchemeVariant = .dark
             addChild(availabilityViewController)
             self.availabilityViewController = availabilityViewController
 

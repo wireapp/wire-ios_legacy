@@ -20,7 +20,6 @@ import UIKit
 import WireUtilities
 
 protocol ConversationServicesOptionsViewModelConfiguration: AnyObject {
-    var title: String { get }
     var allowServices: Bool { get }
     var areServicePresent: Bool { get }
     var allowServicesChangedHandler: ((Bool) -> Void)? { get set }
@@ -37,7 +36,6 @@ final class ConversationServicesOptionsViewModel {
     struct State {
         var rows = [CellConfiguration]()
         var isLoading = false
-        var title = ""
     }
 
     private var showLoadingCell = false {
@@ -62,7 +60,6 @@ final class ConversationServicesOptionsViewModel {
 
     init(configuration: ConversationServicesOptionsViewModelConfiguration) {
         self.configuration = configuration
-        state.title = configuration.title
         updateRows()
 
         configuration.allowServicesChangedHandler = { [weak self] _ in

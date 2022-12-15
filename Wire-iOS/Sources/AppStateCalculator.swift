@@ -108,7 +108,7 @@ class AppStateCalculator {
             return
         }
 
-        if case .blacklisted = self.appState, APIVersion.current == nil {
+        if case .blacklisted = self.appState, BackendInfo.apiVersion == nil {
             completion?()
             return
         }

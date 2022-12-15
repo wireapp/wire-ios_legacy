@@ -181,6 +181,14 @@ final class ConversationViewController: UIViewController {
         }
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+            updateRightNavigationItemsButtons()
+        }
+    }
+
     func createOutgoingConnectionViewController() {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -510,18 +518,30 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         }
     }
 
-    var collectionsBarButtonItem: UIBarButtonItem {
+    var searchBarButtonItem: UIBarButtonItem {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
-        let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
+
+        let button = IconButton()
+        button.setIcon(showingSearchResults ? .activeSearch : .search, size: .tiny, for: .normal)
         button.accessibilityIdentifier = "collection"
-        button.accessibilityLabel = "conversation.action.search".localized
+        button.accessibilityLabel = L10n.Accessibility.Conversation.SearchButton.description
+
+        button.addTarget(self, action: action, for: .touchUpInside)
+
+        button.backgroundColor = SemanticColors.Button.backgroundBarItem
+        button.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
+        button.layer.borderWidth = 1
+        button.setBorderColor(SemanticColors.Button.borderBarItem.resolvedColor(with: traitCollection), for: .normal)
+        button.layer.cornerRadius = 12
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
 
         if showingSearchResults {
             button.tintColor = UIColor.accent()
         }
 
-        return button
+        return UIBarButtonItem(customView: button)
     }
 
     @objc

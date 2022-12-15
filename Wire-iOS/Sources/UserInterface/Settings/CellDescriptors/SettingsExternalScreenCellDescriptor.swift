@@ -23,6 +23,7 @@ import WireCommonComponents
 enum PresentationStyle: Int {
     case modal
     case navigation
+    case alert
 }
 
 enum AccessoryViewMode: Int {
@@ -117,6 +118,8 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             self.viewController?.present(controllerToShow, animated: true, completion: .none)
         case .navigation:
             viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
+        case .alert:
+            break
         }
     }
 

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,30 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import UIKit
+import WireCommonComponents
 
-final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class LinkButton: DynamicFontButton {
 
-    var sut: ProfileSelfPictureViewController!
+    func setup(title: String) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontSpec.normalRegularFont.font!,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabledDefault,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
 
-    override func setUp() {
-        super.setUp()
-        sut = ProfileSelfPictureViewController()
+        let attributeString = NSMutableAttributedString(
+            string: title,
+            attributes: attributes
+        )
 
-        // call viewDidLoad
-        sut.loadViewIfNeeded()
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-
-        sut.selfUserImageView.image = image
-    }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testForInitState() {
-        verify(view: sut.view)
+        setAttributedTitle(attributeString, for: .normal)
     }
 }

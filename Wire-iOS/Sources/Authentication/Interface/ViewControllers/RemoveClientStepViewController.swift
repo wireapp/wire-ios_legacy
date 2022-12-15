@@ -62,7 +62,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "registration.signin.too_many_devices.manage_screen.title".localized
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Registration.Signin.TooManyDevices.ManageScreen.title.capitalized)
         configureSubviews()
         configureConstraints()
         updateBackButton()

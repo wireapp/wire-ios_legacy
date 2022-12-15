@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Nach Name oder Benutzername suchen";
 "peoplepicker.header.top_people" = "Top Kontakte";
 "peoplepicker.button.create_conversation" = "Gruppe erstellen";
-"peoplepicker.button.add_to_conversation" = "Teilnehmer zur Gruppe hinzufügen";
+"peoplepicker.button.add_to_conversation" = "Teilnehmer hinzufügen";
 "peoplepicker.header.conversations" = "Gruppen";
 "peoplepicker.header.team_conversations" = "%@ Gruppen";
 "peoplepicker.header.send_invitation" = "Einladen";
@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "verpasster Anruf";
 "conversation_list.voiceover.status.pause_media" = "pausiere Medien";
 "conversation_list.voiceover.status.play_media" = "Medien abspielen";
-"conversation_list.voiceover.status.silenced" = "stummgeschaltet";
 "conversation_list.voiceover.status.typing" = "tippt";
 "conversation_list.voiceover.status.ping" = "Ping";
-"conversation_list.voiceover.status.mention" = "Sie wurden erwähnt";
-"conversation_list.voiceover.status.reply" = "antworten";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "zuletzt";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "Liste der letzten Unterhaltungen";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "Ordner";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "Liste der in Ordnern organisierten Unterhaltungen";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "Kontakte";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "Suche nach Personen auf Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "erstellen";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "Nachrichten verfassen und für später speichern";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "Kamera";
@@ -227,8 +216,6 @@
 "list.section.requests" = "Anfragen";
 "list.section.favorites" = "Favoriten";
 
-"conversation.voiceover.verified" = "überprüft";
-"conversation.voiceover.legalhold" = "gesetzliche Aufbewahrung";
 "conversation.voiceover.value.active" = "aktiv";
 "conversation.voiceover.value.disabled" = "deaktiviert";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Unterhaltung";
 "compose.message.title" = "Nachricht";
-
-"conversation_details.open_button.accessibility_hint" = "Doppeltippen, um die Details der Unterhaltung anzuzeigen.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "Die Nachricht ist gelöscht.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Gäste**";
-"conversation.banner.services" = "**Dienste**";
-"conversation.banner.externals" = "**Externe**";
-"conversation.banner.remotes" = "**Föderierte Nutzer**";
+"conversation.banner.guests" = "Gäste";
+"conversation.banner.services" = "Dienste";
+"conversation.banner.externals" = "Externe";
+"conversation.banner.remotes" = "]Föderierte Benutzer";
 "conversation.banner.are_present" = "%@ sind anwesend";
 "conversation.banner.are_active" = "%@ sind aktiv";
 "conversation.banner.separator" = "  und ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Sie haben angerufen";
 "content.system.ephemeral_time_remaining" = "%@ verbleibend";
 
-"content.system.self_user_new_client" = "**Sie** haben begonnen, [ein neues Gerät](%@) zu nutzen";
-"content.system.self_user_new_self_client" = "**Sie** haben begonnen, [dieses Gerät](%@) zu nutzen";
+"content.system.self_user_new_client" = "Sie haben begonnen, [ein neues Gerät](%@) zu nutzen";
+"content.system.self_user_new_self_client" = "Sie haben begonnen, [dieses Gerät](%@) zu nutzen";
 
 "content.system.you_started" = "Sie";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Teilnehmer hinzugefügt.";
 "content.system.verify_devices" = "Überprüfe Geräte";
 
-"content.system.unverified_self_devices" = "**Sie** haben eines [Ihrer Geräte](%@) nicht überprüft";
-"content.system.unverified_other_devices" = "**Sie** haben eines von [%1$@s Geräten](%2$@) nicht überprüft";
+"content.system.unverified_self_devices" = "Sie haben eines [Ihrer Geräte](%@) nicht überprüft";
+"content.system.unverified_other_devices" = "Sie haben eines von [%1$@s Geräten](%2$@) nicht überprüft";
 
 "content.system.missing_messages.title" = "Sie haben das Gerät eine Weile nicht benutzt. Einige Nachrichten werden hier eventuell nicht angezeigt.";
 "content.system.missing_messages.subtitle_start" = "In der Zwischenzeit";
 
-"content.system.cannot_decrypt.self" = "Eine Nachricht von **Ihnen** konnte nicht entschlüsselt werden.";
-"content.system.cannot_decrypt.other" = "Eine Nachricht von **%@** konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.self" = "Eine Nachricht von Ihnen konnte nicht entschlüsselt werden.";
+"content.system.cannot_decrypt.other" = "Eine Nachricht von %@ konnte nicht entschlüsselt werden.";
 "content.system.cannot_decrypt.reset_session" = "Entschlüsselung künftiger Nachrichten";
 "content.system.cannot_decrypt.error_details" = "(Behobener Fehler: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "Sie können jetzt Nachrichten von sich selbst entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **müssen Sie sie erneut senden.**";
-"content.system.cannot_decrypt_resolved.other" = "Sie können jetzt künftige Nachrichten von **%1$@**entschlüsseln. Um verlorene Nachrichten wiederherzustellen, **bitten Sie %1$@, sie erneut zu senden.**";
+"content.system.cannot_decrypt_resolved.self" = "Sie können jetzt Nachrichten von sich selbst entschlüsseln. Um verlorene Nachrichten wiederherzustellen, müssen Sie sie erneut senden.";
+"content.system.cannot_decrypt_resolved.other" = "Sie können jetzt künftige Nachrichten von %1$@ entschlüsseln. Um verlorene Nachrichten wiederherzustellen, bitten Sie %1$@, sie erneut zu senden.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Ihre** Geräte-Identität hat sich geändert. Unzustellbare Nachricht.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** Geräte-Identität hat sich geändert. Unzustellbare Nachricht."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Ihre Geräte-Identität hat sich geändert. Unzustellbare Nachricht.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@s Geräte-Identität hat sich geändert. Unzustellbare Nachricht."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = " **%@ konnte einige Ihrer Nachrichten nicht entschlüsseln, hat das Problem aber gelöst**. Dies betraf alle Unterhaltungen, die Sie gemeinsam nutzen.";
-"content.system.session_reset.self" = " **Sie konnten einige Ihrer Nachrichten nicht entschlüsseln, haben das Problem aber gelöst**. Dies betraf alle Unterhaltungen.";
+"content.system.session_reset.other" = " %@ konnte einige Ihrer Nachrichten nicht entschlüsseln, hat das Problem aber gelöst. Dies betraf alle Unterhaltungen, die Sie gemeinsam nutzen.";
+"content.system.session_reset.self" = " Sie konnten einige Ihrer Nachrichten nicht entschlüsseln, haben das Problem aber gelöst. Dies betraf alle Unterhaltungen.";
 
 "content.system.unknown_message.body" = "Diese Meldung konnte nicht angezeigt werden. Möglicherweise verwenden Sie eine ältere Version von Wire.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Blockieren";
 "profile.unblock_button_title_action" = "Freigeben";
 
-"profile.cancel_connection_button_title" = "Anfrage abbrechen";
+"profile.cancel_connection_button_title" = "Kontaktanfrage abbrechen";
 "profile.connection_request_state.blocked" = "Blockiert";
 "profile.create_conversation_button_title" = "Gruppe erstellen";
 "profile.open_conversation_button_title" = "Unterhaltung öffnen";
@@ -903,7 +888,7 @@
 // Device detail
 "profile.devices.detail.verify_message" = "Überprüfen Sie, ob dieser Fingerabdruck mit dem auf %@s Gerät übereinstimmt.";
 "profile.devices.detail.verify_message.link" = "Wie mache ich das?";
-"profile.devices.detail.show_my_device.title" = "Zeige den Fingerabdruck meines Geräts";
+"profile.devices.detail.show_my_device.title" = "Fingerabdruck meines Geräts anzeigen";
 "profile.devices.detail.reset_session.title" = "Session zurücksetzen";
 "device.verified" = "Überprüft";
 "device.not_verified" = "Nicht überprüft";
@@ -911,7 +896,7 @@
 "device.class.legalhold" = "Gesetzliche Aufbewahrung";
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
-"device.class.phone" = "Handy";
+"device.class.phone" = "Telefon";
 "device.class.unknown" = "Unbekannt";
 
 "device.type.permanent" = "Permanent";
@@ -920,13 +905,13 @@
 "device.type.unknown" = "Unbekannt";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Dienst entfernen";
 
 // Group details
 "group_details.guest_options_cell.title" = "Gäste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
-"group_details.services_options_cell.title" = "Services";
+"group_details.services_options_cell.title" = "Dienste";
 "group_details.services_options_cell.enabled" = "An";
 "group_details.services_options_cell.disabled" = "Aus";
 "group_details.timeout_options_cell.title" = "Selbstlöschende Nachrichten";
@@ -959,10 +944,8 @@
 "self.help_center.support_website" = "Wire-Support-Webseite";
 "self.help_center.contact_support" = "Kontaktieren Sie den Support";
 "self.about" = "Über Wire";
-"self.sign_out" = "Ausloggen";
+"self.sign_out" = "Abmelden";
 "self.report_abuse" = "Missbrauch melden";
-"self.voiceover.label" = "Profil";
-"self.voiceover.hint" = "Profil und Einstellungen öffnen";
 "self.new-device.voiceover.label" = "Profil, neue Geräte hinzugefügt";
 
 "self.add_email_password" = "E-Mail-Adresse und Passwort hinzufügen";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Ablageverschlüsselung für Nachrichten";
 
-"self.settings.account_picture_group.picture" = "Bild";
-"self.settings.account_picture_group.color" = "Farbe";
+"self.settings.account_picture_group.picture" = "Profilbild";
+"self.settings.account_picture_group.alert.title" = "Profilbild ändern";
+"self.settings.account_picture_group.alert.choose_picture" = "Aus Mediathek wählen";
+"self.settings.account_picture_group.alert.take_picture" = "Foto aufnehmen";
+"self.settings.account_picture_group.color" = "Profilfarbe";
 "self.settings.account_picture_group.accent_color.blue" = "Blau";
 "self.settings.account_picture_group.accent_color.green" = "Grün";
 "self.settings.account_picture_group.accent_color.yellow" = "Gelb";
@@ -1108,7 +1094,7 @@
 
 // Change Phone Number
 
-"self.settings.account_section.phone_number.change.title" = "Handy";
+"self.settings.account_section.phone_number.change.title" = "Telefon";
 "self.settings.account_section.phone_number.change.save" = "Speichern";
 "self.settings.account_section.phone_number.change.remove" = "Telefonnummer entfernen";
 
@@ -1514,7 +1500,7 @@
 "registration.signin.too_many_devices.title" = "Zu viele Geräte";
 "registration.signin.too_many_devices.subtitle" = "Entfernen Sie eines Ihrer anderen Geräte, um Wire hier zu nutzen.";
 "registration.signin.too_many_devices.manage_button.title" = "Geräte verwalten";
-"registration.signin.too_many_devices.sign_out_button.title" = "Ausloggen";
+"registration.signin.too_many_devices.sign_out_button.title" = "Abmelden";
 
 "registration.signin.too_many_devices.manage_screen.title" = "Bitte ein Gerät entfernen";
 
@@ -1884,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Kennwort erstellen";
-"create_passcode.info_label" = "Es wird zum Entsperren von Wire verwendet. Wenn Sie es vergessen, **kann es nicht wiederhergestellt werden.**";
-"create_passcode.info_label_forced_applock" = "Erstellen Sie einen Kennwort, um Wire zu entsperren. Merken Sie es sich, da **es nicht wiederhergestellt werden kann**.";
-"create_passcode.create_button.title" = "Kennwort erstellen";
+"create_passcode.title_label" = "Kennwort festlegen";
+"create_passcode.info_label" = "Die App wird nach einer bestimmten Zeit der Inaktivität gesperrt. Um die App zu entsperren, müssen Sie dieses Kennwort eingeben. Bitte merken Sie es sich, da es keine Möglichkeit gibt, es wiederherzustellen.";
+"create_passcode.info_label_forced_applock" = "Die App wird nach einer bestimmten Zeit der Inaktivität gesperrt. Um die App zu entsperren, müssen Sie dieses Kennwort eingeben. Bitte merken Sie es sich, da es keine Möglichkeit gibt, es wiederherzustellen.";
+"create_passcode.create_button.title" = "Kennwort festlegen";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Mindestens 8 Zeichen lang";
@@ -1899,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Geben Sie Ihr Kennwort ein";
 "unlock.title_label" = "Kennwort zum Entsperren eingeben";
-"unlock.wipe_button" = "Zugang als neues Gerät";
+"unlock.wipe_button" = "Kennwort der App-Sperre vergessen?";
 "unlock.error_label" = "Falsches Kennwort";
-"unlock.submit_button.title" = "entsperren";
+"unlock.submit_button.title" = "Entsperren";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Es gab eine Änderung bei Wire";
@@ -1911,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Zugang als neues Gerät";
-"wipe_database.info_label" = "Auf die gespeicherten Daten kann nur mit Ihrem Kennwort zugegriffen werden.\n\nWenn Sie Ihr Kennwort vergessen haben, können Sie die Datenbank löschen, um sich erneut anzumelden.\n\nDurch Löschung der Datenbank, ";
+"wipe_database.title_label" = "Kennwort der App-Sperre vergessen?";
+"wipe_database.info_label" = "Der Zugang zu auf diesem Gerät gespeicherten Daten ist nur mit Ihrem App-Sperre-Kennwort möglich. Wenn Sie Ihr Kennwort vergessen haben, können Sie das Gerät zurücksetzen. Bitte geben Sie das Passwort Ihres Wire-Benutzerkonto ein, um dieses Gerät zurückzusetzen und sich erneut anzumelden. Indem Sie Ihr Gerät zurücksetzen, ";
 "wipe_database.info_label.highlighted" = "werden alle lokalen Daten und Nachrichten für dieses Konto dauerhaft gelöscht.";
 
-"wipe_database.button.title" = "Ich möchte die Datenbank löschen";
+"wipe_database.button.title" = "Gerät zurücksetzen";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Löschung der Daten bestätigen";
-"wipe_database.alert.message" = "Geben Sie \"Löschen\" ein, um zu bestätigen, dass Sie alle Daten auf diesem Gerät löschen möchten.";
+"wipe_database.alert.description" = "Gerät zurücksetzen";
+"wipe_database.alert.message" = "Geben Sie 'Löschen' ein, um zu bestätigen, dass Sie alle Daten auf diesem Gerät löschen möchten,\num dieses Gerät zurückzusetzen und sich erneut anzumelden";
 "wipe_database.alert.placeholder" = "\"Löschen\" eingeben";
 "wipe_database.alert.confirm" = "Löschen";
 "wipe_database.alert.confirm_input" = "Löschen";

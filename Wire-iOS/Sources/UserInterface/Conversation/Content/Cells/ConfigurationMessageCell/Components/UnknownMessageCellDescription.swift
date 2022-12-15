@@ -47,14 +47,15 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     var topMargin: Float = 0
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     let isFullWidth: Bool = false
     let supportsActions: Bool = false
     let containsHighlightableContent = false
 
     init() {
-        self.configuration = "content.system.unknown_message.body".localized
+        configuration = L10n.Localizable.Content.System.UnknownMessage.body
+        accessibilityLabel = configuration
     }
 
 }

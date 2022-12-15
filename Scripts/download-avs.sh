@@ -50,7 +50,7 @@ fi
 if [ -z "${AVS_VERSION}" ]; then
 	LATEST_VERSION_PATH="https://api.github.com/repos/${AVS_REPO}/releases/latest"
 	# need to get tag of last version
-	AVS_VERSION=`curl -sLJ -u "${CREDENTIALS}" "${LATEST_VERSION_PATH}" | python -c 'import json; import sys; print json.load(sys.stdin)["tag_name"]'`
+	AVS_VERSION=`curl -sLJ -u "${CREDENTIALS}" "${LATEST_VERSION_PATH}" | python3 -c 'import json; import sys; print(json.load(sys.stdin)["tag_name"])'`
 	if [ -z "${AVS_VERSION}" ]; then
 		echo "❌  Can't find latest version for ${LATEST_VERSION_PATH} ⚠️"
 		exit 1
@@ -111,7 +111,7 @@ else
 	# Get tag json: need to parse json to get assed URL
 	TEMP_FILE=`mktemp`
 	curl -sLJ -u "${CREDENTIALS}" "${AVS_RELEASE_TAG_PATH}" -o "${TEMP_FILE}"
-	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
+	ASSET_URL=`cat ${TEMP_FILE} | python3 -c 'import json; import sys; print(json.load(sys.stdin)["assets"][0]["url"])'`
 	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
 		echo "❌  Can't fetch release ${AVS_VERSION} ⚠️"

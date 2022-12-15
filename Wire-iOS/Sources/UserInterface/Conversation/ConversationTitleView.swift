@@ -37,8 +37,8 @@ final class ConversationTitleView: TitleView {
     }
 
     func configure() {
-        titleColor = UIColor.from(scheme: .textForeground)
-        titleFont = .mediumSemiboldFont
+        titleColor = SemanticColors.Label.textDefault
+        titleFont = .normalSemiboldFont
 
         var attachments: [NSTextAttachment] = []
 
@@ -58,7 +58,7 @@ final class ConversationTitleView: TitleView {
         }
 
         super.configure(icons: attachments,
-                        title: conversation.displayName.localizedUppercase,
+                        title: conversation.displayName.capitalized,
                         subtitle: subtitle,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
 
@@ -68,10 +68,8 @@ final class ConversationTitleView: TitleView {
     private func setupAccessibility() {
         typealias Conversation = L10n.Accessibility.Conversation
 
-        accessibilityTraits = .button
-
         var components: [String] = []
-        components.append(conversation.displayName.localizedUppercase)
+        components.append(conversation.displayName.capitalized)
 
         if conversation.securityLevel == .secure {
             components.append(Conversation.VerifiedIcon.description)
@@ -87,10 +85,15 @@ final class ConversationTitleView: TitleView {
 
         accessibilityLabel = components.joined(separator: ", ")
 
-        accessibilityHint = conversation.conversationType == .oneOnOne
-                            ? Conversation.TitleViewForOneToOne.hint
-                            : Conversation.TitleViewForGroup.hint
+        guard interactive else {
+            accessibilityTraits = .header
+            return
+        }
 
+        accessibilityTraits = .button
+        accessibilityHint = conversation.conversationType == .oneOnOne
+        ? Conversation.TitleViewForOneToOne.hint
+        : Conversation.TitleViewForGroup.hint
     }
 
 }

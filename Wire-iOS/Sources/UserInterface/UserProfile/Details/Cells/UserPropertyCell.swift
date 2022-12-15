@@ -25,23 +25,23 @@ import UIKit
 final class UserPropertyCell: SeparatorTableViewCell {
 
     private let contentStack = UIStackView()
+    typealias LabelColors = SemanticColors.Label
 
-    private let propertyNameLabel: UILabel = {
-        let label = UILabel()
+    private let propertyNameLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(fontSpec: .smallRegularFont,
+                                     color: LabelColors.textUserPropertyCellName)
         label.numberOfLines = 1
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
-        label.font = .smallRegularFont
-        label.textColor = SemanticColors.Label.textUserPropertyCellName
         return label
     }()
 
-    private let propertyValueLabel: UILabel = {
-        let label = UILabel()
+    private let propertyValueLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(fontSpec: .normalLightFont,
+                                     color: LabelColors.textDefault)
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
-        label.font = .normalLightFont
         return label
     }()
 
@@ -70,16 +70,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
         }
     }
 
-    // MARK: - Configuration
-
-    override var isHighlighted: Bool {
-        didSet {
-            backgroundColor = isHighlighted
-            ? UIColor(white: 0, alpha: 0.08)
-            : SemanticColors.View.backgroundUserCell
-        }
-    }
-
     // MARK: - Initialization
 
     override func setUp() {
@@ -90,8 +80,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
 
     private func configureSubviews() {
         backgroundColor = SemanticColors.View.backgroundUserCell
-        propertyNameLabel.textColor = SemanticColors.Label.textUserPropertyCellName
-        propertyValueLabel.textColor = SemanticColors.Label.textDefault
         addBorder(for: .bottom)
 
         separator.isHidden = true

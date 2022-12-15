@@ -182,11 +182,12 @@ final class ConversationImageMessageCellDescription: ConversationMessageCellDesc
         return configuration.isObfuscated ? "ObfuscatedImageCell" : "ImageCell"
     }
 
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, image: ZMImageMessageData) {
         self.message = message
         self.configuration = View.Configuration(image: image, message: message)
+        accessibilityLabel = L10n.Accessibility.ConversationSearch.ImageMessage.description
     }
 
 }

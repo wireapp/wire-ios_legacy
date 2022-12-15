@@ -24,12 +24,31 @@ protocol EmailPasswordTextFieldDelegate: AnyObject {
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
 }
 
+class RevisedEmailPasswordTextField: EmailPasswordTextField {
+
+    override func configureConstraints() {
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // dimensions
+            passwordField.heightAnchor.constraint(equalToConstant: 48),
+            emailField.heightAnchor.constraint(equalToConstant: 48),
+
+            // contentStack
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 31),
+            contentStack.topAnchor.constraint(equalTo: topAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -31),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+
+}
+
 class EmailPasswordTextField: UIView, MagicTappable {
 
-    let emailField = ValidatedTextField(kind: .email)
-    let passwordField = ValidatedTextField(kind: .password(isNew: false))
+    let emailField = ValidatedTextField(kind: .email, cornerRadius: 12, setNewColors: true, style: .default)
+    let passwordField = ValidatedTextField(kind: .password(isNew: false), cornerRadius: 12, setNewColors: true, style: .default)
     let contentStack = UIStackView()
-    let separatorContainer: ContentInsetView
 
     var hasPrefilledValue: Bool = false
     var allowEditingPrefilledValue: Bool = true {
@@ -59,8 +78,6 @@ class EmailPasswordTextField: UIView, MagicTappable {
     // MARK: - Initialization
 
     override init(frame: CGRect) {
-        let separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        separatorContainer = ContentInsetView(UIView(), inset: separatorInset)
         super.init(frame: frame)
 
         configureSubviews()
@@ -74,14 +91,14 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     private func configureSubviews() {
         contentStack.axis = .vertical
-        contentStack.spacing = 0
+        contentStack.spacing = 36
         contentStack.alignment = .fill
         contentStack.distribution = .fill
         addSubview(contentStack)
 
         emailField.delegate = self
         emailField.textFieldValidationDelegate = self
-        emailField.placeholder = "email.placeholder".localized(uppercased: true)
+        emailField.placeholder = L10n.Localizable.Email.placeholder.capitalized
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         emailField.colorSchemeVariant = colorSchemeVariant
@@ -91,13 +108,9 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
         contentStack.addArrangedSubview(emailField)
 
-        separatorContainer.view.backgroundColor = .white
-        separatorContainer.view.backgroundColor = UIColor.from(scheme: .separator)
-        contentStack.addArrangedSubview(separatorContainer)
-
         passwordField.delegate = self
         passwordField.textFieldValidationDelegate = self
-        passwordField.placeholder = "password.placeholder".localized(uppercased: true)
+        passwordField.placeholder = L10n.Localizable.Password.placeholder.capitalized
         passwordField.bindConfirmationButton(to: emailField)
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
@@ -110,14 +123,13 @@ class EmailPasswordTextField: UIView, MagicTappable {
         contentStack.addArrangedSubview(passwordField)
     }
 
-    private func configureConstraints() {
+     func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // dimensions
-            passwordField.heightAnchor.constraint(equalToConstant: 56),
-            emailField.heightAnchor.constraint(equalToConstant: 56),
-            separatorContainer.heightAnchor.constraint(equalToConstant: CGFloat.hairline),
+            passwordField.heightAnchor.constraint(equalToConstant: 48),
+            emailField.heightAnchor.constraint(equalToConstant: 48),
 
             // contentStack
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -148,10 +160,6 @@ class EmailPasswordTextField: UIView, MagicTappable {
     func setBackgroundColor(_ color: UIColor) {
         emailField.backgroundColor = color
         passwordField.backgroundColor = color
-    }
-
-    func setSeparatorColor(_ color: UIColor) {
-        separatorContainer.view.backgroundColor = color
     }
 
     // MARK: - Responder
@@ -194,7 +202,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     // MARK: - Submission
 
-    @objc private func confirmButtonTapped() {
+    @objc func confirmButtonTapped() {
         guard emailValidationError == nil && passwordValidationError == nil else {
             delegate?.textFieldDidSubmitWithValidationError(self)
             return
@@ -220,6 +228,10 @@ class EmailPasswordTextField: UIView, MagicTappable {
         }
 
         delegate?.textFieldDidUpdateText(self)
+    }
+
+    var hasValidInput: Bool {
+        return emailField.isInputValid && passwordField.isInputValid
     }
 
 }

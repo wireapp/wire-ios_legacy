@@ -107,11 +107,8 @@ final class SettingsClientViewController: UIViewController,
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: userClient.deviceClass?.localizedDescription.localized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        guard let deviceClass = userClient.deviceClass?.localizedDescription.localized else { return }
+        navigationItem.setupNavigationBarTitle(title: deviceClass.capitalized)
     }
 
     override func viewWillAppear(_ animated: Bool) {

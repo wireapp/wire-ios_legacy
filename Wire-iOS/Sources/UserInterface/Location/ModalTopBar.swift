@@ -1,22 +1,23 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import UIKit
+import WireCommonComponents
 
 protocol ModalTopBarDelegate: AnyObject {
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)
@@ -25,20 +26,22 @@ protocol ModalTopBarDelegate: AnyObject {
 final class ModalTopBar: UIView {
 
     let dismissButton = IconButton()
+    typealias ViewColors = SemanticColors.View
 
-    public let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .from(scheme: .textForeground)
+    public let titleLabel: DynamicFontLabel = {
+        let textColor = SemanticColors.Label.textDefault
+        let label = DynamicFontLabel(fontSpec: .headerSemiboldFont,
+                                     color: textColor)
         label.textAlignment = .center
         label.accessibilityIdentifier = "Title"
 
         return label
     }()
 
-    public let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .from(scheme: .textForeground)
-        label.font = UIFont.systemFont(ofSize: 11)
+    public let subtitleLabel: DynamicFontLabel = {
+        let textColor = SemanticColors.Label.textDefault
+        let label = DynamicFontLabel(fontSpec: .smallSemiboldFont,
+                                     color: textColor)
         label.textAlignment = .center
         label.accessibilityIdentifier = "Subtitle"
 
@@ -47,7 +50,7 @@ final class ModalTopBar: UIView {
 
     public let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.from(scheme: .separator)
+        view.backgroundColor = ViewColors.backgroundSeparatorCell
         return view
     }()
 
@@ -65,7 +68,7 @@ final class ModalTopBar: UIView {
 
     private var title: String? {
         didSet {
-            titleLabel.text = title?.localizedUppercase
+            titleLabel.text = title?.capitalized
             titleLabel.isHidden = title == nil
             titleLabel.accessibilityLabel = title
             titleLabel.accessibilityTraits.insert(.header)
@@ -74,7 +77,7 @@ final class ModalTopBar: UIView {
 
     private var subtitle: String? {
         didSet {
-            subtitleLabel.text = subtitle?.localizedUppercase
+            subtitleLabel.text = subtitle?.capitalized
             subtitleLabel.isHidden = subtitle == nil
             subtitleLabel.accessibilityLabel = subtitle
         }
@@ -109,21 +112,20 @@ final class ModalTopBar: UIView {
 
         self.title = title
         self.subtitle = subtitle
-        self.titleLabel.font = subtitle == nil ? .mediumSemiboldFont : .systemFont(ofSize: 11, weight: .semibold)
     }
 
     fileprivate func configureViews() {
-        backgroundColor = .from(scheme: .background)
+        backgroundColor = ViewColors.backgroundDefault
         titleLabel.isHidden = true
         subtitleLabel.isHidden = true
         [titleLabel, subtitleLabel].forEach(contentStackView.addArrangedSubview)
         [contentStackView, dismissButton, separatorView].forEach(addSubview)
 
         dismissButton.accessibilityIdentifier = "Close"
-        dismissButton.accessibilityLabel = "general.close".localized
+        dismissButton.accessibilityLabel = L10n.Localizable.General.close
 
         dismissButton.setIcon(.cross, size: .tiny, for: [])
-        dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        dismissButton.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }

@@ -92,9 +92,11 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
 
         let modalVC = ModalPresentationViewController(viewController: activeCallViewController, enableDismissOnPan: !CallingConfiguration.config.paginationEnabled)
 
-        rootViewController.isPresenting
-            ? dismissPresentedAndPresentActiveCall(modalViewController: modalVC, animated: animated)
-            : presentActiveCall(modalViewController: modalVC, animated: animated)
+        if rootViewController.isPresenting {
+            dismissPresentedAndPresentActiveCall(modalViewController: modalVC, animated: animated)
+        } else {
+            presentActiveCall(modalViewController: modalVC, animated: animated)
+        }
     }
 
     func dismissActiveCall(animated: Bool = true, completion: Completion? = nil) {

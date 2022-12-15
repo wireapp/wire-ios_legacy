@@ -26,7 +26,7 @@ struct CallCellViewModel {
     let icon: StyleKitIcon
     let iconColor: UIColor?
     let systemMessageType: ZMSystemMessageType
-    let font, boldFont: UIFont?
+    let font: UIFont?
     let textColor: UIColor?
     let message: ZMConversationMessage
 
@@ -38,7 +38,6 @@ struct CallCellViewModel {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.senderUser,
             let labelFont = font,
-            let labelBoldFont = boldFont,
             let labelTextColor = textColor,
             systemMessageData.systemMessageType == systemMessageType
             else { return nil }
@@ -63,7 +62,7 @@ struct CallCellViewModel {
             called = key(with: detailKey).localized(pov: sender.pov, args: senderString) && labelFont
         }
 
-        var title = called.adding(font: labelBoldFont, to: senderString)
+        var title = called
 
         if childs > 0 {
             title += " (\(childs + 1))" && labelFont

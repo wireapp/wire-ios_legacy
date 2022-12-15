@@ -18,12 +18,15 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
+// MARK: - ShareContactsViewControllerDelegate
 protocol ShareContactsViewControllerDelegate: AnyObject {
     func shareDidSkip(_ viewController: UIViewController)
     func shareDidFinish(_ viewController: UIViewController)
 }
 
+// MARK: - String Extension
 extension String {
     func withCustomParagraphSpacing() -> NSMutableAttributedString {
         let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
@@ -37,27 +40,22 @@ extension String {
     }
 }
 
+// MARK: - UILabel Extension
 extension UILabel {
     static func createHeroLabel() -> UILabel {
         let heroLabel = UILabel()
-        heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        heroLabel.textColor = SemanticColors.Label.textDefault
         heroLabel.numberOfLines = 0
 
         return heroLabel
     }
 }
 
-extension UIVisualEffectView {
-    static func createBackgroundBlurView() -> UIVisualEffectView {
-        return UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    }
-}
-
+// MARK: - ShareContactsViewController
 final class ShareContactsViewController: UIViewController {
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    // MARK: - Properties
+    typealias RegistrationShareContacts = L10n.Localizable.Registration.ShareContacts
 
     weak var delegate: ShareContactsViewControllerDelegate?
     var uploadAddressBookImmediately = false
@@ -70,7 +68,7 @@ final class ShareContactsViewController: UIViewController {
         notNowButton.titleLabel?.font = UIFont.smallLightFont
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .normal)
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
-        notNowButton.setTitle("registration.share_contacts.skip_button.title".localized.uppercased(), for: .normal)
+        notNowButton.setTitle(RegistrationShareContacts.SkipButton.title.capitalized, for: .normal)
         notNowButton.addTarget(self, action: #selector(shareContactsLater(_:)), for: .touchUpInside)
 
         return notNowButton
@@ -78,15 +76,17 @@ final class ShareContactsViewController: UIViewController {
 
     private let heroLabel: UILabel = {
         let heroLabel = UILabel.createHeroLabel()
-        heroLabel.font = UIFont.largeSemiboldFont
+        heroLabel.font = FontSpec.largeSemiboldFont.font!
         heroLabel.attributedText = ShareContactsViewController.attributedHeroText
 
         return heroLabel
     }()
 
-    private let shareContactsButton: LegacyButton = {
-        let shareContactsButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
-        shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
+    private let shareContactsButton: Button = {
+        let shareContactsButton = Button(style: .accentColorTextButtonStyle,
+                                         cornerRadius: 16,
+                                         fontSpec: .normalSemiboldFont)
+        shareContactsButton.setTitle(RegistrationShareContacts.FindFriendsButton.title.capitalized, for: .normal)
 
         return shareContactsButton
     }()
@@ -98,24 +98,23 @@ final class ShareContactsViewController: UIViewController {
         return addressBookAccessDeniedViewController
     }()
 
-    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
-
     private static var attributedHeroText: NSAttributedString {
-        let title = "registration.share_contacts.hero.title".localized
-        let paragraph = "registration.share_contacts.hero.paragraph".localized
+        let title = RegistrationShareContacts.Hero.title
+        let paragraph = RegistrationShareContacts.Hero.paragraph
 
         let text = [title, paragraph].joined(separator: "\u{2029}")
 
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground, variant: .dark),
-            NSAttributedString.Key.font: UIFont.largeThinFont
-            ], range: (text as NSString).range(of: paragraph))
+            NSAttributedString.Key.foregroundColor: SemanticColors.Label.textDefault,
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
+        ], range: (text as NSString).range(of: paragraph))
 
         return attributedText
     }
 
+    // MARK: - Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -130,8 +129,6 @@ final class ShareContactsViewController: UIViewController {
     // MARK: - Setup
 
     private func setupViews() {
-        view.addSubview(backgroundBlurView)
-        backgroundBlurView.isHidden = backgroundBlurDisabled
 
         view.addSubview(shareContactsContainerView)
 
@@ -146,13 +143,11 @@ final class ShareContactsViewController: UIViewController {
 
         addToSelf(addressBookAccessDeniedViewController)
         addressBookAccessDeniedViewController.delegate = self
-        addressBookAccessDeniedViewController.backgroundBlurDisabled = backgroundBlurDisabled
         addressBookAccessDeniedViewController.view.isHidden = true
     }
 
     private func createConstraints() {
-        [backgroundBlurView,
-         shareContactsContainerView,
+        [shareContactsContainerView,
          addressBookAccessDeniedViewController.view,
          heroLabel,
          shareContactsButton].prepareForLayout()
@@ -163,11 +158,6 @@ final class ShareContactsViewController: UIViewController {
             shareContactsContainerView.leadingAnchor.constraint(equalTo: shareContactsContainerView.superview!.leadingAnchor),
             shareContactsContainerView.trailingAnchor.constraint(equalTo: shareContactsContainerView.superview!.trailingAnchor),
 
-            backgroundBlurView.topAnchor.constraint(equalTo: backgroundBlurView.superview!.topAnchor),
-            backgroundBlurView.bottomAnchor.constraint(equalTo: backgroundBlurView.superview!.bottomAnchor),
-            backgroundBlurView.leadingAnchor.constraint(equalTo: backgroundBlurView.superview!.leadingAnchor),
-            backgroundBlurView.trailingAnchor.constraint(equalTo: backgroundBlurView.superview!.trailingAnchor),
-
             addressBookAccessDeniedViewController.view.topAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.topAnchor),
             addressBookAccessDeniedViewController.view.bottomAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.bottomAnchor),
             addressBookAccessDeniedViewController.view.leadingAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.leadingAnchor),
@@ -177,7 +167,7 @@ final class ShareContactsViewController: UIViewController {
             heroLabel.trailingAnchor.constraint(equalTo: heroLabel.superview!.trailingAnchor, constant: -28),
 
             shareContactsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 24),
-            shareContactsButton.heightAnchor.constraint(equalToConstant: 40),
+            shareContactsButton.heightAnchor.constraint(equalToConstant: 56),
 
             shareContactsButton.bottomAnchor.constraint(equalTo: shareContactsButton.superview!.bottomAnchor, constant: -28),
             shareContactsButton.leadingAnchor.constraint(equalTo: shareContactsButton.superview!.leadingAnchor, constant: 28),
@@ -225,6 +215,7 @@ final class ShareContactsViewController: UIViewController {
     }
 }
 
+// MARK: - ShareContactsViewController Extension
 extension ShareContactsViewController: PermissionDeniedViewControllerDelegate {
     public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
         delegate?.shareDidSkip(self)

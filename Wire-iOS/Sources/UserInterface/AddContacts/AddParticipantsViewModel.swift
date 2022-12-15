@@ -21,11 +21,9 @@ import WireDataModel
 
 struct AddParticipantsViewModel {
     let context: AddParticipantsViewController.Context
-    let variant: ColorSchemeVariant
 
-    init(with context: AddParticipantsViewController.Context, variant: ColorSchemeVariant) {
+    init(with context: AddParticipantsViewController.Context) {
         self.context = context
-        self.variant = variant
     }
 
     var botCanBeAdded: Bool {
@@ -46,8 +44,8 @@ struct AddParticipantsViewModel {
 
     func title(with users: UserSet) -> String {
         return users.isEmpty
-            ? "peoplepicker.group.title.singular".localized(uppercased: true)
-            : "peoplepicker.group.title.plural".localized(uppercased: true, args: users.count)
+            ? L10n.Localizable.Peoplepicker.Group.Title.singular.capitalized
+            : L10n.Localizable.Peoplepicker.Group.Title.plural(users.count).capitalized
     }
 
     var filterConversation: ZMConversation? {
@@ -69,9 +67,9 @@ struct AddParticipantsViewModel {
         case .create: return nil
         case .add(let conversation):
             if conversation.conversationType == .oneOnOne {
-                return "peoplepicker.button.create_conversation".localized(uppercased: true)
+                return L10n.Localizable.Peoplepicker.Button.createConversation.capitalized
             } else {
-                return "peoplepicker.button.add_to_conversation".localized(uppercased: true)
+                return L10n.Localizable.Peoplepicker.Button.addToConversation.capitalized
             }
         }
     }
@@ -85,7 +83,7 @@ struct AddParticipantsViewModel {
             return item
         case .create(let values):
             let key = values.participants.isEmpty ? "peoplepicker.group.skip" : "peoplepicker.group.done"
-            let item = UIBarButtonItem(title: key.localized(uppercased: true), style: .plain, target: target, action: action)
+            let item = UIBarButtonItem(title: key.localized.capitalized, style: .plain, target: target, action: action)
             item.tintColor = UIColor.accent()
             item.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
             return item

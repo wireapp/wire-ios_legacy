@@ -76,6 +76,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: IconColors.foregroundCheckMarkSelected) : nil
             checkmarkIconView.backgroundColor = isSelected ? IconColors.backgroundCheckMarkSelected : IconColors.backgroundCheckMark
             checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : IconColors.borderCheckMark.cgColor
+            setupAccessibility()
         }
     }
 
@@ -205,6 +206,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         typealias ContactsList = L10n.Accessibility.ContactsList
         typealias ServicesList = L10n.Accessibility.ServicesList
         typealias ClientsList = L10n.Accessibility.ClientsList
+        typealias CreateConversation = L10n.Accessibility.CreateConversation
 
         guard let title = titleLabel.text,
               let subtitle = subtitleLabel.text else {
@@ -226,11 +228,15 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
         accessibilityLabel = content
 
-        guard let user = user, !user.isServiceUser else {
+        if !checkmarkIconView.isHidden {
+            accessibilityHint = isSelected
+                                ? CreateConversation.SelectedUser.hint
+                                : CreateConversation.UnselectedUser.hint
+        } else if let user = user, user.isServiceUser {
             accessibilityHint = ServicesList.ServiceCell.hint
-            return
+        } else {
+            accessibilityHint = ContactsList.UserCell.hint
         }
-        accessibilityHint = ContactsList.UserCell.hint
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {

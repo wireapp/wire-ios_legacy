@@ -27,7 +27,7 @@ final class ConversationSelectionViewController: UITableViewController {
     fileprivate var allConversations: [Conversation]
     fileprivate var visibleConversations: [Conversation]
 
-    var selectionHandler : ((_ conversation: Conversation) -> Void)?
+    var selectionHandler: ((_ conversation: Conversation) -> Void)?
 
     fileprivate let searchController = UISearchController(searchResultsController: nil)
 

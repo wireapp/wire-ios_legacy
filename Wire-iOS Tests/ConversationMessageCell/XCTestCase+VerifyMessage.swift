@@ -46,7 +46,7 @@ extension XCTestCase {
                 testName: String = #function,
                 line: UInt = #line) {
 
-        let createSut : () -> UIView = {
+        let createSut: () -> UIView = {
             // prevent cache exist and loading image immediately
             if !waitForImagesToLoad {
                 MediaAssetCache.defaultImageCache.cache.removeAllObjects()

@@ -46,7 +46,6 @@ final class InputBarButtonsView: UIView {
     let expandRowButton = IconButton()
     var buttons: [UIButton] {
         didSet {
-            buttonInnerContainer.subviews.forEach({ $0.removeFromSuperview() })
             layoutAndConstrainButtonRows()
         }
     }
@@ -76,6 +75,7 @@ final class InputBarButtonsView: UIView {
 
         buttonInnerContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
+        expandRowButton.accessibilityLabel = L10n.Accessibility.Conversation.MoreButton.description
         expandRowButton.hitAreaPadding = .zero
         expandRowButton.setIcon(.ellipsis, size: .tiny, for: [])
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
@@ -83,7 +83,7 @@ final class InputBarButtonsView: UIView {
         buttonOuterContainer.clipsToBounds = true
         addSubview(buttonOuterContainer)
         addSubview(expandRowButton)
-        self.backgroundColor = UIColor.from(scheme: .barBackground)
+        self.backgroundColor = SemanticColors.SearchBar.backgroundInputView
     }
 
     private func createConstraints() {
@@ -121,6 +121,27 @@ final class InputBarButtonsView: UIView {
         currentRow = rowIndex
         buttonRowTopInset.constant = CGFloat(rowIndex) * constants.buttonsBarHeight
         UIView.animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        if multilineLayout {
+            let firstRowButtons = [UIButton](buttons.prefix(customButtonCount))
+            let secondRowButtons = [UIButton](buttons.suffix(buttons.count - customButtonCount))
+
+            buttons.forEach {
+                $0.isAccessibilityElement = currentRow == 0
+                   ? firstRowButtons.contains($0)
+                   : secondRowButtons.contains($0)
+            }
+        }
+    }
+
+    private var customButtonCount: Int {
+        let minButtonWidth: CGFloat = constants.minimumButtonWidth(forWidth: bounds.width)
+        let ratio = floorf(Float(bounds.width / minButtonWidth))
+        let numberOfButtons: Int = Int(ratio)
+        return numberOfButtons >= 1 ? numberOfButtons - 1 : 0
     }
 
     // MARK: - Button Layout
@@ -136,6 +157,8 @@ final class InputBarButtonsView: UIView {
 
         // Drop existing constraints
         buttons.forEach {
+            $0.roundCorners(edge: .leading)
+            $0.roundCorners(edge: .trailing)
             $0.removeFromSuperview()
             buttonInnerContainer.addSubview($0)
         }
@@ -145,7 +168,6 @@ final class InputBarButtonsView: UIView {
         multilineLayout = numberOfButtons < buttons.count
 
         let (firstRow, secondRow): ([UIButton], [UIButton])
-        let customButtonCount = numberOfButtons >= 1 ? numberOfButtons - 1 : 0 // Last one is alway the expand button
 
         expandRowButton.isHidden = !multilineLayout
 
@@ -158,6 +180,10 @@ final class InputBarButtonsView: UIView {
             secondRow = []
             buttonRowHeight.constant = constants.buttonsBarHeight
         }
+
+        firstRow.first?.roundCorners(edge: .leading, radius: 12)
+        firstRow.last?.roundCorners(edge: .trailing, radius: 12)
+        secondRow.first?.roundCorners(edge: .leading, radius: 12)
 
         var constraints = constrainRowOfButtons(firstRow,
                                                 inset: 0,
@@ -175,6 +201,8 @@ final class InputBarButtonsView: UIView {
 
         constraints.append(contentsOf: constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: referenceButton)
         )
+
+        setupAccessibility()
     }
 
     private func constrainRowOfButtons(_ buttons: [UIButton],
@@ -184,17 +212,20 @@ final class InputBarButtonsView: UIView {
         guard let firstButton = buttons.first,
               let lastButton = buttons.last else { return [] }
 
+        let buttonPadding: CGFloat = 12
+        let buttonHeight = constants.buttonsBarHeight - buttonPadding * 2
+
         var constraints = [NSLayoutConstraint]()
 
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         constraints.append(
-            firstButton.leadingAnchor.constraint(equalTo: firstButton.superview!.leadingAnchor)
+            firstButton.leadingAnchor.constraint(equalTo: firstButton.superview!.leadingAnchor, constant: buttonPadding)
         )
 
         if rowIsFull {
             lastButton.translatesAutoresizingMaskIntoConstraints = false
             constraints.append(
-                lastButton.trailingAnchor.constraint(equalTo: lastButton.superview!.trailingAnchor)
+                lastButton.trailingAnchor.constraint(equalTo: lastButton.superview!.trailingAnchor, constant: -buttonPadding)
             )
         }
 
@@ -203,15 +234,15 @@ final class InputBarButtonsView: UIView {
 
             if button == expandRowButton {
                 constraints.append(contentsOf: [
-                    button.topAnchor.constraint(equalTo: topAnchor),
-                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight)
+                    button.topAnchor.constraint(equalTo: topAnchor, constant: buttonPadding),
+                    button.heightAnchor.constraint(equalToConstant: buttonHeight)
                 ])
             } else {
                 buttonInnerContainer.translatesAutoresizingMaskIntoConstraints = false
 
                 constraints.append(contentsOf: [
-                    button.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor, constant: inset),
-                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight)
+                    button.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor, constant: inset + buttonPadding),
+                    button.heightAnchor.constraint(equalToConstant: buttonHeight)
                 ])
             }
         }

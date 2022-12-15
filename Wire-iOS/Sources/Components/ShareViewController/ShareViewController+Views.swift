@@ -41,14 +41,13 @@ extension ShareViewController {
     }
 
     func createViews() {
-
+        containerView.backgroundColor = SemanticColors.View.backgroundDefault
         createShareablePreview()
-
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
-        self.tokenField.textView.placeholder = "content.message.forward.to".localized(uppercased: true)
-        self.tokenField.textView.keyboardAppearance = .dark
+        self.tokenField.textView.placeholder = "content.message.forward.to".localized
+        self.tokenField.textView.keyboardAppearance = .default
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 40)
@@ -71,15 +70,22 @@ extension ShareViewController {
 
         self.closeButton.accessibilityLabel = "close"
         self.closeButton.setIcon(.cross, size: .tiny, for: .normal)
+        self.closeButton.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         self.closeButton.addTarget(self, action: #selector(ShareViewController.onCloseButtonPressed(sender:)), for: .touchUpInside)
+
+        let sendButtonIconColor = SemanticColors.Icon.foregroundDefaultWhite
 
         self.sendButton.accessibilityLabel = "send"
         self.sendButton.isEnabled = false
         self.sendButton.setIcon(.send, size: .tiny, for: .normal)
-        self.sendButton.setBackgroundImageColor(UIColor.white, for: .normal)
-        self.sendButton.setBackgroundImageColor(UIColor(white: 0.64, alpha: 1), for: .disabled)
-        self.sendButton.setBorderColor(.clear, for: .normal)
-        self.sendButton.setBorderColor(.clear, for: .disabled)
+        self.sendButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
+        self.sendButton.setBackgroundImageColor(UIColor.accentDarken, for: .highlighted)
+        self.sendButton.setBackgroundImageColor(SemanticColors.Button.backgroundSendDisabled, for: .disabled)
+
+        self.sendButton.setIconColor(sendButtonIconColor, for: .normal)
+        self.sendButton.setIconColor(sendButtonIconColor, for: .highlighted)
+        self.sendButton.setIconColor(sendButtonIconColor, for: .disabled)
+
         self.sendButton.circular = true
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
@@ -95,7 +101,7 @@ extension ShareViewController {
             self.bottomSeparatorLine.isHidden = true
         }
 
-        [self.blurView, self.containerView].forEach(self.view.addSubview)
+        [self.containerView].forEach(self.view.addSubview)
 
         [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon, self.clearButton].forEach(self.containerView.addSubview)
 
@@ -112,7 +118,6 @@ extension ShareViewController {
         }
 
         [view,
-         blurView,
          containerView,
          shareablePreviewWrapper,
          shareablePreviewView,
@@ -162,10 +167,6 @@ extension ShareViewController {
         }
 
         NSLayoutConstraint.activate([
-            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurView.topAnchor.constraint(equalTo: view.topAnchor),
-            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             containerView.topAnchor.constraint(equalTo: view.topAnchor),
             bottomConstraint,

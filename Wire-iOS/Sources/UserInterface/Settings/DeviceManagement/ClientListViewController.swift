@@ -160,6 +160,7 @@ final class ClientListViewController: UIViewController,
         self.createConstraints()
 
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        self.navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.ClientsList.BackButton.description
         setColor()
     }
 
@@ -442,11 +443,7 @@ final class ClientListViewController: UIViewController,
     }
 
     private func setupControllerTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Registration.Devices.title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Registration.Devices.title.capitalized)
     }
 
 }

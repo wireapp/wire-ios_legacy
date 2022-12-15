@@ -231,7 +231,7 @@ final class ConversationReplyContentView: UIView {
         restrictionLabel.isHidden = !object.showRestriction
 
         senderComponent.senderName = object.senderName
-        senderComponent.indicatorIcon = object.isEdited ? StyleKitIcon.pencil.makeImage(size: 8, color: .from(scheme: .iconNormal)) : nil
+        senderComponent.indicatorIcon = object.isEdited ? StyleKitIcon.pencil.makeImage(size: 8, color: SemanticColors.Icon.foregroundDefault) : nil
         senderComponent.indicatorLabel = object.isEdited ? "content.message.reply.edited_message".localized : nil
         timestampLabel.text = object.timestamp
         restrictionLabel.text = object.restrictionDescription?.localizedUppercase

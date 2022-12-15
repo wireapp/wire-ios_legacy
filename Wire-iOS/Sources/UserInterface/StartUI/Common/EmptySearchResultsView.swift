@@ -49,14 +49,17 @@ protocol EmptySearchResultsViewDelegate: AnyObject {
 
 final class EmptySearchResultsView: UIView {
 
+    typealias LabelColors = SemanticColors.Label
+
     private var state: EmptySearchResultsViewState = .noUsers {
         didSet {
             iconView.image = icon
+            iconView.tintColor = iconColor
             statusLabel.text = self.text
 
             if let action = self.buttonAction {
                 actionButton.isHidden = false
-                actionButton.setTitle(action.title, for: .normal)
+                actionButton.setup(title: action.title)
             } else {
                 actionButton.isHidden = true
             }
@@ -76,28 +79,25 @@ final class EmptySearchResultsView: UIView {
         }
     }
 
-    private let variant: ColorSchemeVariant
     private let isSelfUserAdmin: Bool
     private let isFederationEnabled: Bool
 
     private let stackView: UIStackView
     private let iconView     = UIImageView()
-    private let statusLabel  = UILabel()
-    private let actionButton: InviteButton
+    private let statusLabel  = DynamicFontLabel(fontSpec: .normalRegularFont,
+                                                color: LabelColors.textSettingsPasswordPlaceholder)
+    private let actionButton: LinkButton
+    private let iconColor = LabelColors.textSettingsPasswordPlaceholder
 
     weak var delegate: EmptySearchResultsViewDelegate?
 
-    init(variant: ColorSchemeVariant,
-         isSelfUserAdmin: Bool,
+    init(isSelfUserAdmin: Bool,
          isFederationEnabled: Bool) {
-        self.variant = variant
         self.isSelfUserAdmin = isSelfUserAdmin
         self.isFederationEnabled = isFederationEnabled
         stackView = UIStackView()
-        actionButton = InviteButton(variant: variant)
+        actionButton = LinkButton()
         super.init(frame: .zero)
-
-        iconView.alpha = 0.24
 
         stackView.alignment = .center
         stackView.spacing = 16
@@ -115,8 +115,6 @@ final class EmptySearchResultsView: UIView {
 
         statusLabel.numberOfLines = 0
         statusLabel.preferredMaxLayoutWidth = 200
-        statusLabel.textColor = UIColor.from(scheme: .textForeground, variant: self.variant)
-        statusLabel.font = FontSpec(.medium, .regular).font!
         statusLabel.textAlignment = .center
 
         actionButton.accessibilityIdentifier = "button.searchui.open-services-no-results"
@@ -169,8 +167,7 @@ final class EmptySearchResultsView: UIView {
             icon = .personalProfile
         }
 
-        let color = UIColor.from(scheme: .iconNormal, variant: self.variant)
-        return icon.makeImage(size: .large, color: color)
+        return icon.makeImage(size: .large, color: iconColor)
     }
 
     private var buttonAction: EmptySearchResultsViewAction? {

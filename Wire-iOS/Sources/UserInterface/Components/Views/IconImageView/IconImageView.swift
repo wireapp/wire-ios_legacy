@@ -65,7 +65,7 @@ class IconImageView: UIImageView {
             return style?.accessibilityIdentifier
         }
         set {
-            // no-op
+            super.accessibilityIdentifier = newValue
         }
     }
 
@@ -74,7 +74,7 @@ class IconImageView: UIImageView {
             return style?.accessibilityLabel
         }
         set {
-            // no-op
+            super.accessibilityLabel = newValue
         }
     }
 

@@ -22,13 +22,16 @@ import WireCommonComponents
 
 class StartUIIconCell: UICollectionViewCell {
 
+    typealias CellColors = SemanticColors.View
+    typealias PeoplePicker = L10n.Localizable.Peoplepicker
+
     fileprivate let iconView = UIImageView()
     fileprivate let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
     fileprivate let separator = UIView()
 
     fileprivate var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefault)
+            iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefault).withRenderingMode(.alwaysTemplate)
             iconView.tintColor = SemanticColors.Icon.foregroundDefault
         }
     }
@@ -41,7 +44,7 @@ class StartUIIconCell: UICollectionViewCell {
 
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? SemanticColors.View.backgroundUserCellHightLighted : SemanticColors.View.backgroundUserCell
+            backgroundColor = isHighlighted ? CellColors.backgroundUserCellHightLighted : CellColors.backgroundUserCell
         }
     }
 
@@ -59,8 +62,9 @@ class StartUIIconCell: UICollectionViewCell {
     fileprivate func setupViews() {
         iconView.contentMode = .center
         titleLabel.applyStyle(.primaryCellLabel)
+        separator.backgroundColor = CellColors.backgroundSeparatorCell
+        backgroundColor = CellColors.backgroundUserCell
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
-        separator.backgroundColor = SemanticColors.View.backgroundSeparatorCell
     }
 
     fileprivate func createConstraints() {
@@ -92,7 +96,7 @@ final class InviteTeamMemberCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .envelope
-        title = "peoplepicker.invite_team_members".localized
+        title = PeoplePicker.inviteTeamMembers
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -106,7 +110,7 @@ final class CreateGroupCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .createConversation
-        title = "peoplepicker.quick-action.create-conversation".localized
+        title = PeoplePicker.QuickAction.createConversation
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -119,9 +123,8 @@ final class CreateGuestRoomCell: StartUIIconCell {
 
     override func setupViews() {
         super.setupViews()
-
         icon = .guest
-        title = "peoplepicker.quick-action.create-guest-room".localized
+        title = PeoplePicker.QuickAction.createGuestRoom
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -135,7 +138,7 @@ final class OpenServicesAdminCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .bot
-        title = "peoplepicker.quick-action.admin-services".localized
+        title = PeoplePicker.QuickAction.adminServices
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityIdentifier = "button.searchui.open-services"

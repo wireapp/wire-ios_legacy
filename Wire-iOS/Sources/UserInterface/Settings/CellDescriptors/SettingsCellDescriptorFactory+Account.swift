@@ -71,7 +71,7 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
-        let federationEnabled = APIVersion.isFederationEnabled
+        let federationEnabled = BackendInfo.isFederationEnabled
         var cellDescriptors: [SettingsCellDescriptorType] = []
         cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
                            handleElement(
@@ -259,24 +259,28 @@ extension SettingsCellDescriptorFactory {
     }
 
     func pictureElement() -> SettingsCellDescriptorType {
+        let profileImagePicker = ProfileImagePickerManager()
         let previewGenerator: PreviewGeneratorType = { _ in
             guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
             return .image(image)
         }
 
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.account_picture_group.picture".localized,
-            isDestructive: false,
-            presentationStyle: .modal,
-            presentationAction: ProfileSelfPictureViewController.init,
-            previewGenerator: previewGenerator
-        )
+        let presentationAction: () -> (UIViewController?) = {
+            let actionSheet = profileImagePicker.selectProfileImage()
+            return actionSheet
+        }
+        return SettingsAppearanceCellDescriptor(
+            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.picture.capitalized,
+            previewGenerator: previewGenerator,
+            presentationStyle: .alert,
+            presentationAction: presentationAction)
     }
 
     func colorElement() -> SettingsCellDescriptorType {
         return SettingsAppearanceCellDescriptor(
-            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.color,
-            appearanceType: .color,
+            text: L10n.Localizable.Self.Settings.AccountPictureGroup.color.capitalized,
+            previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) },
+            presentationStyle: .navigation,
             presentationAction: AccentColorPickerController.init)
     }
 

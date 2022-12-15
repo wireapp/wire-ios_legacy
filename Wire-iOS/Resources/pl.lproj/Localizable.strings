@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Szukaj według nazwy lub nazwy użytkownika";
 "peoplepicker.header.top_people" = "Osoby";
 "peoplepicker.button.create_conversation" = "Załóż grupę";
-"peoplepicker.button.add_to_conversation" = "Dodaj uczestników do grupy";
+"peoplepicker.button.add_to_conversation" = "Dodaj uczestników";
 "peoplepicker.header.conversations" = "Grupy";
 "peoplepicker.header.team_conversations" = "Grupy zespołu %@";
 "peoplepicker.header.send_invitation" = "Zaproś";
@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "nieodebrane połączenie";
 "conversation_list.voiceover.status.pause_media" = "wstrzymaj odtwarzanie";
 "conversation_list.voiceover.status.play_media" = "odtwórz";
-"conversation_list.voiceover.status.silenced" = "wyciszony";
 "conversation_list.voiceover.status.typing" = "pisze";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.status.mention" = "zostałeś wspomniany";
-"conversation_list.voiceover.status.reply" = "odpowiedz";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "najnowsze";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "lista ostatnich konwersacji";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "foldery";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "lista rozmów zorganizowanych w folderach";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "zarchiwizowane";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista zarchiwizowanych konwersacji";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontakty";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "szukaj osób w Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "napisz";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "napisz wiadomości i zapisz na później";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "aparat";
@@ -227,8 +216,6 @@
 "list.section.requests" = "Prośby";
 "list.section.favorites" = "Ulubione ";
 
-"conversation.voiceover.verified" = "Potwierdź";
-"conversation.voiceover.legalhold" = "legalne przechowywanie";
 "conversation.voiceover.value.active" = "aktywny";
 "conversation.voiceover.value.disabled" = "wyłączony";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Rozmowa";
 "compose.message.title" = "Wiadomość";
-
-"conversation_details.open_button.accessibility_hint" = "Kliknij dwukrotnie, aby wyświetlić szczegóły rozmowy.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "Wiadomość została usunięta.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Gości**";
-"conversation.banner.services" = "**Usługi**";
-"conversation.banner.externals" = "**Zewnętrzne**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "Goście";
+"conversation.banner.services" = "Usługi";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ jest obecny";
 "conversation.banner.are_active" = "%@ są aktywne";
 "conversation.banner.separator" = " i ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Dzwonisz";
 "content.system.ephemeral_time_remaining" = "pozostało: %@";
 
-"content.system.self_user_new_client" = "**Zacząłeś** używać [nowego urządzenia](%@)";
-"content.system.self_user_new_self_client" = "**Zacząłeś** używać [to urządzenie](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "Ty";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Nowy użytkownik właśnie dołączył.";
 "content.system.verify_devices" = "Zweryfikuj urządzenie";
 
-"content.system.unverified_self_devices" = "**Ty ** wyłączyłeś weryfikacje z jednego z [twoich urządzeń](%@)";
-"content.system.unverified_other_devices" = "**Ty ** wyłączyłeś weryfikacje z jednego z [%1$@ urządzeń](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Dość długo nie używałeś tego urządzenia. Niektóre wiadomości nie będą pokazane.";
 "content.system.missing_messages.subtitle_start" = "Tymczasem,";
 
-"content.system.cannot_decrypt.self" = "Wiadomość od **ciebie** nie może być odszyfrowana.";
-"content.system.cannot_decrypt.other" = "Wiadomość od **%@** nie może być odszyfrowana.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "Napraw przyszłe wiadomości";
 "content.system.cannot_decrypt.error_details" = "(Naprawiono błąd: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "Możesz teraz odszyfrować wiadomości od siebie. Aby odzyskać utracone wiadomości, **musisz je ponownie wysłać.**";
-"content.system.cannot_decrypt_resolved.other" = "Możesz teraz odszyfrować wiadomości od **%1$@**. Aby odzyskać utracone wiadomości, **poproś %1$@ o wysłanie ich ponownie.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Identyfikator urządzenia** zmienił się. Niedostarczona wiadomość.";
-"content.system.cannot_decrypt_identity_changed.other" = "Zmieniono identyfikator urządzenia **%@**. Wiadomość niedostarczona."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ nie był w stanie odszyfrować niektórych Twoich wiadomości, ale rozwiązał problem **. To wpłynęło na wszystkie wasze rozmowy.";
-"content.system.session_reset.self" = "**Nie udało się odszyfrować niektórych wiadomości, ale rozwiązałeś problem **. To wpłynęło na wszystkie rozmowy.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Ta wiadomość nie może być wyświetlona. Możliwe że używasz starszej wersji Wire.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Zablokuj";
 "profile.unblock_button_title_action" = "Odblokuj";
 
-"profile.cancel_connection_button_title" = "ANULUJ ŻĄDANIE";
+"profile.cancel_connection_button_title" = "Anuluj żądanie";
 "profile.connection_request_state.blocked" = "ZABLOKOWANY";
 "profile.create_conversation_button_title" = "Załóż grupę";
 "profile.open_conversation_button_title" = "Otwórz konwersację";
@@ -920,7 +905,7 @@
 "device.type.unknown" = "Nieznane";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Goście";
@@ -961,8 +946,6 @@
 "self.about" = "O programie";
 "self.sign_out" = "Wyloguj";
 "self.report_abuse" = "Raport z nadużycia";
-"self.voiceover.label" = "Profil";
-"self.voiceover.hint" = "Otwórz profil i ustawienia";
 "self.new-device.voiceover.label" = "Profil, nowe urządzenia dodane";
 
 "self.add_email_password" = "Dodaj adres e-mail i hasło";
@@ -1039,7 +1022,10 @@
 "self.settings.encrypt_messages_at_rest.title" = "Zaszyfruj wiadomości w spoczynku";
 
 "self.settings.account_picture_group.picture" = "Zdjęcie profilowe";
-"self.settings.account_picture_group.color" = "Kolor";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
+"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Niebieski";
 "self.settings.account_picture_group.accent_color.green" = "Zielony";
 "self.settings.account_picture_group.accent_color.yellow" = "Żółty";
@@ -1884,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Ustaw kod dostępu";
-"create_passcode.info_label" = "Zostanie użyty do odblokowania Wire. Jeśli zapomnisz tego kodu dostępu **nie będzie można go odzyskać.**";
-"create_passcode.info_label_forced_applock" = "Utwórz kod dostępu, aby odblokować Wire. Zapamietaj go, ponieważ **nie będzie można go odzyskać.**";
-"create_passcode.create_button.title" = "ustaw kod dostępu";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Co najmniej osiem znaków";
@@ -1899,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Wprowadź swoje hasło";
 "unlock.title_label" = "Wprowadź hasło, żeby odblokować Wire";
-"unlock.wipe_button" = "Dostęp jako nowe urządzenie";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Błędne hasło";
-"unlock.submit_button.title" = "odblokuj";
+"unlock.submit_button.title" = "Odblokuj";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "W Wire nastąpiła zmiana";
@@ -1911,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Dostęp jako nowe urządzenie";
-"wipe_database.info_label" = "Dane przechowywane na tym urządzeniu mogą być dostępne tylko z kodem dostępu.\n\nJeśli zapomniałeś hasła, możesz usunąć bazę danych, aby zalogować się ponownie jako nowe urządzenie.\n\nUsuwając bazę danych, ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "wszystkie lokalne dane i wiadomości dla tego konta zostaną trwale usunięte.";
 
-"wipe_database.button.title" = "Chcę usunąć bazę danych";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Potwierdź usunięcie bazy danych";
-"wipe_database.alert.message" = "Wpisz 'Usuń', aby potwierdzić, że chcesz usunąć wszystkie dane z tego urządzenia.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Wpisz 'Usuń'";
 "wipe_database.alert.confirm" = "Usuń";
 "wipe_database.alert.confirm_input" = "Usuń";
@@ -1937,7 +1923,7 @@
 "appLockModule.message.passcode" = "Odblokuj Wire kodem dostępu";
 "appLockModule.message.passcodeUnavailable" = "Aby odblokować Wire, włącz kod dostępu w ustawieniach urządzenia";
 "appLockModule.unlockButton.title" = "Odblokuj";
-"appLockModule.goToSettingsButton.title" = "Przejdź do ustawień";
+"appLockModule.goToSettingsButton.title" = "Przejdź do Ustawień";
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Przewiń na dół";

@@ -94,7 +94,7 @@ class PopUpIconButtonView: UIView {
         context.setShadow(offset: offset, blur: blurRadius, color: shadowColor)
 
         // overlay fill
-        UIColor.from(scheme: .barBackground).set()
+        SemanticColors.View.backgroundConversationView.set()
         path.fill()
 
         context.restoreGState()
@@ -103,7 +103,7 @@ class PopUpIconButtonView: UIView {
         if let imageView = button.imageView {
             // rect in window coordinates
             let imageRect = imageView.convert(button.imageView!.bounds, to: nil)
-            let image = button.icon(for: .normal)!.makeImage(size: .tiny, color: UIColor.from(scheme: .iconNormal))
+            let image = button.icon(for: .normal)!.makeImage(size: .tiny, color: SemanticColors.Button.textInputBarItemEnabled)
             image.draw(in: imageRect)
         }
 
@@ -111,7 +111,7 @@ class PopUpIconButtonView: UIView {
         if let buttonImageView = button.imageView {
             for (index, icon) in button.itemIcons.enumerated() {
                 let itemRect = rectForItem(icon)!
-                let iconColor = index == selectedIndex ? .accent() : UIColor.from(scheme: .iconNormal)
+                let iconColor = index == selectedIndex ? SemanticColors.Button.borderInputBarItemHighlighted : SemanticColors.Button.textInputBarItemEnabled
                 let image = icon.makeImage(size: .medium, color: iconColor)
                 // rect in window coordinates
                 var imageRect = buttonImageView.convert(buttonImageView.bounds, to: nil)

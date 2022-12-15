@@ -32,7 +32,6 @@ final class SearchHeaderViewController: UIViewController {
     let searchIcon = UIImageView()
     let clearButton: IconButton
     let userSelection: UserSelection
-    let colorSchemeVariant: ColorSchemeVariant
     var allowsMultipleSelection: Bool = true
 
     weak var delegate: SearchHeaderViewControllerDelegate?
@@ -45,9 +44,8 @@ final class SearchHeaderViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(userSelection: UserSelection, variant: ColorSchemeVariant) {
+    init(userSelection: UserSelection) {
         self.userSelection = userSelection
-        colorSchemeVariant = variant
         clearButton = IconButton(style: .default)
 
         super.init(nibName: nil, bundle: nil)
@@ -72,7 +70,7 @@ final class SearchHeaderViewController: UIViewController {
 
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
-        tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
+        tokenField.textView.placeholder = L10n.Localizable.Peoplepicker.searchPlaceholder.capitalized
         tokenField.textView.keyboardAppearance = .default
         tokenField.textView.returnKeyType = .done
         tokenField.textView.autocorrectionType = .no

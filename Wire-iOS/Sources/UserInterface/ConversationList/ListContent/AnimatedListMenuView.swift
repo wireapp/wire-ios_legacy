@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-fileprivate final class MenuDotView: UIView {
+private final class MenuDotView: UIView {
     init() {
         super.init(frame: .zero)
 

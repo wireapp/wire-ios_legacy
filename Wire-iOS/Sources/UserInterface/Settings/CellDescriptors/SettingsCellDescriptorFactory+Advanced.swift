@@ -108,7 +108,7 @@ extension SettingsCellDescriptorFactory {
         // Inner group
         let debuggingToolsGroup = SettingsGroupCellDescriptor(
             items: [findUnreadConversationSection],
-            title: L10n.Localizable.Self.Settings.Advanced.DebuggingTools.title ,
+            title: L10n.Localizable.Self.Settings.Advanced.DebuggingTools.title,
             accessibilityBackButtonText: L10n.Accessibility.AdvancedSettings.BackButton.description
         )
 

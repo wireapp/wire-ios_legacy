@@ -55,9 +55,9 @@ final class ConversationNotificationOptionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "group_details.notification_options_cell.title".localized(uppercased: true)
-        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.GroupDetails.NotificationOptionsCell.title.capitalized)
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.NotificationConversationSettings.CloseButton.description
 
         configureSubviews()
         configureConstraints()

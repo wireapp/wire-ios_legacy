@@ -23,7 +23,7 @@ import WireDataModel
 extension UIView {
     func targetView(for message: ZMConversationMessage!, dataSource: ConversationTableViewDataSource) -> UIView {
 
-        /// if the view is a tableView, search for a visible cell that contains the message and the cell is a SelectableView
+        // If the view is a tableView, search for a visible cell that contains the message and the cell is a SelectableView
         guard let tableView: UITableView = self as? UITableView else {
             return self
         }
@@ -53,7 +53,7 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
                  view: UIView) {
         let actionView = view.targetView(for: message, dataSource: dataSource)
 
-        /// Do not dismiss Modal for forward since share VC is present in a popover
+        // Do not dismiss Modal for forward since share VC is present in a popover
         let shouldDismissModal = action != .delete && action != .copy &&
             !(action == .forward && isIPadRegular())
 

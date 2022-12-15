@@ -61,7 +61,7 @@ extension ZMConversation {
     func joinVoiceChannel(video: Bool) {
         guard let userSession = ZMUserSession.shared() else { return }
 
-        let onGranted : (_ granted: Bool ) -> Void = { granted in
+        let onGranted: (_ granted: Bool ) -> Void = { granted in
             if granted {
                 let joined = self.voiceChannel?.join(video: video, userSession: userSession) ?? false
 
@@ -87,7 +87,7 @@ extension ZMConversation {
 
     }
 
-    func warnAboutSlowConnection(handler : @escaping (_ abortCall: Bool) -> Void) {
+    func warnAboutSlowConnection(handler: @escaping (_ abortCall: Bool) -> Void) {
         if NetworkConditionHelper.shared.qualityType() == .type2G {
             let badConnectionController = UIAlertController(title: "error.call.slow_connection.title".localized, message: "error.call.slow_connection".localized, preferredStyle: .alert)
 

@@ -220,7 +220,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     /// Used to inject a specific `HandleChangeState` in tests. See `ChangeHandleViewControllerTests`.
-    init(state: HandleChangeState, federationEnabled: Bool = APIVersion.isFederationEnabled) {
+    init(state: HandleChangeState, federationEnabled: Bool = BackendInfo.isFederationEnabled) {
         self.state = state
         self.federationEnabled = federationEnabled
         super.init(style: .grouped)
@@ -245,7 +245,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        title = HandleChange.title.uppercased()
+        navigationItem.setupNavigationBarTitle(title: HandleChange.title.capitalized)
         view.backgroundColor = .clear
         ChangeHandleTableViewCell.register(in: tableView)
         tableView.allowsSelection = false
@@ -256,7 +256,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         updateUI()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: HandleChange.save.uppercased(),
+            title: HandleChange.save.capitalized,
             style: .plain,
             target: self,
             action: #selector(saveButtonTapped)
@@ -322,8 +322,8 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
 
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool {
         do {
-            /// We validate the new handle and only allow the edit if
-            /// the new handle neither contains invalid characters nor is too long.
+            // We validate the new handle and only allow the edit if
+            // the new handle neither contains invalid characters nor is too long.
             try state.validate(text)
             return true
         } catch HandleChangeState.ValidationError.invalidCharacter {

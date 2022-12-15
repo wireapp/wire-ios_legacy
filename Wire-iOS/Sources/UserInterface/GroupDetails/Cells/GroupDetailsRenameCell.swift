@@ -28,13 +28,6 @@ final class GroupDetailsRenameCell: UICollectionViewCell {
     let titleTextField = SimpleTextField()
     var contentStackView: UIStackView!
 
-    var variant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != variant else { return }
-            configureColors()
-        }
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -55,7 +48,6 @@ final class GroupDetailsRenameCell: UICollectionViewCell {
         verifiedIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         verifiedIconView.accessibilityIdentifier = "img.shield"
 
-        accessoryIconView.setIcon(.pencil, size: 12, color: UIColor.from(scheme: .textForeground, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .scaleAspectFit
         accessoryIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -66,7 +58,7 @@ final class GroupDetailsRenameCell: UICollectionViewCell {
         titleTextField.returnKeyType = .done
         titleTextField.backgroundColor = .clear
         titleTextField.textInsets = UIEdgeInsets.zero
-        titleTextField.keyboardAppearance = ColorScheme.default.keyboardAppearance
+        titleTextField.keyboardAppearance = .default
 
         contentStackView = UIStackView(arrangedSubviews: [verifiedIconView, titleTextField, accessoryIconView])
         contentStackView.axis = .horizontal

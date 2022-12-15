@@ -107,7 +107,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
 
         set {
-            // no op
+            super.accessibilityLabel = newValue
         }
     }
 
@@ -122,7 +122,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
 
         set {
-            // no op
+            super.accessibilityValue = newValue
         }
     }
 
@@ -145,7 +145,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
         backgroundColor = SemanticColors.View.backgroundConversationList
-        addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
+        addBorder(for: .bottom)
     }
 
     @objc

@@ -28,17 +28,19 @@ class ButtonWithLargerHitArea: DynamicFontButton {
 
     override init(fontSpec: FontSpec = .normalRegularFont) {
         super.init(fontSpec: fontSpec)
-        setUp()
+
+        setupAccessibility()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
-        setUp()
+        setupAccessibility()
     }
 
-    private func setUp() {
+    private func setupAccessibility() {
         isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 
      // MARK: - Overridden methods

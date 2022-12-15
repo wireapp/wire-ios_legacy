@@ -69,6 +69,12 @@ class ContactsSectionController: SearchSectionController {
         cell.showSeparator = (contacts.count - 1) != indexPath.row
         cell.checkmarkIconView.isHidden = !allowsSelection
         cell.accessoryIconView.isHidden = true
+        if allowsSelection {
+            typealias CreateConversation = L10n.Accessibility.CreateConversation
+            cell.accessibilityHint = cell.isSelected
+                                    ? CreateConversation.SelectedUser.hint
+                                    : CreateConversation.UnselectedUser.hint
+        }
 
         let selected = selection?.users.contains(user) ?? false
         cell.isSelected = selected
