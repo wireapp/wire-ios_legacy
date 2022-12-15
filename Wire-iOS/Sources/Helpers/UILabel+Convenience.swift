@@ -39,12 +39,8 @@ extension UILabel {
         setContentCompressionResistancePriority(.required, for: .vertical)
     }
 
-    static func createMultiLineCenterdLabel(variant: ColorSchemeVariant? = nil) -> UILabel {
-        let label = UILabel(key: nil,
-                            size: .large,
-                            weight: .semibold,
-                            color: .textForeground,
-                            variant: variant ?? ColorScheme.default.variant)
+    static func createMultiLineCenterdLabel() -> UILabel {
+        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont, color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.configMultipleLineLabel()
 
@@ -53,11 +49,11 @@ extension UILabel {
 
     // MARK: - passcode label factory
 
-    static func createHintLabel(variant: ColorSchemeVariant) -> UILabel {
+    static func createHintLabel() -> UILabel {
         let label = UILabel()
 
-        label.font = UIFont.smallRegularFont.withSize(10)
-        label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        label.font = FontSpec.smallRegularFont.font!
+        label.textColor = SemanticColors.Label.textDefault
 
         let leadingMargin: CGFloat = CGFloat.AccessoryTextField.horizonalInset
 

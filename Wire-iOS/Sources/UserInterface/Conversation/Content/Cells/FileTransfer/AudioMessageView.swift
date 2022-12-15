@@ -436,7 +436,7 @@ final class AudioMessageView: UIView, TransferView {
             updateTimeLabel()
             updateProximityObserverState()
         }
-        /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+        // When state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
         else if state == .completed {
             updateTimeLabel()
         } else {
@@ -512,9 +512,9 @@ extension AudioMessageView: AudioTrackPlayerDelegate {
     }
 
     func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?) {
-        ///  Updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
-        ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
-        ///          This function may called from background thread (in case incoming call).
+        // Updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
+        // Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
+        // This function may called from background thread (in case incoming call).
         DispatchQueue.main.async { [weak self] in
             self?.updateUI(state: state)
         }

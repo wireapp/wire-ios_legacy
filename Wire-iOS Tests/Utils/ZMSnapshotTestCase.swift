@@ -515,7 +515,7 @@ extension ZMSnapshotTestCase {
             break
         }
 
-        /// restore to default light scheme
+        // Restore to default light scheme
         ColorScheme.default.variant = .light
     }
 
@@ -571,7 +571,7 @@ extension ZMSnapshotTestCase {
             break
         }
 
-        /// restore to default light scheme
+        // Restore to default light scheme
         ColorScheme.default.variant = .light
         snapshotBackgroundColor = UIColor.lightGray
     }

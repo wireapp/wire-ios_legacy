@@ -284,7 +284,7 @@ class IconButton: ButtonWithLargerHitArea {
     private func updateCircularCornerRadius() {
         guard circular else { return }
 
-        /// Create a circular mask. It would also mask subviews.
+        // Create a circular mask. It would also mask subviews.
 
         let radius: CGFloat = bounds.size.height / 2
         let maskPath = UIBezierPath(roundedRect: bounds,
@@ -297,7 +297,7 @@ class IconButton: ButtonWithLargerHitArea {
 
         layer.mask = maskLayer
 
-        /// When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
+        // When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
         layer.cornerRadius = borderWidth > 0 ? radius : 0
     }
 
