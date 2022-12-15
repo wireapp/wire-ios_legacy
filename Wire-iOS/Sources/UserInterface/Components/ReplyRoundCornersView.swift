@@ -20,13 +20,14 @@ import Foundation
 import UIKit
 
 final class ReplyRoundCornersView: UIControl {
-
+    // MARK: - Properties
     typealias ViewColors = SemanticColors.View
 
     let containedView: UIView
     private let grayBoxView = UIView()
     let highlightLayer = UIView()
 
+    // MARK: - Init
     init(containedView: UIView) {
         self.containedView = containedView
         super.init(frame: .zero)
@@ -34,6 +35,12 @@ final class ReplyRoundCornersView: UIControl {
         setupConstraints()
     }
 
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Setup Subviews and Constraints
     private func setupSubviews() {
         layer.cornerRadius = 8
         layer.borderWidth = 1
@@ -71,13 +78,7 @@ final class ReplyRoundCornersView: UIControl {
         ])
     }
 
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     // MARK: - UIControl
-
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         setHighlighted(true, animated: false)
         sendActions(for: .touchDown)
