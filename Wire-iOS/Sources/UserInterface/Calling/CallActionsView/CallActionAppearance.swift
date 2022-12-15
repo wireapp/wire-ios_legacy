@@ -71,33 +71,6 @@ enum CallActionAppearance: Equatable {
         }
     }
 
-    var iconColorDisabled: UIColor {
-        switch self {
-        case .light: return UIColor.black.withAlphaComponent(0.16)
-        case .dark: return UIColor.white.withAlphaComponent(0.4)
-        }
-    }
-
-    var borderColorNormal: UIColor {
-        switch self {
-        case .light: return UIColor.lightGraphite.withAlphaComponent(0.08)
-        case .dark: return UIColor.white.withAlphaComponent(0.24)
-        }
-    }
-
-    var borderColorSelected: UIColor {
-        switch self {
-        case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
-        case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
-        }
-    }
-
-    var borderColorDisabled: UIColor {
-        switch self {
-        case .light: return UIColor.black.withAlphaComponent(0.16)
-        case .dark: return UIColor.white.withAlphaComponent(0.4)        }
-    }
-
     var textColorNormal: UIColor {
         switch self {
         case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
