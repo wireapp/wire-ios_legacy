@@ -905,7 +905,7 @@
 "device.type.unknown" = "Unknown";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";

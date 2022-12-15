@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "名前またはユーザーネームで検索する";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "グループを作成";
-"peoplepicker.button.add_to_conversation" = "参加者をグループに追加します。";
+"peoplepicker.button.add_to_conversation" = "参加者を追加";
 "peoplepicker.header.conversations" = "グループ";
 "peoplepicker.header.team_conversations" = "%@ グループ";
 "peoplepicker.header.send_invitation" = "招待";
@@ -138,7 +138,7 @@
 // Conversation List Bottom Bar
 "conversation_list.bottom_bar.contacts.title" = "連絡先";
 "conversation_list.bottom_bar.conversations.title" = "会話";
-"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.folders.title" = "フォルダ";
 "conversation_list.bottom_bar.archived.title" = "アーカイブ";
 
 // Conversation List Data Usage Permission Dialog
@@ -905,7 +905,7 @@
 "device.type.unknown" = "不明";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "ゲスト";
@@ -1000,9 +1000,9 @@
 "self.settings.account_section.add_handle.title" = "ユーザーネームを追加する";
 "self.settings.account_section.team.title" = "チーム";
 "self.settings.account_section.domain.title" = "ドメイン";
-"self.settings.account_section.profile_link.title" = "Profile link";
-"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
-"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
+"self.settings.account_section.profile_link.title" = "プロフィールリンク";
+"self.settings.account_section.profile_link.actions.copy_link" = "プロフィールリンクをコピー";
+"self.settings.account_section.profile_link.actions.copied_link" = "プロフィールリンクをコピーしました";
 
 "self.settings.account_details_group.info.footer" = "この情報で他の人があなたを見つけることができます。";
 "self.settings.account_details_group.personal.footer" = "この情報は表示されません。";
@@ -1022,17 +1022,17 @@
 "self.settings.encrypt_messages_at_rest.title" = "待機時にメッセージを暗号化する";
 
 "self.settings.account_picture_group.picture" = "プロフィール画像";
-"self.settings.account_picture_group.alert.title" = "Change your profile picture";
-"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
-"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
-"self.settings.account_picture_group.color" = "Profile color";
-"self.settings.account_picture_group.accent_color.blue" = "Blue";
-"self.settings.account_picture_group.accent_color.green" = "Green";
-"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
-"self.settings.account_picture_group.accent_color.red" = "Red";
-"self.settings.account_picture_group.accent_color.amber" = "Amber";
-"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
-"self.settings.account_picture_group.accent_color.purple" = "Purple";
+"self.settings.account_picture_group.alert.title" = "プロフィール画像を変更";
+"self.settings.account_picture_group.alert.choose_picture" = "ライブラリから選択";
+"self.settings.account_picture_group.alert.take_picture" = "写真を撮影";
+"self.settings.account_picture_group.color" = "プロフィールの色";
+"self.settings.account_picture_group.accent_color.blue" = "青";
+"self.settings.account_picture_group.accent_color.green" = "緑";
+"self.settings.account_picture_group.accent_color.yellow" = "黄";
+"self.settings.account_picture_group.accent_color.red" = "赤";
+"self.settings.account_picture_group.accent_color.amber" = "黄";
+"self.settings.account_picture_group.accent_color.turquoise" = "青緑";
+"self.settings.account_picture_group.accent_color.purple" = "紫";
 
 "self.settings.account_personal_information_group.title" = "個人情報";
 
@@ -1128,11 +1128,11 @@
 "self.settings.sound_menu.sounds.none" = "なし";
 
 "self.settings.callkit.title" = "通話";
-"self.settings.callkit.caption" = "iOSで共有する";
-"self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示します。もしiCloudが有効である場合、通話履歴はAppleに共有されます。";
+"self.settings.callkit.caption" = "iOSと共有する";
+"self.settings.callkit.description" = "ロック画面とiOSの通話履歴にWireの通話を表示します。iCloudが有効な場合、通話履歴がAppleと共有されます。";
 
-"self.settings.mute_other_call.caption" = "Silence other calls";
-"self.settings.mute_other_call.description" = "Enable to silence incoming calls when you are already in an ongoing call.";
+"self.settings.mute_other_call.caption" = "他の通話の着信音を鳴らさない";
+"self.settings.mute_other_call.description" = "通話中に新たな着信があった場合は着信音を鳴らしません。";
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
 "self.settings.vbr.description" = "これによって、音声通話のデータ使用量が少なくなり、低速なネットワークでより良く動作します。オフにすると、コンスタントビットレートエンコーディング(CBR)が使用できます。この設定は1対1の通話にのみ影響し、会議通話では常にCBRエンコーディングが使われます。";
@@ -1204,7 +1204,7 @@
 "self.settings.privacy_security.lock_password.description.wrong_password" = "パスワードが違います、もう一度入力してください。";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
 
-"self.settings.privacy_security.disable_link_previews.title" = "リンク プレビューを作成します。";
+"self.settings.privacy_security.disable_link_previews.title" = "リンクプレビューを作成";
 "self.settings.privacy_security.disable_link_previews.footer" = "他ユーザーからのリンクがプレビュー表示されれます";
 
 "self.settings.privacy_analytics_menu.devices.title" = "デバイス";
@@ -1338,7 +1338,7 @@
 "guest_room.error.generic.title" = "何か問題があります";
 "guest_room.error.generic.message" = "接続を確認して、もう一度やり直してください。";
 
-"guest_room.link.header.title" = "Guest Links";
+"guest_room.link.header.title" = "ゲストリンク";
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "Wire のロック解除に使用されます。忘れてしまった場合、**復元できません**";
-"create_passcode.info_label_forced_applock" = "Wire のロック解除用のパスコードを作成します。これは **復元できません** ので、忘れないようにしてください。";
-"create_passcode.create_button.title" = "create passcode";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least eight characters long";
@@ -1885,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "パスコードを入力してください";
 "unlock.title_label" = "Wireのロックを解除するためのパスコードを入力してください";
-"unlock.wipe_button" = "Access as new device";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "パスコードが間違っています";
-"unlock.submit_button.title" = "ロック解除";
+"unlock.submit_button.title" = "ロックを解除";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Wire に変更がありました。";
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "このデバイスに保存されたデータには、パスコードを入力しなければアクセスできません。\nパスコードを忘れた場合は、データベースを消去すれば、新たなデバイスとして再度ログインできます。\nデータベースを消去すると、";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
-"wipe_database.button.title" = "I want to delete the database";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirm database deletion";
-"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Type 'Delete'";
 "wipe_database.alert.confirm" = "削除";
 "wipe_database.alert.confirm_input" = "削除";
@@ -1923,7 +1923,7 @@
 "appLockModule.message.passcode" = "パスコードで Wire をロック解除してください";
 "appLockModule.message.passcodeUnavailable" = "Wire をロック解除するには、デバイス設定でパスコードを有効にしてください";
 "appLockModule.unlockButton.title" = "ロックを解除";
-"appLockModule.goToSettingsButton.title" = "設定を開く";
+"appLockModule.goToSettingsButton.title" = "設定に移動する";
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
