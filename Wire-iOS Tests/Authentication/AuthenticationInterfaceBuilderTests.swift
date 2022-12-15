@@ -28,6 +28,7 @@ final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFix
         super.setUp()
 
         coreDataFixture = CoreDataFixture()
+        accentColor = .strongBlue
 
         featureProvider = MockAuthenticationFeatureProvider()
         builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)

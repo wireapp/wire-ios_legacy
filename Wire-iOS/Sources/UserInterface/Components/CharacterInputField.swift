@@ -117,6 +117,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
             super.init(frame: .zero)
 
             layer.cornerRadius = 4
+            layer.borderColor = SemanticColors.View.borderCharacterInputField.cgColor
             backgroundColor = .white
 
             label.font = UIFont.systemFont(ofSize: 32)
@@ -223,6 +224,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.becomeFirstResponder()
+        self.layer.borderColor = SemanticColors.View.borderCharacterInputFieldEnabled.cgColor
     }
 
     override func accessibilityActivate() -> Bool {
@@ -293,6 +295,8 @@ extension CharacterInputField: UIKeyInput {
         notifyingDelegate {
             self.storage.append(String(allowedChars))
         }
+
+        layer.borderColor = SemanticColors.View.borderCharacterInputFieldEnabled.cgColor
     }
 
     func deleteBackward() {

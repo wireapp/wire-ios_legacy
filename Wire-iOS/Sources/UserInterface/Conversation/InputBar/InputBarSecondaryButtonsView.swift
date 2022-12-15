@@ -60,5 +60,6 @@ final class InputBarSecondaryButtonsView: UIView {
 
     func setMarkdownBarView() {
         setView(markdownBarView)
+        markdownBarView.setupViews()
     }
 }
