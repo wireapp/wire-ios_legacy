@@ -26,7 +26,7 @@ final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
     var constraints: [NSLayoutConstraint] = []
 }
 
-fileprivate final class ResponderContainer<Child: UIView>: UIView {
+private final class ResponderContainer<Child: UIView>: UIView {
     private let responder: Child
 
     init(responder: Child) {
