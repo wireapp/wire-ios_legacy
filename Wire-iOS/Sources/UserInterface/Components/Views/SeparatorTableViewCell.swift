@@ -69,7 +69,6 @@ class SeparatorTableViewCell: UITableViewCell, SeparatorViewProtocol {
         // can be overriden to customize interface
     }
 
-
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted

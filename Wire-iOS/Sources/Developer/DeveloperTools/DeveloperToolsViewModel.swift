@@ -273,7 +273,6 @@ extension PushToken.TokenType: CustomStringConvertible {
 
 }
 
-
 extension PushToken: CustomDebugStringConvertible {
 
     public var debugDescription: String {
