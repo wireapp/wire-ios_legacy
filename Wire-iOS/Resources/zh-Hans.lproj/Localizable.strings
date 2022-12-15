@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "通过您的名字或用户名搜索";
 "peoplepicker.header.top_people" = "常联系的人";
 "peoplepicker.button.create_conversation" = "创建群聊";
-"peoplepicker.button.add_to_conversation" = "将参与者添加到群组";
+"peoplepicker.button.add_to_conversation" = "添加参与者";
 "peoplepicker.header.conversations" = "群组";
 "peoplepicker.header.team_conversations" = "%@ 组";
 "peoplepicker.header.send_invitation" = "邀请";
@@ -905,7 +905,7 @@
 "device.type.unknown" = "未知";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
-"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
-"create_passcode.create_button.title" = "创建密码";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least eight characters long";
@@ -1885,7 +1885,7 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "输入您的锁定码";
 "unlock.title_label" = "Enter passcode to unlock Wire";
-"unlock.wipe_button" = "Access as new device";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "密码错误";
 "unlock.submit_button.title" = "解锁";
 
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "此设备上存储的数据只能用您的密码访问。\n\n如果您忘记了您的密码，您可以删除数据库作为新设备重新登录。\n\n删除数据库， ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
-"wipe_database.button.title" = "I want to delete the database";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirm database deletion";
-"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "输入 'Delete'";
 "wipe_database.alert.confirm" = "删除";
 "wipe_database.alert.confirm_input" = "删除";
@@ -1923,7 +1923,7 @@
 "appLockModule.message.passcode" = "使用密码解锁Wire";
 "appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
 "appLockModule.unlockButton.title" = "解锁";
-"appLockModule.goToSettingsButton.title" = "前往设置";
+"appLockModule.goToSettingsButton.title" = "打开设置";
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
