@@ -3600,8 +3600,8 @@ internal enum L10n {
       }
       internal enum Services {
         internal enum RemoveIntegration {
-          /// Remove integration
-          internal static let button = L10n.tr("Localizable", "participants.services.remove_integration.button", fallback: "Remove integration")
+          /// Remove service
+          internal static let button = L10n.tr("Localizable", "participants.services.remove_integration.button", fallback: "Remove service")
         }
       }
     }
