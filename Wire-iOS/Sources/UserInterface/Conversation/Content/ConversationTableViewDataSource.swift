@@ -477,6 +477,7 @@ extension ConversationTableViewDataSource {
                  at index: Int,
                  firstUnreadMessage: ZMConversationMessage?,
                  searchQueries: [String]) -> ConversationMessageContext {
+        // 45 minutes
         let significantTimeInterval: TimeInterval = 60 * 45
         let isTimeIntervalSinceLastMessageSignificant: Bool
         let previousMessage = messagePrevious(to: message, at: index)

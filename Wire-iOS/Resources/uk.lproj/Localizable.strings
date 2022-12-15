@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Пошук за іменем або ніком";
 "peoplepicker.header.top_people" = "Топ-контакти";
 "peoplepicker.button.create_conversation" = "Створити групу";
-"peoplepicker.button.add_to_conversation" = "Додати учасників до розмови";
+"peoplepicker.button.add_to_conversation" = "Додати учасників";
 "peoplepicker.header.conversations" = "Групи";
 "peoplepicker.header.team_conversations" = "Групи %@";
 "peoplepicker.header.send_invitation" = "Запросити";
@@ -905,7 +905,7 @@
 "device.type.unknown" = "Невідомо";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Гості";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Створіть код допуску";
-"create_passcode.info_label" = "Він буде використаний для розблокування Wire. Якщо ви забудете цей пароль, то **його неможливо буде відновити.**";
-"create_passcode.info_label_forced_applock" = "Створіть пароль для розблокування Wire. Будь ласка,  запам'ятайте, що **його неможливо буде відновити.**";
-"create_passcode.create_button.title" = "створити код допуску";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Не менше восьми символів";
@@ -1885,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Введіть ваш код допуску";
 "unlock.title_label" = "Введіть код допуску, щоб розблокувати Wire";
-"unlock.wipe_button" = "Доступ як з нового пристрою";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Невірний код допуску";
-"unlock.submit_button.title" = "розблокувати";
+"unlock.submit_button.title" = "Розблокувати";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "У Wire відбулися зміни";
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Доступ як з нового пристрою";
-"wipe_database.info_label" = "Дані, що зберігаються на цьому пристрої, доступні лише з вашим кодом доступу.\n\nЯкщо ви забудете код доступу, то зможете очистити базу даних для входу в якості нового пристрою.\n\nВидаливши базу даних, ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього облікового запису будуть остаточно видалені.";
 
-"wipe_database.button.title" = "Я хочу видалити базу даних";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Підтвердити видалення бази даних";
-"wipe_database.alert.message" = "Введіть 'Видалити', щоб переконатися, що ви хочете видалити всі дані на цьому пристрої.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Введіть 'Видалити'";
 "wipe_database.alert.confirm" = "Видалити";
 "wipe_database.alert.confirm_input" = "Видалити";

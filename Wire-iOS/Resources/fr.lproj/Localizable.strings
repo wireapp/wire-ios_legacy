@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Rechercher par nom ou par identifiant";
 "peoplepicker.header.top_people" = "Contacts favoris";
 "peoplepicker.button.create_conversation" = "Créer un groupe";
-"peoplepicker.button.add_to_conversation" = "Ajouter des Participants au Groupe";
+"peoplepicker.button.add_to_conversation" = "Ajouter des contacts";
 "peoplepicker.header.conversations" = "Groupes";
 "peoplepicker.header.team_conversations" = "%@ Groupes";
 "peoplepicker.header.send_invitation" = "Inviter";
@@ -905,7 +905,7 @@
 "device.type.unknown" = "Inconnu";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Invités";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Créer un code d'accès";
-"create_passcode.info_label" = "Il sera utilisé pour déverrouiller Wire. Si vous oubliez ce code **il ne peut pas être récupéré.**";
-"create_passcode.info_label_forced_applock" = "Créez un code d'accès pour déverrouiller Wire. Ne l'oubliez pas, car **il ne peut pas être récupéré.**";
-"create_passcode.create_button.title" = "Créer un code d'accès";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Minimum de huit caractères";
@@ -1885,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Saisissez votre code d'accès";
 "unlock.title_label" = "Entrez le code d'accès pour déverrouiller Wire";
-"unlock.wipe_button" = "Accéder en tant que nouvel appareil";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Code d'accès erroné";
-"unlock.submit_button.title" = "déverrouiller";
+"unlock.submit_button.title" = "Déverrouiller";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Il y a eu un changement dans Wire";
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Accéder en tant que nouvel appareil";
-"wipe_database.info_label" = "Les données stockées sur cet appareil ne sont accessibles qu'avec votre code d'accès.\n\nSi vous avez oublié votre code d'accès, vous devez effacer la base de données et vous reconnecter en tant que nouvel appareil.\n\nEn supprimant la base de données, ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "toutes les données et les messages sur cet appareil pour ce compte seront supprimés définitivement.";
 
-"wipe_database.button.title" = "Je souhaite supprimer la base de données";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirmer la suppression de la base de données";
-"wipe_database.alert.message" = "Entrez 'Supprimer' pour confirmer la suppression de toutes les données sur cet appareil.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Entrer 'Supprimer'";
 "wipe_database.alert.confirm" = "Supprimer";
 "wipe_database.alert.confirm_input" = "Supprimer";
@@ -1923,7 +1923,7 @@
 "appLockModule.message.passcode" = "Déverrouiller Wire avec le Code d'accès";
 "appLockModule.message.passcodeUnavailable" = "Pour déverrouiller Wire, veuillez configurer votre code d'authentification dans les paramètres de votre appareil";
 "appLockModule.unlockButton.title" = "Déverrouiller";
-"appLockModule.goToSettingsButton.title" = "Ouvrir les paramètres";
+"appLockModule.goToSettingsButton.title" = "Allez dans les paramètres";
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Défiler jusqu'en bas";
