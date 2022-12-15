@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Ieškokite pagal vardą ar naudotojo vardą";
 "peoplepicker.header.top_people" = "Mėgstami žmonės";
 "peoplepicker.button.create_conversation" = "Sukurti grupę";
-"peoplepicker.button.add_to_conversation" = "Pridėti pašnekovų į grupę";
+"peoplepicker.button.add_to_conversation" = "Pridėti dalyvių";
 "peoplepicker.header.conversations" = "Grupės";
 "peoplepicker.header.team_conversations" = "%@ grupės";
 "peoplepicker.header.send_invitation" = "Pakviesti";
@@ -905,7 +905,7 @@
 "device.type.unknown" = "Nežinoma";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Svečių";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Create a passcode";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
-"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
-"create_passcode.create_button.title" = "create passcode";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least eight characters long";
@@ -1885,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter passcode to unlock Wire";
-"unlock.wipe_button" = "Access as new device";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Neteisingas slaptažodis";
-"unlock.submit_button.title" = "unlock";
+"unlock.submit_button.title" = "Atrakinti";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "There was a change in Wire";
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Access as new device";
-"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
-"wipe_database.button.title" = "I want to delete the database";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirm database deletion";
-"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Type 'Delete'";
 "wipe_database.alert.confirm" = "Ištrinti";
 "wipe_database.alert.confirm_input" = "Ištrinti";
@@ -1923,7 +1923,7 @@
 "appLockModule.message.passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
 "appLockModule.message.passcodeUnavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
 "appLockModule.unlockButton.title" = "Atrakinti";
-"appLockModule.goToSettingsButton.title" = "Go to settings";
+"appLockModule.goToSettingsButton.title" = "Eiti į Nustatymus";
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Scroll to Bottom";

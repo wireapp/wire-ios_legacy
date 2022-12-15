@@ -34,11 +34,7 @@ class CallEventHandler: CallEventHandlerProtocol {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
         guard #available(iOS 14.5, *) else { return }
-        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-            if let error = error {
-                // TODO: handle
-            }
-        }
+        CXProvider.reportNewIncomingVoIPPushPayload(payload) { _ in }
     }
 
 }
@@ -130,16 +126,17 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
         contentHandler(mutabaleContent)
     }
 
-    public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
-        guard
-            let accountID = session?.accountIdentifier,
-            let voipPayload = VoIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
-            let payload = voipPayload.asDictionary
-        else {
-            return
-        }
-
-      callEventHandler.reportIncomingVoIPCall(payload)
+    public func reportCallEvent(
+        _ callEvent: CallEventPayload,
+        currentTimestamp: TimeInterval
+    ) {
+        callEventHandler.reportIncomingVoIPCall([
+            "accountID": callEvent.accountID,
+            "conversationID": callEvent.conversationID,
+            "shouldRing": callEvent.shouldRing,
+            "callerName": callEvent.callerName,
+            "hasVideo": callEvent.hasVideo
+        ])
   }
 
   public func notificationSessionDidFailWithError(error: NotificationSessionError) {
