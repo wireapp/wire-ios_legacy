@@ -85,7 +85,6 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         setupViews()
         createStackViewConstraints()
         createConstraints()
-        view.backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
     }
 
     override func viewDidLayoutSubviews() {
@@ -122,6 +121,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         self.collectionView = collectionView
             [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
         CallParticipantsListCellConfiguration.prepare(collectionView)
+        view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
 
 

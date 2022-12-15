@@ -18,7 +18,7 @@
 
 import UIKit
 
-class BottomSheetContainerViewController : UIViewController {
+class BottomSheetContainerViewController: UIViewController {
 
     // MARK: - Configuration
     public struct BottomSheetConfiguration {

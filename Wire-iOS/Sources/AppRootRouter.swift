@@ -458,7 +458,7 @@ extension AppRootRouter {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
         colorScheme.variant = Settings.shared.colorSchemeVariant
-        
+
         UIApplication.shared.windows.forEach { window in
             window.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
         }

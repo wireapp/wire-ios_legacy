@@ -37,7 +37,7 @@ class IncomingCallActionsView: UIView {
     }
 
     private func setupViews() {
-        backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
+        backgroundColor = SemanticColors.View.backgroundDefaultWhite
         horizontalStackView.distribution = .fill
         addSubview(horizontalStackView)
         let springView = UIView()

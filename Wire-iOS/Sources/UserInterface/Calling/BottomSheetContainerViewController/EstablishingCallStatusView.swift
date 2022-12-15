@@ -20,6 +20,8 @@ import UIKit
 import WireCommonComponents
 
 extension CallStatusViewState {
+    typealias CallStatus = L10n.Localizable.Call.Status
+
     var isIncoming: Bool {
         switch self {
         case .ringingIncoming(_): return true
@@ -36,13 +38,13 @@ extension CallStatusViewState {
     var displayString: String {
         switch self {
         case .none: return ""
-        case .connecting: return "call.status.connecting".localized
-        case .ringingIncoming(name: let name?): return "call.status.incoming.user".localized(args: name)
-        case .ringingIncoming(name: nil): return "call.status.incoming".localized
-        case .ringingOutgoing: return "call.status.outgoing".localized
+        case .connecting: return CallStatus.connecting
+        case .ringingIncoming(name: let name?): return CallStatus.Incoming.user("\(name ?? "")")
+        case .ringingIncoming(name: nil): return CallStatus.incoming
+        case .ringingOutgoing: return CallStatus.outgoing
         case .established(duration: let duration): return callDurationFormatter.string(from: duration) ?? ""
-        case .reconnecting: return "call.status.reconnecting".localized
-        case .terminating: return "call.status.terminating".localized
+        case .reconnecting: return CallStatus.reconnecting
+        case .terminating: return CallStatus.terminating
         }
     }
 }

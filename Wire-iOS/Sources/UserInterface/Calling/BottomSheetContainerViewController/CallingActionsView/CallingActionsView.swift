@@ -77,7 +77,7 @@ class CallingActionsView: UIView {
     }
 
     private func setupViews() {
-        backgroundColor = UIColor.from(scheme: .callActionBackground, variant: ColorScheme.default.variant)
+        backgroundColor = SemanticColors.View.backgroundDefaultWhite
         topStackView.distribution = .fillEqually
         topStackView.spacing = 16
         verticalStackView.alignment = .center

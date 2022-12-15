@@ -17,8 +17,8 @@
 
 import SnapshotTesting
 import XCTest
+@testable import WireCommonComponents
 @testable import Wire
-import WireCommonComponents
 
 final class CallInfoViewControllerSnapshotTests: ZMSnapshotTestCase {
 

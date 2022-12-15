@@ -65,11 +65,6 @@ extension UIColor {
     static var iconDark: UIColor = UIColor(rgba: (52, 56, 69, 1))
     static var iconHilighted: UIColor = UIColor(rgba: (159, 161, 167, 1))
     static var iconDarkHilighted: UIColor = UIColor(rgba: (103, 107, 113, 1))
-    static var callIconBackgroundDisabled: UIColor = UIColor(rgba: (237, 239, 240, 1))
-    static var callIconBackgroundDarkDisabled: UIColor = UIColor(rgba: (38, 39, 44, 1))
-    static var callIconBackgroundDark: UIColor = UIColor(rgba: (23, 24, 26, 1))
-    
-
 }
 
 enum ColorSchemeColor: Int {
@@ -127,13 +122,6 @@ enum ColorSchemeColor: Int {
     case textSecurityNotClassified
     case backgroundSecurityNotClassified
     case white
-    case callIconNormal
-    case callIconSelected
-    case callIconDisabled
-    case callIconBackground
-    case callIconBackgroundSelected
-    case callIconBackgroundDisabled
-    case callActionBackground
 
     fileprivate func colorPair(accentColor: UIColor) -> ColorPair {
         switch self {
@@ -247,20 +235,6 @@ enum ColorSchemeColor: Int {
             return ColorPair(light: .graphite, dark: .white)
         case .white:
             return ColorPair(light: .white, dark: .white)
-        case .callIconNormal:
-            return ColorPair(light: .black, dark: .white)
-        case .callIconSelected:
-            return ColorPair(light: .white, dark: .black)
-        case .callIconDisabled:
-            return ColorPair(light: .iconHilighted, dark: .iconDarkHilighted)
-        case .callIconBackground:
-            return ColorPair(light: .white, dark: .callIconBackgroundDark)
-        case .callIconBackgroundSelected:
-            return ColorPair(light: .black, dark: .white)
-        case .callIconBackgroundDisabled:
-            return ColorPair(light: .callIconBackgroundDisabled, dark: .callIconBackgroundDarkDisabled)
-        case .callActionBackground:
-            return ColorPair(light: .white, dark: .black)
         }
     }
 }
