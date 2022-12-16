@@ -26,8 +26,8 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
     private let titleLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
-            color: .textForeground)
-        label.textColor = SemanticColors.Label.textDefault
+            color: SemanticColors.Label.textDefault)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         return label
     }()
@@ -35,8 +35,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
     private let subtitleLabel: UILabel = {
         let valueLabel = DynamicFontLabel(
             fontSpec: .mediumRegularFont,
-            color: .textForeground)
-        valueLabel.textColor = SemanticColors.Label.textDefault
+            color: SemanticColors.Label.textDefault)
         valueLabel.textAlignment = .right
         return valueLabel
     }()
