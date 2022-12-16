@@ -59,7 +59,7 @@ enum PasscodeError: CaseIterable {
     }
 
     var descriptionWithInvalidIcon: NSAttributedString {
-        return description(icon: .circleCross, color: SemanticColors.Icon.backgroundPasswordRuleCheck, font: .smallRegularFont)
+        return description(icon: .circleCross, color: SemanticColors.Icon.backgroundPasswordRuleCheck, font: FontSpec.smallRegularFont.font!)
     }
 
     var descriptionWithPassedIcon: NSAttributedString {

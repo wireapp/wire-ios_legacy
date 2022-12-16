@@ -65,7 +65,7 @@ final class ShareContactsViewController: UIViewController {
 
     private lazy var notNowButton: UIButton = {
         let notNowButton = UIButton(type: .custom)
-        notNowButton.titleLabel?.font = UIFont.smallLightFont
+        notNowButton.titleLabel?.font = FontSpec.smallLightFont.font!
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .normal)
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
         notNowButton.setTitle(RegistrationShareContacts.SkipButton.title.capitalized, for: .normal)

@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 fileprivate extension UIView {
 
@@ -201,7 +202,7 @@ struct HandleChangeState {
 final class ChangeHandleViewController: SettingsBaseTableViewController {
     private typealias HandleChange = L10n.Localizable.Self.Settings.AccountSection.Handle.Change
 
-    var footerFont: UIFont = .smallFont
+    var footerFont: UIFont = FontSpec.smallFont.font!
     var state: HandleChangeState
     private var footerLabel = UILabel()
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
@@ -272,7 +273,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
         let infoText = HandleChange.footer.attributedString && SemanticColors.Label.textSectionFooter
-        let alreadyTakenText = HandleChange.Footer.unavailable && SemanticColors.LegacyColors.vividRed
+        let alreadyTakenText = HandleChange.Footer.unavailable && SemanticColors.Label.textErrorDefault
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont
     }

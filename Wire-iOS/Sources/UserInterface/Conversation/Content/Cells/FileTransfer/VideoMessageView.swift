@@ -41,7 +41,7 @@ final class VideoMessageView: UIView, TransferView {
     private let bottomGradientView = GradientView()
     private let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallLightFont
+        label.font = FontSpec.smallLightFont.font!
 
         return label
     }()

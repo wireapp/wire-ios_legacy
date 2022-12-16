@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import WireCommonComponents
 
 final class TopPeopleCell: UICollectionViewCell {
 
@@ -136,7 +137,7 @@ final class TopPeopleCell: UICollectionViewCell {
     }
 
     private func updateForContext() {
-        nameLabel.font = .smallLightFont
+        nameLabel.font = FontSpec.smallLightFont.font!
         nameLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: .dark)
 
         badgeUserImageView.badgeColor = .white

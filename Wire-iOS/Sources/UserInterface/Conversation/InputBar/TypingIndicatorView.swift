@@ -18,6 +18,7 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 final class AnimatedPenView: UIView {
 
@@ -115,7 +116,7 @@ final class TypingIndicatorView: UIView {
 
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallLightFont
+        label.font = FontSpec.smallLightFont.font!
         label.textColor = SemanticColors.Label.textDefault
 
         return label

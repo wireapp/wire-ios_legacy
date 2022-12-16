@@ -35,7 +35,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
     private var iconStackView: UIStackView!
 
     private let boldFingerprintFont: UIFont = .smallSemiboldFont
-    private let fingerprintFont: UIFont = .smallFont
+    private let fingerprintFont: UIFont = FontSpec.smallFont.font!
 
     private weak var client: UserClientType?
 
@@ -75,7 +75,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
         titleLabel.accessibilityIdentifier = "device_cell.name"
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.font = .smallRegularFont
+        subtitleLabel.font = FontSpec.smallRegularFont.font!
         subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
         subtitleLabel.accessibilityIdentifier = "device_cell.identifier"
 

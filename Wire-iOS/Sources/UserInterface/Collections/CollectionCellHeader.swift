@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 final class CollectionCellHeader: UIView {
     var message: ZMConversationMessage? {
@@ -69,7 +70,7 @@ final class CollectionCellHeader: UIView {
     var dateLabel: UILabel = {
         let label = UILabel()
         label.isAccessibilityElement = false
-        label.font = .smallLightFont
+        label.font = FontSpec.smallLightFont.font!
         label.textColor = .from(scheme: .textDimmed)
 
         return label

@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 class RoundedSegmentedView: UIView {
     typealias ActionHandler = () -> Void
@@ -62,7 +63,7 @@ class RoundedSegmentedView: UIView {
         button.setBackgroundImage(.singlePixelImage(with: .clear), for: .normal)
         button.setBackgroundImage(.singlePixelImage(with: .white), for: .selected)
         button.setTitle(title, for: .normal)
-        button.titleLabel?.font = .smallMediumFont
+        button.titleLabel?.font = FontSpec.smallMediumFont.font!
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         stackView.addArrangedSubview(button)
         buttons.append(button)

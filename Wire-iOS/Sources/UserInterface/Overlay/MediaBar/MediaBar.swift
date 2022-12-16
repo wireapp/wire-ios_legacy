@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class MediaBar: UIView {
     private(set) var titleLabel: UILabel!
@@ -49,7 +50,7 @@ final class MediaBar: UIView {
         titleLabel.textAlignment = .center
         titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.accessibilityIdentifier = "playingMediaTitle"
-        titleLabel.font = UIFont.smallRegularFont
+        titleLabel.font = FontSpec.smallRegularFont.font!
         titleLabel.textColor = UIColor.from(scheme: .textForeground)
 
         contentView.addSubview(titleLabel)

@@ -28,7 +28,7 @@ final class ArticleView: UIView {
     private let titleTextColor: UIColor = .from(scheme: .textForeground)
     private let titleFont: UIFont = .normalSemiboldFont
     private let authorTextColor: UIColor = .from(scheme: .textDimmed)
-    private let authorFont: UIFont = .smallLightFont
+    private let authorFont: UIFont = FontSpec.smallLightFont.font!
     private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
     private let authorHighlightFont = UIFont.smallSemiboldFont
 

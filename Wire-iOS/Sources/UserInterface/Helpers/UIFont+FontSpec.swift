@@ -33,22 +33,6 @@ extension UIFont {
 
     // MARK: - Small
 
-    class var smallFont: UIFont {
-        return FontSpec(.small, .none).font!
-    }
-
-    class var smallLightFont: UIFont {
-        return FontSpec(.small, .light).font!
-    }
-
-    class var smallRegularFont: UIFont {
-        return FontSpec(.small, .regular).font!
-    }
-
-    class var smallMediumFont: UIFont {
-        return FontSpec(.small, .medium).font!
-    }
-
     class var smallSemiboldFont: UIFont {
         return FontSpec(.small, .semibold).font!
     }

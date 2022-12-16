@@ -88,10 +88,12 @@ class BaseMessageRestrictionView: UIView {
     // MARK: - Public
 
     func configure() {
+        let smallLightFont = FontSpec.smallLightFont.font!
+        let smallSemiboldFont = FontSpec.smallSemiboldFont.font!
         iconView.setTemplateIcon(messageType.icon, size: messageType.iconSize)
 
-        let titleString = messageType.title.localizedUppercase && .smallSemiboldFont && .from(scheme: .textForeground)
-        let subtitleString = messageType.subtitle.localizedUppercase && .smallLightFont && .from(scheme: .textDimmed)
+        let titleString = messageType.title.localizedUppercase && smallSemiboldFont && .from(scheme: .textForeground)
+        let subtitleString = messageType.subtitle.localizedUppercase && smallLightFont && .from(scheme: .textDimmed)
         topLabel.attributedText = titleString
         bottomLabel.attributedText = subtitleString
     }

@@ -17,6 +17,7 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 extension ButtonMessageState {
     var localizedName: String {
@@ -45,7 +46,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     private let errorLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallLightFont
+        label.font = FontSpec.smallLightFont.font!
         label.textColor = UIColor.AlarmButton.alarmRed
 
         return label

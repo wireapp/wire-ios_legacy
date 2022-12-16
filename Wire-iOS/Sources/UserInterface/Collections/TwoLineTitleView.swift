@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class TwoLineTitleView: UIView {
 
@@ -30,7 +31,7 @@ final class TwoLineTitleView: UIView {
 
     let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallLightFont
+        label.font = FontSpec.smallLightFont.font!
         label.textColor = .from(scheme: .textForeground)
 
         return label

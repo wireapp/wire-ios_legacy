@@ -19,6 +19,7 @@ import Foundation
 import UIKit
 import WireDataModel
 import WireSyncEngine
+import WireCommonComponents
 
 enum ConversationListState {
     case conversationList
@@ -368,7 +369,7 @@ fileprivate extension NSAttributedString {
 
         let titleAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont.smallMediumFont,
+            NSAttributedString.Key.font: FontSpec.smallMediumFont.font!,
             NSAttributedString.Key.paragraphStyle: paragraphStyle
         ]
 

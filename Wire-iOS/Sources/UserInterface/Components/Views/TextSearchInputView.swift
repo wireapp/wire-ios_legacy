@@ -71,7 +71,7 @@ final class TextSearchInputView: UIView {
         searchInput.font = .normalFont
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
-        placeholderLabel.font = .smallRegularFont
+        placeholderLabel.font = FontSpec.smallRegularFont.font!
         placeholderLabel.applyStyle(.searchBarPlaceholder)
 
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)

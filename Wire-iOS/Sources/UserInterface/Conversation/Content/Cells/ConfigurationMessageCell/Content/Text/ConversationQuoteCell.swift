@@ -196,7 +196,7 @@ final class ConversationReplyContentView: UIView {
         stackView.addArrangedSubview(contentTextView)
 
         restrictionLabel.accessibilityIdentifier = "original.restriction"
-        restrictionLabel.font = .smallLightFont
+        restrictionLabel.font = FontSpec.smallLightFont.font!
         restrictionLabel.textColor = .from(scheme: .textDimmed)
         stackView.addArrangedSubview(restrictionLabel)
 

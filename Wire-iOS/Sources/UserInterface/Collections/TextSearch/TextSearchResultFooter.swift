@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 import UIKit
+import WireCommonComponents
 
 final class TextSearchResultFooter: UIView {
     var message: ZMConversationMessage? {
@@ -70,7 +71,7 @@ final class TextSearchResultFooter: UIView {
 
     var dateLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallLightFont
+        label.font = FontSpec.smallLightFont.font!
         label.textColor = .from(scheme: .textDimmed)
 
         return label

@@ -45,8 +45,8 @@ final class FileTransferView: UIView, TransferView {
 
     private let labelTextColor: UIColor = .from(scheme: .textForeground)
     private let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    private let labelFont: UIFont = .smallLightFont
-    private let labelBoldFont: UIFont = .smallSemiboldFont
+    private let labelFont: UIFont = FontSpec.smallLightFont.font!
+    private let labelBoldFont: UIFont = FontSpec.smallSemiboldFont.font!
 
     private var allViews: [UIView] = []
 
