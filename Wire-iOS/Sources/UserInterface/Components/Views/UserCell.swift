@@ -33,11 +33,14 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var hidesSubtitle: Bool = false
     typealias IconColors = SemanticColors.Icon
+    typealias LabelColors = SemanticColors.Label
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
-    let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
-    let subtitleLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: .sectionText)
+    let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont,
+                                      color: LabelColors.textDefault)
+    let subtitleLabel = DynamicFontLabel(fontSpec: .smallRegularFont,
+                                         color: LabelColors.textCellSubtitle)
     let connectButton = IconButton()
     let accessoryIconView = UIImageView()
     let userTypeIconView = IconImageView()
@@ -144,11 +147,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.accessibilityIdentifier = "user_cell.name"
-        titleLabel.applyStyle(.primaryCellLabel)
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
-        subtitleLabel.applyStyle(.secondaryCellLabel)
 
         avatar.userSession = ZMUserSession.shared()
         avatar.initialsFont = .avatarInitial

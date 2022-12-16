@@ -25,11 +25,16 @@ import WireCommonComponents
 class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
 
     // MARK: - Properties
-    let nameLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color: .textForeground)
-    let labelLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .textForeground)
+    typealias LabelColors = SemanticColors.Label
+
+    let nameLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont,
+                                     color: LabelColors.textDefault)
+    let labelLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont,
+                                      color: LabelColors.textDefault)
     let activationLabel = UILabel(frame: CGRect.zero)
     let fingerprintLabel = UILabel(frame: CGRect.zero)
-    let verifiedLabel = DynamicFontLabel(fontSpec: .smallFont, color: .textForeground)
+    let verifiedLabel = DynamicFontLabel(fontSpec: .smallFont,
+                                         color: LabelColors.textDefault)
 
     private let activationLabelFont = FontSpec.smallLightFont
     private let activationLabelDateFont = FontSpec.smallSemiboldFont
@@ -113,6 +118,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
 
     // MARK: - Methods
     func setupStyle() {
+        let textColor = SemanticColors.Label.textDefault
         nameLabel.accessibilityIdentifier = "device name"
         labelLabel.accessibilityIdentifier = "device label"
         activationLabel.accessibilityIdentifier = "device activation date"
@@ -120,14 +126,14 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         verifiedLabel.accessibilityIdentifier = "device verification status"
 
         activationLabel.numberOfLines = 0
-        backgroundColor = SemanticColors.View.backgroundUserCell
+        activationLabel.textColor = textColor
 
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
-        let textColor = SemanticColors.Label.textDefault
-
         fingerprintTextColor = textColor
-        [nameLabel, labelLabel, verifiedLabel, activationLabel].forEach { $0.textColor = textColor}
+
+        backgroundColor = SemanticColors.View.backgroundUserCell
+
         addBorder(for: .bottom)
     }
 

@@ -45,27 +45,26 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase, CoreDataFixtu
         super.tearDown()
     }
 
-    func prepareSut(variant: ColorSchemeVariant?) {
-        sut = SettingsClientViewController(userClient: client, variant: variant)
-
+    func prepareSut(mode: UIUserInterfaceStyle = .light) {
+        sut = SettingsClientViewController(userClient: client)
+        sut.overrideUserInterfaceStyle = mode
         sut.isLoadingViewVisible = false
     }
 
     func testForLightTheme() {
-        prepareSut(variant: .light)
+        prepareSut()
 
         verify(matching: sut)
     }
 
     func testForDarkTheme() {
-        prepareSut(variant: .dark)
-        sut.overrideUserInterfaceStyle = .dark
+        prepareSut(mode: .dark)
 
         verify(matching: sut)
     }
 
     func testForLightThemeWrappedInNavigationController() {
-        prepareSut(variant: .light)
+        prepareSut()
         let navWrapperController = sut.wrapInNavigationController()
 
         verify(matching: navWrapperController)

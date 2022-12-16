@@ -47,8 +47,7 @@ class SettingsTableCell: SettingsTableCellProtocol {
     let cellNameLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
-            color: .textForeground)
-        label.textColor = SemanticColors.Label.textDefault
+            color: SemanticColors.Label.textDefault)
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -76,10 +75,9 @@ class SettingsTableCell: SettingsTableCellProtocol {
     }()
 
     private let badgeLabel: UILabel = {
-        let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont, color: .textInBadge)
+        let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont,
+                                          color: SemanticColors.Label.textDefaultWhite)
         badgeLabel.textAlignment = .center
-        badgeLabel.textColor = SemanticColors.Label.textDefaultWhite
-
         return badgeLabel
     }()
 
