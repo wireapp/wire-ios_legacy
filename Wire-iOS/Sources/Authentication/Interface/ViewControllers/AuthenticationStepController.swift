@@ -25,6 +25,8 @@ import WireCommonComponents
 
 class AuthenticationStepController: AuthenticationStepViewController {
 
+    typealias LabelColors = SemanticColors.Label
+
     /// The step to display.
     let stepDescription: AuthenticationStepDescription
 
@@ -137,7 +139,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     private func createViews() {
         let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
-        let labelColor = SemanticColors.Label.textDefault
+        let labelColor = LabelColors.textDefault
 
         headlineLabel = DynamicFontLabel(fontSpec: .largeLightWithTextStyleFont, color: .textForeground)
         headlineLabelContainer = ContentInsetView(headlineLabel, inset: textPadding)
@@ -411,7 +413,7 @@ extension AuthenticationStepController {
         case .info(let infoText)?:
             errorLabel.accessibilityIdentifier = "validation-rules"
             errorLabel.text = infoText
-            errorLabel.textColor = UIColor.Team.placeholderColor
+            errorLabel.textColor = LabelColors.textPasswordRulesCheck
             errorLabelContainer.isHidden = false
             showSecondaryView(for: nil)
 
@@ -424,7 +426,7 @@ extension AuthenticationStepController {
 
             errorLabel.accessibilityIdentifier = "validation-failure"
             errorLabel.text = error.errorDescription
-            errorLabel.textColor = UIColor.from(scheme: .errorIndicator, variant: .light)
+            errorLabel.textColor = LabelColors.textErrorDefault
             errorLabelContainer.isHidden = false
             showSecondaryView(for: error)
 

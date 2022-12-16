@@ -52,7 +52,7 @@ extension AppLockModule.View {
         private let blurView = UIVisualEffectView.blurView()
 
         private let messageLabel: UILabel = {
-            let label = DynamicFontLabel(fontSpec: .largeRegularFont, color: SemanticColors.Label.textWhite)
+            let label = DynamicFontLabel(fontSpec: .largeRegularFont, color: SemanticColors.Label.textDefaultWhite)
             return label
         }()
 
