@@ -56,16 +56,18 @@ final class PasscodeSetupViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testForInitStateInDarkTheme() {
-        sut = PasscodeSetupViewController(variant: .dark, useCompactLayout: false,
+        sut = PasscodeSetupViewController(useCompactLayout: false,
                                           context: .createPasscode,
                                           callback: nil)
+        sut.overrideUserInterfaceStyle = .dark
         verify(matching: sut)
     }
 
     func testForInitStateInDarkTheme_ifForcedApplock() {
-        sut = PasscodeSetupViewController(variant: .dark, useCompactLayout: false,
+        sut = PasscodeSetupViewController(useCompactLayout: false,
                                           context: .forcedForTeam,
                                           callback: nil)
+        sut.overrideUserInterfaceStyle = .dark
         verify(matching: sut)
     }
 

@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 import WireSyncEngine
 
 private var ZM_UNUSED = "UI"
@@ -77,6 +78,26 @@ extension UIColor {
 
     class func accent() -> UIColor {
         return UIColor(fromZMAccentColor: indexedAccentColor())
+    }
+
+    class func lowAccentColor() -> UIColor {
+        let safeAccentColor = AccentColor(ZMAccentColor: indexedAccentColor()) ?? .blue
+        switch safeAccentColor {
+        case .blue:
+            return SemanticColors.View.backgroundBlue
+        case .red:
+            return SemanticColors.View.backgroundRed
+        case .green:
+            return SemanticColors.View.backgroundGreen
+        case .yellow:
+            return SemanticColors.View.backgroundAmber
+        case .amber:
+            return SemanticColors.View.backgroundAmber
+        case .turquoise:
+            return SemanticColors.View.backgroundTurqoise
+        case .purple:
+            return SemanticColors.View.backgroundPurple
+        }
     }
 
     static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {

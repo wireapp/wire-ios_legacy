@@ -27,6 +27,10 @@ final class ConversationInputBarButtonState {
         return hasText || (disableSendButton == false && !markingDown)
     }
 
+    var sendButtonHidden: Bool {
+        return editing
+    }
+
     var hourglassButtonHidden: Bool {
         return hasText || editing || ephemeral || isEphemeralSendingDisabled
     }

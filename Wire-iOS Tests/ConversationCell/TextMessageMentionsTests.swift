@@ -92,7 +92,7 @@ final class TextMessageMentionsTests: XCTestCase {
         let mention1 = Mention(range: NSRange(location: 6, length: 17), user: selfUser)
         let mention2 = Mention(range: NSRange(location: 26, length: 28), user: otherUser)
 
-        /// The emoji 🀄︎ may be rendered on its corner on differnt versions of iOS, set tolerance to 0.01
+        // The emoji 🀄︎ may be rendered on its corner on differnt versions of iOS, set tolerance to 0.01
         verify(message: createMessage(messageText: messageText, mentions: [mention1, mention2]))
     }
 

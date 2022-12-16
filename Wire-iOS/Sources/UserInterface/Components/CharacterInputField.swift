@@ -32,6 +32,9 @@ protocol TextContainer: AnyObject {
 /// Custom input field implementation. Allows entering the characters from @c characterSet up to @c maxLength characters
 /// Allows pasting the text.
 final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
+
+    typealias ViewColors = SemanticColors.View
+
     fileprivate var storage = String() {
         didSet {
             if storage.count > maxLength {
@@ -117,9 +120,11 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
             super.init(frame: .zero)
 
             layer.cornerRadius = 4
-            backgroundColor = .white
+            layer.borderColor = ViewColors.borderCharacterInputField.cgColor
+            backgroundColor = ViewColors.backgroundUserCell
 
             label.font = UIFont.systemFont(ofSize: 32)
+            label.textColor = SemanticColors.Label.textDefault
             addSubview(label)
 
             createConstraints()
@@ -161,10 +166,12 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         self.isAccessibilityElement = true
         self.shouldGroupAccessibilityChildren = true
 
-        accessibilityHint = "verification.code_hint".localized
+        accessibilityHint = L10n.Localizable.Verification.codeHint
 
         accessibilityCustomActions = [
-            UIAccessibilityCustomAction(name: "general.paste".localized, target: self, selector: #selector(UIResponderStandardEditActions.paste))
+            UIAccessibilityCustomAction(name: L10n.Localizable.General.paste,
+                                        target: self,
+                                        selector: #selector(UIResponderStandardEditActions.paste))
         ]
 
         stackView.spacing = 8
@@ -177,7 +184,8 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
         createConstraints()
 
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self,
+                                                                      action: #selector(onLongPress(_:)))
         addGestureRecognizer(longPressGestureRecognizer)
 
         storage = String()
@@ -223,6 +231,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.becomeFirstResponder()
+        self.layer.borderColor = ViewColors.borderCharacterInputFieldEnabled.cgColor
     }
 
     override func accessibilityActivate() -> Bool {
@@ -293,6 +302,8 @@ extension CharacterInputField: UIKeyInput {
         notifyingDelegate {
             self.storage.append(String(allowedChars))
         }
+
+        layer.borderColor = ViewColors.borderCharacterInputFieldEnabled.cgColor
     }
 
     func deleteBackward() {

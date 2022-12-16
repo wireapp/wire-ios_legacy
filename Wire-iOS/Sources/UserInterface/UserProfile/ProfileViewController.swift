@@ -208,7 +208,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupProfileDetailsViewController() -> ProfileDetailsViewController {
-        /// TODO: pass the whole view Model/stuct/context
+        // TODO: Pass the whole view Model/stuct/context
         let profileDetailsViewController = ProfileDetailsViewController(user: viewModel.user,
                                                                         viewer: viewModel.viewer,
                                                                         conversation: viewModel.conversation,
@@ -317,7 +317,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
                                     footerView: ProfileFooterView) -> UIAlertAction {
         return UIAlertAction(title: action.buttonText,
                              style: .default) { _ in
-                                self.performAction(action, targetView: footerView)
+            self.performAction(action, targetView: footerView)
         }
     }
 
@@ -334,9 +334,11 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         case .deleteContents:
             presentDeleteConfirmationPrompt(from: targetView)
         case let .block(isBlocked):
-            isBlocked
-                ? handleBlockAndUnblock()
-                : presentBlockActionSheet(from: targetView)
+            if isBlocked {
+                handleBlockAndUnblock()
+            } else {
+                presentBlockActionSheet(from: targetView)
+            }
         case .openOneToOne:
             viewModel.openOneToOneConversation()
         case .removeFromGroup:
@@ -351,7 +353,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
 
     private func openSelfProfile() {
-        /// do not reveal list view for iPad regular mode
+        // Do not reveal list view for iPad regular mode
         let leftViewControllerRevealed: Bool
         if let presentingViewController = presentingViewController {
             leftViewControllerRevealed = !presentingViewController.isIPadRegular(device: UIDevice.current)
@@ -503,7 +505,7 @@ extension ProfileViewController: ProfileViewControllerViewModelDelegate {
         let legalHoldItem: UIBarButtonItem? = viewModel.hasLegalHoldItem ? legalholdItem : nil
 
         if navigationController?.viewControllers.count == 1 {
-            navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+            navigationItem.rightBarButtonItem = navigationController?.closeItem()
             navigationItem.leftBarButtonItem = legalHoldItem
         } else {
             navigationItem.rightBarButtonItem = legalHoldItem

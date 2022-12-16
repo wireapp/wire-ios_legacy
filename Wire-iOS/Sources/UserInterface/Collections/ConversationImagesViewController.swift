@@ -109,6 +109,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.PictureView.CloseButton.description
 
         if let navigationBar = navigationController?.navigationBar {
             navigationBar.isTranslucent = true
@@ -262,7 +263,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
             let shareButton = IconButton(style: .default)
             shareButton.setIcon(.export, size: .tiny, for: .normal)
-            shareButton.accessibilityLabel = "share"
+            shareButton.accessibilityLabel = L10n.Accessibility.MessageAction.ShareButton.description
             shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
             self.shareButton = shareButton
 
@@ -332,6 +333,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             return
         }
         navigationItem.titleView = TwoLineTitleView(first: (sender.name ?? "").localizedUppercase, second: serverTimestamp.formattedDate)
+        navigationItem.titleView?.accessibilityTraits = .header
+        navigationItem.titleView?.accessibilityLabel = "\(sender.name ?? ""), \(serverTimestamp.formattedDate)"
     }
 
     private func updateButtonsForMessage() {

@@ -31,6 +31,99 @@
 "conversation.legalHoldIcon.description" = "Legal hold";
 "conversation.verifiedIcon.description" = "検証する";
 
+"conversation.sendButton.description" = "Send this message";
+"conversation.openFormattingButton.description" = "Open formatting options";
+"conversation.hideFormattingButton.description" = "Hide formatting options";
+"conversation.timerButton.description" = "Set a timer for self-deleting messages";
+"conversation.mentionButton.description" = "Mention someone";
+"conversation.cameraButton.description" = "Take or select a photo";
+"conversation.sketchButton.description" = "Open sketch to draw or write";
+"conversation.gifButton.description" = "Select a GIF";
+"conversation.audioButton.description" = "Record an audio message";
+"conversation.pingButton.description" = "Send a ping";
+"conversation.uploadFileButton.description" = "Share a file";
+"conversation.locationButton.description" = "Share your location";
+"conversation.videoButton.description" = "ビデオを録画";
+"conversation.moreButton.description" = "Open more messaging options";
+"conversation.emphemeralButton.description" = "Set a timer for self-deleting messages";
+"conversation.timerForSelfDeletingMessagesSeconds.value" = "%@ seconds";
+"conversation.timerForSelfDeletingMessagesMinutes.value" = "%@ minutes";
+"conversation.timerForSelfDeletingMessagesHour.value" = "%@ hour";
+"conversation.timerForSelfDeletingMessagesDay.value" = "%@ day";
+"conversation.timerForSelfDeletingMessagesWeek.value" = "%@ week";
+"conversation.timerForSelfDeletingMessagesWeeks.value" = "%@ weeks";
+
+"conversation.headerButton.description" = "Use a heading";
+"conversation.boldButton.description" = "Use bolded text";
+"conversation.italicButton.description" = "Use italic text";
+"conversation.numberListButton.description" = "Use number list";
+"conversation.bulletListButton.description" = "Use bullet list";
+"conversation.codeButton.description" = "Use code format";
+"conversation.messageInfo.hint" = "Double tap to hide or show message info";
+"conversation.messageOptions.hint" = "Triple tap to open messaging options";
+
+"conversationSearch.closeButton.description" = "Close search";
+"conversationSearch.backButton.description" = "Go back to search";
+"conversationSearch.imagesSection.description" = "Pictures in this conversation";
+"conversationSearch.filesSection.description" = "Files in this conversation";
+"conversationSearch.videosSection.description" = "Videos in this conversation";
+"conversationSearch.linksSection.description" = "Links in this conversation";
+"conversationSearch.section.hint" = "Double tap to open all";
+"conversationSearch.emptyResult.description" = "見つかりませんでした";
+"conversationSearch.noItems.description" = "コレクションにアイテムがありません。";
+"conversationSearch.imageMessage.description" = "画像";
+"conversationSearch.videoMessage.description" = "ビデオメッセージ";
+"conversationSearch.audioMessage.description" = "音声メッセージ";
+"conversationSearch.linkMessage.description" = "リンク";
+"conversationSearch.sentBy.description" = "Sent by %@";
+"conversationSearch.fileName.description" = "File name";
+"conversationSearch.fileSize.description" = "Size";
+"conversationSearch.fileType.description" = "Type";
+
+"conversationSearch.item.hint" = "Double tap to open";
+"conversationSearch.itemPlay.hint" = "Double tap to play";
+
+"audioRecord.stopButton.description" = "録音停止";
+"audioRecord.startButton.description" = "録音開始";
+"audioRecord.startButton.hint" = "Double tap to record";
+"audioRecord.sendButton.description" = "送信";
+"audioRecord.cancelButton.description" = "Delete audio recording";
+"audioRecord.redoButton.description" = "Redo audio recording";
+"audioRecord.normalEffectButton.description" = "Normal";
+"audioRecord.heliumEffectButton.description" = "Helium";
+"audioRecord.deepVoiceEffectButton.description" = "Deep voice";
+"audioRecord.quickEffectButton.description" = "Quick";
+"audioRecord.hallEffectButton.description" = "Hall effect";
+"audioRecord.alienEffectButton.description" = "Alien";
+"audioRecord.roboticEffectButton.description" = "Robotic";
+"audioRecord.highToDeepEffectButton.description" = "High to deep";
+
+"createConversation.backButton.description" = "Go back to contact list";
+
+"pictureView.closeButton.description" = "Close picture view";
+
+"messageAction.unlikeButton.description" = "Unlike the picture";
+"messageAction.likeButton.description" = "Like the picture";
+"messageAction.shareButton.description" = "Share picture";
+"messageAction.sketchButton.description" = "Sketch over picture";
+"messageAction.emojiButton.description" = "Sketch emoji over picture";
+"messageAction.copyButton.description" = "Copy picture";
+"messageAction.moreButton.description" = "Open more messaging options";
+"messageAction.saveButton.description" = "Save picture";
+"messageAction.revealButton.description" = "Reveal in conversation";
+"messageAction.deleteButton.description" = "Delete picture";
+
+"audioMessage.pause.value" = "Pause";
+"audioMessage.play.value" = "Play";
+
+"sketch.selectPictureButton.description" = "Select picture";
+"sketch.drawButton.description" = "Draw or write";
+"sketch.drawButton.hint" = "Double tap to enable or disable";
+"sketch.selectEmojiButton.description" = "Select emoji";
+"sketch.sendButton.description" = "送信";
+"sketch.undoButton.description" = "Undo last step";
+"sketch.closeButton.description" = "Close sketch";
+
 "conversationDetails.messageTimeoutState.description" = "Selected";
 "selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
 "notificationConversationSettings.closeButton.description" = "Close notification settings";
@@ -75,6 +168,7 @@
 "clientsList.keyFingerprint.description" = "Key fingerprint";
 "clientsList.deviceVerified.description" = "検証する";
 "clientsList.deviceNotVerified.description" = "未確認";
+"clientsList.backButton.description" = "Go back to device list";
 
 "deviceDetails.whyVerifyFingerprint.hint" = "Double tap to learn more about verifications";
 "deviceDetails.howToVerifyFingerprint.hint" = "Learn more about fingerprint verification";
@@ -117,7 +211,7 @@
 "conversationsList.contactsBottomBar.hint" = "Double tap to search for people and open contact list";
 "conversationsList.recentBottomBar.description" = "会話";
 "conversationsList.recentBottomBar.hint" = "Double tap to open list of recent conversations";
-"conversationsList.folderBottomBar.description" = "Folders";
+"conversationsList.folderBottomBar.description" = "フォルダ";
 "conversationsList.folderBottomBar.hint" = "Double tap to open list of conversations organized in folders";
 "conversationsList.archiveBottomBar.description" = "アーカイブ";
 "conversationsList.archiveBottomBar.hint" = "Double tap to open list of archived conversations";

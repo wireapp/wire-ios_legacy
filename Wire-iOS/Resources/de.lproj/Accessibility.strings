@@ -31,6 +31,99 @@
 "conversation.legalHoldIcon.description" = "Gesetzliche Aufbewahrung";
 "conversation.verifiedIcon.description" = "Überprüft";
 
+"conversation.sendButton.description" = "Diese Nachricht senden";
+"conversation.openFormattingButton.description" = "Formatierungsoptionen öffnen";
+"conversation.hideFormattingButton.description" = "Formatierungsoptionen ausblenden";
+"conversation.timerButton.description" = "Timer für selbstlöschende Nachrichten festlegen";
+"conversation.mentionButton.description" = "Jemanden erwähnen";
+"conversation.cameraButton.description" = "Foto aufnehmen oder auswählen";
+"conversation.sketchButton.description" = "Skizze zum Zeichnen oder Schreiben öffnen";
+"conversation.gifButton.description" = "Ein GIF auswählen";
+"conversation.audioButton.description" = "Audionachricht aufnehmen";
+"conversation.pingButton.description" = "Ping senden";
+"conversation.uploadFileButton.description" = "Datei teilen";
+"conversation.locationButton.description" = "Standort teilen";
+"conversation.videoButton.description" = "Video aufnehmen";
+"conversation.moreButton.description" = "Weitere Nachrichtenoptionen öffnen";
+"conversation.emphemeralButton.description" = "Timer für selbstlöschende Nachrichten festlegen";
+"conversation.timerForSelfDeletingMessagesSeconds.value" = "%@ Sekunden";
+"conversation.timerForSelfDeletingMessagesMinutes.value" = "%@ Minuten";
+"conversation.timerForSelfDeletingMessagesHour.value" = "%@ Stunde";
+"conversation.timerForSelfDeletingMessagesDay.value" = "%@ Tag";
+"conversation.timerForSelfDeletingMessagesWeek.value" = "%@ Woche";
+"conversation.timerForSelfDeletingMessagesWeeks.value" = "%@ Wochen";
+
+"conversation.headerButton.description" = "Überschrift benutzen";
+"conversation.boldButton.description" = "Fettdruck benutzen";
+"conversation.italicButton.description" = "Kursivdruck benutzen";
+"conversation.numberListButton.description" = "Nummerierte Liste benutzen";
+"conversation.bulletListButton.description" = "Aufzählungsliste benutzen";
+"conversation.codeButton.description" = "Code-Format benutzen";
+"conversation.messageInfo.hint" = "Doppeltippen, um Nachrichteninformationen ein- oder auszublenden";
+"conversation.messageOptions.hint" = "Dreifach tippen, um Nachrichtenoptionen zu öffnen";
+
+"conversationSearch.closeButton.description" = "Suche schließen";
+"conversationSearch.backButton.description" = "Zurück zur Suche";
+"conversationSearch.imagesSection.description" = "Bilder in dieser Unterhaltung";
+"conversationSearch.filesSection.description" = "Dateien in dieser Unterhaltung";
+"conversationSearch.videosSection.description" = "Videos in dieser Unterhaltung";
+"conversationSearch.linksSection.description" = "Links in dieser Unterhaltung";
+"conversationSearch.section.hint" = "Doppeltippen, um alle zu öffnen";
+"conversationSearch.emptyResult.description" = "Keine Ergebnisse";
+"conversationSearch.noItems.description" = "Keine Elemente in dieser Sammlung";
+"conversationSearch.imageMessage.description" = "Bild";
+"conversationSearch.videoMessage.description" = "Videonachricht";
+"conversationSearch.audioMessage.description" = "Audionachricht";
+"conversationSearch.linkMessage.description" = "Link";
+"conversationSearch.sentBy.description" = "Gesendet von %@";
+"conversationSearch.fileName.description" = "Dateiname";
+"conversationSearch.fileSize.description" = "Größe";
+"conversationSearch.fileType.description" = "Typ";
+
+"conversationSearch.item.hint" = "Zum Öffnen doppeltippen";
+"conversationSearch.itemPlay.hint" = "Doppeltippen zum Abspielen";
+
+"audioRecord.stopButton.description" = "Aufnahme stoppen";
+"audioRecord.startButton.description" = "Aufnahme starten";
+"audioRecord.startButton.hint" = "Doppeltippen zum Aufnehmen";
+"audioRecord.sendButton.description" = "Senden";
+"audioRecord.cancelButton.description" = "Audio-Aufnahme löschen";
+"audioRecord.redoButton.description" = "Audio-Aufnahme wiederholen";
+"audioRecord.normalEffectButton.description" = "Normal";
+"audioRecord.heliumEffectButton.description" = "Helium";
+"audioRecord.deepVoiceEffectButton.description" = "Tiefe Stimme";
+"audioRecord.quickEffectButton.description" = "Schnell";
+"audioRecord.hallEffectButton.description" = "Hall-Effekt";
+"audioRecord.alienEffectButton.description" = "Alien";
+"audioRecord.roboticEffectButton.description" = "Robotik";
+"audioRecord.highToDeepEffectButton.description" = "Hoch bis tief";
+
+"createConversation.backButton.description" = "Zurück zur Kontaktliste";
+
+"pictureView.closeButton.description" = "Bildansicht schließen";
+
+"messageAction.unlikeButton.description" = "Bild gefällt mit nicht";
+"messageAction.likeButton.description" = "Bild gefällt mir";
+"messageAction.shareButton.description" = "Bild teilen";
+"messageAction.sketchButton.description" = "Über das Bild skizzieren";
+"messageAction.emojiButton.description" = "Emoji zum Bild hinzufügen";
+"messageAction.copyButton.description" = "Bild kopieren";
+"messageAction.moreButton.description" = "Weitere Nachrichtenoptionen öffnen";
+"messageAction.saveButton.description" = "Bild speichern";
+"messageAction.revealButton.description" = "In Unterhaltung anzeigen";
+"messageAction.deleteButton.description" = "Bild löschen";
+
+"audioMessage.pause.value" = "Pause";
+"audioMessage.play.value" = "Wiedergabe";
+
+"sketch.selectPictureButton.description" = "Bild auswählen";
+"sketch.drawButton.description" = "Zeichnen oder schreiben";
+"sketch.drawButton.hint" = " Zum Aktivieren oder Deaktivieren doppeltippen";
+"sketch.selectEmojiButton.description" = "Emoji auswählen";
+"sketch.sendButton.description" = "Senden";
+"sketch.undoButton.description" = "Letzten Schritt rückgängig machen";
+"sketch.closeButton.description" = "Skizze schließen";
+
 "conversationDetails.messageTimeoutState.description" = "Ausgewählt";
 "selfDeletingMessagesConversationSettings.closeButton.description" = "Einstellungen für selbstlöschende Nachrichten schließen";
 "notificationConversationSettings.closeButton.description" = "Benachrichtigungseinstellungen schließen";
@@ -75,6 +168,7 @@
 "clientsList.keyFingerprint.description" = "Schlüssel-Fingerabdruck";
 "clientsList.deviceVerified.description" = "Überprüft";
 "clientsList.deviceNotVerified.description" = "Nicht überprüft";
+"clientsList.backButton.description" = "Zurück zur Geräteliste";
 
 "deviceDetails.whyVerifyFingerprint.hint" = "Doppeltippen, um mehr über Verifizierungen zu erfahren";
 "deviceDetails.howToVerifyFingerprint.hint" = "Erfahren Sie mehr über die Überprüfung von Fingerabdrücken";

@@ -242,7 +242,7 @@ final class ConversationCreationController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: SemanticColors.Label.textDefault)
 
         if navigationController?.viewControllers.count ?? 0 <= 1 {
-            navigationItem.leftBarButtonItem = navigationController?.updatedCloseItem()
+            navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
 
         let nextButtonItem = UIBarButtonItem(title: L10n.Localizable.General.next.capitalized, style: .plain, target: self, action: #selector(tryToProceed))
@@ -266,7 +266,7 @@ final class ConversationCreationController: UIViewController {
                 values.participants = parts
             }
 
-            let participantsController = AddParticipantsViewController(context: .create(values), variant: colorSchemeVariant)
+            let participantsController = AddParticipantsViewController(context: .create(values))
             participantsController.conversationCreationDelegate = self
             navigationController?.pushViewController(participantsController, animated: true)
         }
