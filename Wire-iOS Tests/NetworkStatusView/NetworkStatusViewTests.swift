@@ -78,6 +78,7 @@ final class NetworkStatusViewSnapShotTests: ZMSnapshotTestCase {
         mockContainer = MockContainer()
         sut = NetworkStatusView()
         sut.overrideUserInterfaceStyle = .light
+        sut.backgroundColor = .clear
         sut.delegate = mockContainer
     }
 
