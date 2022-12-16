@@ -218,7 +218,8 @@ final class CollectionsViewController: UIViewController {
     private func reloadData() {
         UIView.performWithoutAnimation {
             contentView.collectionView.performBatchUpdates({
-                for section in [CollectionsSectionSet.images, CollectionsSectionSet.videos] where numberOfElements(for: section) != 0 {
+                for section in [CollectionsSectionSet.images, CollectionsSectionSet.videos]
+                where numberOfElements(for: section) != 0 {
                     contentView.collectionView.reloadSections(IndexSet(integer: (CollectionsSectionSet.visible.firstIndex(of: section))!))
                 }
             }, completion: { _ in
