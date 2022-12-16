@@ -115,7 +115,7 @@ private extension MessageDestructionTimeoutValue {
     var accessibilityValue: String? {
         typealias Conversation = L10n.Accessibility.Conversation
 
-        guard 
+        guard
            self != .none,
            let timeoutValue = shortDisplayString
         else {

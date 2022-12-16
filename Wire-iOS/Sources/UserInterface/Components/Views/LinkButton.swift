@@ -24,7 +24,7 @@ final class LinkButton: DynamicFontButton {
     func setup(title: String) {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: FontSpec.normalRegularFont.font!,
-            .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabledDefault,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
 

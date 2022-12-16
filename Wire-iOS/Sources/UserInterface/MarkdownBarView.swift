@@ -68,10 +68,10 @@ final class MarkdownBarView: UIView {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
 
-    private func setupViews() {
+     func setupViews() {
 
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
+         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: buttonMargin, bottom: 0, right: buttonMargin)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -113,12 +113,22 @@ final class MarkdownBarView: UIView {
 
         addSubview(stackView)
 
+         let buttonMaxWidth = 100
+         let stackViewMaxWidth = CGFloat(buttonMaxWidth * buttons.count)
+
+         let stackViewWidth = stackView.widthAnchor.constraint(lessThanOrEqualToConstant: stackViewMaxWidth)
+         stackViewWidth.priority = .defaultHigh
+
+         let stackViewTrailingConstraint = stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
+         stackViewTrailingConstraint.priority = .defaultLow
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           stackView.topAnchor.constraint(equalTo: topAnchor),
           stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-          stackView.leftAnchor.constraint(equalTo: leftAnchor),
-          stackView.rightAnchor.constraint(equalTo: rightAnchor)
+          stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+          stackViewWidth,
+          stackViewTrailingConstraint
         ])
 
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]

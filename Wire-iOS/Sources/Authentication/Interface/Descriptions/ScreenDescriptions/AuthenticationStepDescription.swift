@@ -21,6 +21,8 @@ import UIKit
 
 typealias AuthenticationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
 
+typealias AuthenticationFooterViewDescription = FooterViewDescription & AuthenticationActionable
+
 typealias ValueSubmitted = (Any) -> Void
 typealias ValueValidated = (ValueValidation?) -> Void
 
@@ -50,6 +52,7 @@ protocol AuthenticationStepDescription {
     var headline: String { get }
     var subtext: String? { get }
     var secondaryView: AuthenticationSecondaryViewDescription? { get }
+    var footerView: AuthenticationFooterViewDescription? { get }
     func shouldSkipFromNavigation() -> Bool
 }
 

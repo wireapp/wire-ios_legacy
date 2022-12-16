@@ -87,6 +87,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
 
         navigationItem.setupNavigationBarTitle(title: L10n.Localizable.GroupDetails.GuestOptionsCell.title.capitalized)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ConversationDetails.CloseButton.description
         navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
 
     }

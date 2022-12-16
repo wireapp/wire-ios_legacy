@@ -322,8 +322,8 @@ extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
 
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool {
         do {
-            /// We validate the new handle and only allow the edit if
-            /// the new handle neither contains invalid characters nor is too long.
+            // We validate the new handle and only allow the edit if
+            // the new handle neither contains invalid characters nor is too long.
             try state.validate(text)
             return true
         } catch HandleChangeState.ValidationError.invalidCharacter {

@@ -110,5 +110,4 @@ extension UIFont {
     class var largeSemiboldFont: UIFont {
         return FontSpec(.large, .semibold).font!
     }
-
 }

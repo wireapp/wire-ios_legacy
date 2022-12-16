@@ -111,7 +111,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
 
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        /// if there are more than one request, reduce the cell height to give user a hint
+        // If there are more than one request, reduce the cell height to give user a hint
 
         let inset: CGFloat = connectionRequests.count > 1 ? 48 : 0
 
@@ -126,7 +126,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
 
     private func configureCell(_ cell: ConnectRequestCell, for indexPath: IndexPath) {
-        /// get the user in reversed order, newer request is shown on top
+        // Get the user in reversed order, newer request is shown on top
         let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)]
 
         let user = request.connectedUserType

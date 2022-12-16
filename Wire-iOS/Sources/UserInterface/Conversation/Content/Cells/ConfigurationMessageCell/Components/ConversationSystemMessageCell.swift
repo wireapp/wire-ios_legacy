@@ -74,6 +74,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         imageView.image = object.icon
         imageView.isAccessibilityElement = false
         selectedUsers = object.selectedUsers
+        accessibilityLabel = object.title?.string
     }
 
 }
@@ -106,7 +107,7 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
         warningLabel.numberOfLines = 0
         warningLabel.isAccessibilityElement = true
         warningLabel.font = FontSpec(.small, .regular).font
-        warningLabel.textColor = SemanticColors.Label.textWarning
+        warningLabel.textColor = SemanticColors.Label.textErrorDefault
         bottomContentView.addSubview(warningLabel)
     }
 

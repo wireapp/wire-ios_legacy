@@ -26,7 +26,7 @@ final class ValidatedTextFieldTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = ValidatedTextField()
+        sut = ValidatedTextField(style: .default)
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
     }
 
@@ -75,16 +75,4 @@ final class ValidatedTextFieldTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testThatItShowsGuidanceDot() {
-        // GIVEN
-        sut.kind = .password(isNew: false)
-        sut.showGuidanceDot()
-
-        // WHEN
-        sut.text = "Password"
-        sut.textFieldDidChange(textField: sut)
-
-        // THEN
-        verify(matching: sut)
-    }
 }
