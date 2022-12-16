@@ -98,6 +98,15 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         hideBottomSheet()
     }
 
+    override func didChangeState() {
+        switch state {
+        case .initial:
+            visibleVoiceChannelViewController.view.accessibilityElementsHidden = false
+        case .full:
+            visibleVoiceChannelViewController.view.accessibilityElementsHidden = true
+        }
+    }
+
     func transition(to toViewController: UIViewController, from fromViewController: UIViewController) {
         guard toViewController != fromViewController else { return }
         toViewController.view.frame = view.bounds

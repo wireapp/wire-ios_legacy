@@ -63,6 +63,7 @@ class CallingActionsView: UIView {
             guard oldValue != isIncomingCall else { return }
             topStackView.removeSubviews()
             handleView.isHidden = isIncomingCall
+            handleView.accessibilityElementsHidden = isIncomingCall
             if isIncomingCall  {
                 [microphoneButton, cameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
             } else {
