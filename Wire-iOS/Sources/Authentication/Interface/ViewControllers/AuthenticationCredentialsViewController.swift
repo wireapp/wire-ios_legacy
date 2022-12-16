@@ -197,6 +197,11 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         emailInputField.textFieldValidationDelegate = self
         emailInputField.placeholder = L10n.Localizable.Email.placeholder.capitalized
         emailInputField.addTarget(self, action: #selector(emailTextInputDidChange), for: .editingChanged)
+        emailInputField.confirmButton.addTarget(self, action: #selector(emailConfirmButtonTapped), for: .touchUpInside)
+
+        emailInputField.enableConfirmButton = { [weak self] in
+            self?.emailFieldValidationError == nil
+        }
 
         contentStack.isLayoutMarginsRelativeArrangement = true
         contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 31, bottom: 0, trailing: 31)

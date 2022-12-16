@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import WireNotificationEngine
 import Wire_Notification_Service_Extension
 
 final class LegacyNotificationServiceTests: XCTestCase {
@@ -96,7 +97,13 @@ final class LegacyNotificationServiceTests: XCTestCase {
 
     func disable_testThatItReportsCallEvent() {
         // GIVEN
-        let event = createEvent()
+        let event = CallEventPayload(
+            accountID: UUID.create().uuidString,
+            conversationID: UUID.create().uuidString,
+            shouldRing: true,
+            callerName: "Alice",
+            hasVideo: false
+        )
 
         // WHEN
         XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
@@ -105,30 +112,6 @@ final class LegacyNotificationServiceTests: XCTestCase {
         // THEN
         XCTAssertTrue(callEventHandlerMock.reportIncomingVoIPCallCalled)
     }
-
-    func disable_testThatItDoesNotReportCallEventForNonCallEvent() {
-        // GIVEN
-        let genericMessage = GenericMessage(content: Text(content: "Hello Hello!", linkPreviews: []),
-                                            nonce: UUID.create())
-        let payload: [String: Any] = [
-            "id": UUID.create().transportString(),
-            "conversation": mockConversation.remoteIdentifier!.transportString(),
-            "from": otherUser.remoteIdentifier.transportString(),
-            "time": Date().transportString(),
-            "data": ["text": try? genericMessage.serializedData().base64String()],
-            "type": "conversation.otr-message-add"
-        ]
-
-        let event = ZMUpdateEvent(fromEventStreamPayload: payload as ZMTransportData, uuid: UUID.create())!
-
-        // WHEN
-        XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
-        sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
-
-        // THEN
-        XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
-    }
-
 }
 
 // MARK: - Helpers

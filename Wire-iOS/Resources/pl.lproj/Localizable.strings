@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Szukaj według nazwy lub nazwy użytkownika";
 "peoplepicker.header.top_people" = "Osoby";
 "peoplepicker.button.create_conversation" = "Załóż grupę";
-"peoplepicker.button.add_to_conversation" = "Dodaj uczestników do grupy";
+"peoplepicker.button.add_to_conversation" = "Dodaj uczestników";
 "peoplepicker.header.conversations" = "Grupy";
 "peoplepicker.header.team_conversations" = "Grupy zespołu %@";
 "peoplepicker.header.send_invitation" = "Zaproś";
@@ -905,7 +905,7 @@
 "device.type.unknown" = "Nieznane";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Goście";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Ustaw kod dostępu";
-"create_passcode.info_label" = "Zostanie użyty do odblokowania Wire. Jeśli zapomnisz tego kodu dostępu **nie będzie można go odzyskać.**";
-"create_passcode.info_label_forced_applock" = "Utwórz kod dostępu, aby odblokować Wire. Zapamietaj go, ponieważ **nie będzie można go odzyskać.**";
-"create_passcode.create_button.title" = "ustaw kod dostępu";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Co najmniej osiem znaków";
@@ -1885,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Wprowadź swoje hasło";
 "unlock.title_label" = "Wprowadź hasło, żeby odblokować Wire";
-"unlock.wipe_button" = "Dostęp jako nowe urządzenie";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Błędne hasło";
-"unlock.submit_button.title" = "odblokuj";
+"unlock.submit_button.title" = "Odblokuj";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "W Wire nastąpiła zmiana";
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Dostęp jako nowe urządzenie";
-"wipe_database.info_label" = "Dane przechowywane na tym urządzeniu mogą być dostępne tylko z kodem dostępu.\n\nJeśli zapomniałeś hasła, możesz usunąć bazę danych, aby zalogować się ponownie jako nowe urządzenie.\n\nUsuwając bazę danych, ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "wszystkie lokalne dane i wiadomości dla tego konta zostaną trwale usunięte.";
 
-"wipe_database.button.title" = "Chcę usunąć bazę danych";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Potwierdź usunięcie bazy danych";
-"wipe_database.alert.message" = "Wpisz 'Usuń', aby potwierdzić, że chcesz usunąć wszystkie dane z tego urządzenia.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Wpisz 'Usuń'";
 "wipe_database.alert.confirm" = "Usuń";
 "wipe_database.alert.confirm_input" = "Usuń";
@@ -1923,7 +1923,7 @@
 "appLockModule.message.passcode" = "Odblokuj Wire kodem dostępu";
 "appLockModule.message.passcodeUnavailable" = "Aby odblokować Wire, włącz kod dostępu w ustawieniach urządzenia";
 "appLockModule.unlockButton.title" = "Odblokuj";
-"appLockModule.goToSettingsButton.title" = "Przejdź do ustawień";
+"appLockModule.goToSettingsButton.title" = "Przejdź do Ustawień";
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Przewiń na dół";
