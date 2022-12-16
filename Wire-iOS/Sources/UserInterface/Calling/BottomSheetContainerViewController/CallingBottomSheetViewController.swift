@@ -51,6 +51,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: bottomSheetInitialOffset))
 
         callingActionsInfoViewController.actionsDelegate = visibleVoiceChannelViewController
+        callingActionsInfoViewController.actionsView.bottomSheetScrollingDelegate = self
         visibleVoiceChannelViewController.configurationObserver = self
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
@@ -155,6 +156,22 @@ extension CallingBottomSheetViewController: CallViewControllerDelegate {
         delegate?.activeCallViewControllerDidDisappear(self, for: conversation)
     }
 }
+
+extension CallingBottomSheetViewController: BottomSheetScrollingDelegate {
+    var isBottomSheetExpanded: Bool {
+        return state == .full
+    }
+
+    func toggleBottomSheetVisibility() {
+        switch state {
+        case .full:
+            hideBottomSheet(animated: false)
+        case .initial:
+            showBottomSheet(animated: false)
+        }
+    }
+}
+
 
 extension VoiceChannel {
     fileprivate func getParticipantsList() -> CallParticipantsList {

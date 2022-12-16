@@ -27,7 +27,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     private let selfUser: UserType
 
     fileprivate var collectionView: CallParticipantsListView!
-    private let actionsView = CallingActionsView()
+    let actionsView = CallingActionsView()
     private let stackView = UIStackView(axis: .vertical)
     private var participantsHeaderView = UIView()
     private var participantsHeaderLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .sectionText)
@@ -123,7 +123,6 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         CallParticipantsListCellConfiguration.prepare(collectionView)
         view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
-
 
     private func createStackViewConstraints() {
         NSLayoutConstraint.activate([

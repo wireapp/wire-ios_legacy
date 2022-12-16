@@ -19,9 +19,13 @@
 import UIKit
 import WireSyncEngine
 
-// this is duplicate fot CallActionsView made for ACC-143
 protocol CallingActionsViewDelegate: AnyObject {
     func callingActionsViewPerformAction(_ action: CallAction)
+}
+
+protocol BottomSheetScrollingDelegate: AnyObject {
+    var isBottomSheetExpanded: Bool { get }
+    func toggleBottomSheetVisibility()
 }
 
 // A view showing multiple buttons depending on the given `CallActionsView.Input`.
@@ -29,6 +33,13 @@ protocol CallingActionsViewDelegate: AnyObject {
 class CallingActionsView: UIView {
 
     weak var delegate: CallingActionsViewDelegate?
+    weak var bottomSheetScrollingDelegate: BottomSheetScrollingDelegate? {
+        didSet {
+            handleView.isAccessibilityElement = true
+            handleView.accessibilityAction = handleViewAccessibilityAction
+            updateHandleViewAccessibilityLabel()
+        }
+    }
 
     private let verticalStackView = UIStackView(axis: .vertical)
     private let topStackView = UIStackView(axis: .horizontal)
@@ -41,7 +52,7 @@ class CallingActionsView: UIView {
     private let speakerButton = CallingActionButton.speakerButton()
     private let flipCameraButton = CallingActionButton.flipCameraButton()
     private let endCallButton =  EndCallButton.endCallButton()
-    private let handleView = UIView()
+    private let handleView = AccessibilityActionView()
 
     private var allButtons: [IconLabelButton] {
         return [flipCameraButton, cameraButton, microphoneButton, speakerButton, endCallButton]
@@ -171,5 +182,16 @@ class CallingActionsView: UIView {
         cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Label.toggleVideoOff: Label.toggleVideoOn
         flipCameraButton.accessibilityLabel = input.cameraType == .front ? Label.switchToBackCamera: Label.switchToFrontCamera
 
+    }
+
+    private func updateHandleViewAccessibilityLabel() {
+        typealias Label = L10n.Accessibility.Calling
+        guard let bottomSheetScrollingDelegate = bottomSheetScrollingDelegate else { return }
+        handleView.accessibilityHint = bottomSheetScrollingDelegate.isBottomSheetExpanded ? Label.SwipeDownParticipants.hint : Label.SwipeUpParticipants.hint
+    }
+
+    @objc private func handleViewAccessibilityAction() {
+        bottomSheetScrollingDelegate?.toggleBottomSheetVisibility()
+        updateHandleViewAccessibilityLabel()
     }
 }
