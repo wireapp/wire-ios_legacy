@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 class RoundedBadge: UIButton {
     let containedView: UIView

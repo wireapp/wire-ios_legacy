@@ -84,14 +84,12 @@ final class MessageToolboxView: UIView {
     private let timestampSeparatorLabel = UILabel.createSeparatorLabel()
     private let statusSeparatorLabel = UILabel.createSeparatorLabel()
 
-    let buttonTextFont = FontSpec.smallSemiboldFont.font!
-
     private let resendButton: UIButton = {
         let button = UIButton()
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized,
                                                  attributes: [.foregroundColor: MessageActionsColor.textErrorDefault,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                                              .font: buttonTextFont])
+                                                              .font: FontSpec.smallSemiboldFont.font!])
 
         button.contentHorizontalAlignment = .left
         button.setAttributedTitle(attributedTitle, for: .normal)
@@ -105,7 +103,7 @@ final class MessageToolboxView: UIView {
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized,
                                                  attributes: [.foregroundColor: MessageActionsColor.textErrorDefault,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                                              .font: buttonTextFont])
+                                                              .font: FontSpec.smallSemiboldFont.font!])
 
         button.contentHorizontalAlignment = .left
         button.setAttributedTitle(attributedTitle, for: .normal)

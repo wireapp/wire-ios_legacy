@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {

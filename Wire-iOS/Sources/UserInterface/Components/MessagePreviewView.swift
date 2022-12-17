@@ -152,14 +152,14 @@ final class MessageThumbnailPreviewView: UIView {
 
     private func updateForMessage() {
         typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
-        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
+        let attributes: [NSAttributedString.Key: Any] = [.font: FontSpec.smallSemiboldFont.font!,
                                                          .foregroundColor: SemanticColors.Label.textDefault]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
         imagePreview.isHidden = !message.canBeShared
 
         if message.isImage {
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
+            let attributes: [NSAttributedString.Key: Any] = [.font: FontSpec.smallSemiboldFont.font!,
                                                              .foregroundColor: SemanticColors.Label.textDefault]
             let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase

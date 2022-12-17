@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 protocol IncomingRequestFooterViewDelegate: AnyObject {
 
@@ -60,7 +61,7 @@ class IncomingRequestFooterView: UIView {
 
     private func configureSubviews() {
         titleLabel.text = "connection_request_pending_title".localized(uppercased: true)
-        titleLabel.font = .smallSemiboldFont
+        titleLabel.font = FontSpec.smallSemiboldFont.font!
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
 

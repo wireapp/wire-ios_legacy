@@ -102,7 +102,7 @@ final class UserConnectionView: UIView, Copyable {
 
         return handle && [
             .foregroundColor: SemanticColors.Label.textDefault,
-            .font: UIFont.smallSemiboldFont
+            .font: FontSpec.smallSemiboldFont.font!
         ]
     }
 
