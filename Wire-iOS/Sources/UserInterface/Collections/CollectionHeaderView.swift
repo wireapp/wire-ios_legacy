@@ -66,7 +66,7 @@ final class CollectionHeaderView: UICollectionReusableView {
 
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallSemiboldFont
+        label.font = FontSpec.smallSemiboldFont.font!
         label.textColor = .from(scheme: .textForeground)
 
         return label
@@ -75,7 +75,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     let actionButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(SemanticColors.LegacyColors.strongBlue, for: .normal)
-        button.titleLabel?.font = .smallSemiboldFont
+        button.titleLabel?.font = FontSpec.smallSemiboldFont.font!
 
         return button
     }()

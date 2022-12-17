@@ -262,7 +262,7 @@ final class PersonalAccountView: AccountView {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
 
-        avatarImageView.initialsFont = .smallSemiboldFont
+        avatarImageView.initialsFont = FontSpec.smallSemiboldFont.font!
         avatarImageView.initialsColor = .from(scheme: .textForeground, variant: .light)
 
         return avatarImageView

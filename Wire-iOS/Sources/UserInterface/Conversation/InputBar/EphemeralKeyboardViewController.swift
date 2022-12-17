@@ -152,7 +152,7 @@ final class EphemeralKeyboardViewController: UIViewController {
 
         titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
-        titleLabel.font = .smallSemiboldFont
+        titleLabel.font = FontSpec.smallSemiboldFont.font!
 
         titleLabel.text = "input.ephemeral.title".localized(uppercased: true)
         titleLabel.numberOfLines = 0

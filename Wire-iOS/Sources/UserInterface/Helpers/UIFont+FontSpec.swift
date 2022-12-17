@@ -30,13 +30,7 @@ extension UIFont {
 
 // Objective-C compatiblity layer for the Swift only FontSpec
 extension UIFont {
-
-    // MARK: - Small
-
-    class var smallSemiboldFont: UIFont {
-        return FontSpec(.small, .semibold).font!
-    }
-
+    
     // MARK: - Normal
 
     class var normalFont: UIFont {

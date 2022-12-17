@@ -63,6 +63,6 @@ enum PasscodeError: CaseIterable {
     }
 
     var descriptionWithPassedIcon: NSAttributedString {
-        return description(icon: .circleTick, color: SemanticColors.Icon.backgroundJoinCall, font: .smallSemiboldFont)
+        return description(icon: .circleTick, color: SemanticColors.Icon.backgroundJoinCall, font: .FontSpec.smallSemiboldFont.font!)
     }
 }

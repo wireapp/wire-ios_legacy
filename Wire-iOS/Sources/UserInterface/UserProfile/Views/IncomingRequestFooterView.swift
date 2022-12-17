@@ -33,8 +33,12 @@ protocol IncomingRequestFooterViewDelegate: AnyObject {
 class IncomingRequestFooterView: UIView {
 
     let titleLabel = UILabel()
-    let acceptButton = LegacyButton(fontSpec: .smallSemiboldFont)
-    let ignoreButton = LegacyButton(fontSpec: .smallSemiboldFont)
+    let acceptButton = Button(style: .accentColorTextButtonStyle,
+                              cornerRadius: 8,
+                              fontSpec: .smallSemiboldFont)
+    let ignoreButton = Button(style: .secondaryTextButtonStyle,
+                              cornerRadius: 8,
+                              fontSpec: .smallSemiboldFont)
 
     let contentStack = UIStackView()
 
@@ -73,10 +77,6 @@ class IncomingRequestFooterView: UIView {
         titleLabel.textColor = SemanticColors.Label.textDefault
         backgroundColor = SemanticColors.View.backgroundDefault
 
-        acceptButton.applyStyle(.accentColorTextButtonStyle)
-
-        ignoreButton.applyStyle(.secondaryTextButtonStyle)
-
         let buttonsStack = UIStackView(arrangedSubviews: [ignoreButton, acceptButton])
         buttonsStack.axis = .horizontal
         buttonsStack.spacing = 16
@@ -110,7 +110,8 @@ class IncomingRequestFooterView: UIView {
 
     // MARK: - Events
 
-    @objc private func acceptButtonTapped() {
+    @objc
+    private func acceptButtonTapped() {
         delegate?.footerView(self, didRespondToRequestWithAction: .accept)
     }
 

@@ -90,7 +90,7 @@ class RoundedBadge: UIButton {
 final class RoundedTextBadge: RoundedBadge {
     var textLabel = UILabel()
 
-    init(contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4), font: UIFont = .smallSemiboldFont) {
+    init(contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4), font: UIFont = FontSpec.smallSemiboldFont.font!) {
         super.init(view: self.textLabel, contentInset: contentInset)
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         textLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)

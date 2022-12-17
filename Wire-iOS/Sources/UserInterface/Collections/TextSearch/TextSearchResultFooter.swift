@@ -64,7 +64,7 @@ final class TextSearchResultFooter: UIView {
 
     var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallSemiboldFont
+        label.font = FontSpec.smallSemiboldFont.font!
 
         return label
     }()

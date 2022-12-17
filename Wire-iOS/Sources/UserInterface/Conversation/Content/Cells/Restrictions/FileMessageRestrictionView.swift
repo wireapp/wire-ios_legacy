@@ -45,7 +45,7 @@ final class FileMessageRestrictionView: BaseMessageRestrictionView {
         super.configure()
 
         guard let filename = message?.filename else { return }
-        let fileNameAttributed = filename.uppercased() && .smallSemiboldFont && .from(scheme: .textForeground)
+        let fileNameAttributed = filename.uppercased() && FontSpec.smallSemiboldFont.font! && .from(scheme: .textForeground)
 
         topLabel.attributedText = fileNameAttributed
     }

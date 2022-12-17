@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 final class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
@@ -67,7 +68,7 @@ final class TextSearchResultCell: UITableViewCell {
         createConstraints()
 
         textLabel?.textColor = .from(scheme: .background)
-        textLabel?.font = .smallSemiboldFont
+        textLabel?.font = FontSpec.smallSemiboldFont.font!
     }
 
     fileprivate func createConstraints() {

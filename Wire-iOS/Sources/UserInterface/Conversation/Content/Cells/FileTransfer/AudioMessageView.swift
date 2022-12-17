@@ -47,7 +47,7 @@ final class AudioMessageView: UIView, TransferView {
 
     private let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = (UIFont.smallSemiboldFont).monospaced()
+        label.font = (FontSpec.smallSemiboldFont.font!).monospaced()
         label.textColor = .from(scheme: .textForeground)
         label.numberOfLines = 1
         label.textAlignment = .center

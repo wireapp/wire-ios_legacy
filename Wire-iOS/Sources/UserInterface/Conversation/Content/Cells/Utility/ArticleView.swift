@@ -30,7 +30,7 @@ final class ArticleView: UIView {
     private let authorTextColor: UIColor = .from(scheme: .textDimmed)
     private let authorFont: UIFont = FontSpec.smallLightFont.font!
     private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
-    private let authorHighlightFont = UIFont.smallSemiboldFont
+    private let authorHighlightFont = FontSpec.smallSemiboldFont.font!
 
     var imageHeight: CGFloat = 144 {
         didSet {

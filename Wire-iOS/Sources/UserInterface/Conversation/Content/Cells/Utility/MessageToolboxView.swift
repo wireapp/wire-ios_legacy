@@ -19,6 +19,7 @@
 import Foundation
 import WireSyncEngine
 import WireDataModel
+import WireCommonComponents
 
 /// Observes events from the message toolbox.
 protocol MessageToolboxViewDelegate: AnyObject {
@@ -33,7 +34,7 @@ private extension UILabel {
         let label = UILabel()
         label.numberOfLines = 1
         label.textColor = UIColor.from(scheme: .textDimmed)
-        label.font = UIFont.smallSemiboldFont
+        label.font = FontSpec.smallSemiboldFont.font!
         label.text = String.MessageToolbox.middleDot
         label.isAccessibilityElement = false
         label.setContentHuggingPriority(.required, for: .horizontal)
@@ -83,12 +84,14 @@ final class MessageToolboxView: UIView {
     private let timestampSeparatorLabel = UILabel.createSeparatorLabel()
     private let statusSeparatorLabel = UILabel.createSeparatorLabel()
 
+    let buttonTextFont = FontSpec.smallSemiboldFont.font!
+
     private let resendButton: UIButton = {
         let button = UIButton()
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized,
                                                  attributes: [.foregroundColor: MessageActionsColor.textErrorDefault,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                                              .font: UIFont.smallSemiboldFont])
+                                                              .font: buttonTextFont])
 
         button.contentHorizontalAlignment = .left
         button.setAttributedTitle(attributedTitle, for: .normal)
@@ -102,7 +105,7 @@ final class MessageToolboxView: UIView {
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized,
                                                  attributes: [.foregroundColor: MessageActionsColor.textErrorDefault,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
-                                                              .font: UIFont.smallSemiboldFont])
+                                                              .font: buttonTextFont])
 
         button.contentHorizontalAlignment = .left
         button.setAttributedTitle(attributedTitle, for: .normal)

@@ -99,7 +99,7 @@ final class ConversationReplyContentView: UIView {
         }
 
         private func setupContent() -> Content {
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
+            let attributes: [NSAttributedString.Key: Any] = [.font: FontSpec.smallSemiboldFont.font!,
                                                              .foregroundColor: UIColor.from(scheme: .textForeground)]
             switch quotedMessage {
             case let message? where message.isText:

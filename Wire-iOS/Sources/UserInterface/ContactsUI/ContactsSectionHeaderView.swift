@@ -18,11 +18,12 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 final class ContactsSectionHeaderView: UITableViewHeaderFooterView {
     let label: UILabel = {
         let label = UILabel()
-        label.font = .smallSemiboldFont
+        label.font = FontSpec.smallSemiboldFont.font!
         label.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return label

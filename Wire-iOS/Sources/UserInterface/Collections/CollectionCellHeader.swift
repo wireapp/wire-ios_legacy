@@ -62,7 +62,7 @@ final class CollectionCellHeader: UIView {
     var nameLabel: UILabel = {
         let label = UILabel()
         label.isAccessibilityElement = false
-        label.font = .smallSemiboldFont
+        label.font = FontSpec.smallSemiboldFont.font!
 
         return label
     }()

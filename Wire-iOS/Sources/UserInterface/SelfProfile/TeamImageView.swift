@@ -16,6 +16,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class TeamImageView: UIImageView {
 
@@ -56,9 +57,9 @@ final class TeamImageView: UIImageView {
     func applyStyle(style: TeamImageViewStyle ) {
         switch style {
         case .small:
-            initialLabel.font = .smallSemiboldFont
+            initialLabel.font = FontSpec.smallSemiboldFont.font!
         case .big:
-            initialLabel.font = .mediumLightLargeTitleFont
+            initialLabel.font = FontSpec.mediumLightLargeTitleFont.font!
         }
 
         initialLabel.textColor = SemanticColors.Label.textDefault
