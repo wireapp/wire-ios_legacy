@@ -17,7 +17,7 @@
 //
 
 public extension FontSpec {
-
+    
     // MARK: - Small
     static var smallFont: Self {
         return self.init(.small, .none)
@@ -37,7 +37,7 @@ public extension FontSpec {
     static var smallBoldFont: Self {
         return self.init(.small, .bold)
     }
-
+    
     // MARK: - Normal
     static var normalFont: Self {
         return self.init(.normal, .none)
@@ -60,7 +60,7 @@ public extension FontSpec {
     static var normalRegularFontWithInputTextStyle: Self {
         return self.init(.normal, .regular, .inputText)
     }
-
+    
     // MARK: - Medium
     static var mediumFont: Self {
         return self.init(.medium, .none)
@@ -77,7 +77,7 @@ public extension FontSpec {
     static var mediumSemiboldInputText: Self {
         return self.init(.medium, .semibold, .inputText)
     }
-
+    
     // MARK: - Large
     static var largeFont: Self {
         return self.init(.large, .none)
@@ -100,7 +100,7 @@ public extension FontSpec {
     static var largeLightWithTextStyleFont: Self {
         return self.init(.large, .light, .largeTitle)
     }
-
+    
     // Account
     static var accountName: Self {
         return self.init(.titleThree, .semibold)
@@ -108,12 +108,17 @@ public extension FontSpec {
     static var accountTeam: Self {
         return self.init(.subHeadline, .regular)
     }
-
+    
     // Navigation
     static var headerSemiboldFont: Self {
         return self.init(.header, .semibold)
     }
     static var headerRegularFont: Self {
         return self.init(.header, .regular)
+    }
+    
+    // MARK: - Body Two
+    static var bodyTwoSemibold: Self {
+        return self.init(.bodyTwo, .semibold)
     }
 }
