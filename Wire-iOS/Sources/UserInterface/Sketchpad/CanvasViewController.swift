@@ -74,7 +74,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         super.viewDidLoad()
 
         canvas.delegate = self
-        canvas.backgroundColor = SemanticColors.View.backgroundDefaultWhite
+        canvas.backgroundColor = .white
         canvas.isAccessibilityElement = true
         canvas.accessibilityIdentifier = "canvas"
 
@@ -88,7 +88,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         hintLabel.font = FontSpec.normalRegularFont.font
         hintLabel.textAlignment = .center
         hintLabel.textColor = SemanticColors.Label.textSettingsPasswordPlaceholder
-        self.view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
+        self.view.backgroundColor = .white
 
         [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
 
