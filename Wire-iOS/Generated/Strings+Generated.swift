@@ -144,14 +144,6 @@ internal enum L10n {
         /// Active speaker
         internal static let description = L10n.tr("Accessibility", "calling.activeSpeaker.description", fallback: "Active speaker")
       }
-      internal enum BottomViewHide {
-        /// Double tap to swipe down and hide participant’s details
-        internal static let hint = L10n.tr("Accessibility", "calling.bottomViewHide.hint", fallback: "Double tap to swipe down and hide participant’s details")
-      }
-      internal enum BottomViewShow {
-        /// Double tap to swipe up and view all participant’s details
-        internal static let hint = L10n.tr("Accessibility", "calling.bottomViewShow.hint", fallback: "Double tap to swipe up and view all participant’s details")
-      }
       internal enum CameraOff {
         /// Camera off
         internal static let description = L10n.tr("Accessibility", "calling.cameraOff.description", fallback: "Camera off")
@@ -201,12 +193,12 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "calling.speakerOnButton.description", fallback: "Turn on speaker")
       }
       internal enum UserCellFullscreen {
-        /// Double tap for full screen
-        internal static let hint = L10n.tr("Accessibility", "calling.userCellFullscreen.hint", fallback: "Double tap for full screen")
+        /// Quadruple tap for full screen
+        internal static let hint = L10n.tr("Accessibility", "calling.userCellFullscreen.hint", fallback: "Quadruple tap for full screen")
       }
       internal enum UserCellMinimize {
-        /// Double tap to minimize view
-        internal static let hint = L10n.tr("Accessibility", "calling.userCellMinimize.hint", fallback: "Double tap to minimize view")
+        /// Quadruple tap to minimize view
+        internal static let hint = L10n.tr("Accessibility", "calling.userCellMinimize.hint", fallback: "Quadruple tap to minimize view")
       }
       internal enum VideoOffButton {
         /// Turn off camera

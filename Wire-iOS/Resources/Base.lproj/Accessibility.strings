@@ -246,10 +246,8 @@
 "calling.speakerOffButton.description" = "Turn off speaker";
 "calling.hangUpButton.description" = "End call";
 "calling.acceptButton.description" = "Accept";
-"calling.userCellFullscreen.hint" = "Double tap for full screen";
-"calling.userCellMinimize.hint" = "Double tap to minimize view";
-"calling.bottomViewShow.hint" = "Double tap to swipe up and view all participant’s details";
-"calling.bottomViewHide.hint" = "Double tap to swipe down and hide participant’s details";
+"calling.userCellFullscreen.hint" = "Quadruple tap for full screen";
+"calling.userCellMinimize.hint" = "Quadruple tap to minimize view";
 "calling.microphoneOn.description" = "Microphone on";
 "calling.microphoneOff.description" = "Microphone off";
 "calling.cameraOn.description" = "Camera on";
