@@ -21,12 +21,14 @@ import Foundation
 import WireSyncEngine
 import WireCommonComponents
 
+private typealias LabelColors = SemanticColors.Label
+private typealias HistoryBackup = L10n.Localizable.Self.Settings.HistoryBackup
+
 final class BackupStatusCell: UITableViewCell {
+
     let descriptionLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(fontSpec: .normalRegularFont,
-                                     color: .textForeground,
-                                     variant: .dark)
-        label.textColor = SemanticColors.Label.textDefault
+                                     color: LabelColors.textDefault)
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -40,8 +42,8 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        iconView.tintColor = SemanticColors.Label.textDefault
         iconView.setTemplateIcon(.restore, size: .large)
+        iconView.tintColor = LabelColors.textDefault
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
@@ -60,7 +62,7 @@ final class BackupStatusCell: UITableViewCell {
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
         ])
 
-        descriptionLabel.attributedText = L10n.Localizable.Self.Settings.HistoryBackup.description && .paragraphSpacing(2)
+        descriptionLabel.attributedText = HistoryBackup.description && .paragraphSpacing(2)
     }
 
     @available(*, unavailable)
@@ -71,11 +73,9 @@ final class BackupStatusCell: UITableViewCell {
 
 final class BackupActionCell: UITableViewCell {
     let actionTitleLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(text: L10n.Localizable.Self.Settings.HistoryBackup.action,
+        let label = DynamicFontLabel(text: HistoryBackup.action,
                                      fontSpec: .normalRegularFont,
-                                     color: .textForeground,
-                                     variant: .dark)
-        label.textColor = SemanticColors.Label.textDefault
+                                     color: LabelColors.textDefault)
         label.textAlignment = .left
         return label
     }()
@@ -166,7 +166,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupNavigationTitle() {
-        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.HistoryBackup.title.capitalized)
+        navigationItem.setupNavigationBarTitle(title: HistoryBackup.title.capitalized)
     }
 
     var loadingHostController: SpinnerCapableViewController {
@@ -221,7 +221,7 @@ fileprivate extension BackupViewController {
 
     private func presentAlert(for error: Error) {
         let alert = UIAlertController(
-            title: L10n.Localizable.Self.Settings.HistoryBackup.Error.title,
+            title: HistoryBackup.Error.title,
             message: error.localizedDescription,
             alertAction: .ok(style: .cancel))
         present(alert, animated: true)
