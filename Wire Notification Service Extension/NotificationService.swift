@@ -19,7 +19,9 @@
 import Foundation
 import WireCommonComponents
 import UserNotifications
+#if canImport(Datadog)
 import Datadog
+#endif
 
 public class NotificationService: UNNotificationServiceExtension{
 
