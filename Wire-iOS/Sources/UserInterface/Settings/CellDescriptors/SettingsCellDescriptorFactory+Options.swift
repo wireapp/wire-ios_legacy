@@ -125,7 +125,7 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors: [callKitToggle],
             header: "self.settings.callkit.title".localized,
             footer: "self.settings.callkit.description".localized,
-            visibilityAction: .none
+            visibilityAction: { _ in !SecurityFlags.forceCallKitDisabled.isEnabled }
         )
     }
 
@@ -135,8 +135,14 @@ extension SettingsCellDescriptorFactory {
             inverse: false
         )
 
+        // FIXME: Headers
+        // The header of the CallKit section is used as a generic "Calls" section header, not
+        // only for the CallKit toggle but also for the other call settings. The CallKit toggle
+        // is sometimes hidden, which means if it is, we need to add the header to the next section.
+
         return SettingsSectionDescriptor(
             cellDescriptors: [muteCallToggle],
+            header: SecurityFlags.forceCallKitDisabled.isEnabled ? L10n.Localizable.Self.Settings.Callkit.title : .none,
             footer: L10n.Localizable.Self.Settings.MuteOtherCall.description,
             visibilityAction: .none
         )

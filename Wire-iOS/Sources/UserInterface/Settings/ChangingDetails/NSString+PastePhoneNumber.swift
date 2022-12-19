@@ -45,11 +45,10 @@ extension String {
 
         if phoneNumber.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).hasPrefix("+") {
             if let country = Country.detect(forPhoneNumber: phoneNumber) {
-                /// remove the leading space and country prefix
+                // Remove the leading space and country prefix
                 var phoneNumberWithoutCountryCode = phoneNumber.replacingOccurrences(of: country.e164PrefixString, with: "").withoutSpace
 
-                /// remove symbols -()
-
+                // remove symbols -()
                 phoneNumberWithoutCountryCode = String(phoneNumberWithoutCountryCode.unicodeScalars.filter { CharacterSet.decimalDigits.contains($0) })
 
                 return (country: country, phoneNumber: phoneNumberWithoutCountryCode)

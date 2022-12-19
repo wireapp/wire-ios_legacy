@@ -35,7 +35,7 @@ extension XCTestCase {
     func setDayFormatterLocale(identifier: String, date: Date) {
         let dayFormatter = Message.dayFormatter(date: date)
 
-        /// overwrite dayFormatter's locale and update the date format string
+        // Overwrite dayFormatter's locale and update the date format string
         let locale = Locale(identifier: identifier)
         let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
 

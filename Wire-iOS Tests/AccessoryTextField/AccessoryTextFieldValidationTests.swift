@@ -44,7 +44,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = ValidatedTextField()
+        sut = ValidatedTextField(style: .default)
         mockViewController = MockViewController()
         sut.textFieldValidationDelegate = mockViewController
     }

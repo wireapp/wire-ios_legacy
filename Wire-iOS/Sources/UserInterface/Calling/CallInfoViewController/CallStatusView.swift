@@ -29,6 +29,7 @@ enum CallStatusViewState: Equatable {
     case terminating // "Ending call..."
 }
 
+
 final class CallStatusView: UIView {
 
     private let titleLabel = UILabel()

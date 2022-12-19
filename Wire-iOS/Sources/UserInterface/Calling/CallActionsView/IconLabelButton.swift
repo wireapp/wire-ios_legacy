@@ -33,7 +33,6 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
     var appearance: CallActionAppearance = .dark(blurred: false) {
-//    var appearance: CallActionAppearance = .adaptive {
         didSet {
             updateState()
         }
@@ -43,8 +42,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
         super.init()
         setupViews()
         createConstraints()
-        iconButton.setIcon(input.icon(forState: .normal), size: .medium, for: .normal)
-        iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
+        iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
+        iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
         subtitleTransformLabel.text = input.label
     }
 
@@ -78,8 +77,8 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private func createConstraints() {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            iconButton.widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            iconButton.heightAnchor.constraint(equalToConstant: IconLabelButton.width),
+            iconButton.widthAnchor.constraint(equalTo: widthAnchor),
+            iconButton.heightAnchor.constraint(equalTo: iconButton.heightAnchor),
             blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
             blurView.trailingAnchor.constraint(equalTo: iconButton.trailingAnchor),
             blurView.topAnchor.constraint(equalTo: iconButton.topAnchor),

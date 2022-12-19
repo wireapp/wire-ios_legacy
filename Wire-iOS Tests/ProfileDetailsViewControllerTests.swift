@@ -575,7 +575,8 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
     }
 
-    func test_Group_SelfUser_SCIM() {/// FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
+    // FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
+    func test_Group_SelfUser_SCIM() {
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = true
@@ -1112,7 +1113,7 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
     func test_ProfileViewer_OtherUserIsGuest() {
         // GIVEN
         let guest = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
-        /// Notice: rich profile is not visible in this case
+        // Notice: rich profile is not visible in this case
         guest.richProfile = defaultRichProfile
 
         // THEN

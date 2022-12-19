@@ -17,8 +17,9 @@
 //
 
 import XCTest
-@testable import Wire
 import WireCommonComponents
+@testable import Wire
+
 // In this class the snapshot tests they don't look the same as in the real app.
 // The first and last button for the input bar look like they have 4 rounded corners
 // instead of 2. That's because snapshot tests don't work well with maskedCorners and CI.

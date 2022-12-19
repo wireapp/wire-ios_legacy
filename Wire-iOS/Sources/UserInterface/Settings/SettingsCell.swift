@@ -47,8 +47,7 @@ class SettingsTableCell: SettingsTableCellProtocol {
     let cellNameLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
-            color: .textForeground)
-        label.textColor = SemanticColors.Label.textDefault
+            color: SemanticColors.Label.textDefault)
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -69,17 +68,16 @@ class SettingsTableCell: SettingsTableCellProtocol {
 
     let badge: RoundedBadge = {
         let badge = RoundedBadge(view: UIView())
-        badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
+        badge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
         badge.isHidden = true
 
         return badge
     }()
 
     private let badgeLabel: UILabel = {
-        let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont, color: .textInBadge)
+        let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont,
+                                          color: SemanticColors.Label.textDefaultWhite)
         badgeLabel.textAlignment = .center
-        badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
-
         return badgeLabel
     }()
 
@@ -258,8 +256,8 @@ class SettingsTableCell: SettingsTableCellProtocol {
 
         if isHighlighted && selectionStyle != .none {
             backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
-            badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
-            badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
+            badge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
+            badgeLabel.textColor = SemanticColors.Label.textDefaultWhite
         }
     }
 }

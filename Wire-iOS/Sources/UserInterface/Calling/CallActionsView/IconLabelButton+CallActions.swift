@@ -67,8 +67,14 @@ extension CallingActionButton {
 }
 
 extension EndCallButton {
-
     static func endCallButton() -> EndCallButton {
         .init(callActionIcon: .endCall)
     }
 }
+
+extension PickUpButton {
+    static func pickUpButton() -> PickUpButton {
+        .init(callActionIcon: .pickUp)
+    }
+}
+

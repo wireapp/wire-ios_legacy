@@ -278,14 +278,13 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         if let deviceId = IDLabel.text {
             IDLabel.accessibilityLabel = "\(ClientList.DeviceId.description), \(deviceId)"
         }
-        if let keyFingerprint = IDLabel.text {
-            fullIDLabel.accessibilityLabel = "\(ClientList.KeyFingerprint.description), + \(keyFingerprint)"
+        if let keyFingerprint = fullIDLabel.text {
+            fullIDLabel.accessibilityLabel = "\(ClientList.KeyFingerprint.description), \(keyFingerprint)"
         }
 
         descriptionTextView.isAccessibilityElement = true
         descriptionTextView.accessibilityTraits = .link
         descriptionTextView.accessibilityIdentifier = "description text"
-        descriptionTextView.accessibilityAttributedHint = NSAttributedString(string: DeviceDetails.HowToVerifyFingerprint.hint)
 
         verifiedToggle.accessibilityLabel = DeviceDetails.Verified.description
         verifiedToggleLabel.isAccessibilityElement = false
@@ -367,8 +366,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient!,
-                                                                fromConversation: fromConversation,
-                                                                variant: ColorScheme.default.variant)
+                                                                fromConversation: fromConversation)
 
         let navigationControllerWrapper = selfClientController.wrapInNavigationController(setBackgroundColor: true)
 

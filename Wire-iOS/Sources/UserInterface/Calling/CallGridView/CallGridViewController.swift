@@ -126,6 +126,10 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Setup
 
     private func setupViews() {
+        if DeveloperFlag.updatedCallingUI.isOn {
+            gridView.backgroundColor = SemanticColors.View.backgroundCallGrid
+        }
+
         gridView.dataSource = self
         gridView.gridViewDelegate = self
         view.addSubview(gridView)

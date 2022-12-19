@@ -75,6 +75,7 @@ final class AudioEffectCell: UICollectionViewCell {
         ])
 
         updateForSelectedState()
+        setupAccessibility()
     }
 
     @available(*, unavailable)
@@ -98,10 +99,15 @@ final class AudioEffectCell: UICollectionViewCell {
         iconView.setIconColor(color, for: .normal)
     }
 
+    fileprivate func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+    }
+
     var effect: AVSAudioEffectType = .none {
         didSet {
             iconView.setIcon(effect.icon, size: .small, for: .normal)
-            accessibilityLabel = effect.description
+            accessibilityLabel = effect.accessibilityLabel
         }
     }
 

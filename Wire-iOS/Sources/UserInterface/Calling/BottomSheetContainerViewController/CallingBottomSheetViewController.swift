@@ -26,7 +26,7 @@ protocol CallInfoConfigurationObserver: AnyObject {
 }
 
 class CallingBottomSheetViewController: BottomSheetContainerViewController {
-    private let bottomSheetInitialOffset =  118.0
+    private let bottomSheetInitialOffset = 124.0
     private let bottomSheetMaxHeight = UIScreen.main.bounds.height * 0.7
 
     weak var delegate: ActiveCallViewControllerDelegate?
@@ -47,11 +47,11 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         let selfUser: UserType = ZMUser.selfUser()
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: selfUser, isOverlayEnabled: false)
 
-        callingActionsInfoViewController = CallingActionsInfoViewController(participants: voiceChannel.getParticipantsList(), showParticipants: true, selfUser: selfUser)
+        callingActionsInfoViewController = CallingActionsInfoViewController(participants: voiceChannel.getParticipantsList(), selfUser: selfUser)
         super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: bottomSheetInitialOffset))
 
         callingActionsInfoViewController.actionsDelegate = visibleVoiceChannelViewController
-        visibleVoiceChannelViewController.configurationObserver = callingActionsInfoViewController
+        visibleVoiceChannelViewController.configurationObserver = self
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
 
@@ -67,7 +67,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         headerBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(headerBar)
 
-
         NSLayoutConstraint.activate([
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -76,8 +75,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
             headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
         ])
         headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
-        guard case .avatar(let user) = voiceChannel.accessoryType(), let session = ZMUserSession.shared() else { return }
-        user.value.fetchProfileImage(session: session,
+        guard !voiceChannel.isGroupCall, let user = voiceChannel.getSecondParticipant(), let session = ZMUserSession.shared() else { return }
+        user.fetchProfileImage(session: session,
                                      imageCache: UIImage.defaultUserImageCache,
                                      sizeLimit: UserImageView.Size.small.rawValue,
                                      isDesaturated: false,
@@ -125,6 +124,19 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     }
 }
 
+extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
+    func didUpdateConfiguration(configuration: CallInfoConfiguration) {
+        callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
+        headerBar.setContent(hidden: configuration.state.isIncoming)
+        let offset = configuration.state.isIncoming ? 280.0 : bottomSheetInitialOffset
+        guard self.configuration.initialOffset != offset else { return }
+        let height = configuration.state.isIncoming ? offset : view.bounds.height * 0.7
+        let newConfiguration = BottomSheetConfiguration(height: height, initialOffset: offset)
+        self.configuration = newConfiguration
+        hideBottomSheet()
+    }
+}
+
 extension CallingBottomSheetViewController: WireCallCenterCallParticipantObserver {
     func callParticipantsDidChange(conversation: ZMConversation, participants: [CallParticipant]) {
         callingActionsInfoViewController.participants = voiceChannel.getParticipantsList()
@@ -132,7 +144,6 @@ extension CallingBottomSheetViewController: WireCallCenterCallParticipantObserve
 }
 
 extension CallingBottomSheetViewController: WireCallCenterCallStateObserver {
-    // TODO: needed?
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateVisibleVoiceChannelViewController()
     }

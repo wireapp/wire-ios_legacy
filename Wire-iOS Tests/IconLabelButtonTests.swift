@@ -17,9 +17,10 @@
 //
 
 import XCTest
+import WireCommonComponents
 @testable import Wire
 
-final class IconLabelButtonTests: XCTestCase {
+final class IconLabelButtonTests: ZMSnapshotTestCase {
 
     fileprivate var button: IconLabelButton!
 
@@ -29,6 +30,7 @@ final class IconLabelButtonTests: XCTestCase {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setNeedsLayout()
         button.layoutIfNeeded()
+        UserDefaults.applicationGroup.set(false, forKey: DeveloperFlag.updatedCallingUI.rawValue)
     }
 
     override func tearDown() {

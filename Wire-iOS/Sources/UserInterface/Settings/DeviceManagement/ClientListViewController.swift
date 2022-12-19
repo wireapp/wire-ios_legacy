@@ -101,8 +101,7 @@ final class ClientListViewController: UIViewController,
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true,
-                  showLegalHold: Bool = true,
-                  variant: ColorSchemeVariant? = .none) {
+                  showLegalHold: Bool = true) {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
@@ -160,6 +159,7 @@ final class ClientListViewController: UIViewController,
         self.createConstraints()
 
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        self.navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.ClientsList.BackButton.description
         setColor()
     }
 

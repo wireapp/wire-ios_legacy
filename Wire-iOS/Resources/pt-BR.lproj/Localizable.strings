@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Procurar por nome ou nome de usuário";
 "peoplepicker.header.top_people" = "Contatos frequentes";
 "peoplepicker.button.create_conversation" = "Criar grupo";
-"peoplepicker.button.add_to_conversation" = "Adicionar Participantes ao Grupo";
+"peoplepicker.button.add_to_conversation" = "Adicionar Participantes";
 "peoplepicker.header.conversations" = "Grupos";
 "peoplepicker.header.team_conversations" = "Grupos de %@";
 "peoplepicker.header.send_invitation" = "Convidar";
@@ -905,7 +905,7 @@
 "device.type.unknown" = "Desconhecido";
 
 // Bot
-"participants.services.remove_integration.button" = "Remover integração";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Convidados";
@@ -1022,10 +1022,10 @@
 "self.settings.encrypt_messages_at_rest.title" = "Criptografar mensagens em repouso";
 
 "self.settings.account_picture_group.picture" = "Foto do perfil";
-"self.settings.account_picture_group.alert.title" = "Change your profile picture";
-"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
-"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
-"self.settings.account_picture_group.color" = "Profile color";
+"self.settings.account_picture_group.alert.title" = "Alterar sua foto de perfil";
+"self.settings.account_picture_group.alert.choose_picture" = "Escolher da biblioteca";
+"self.settings.account_picture_group.alert.take_picture" = "Tirar uma foto";
+"self.settings.account_picture_group.color" = "Cor do perfil";
 "self.settings.account_picture_group.accent_color.blue" = "Azul";
 "self.settings.account_picture_group.accent_color.green" = "Verde";
 "self.settings.account_picture_group.accent_color.yellow" = "Amarelo";
@@ -1870,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Crie uma senha";
-"create_passcode.info_label" = "Ele será usado para desbloquear o Wire. Se você esquecer esta senha, **ela não poderá ser recuperada.**";
-"create_passcode.info_label_forced_applock" = "Crie um código de acesso para desbloquear o Wire. Lembre-se disso, pois ela **não pode ser recuperada.**";
-"create_passcode.create_button.title" = "criar senha";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Pelo menos oito caracteres";
@@ -1885,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Digite sua senha";
 "unlock.title_label" = "Insira a senha para desbloquear o Wire";
-"unlock.wipe_button" = "Acessar como novo dispositivo";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Senha incorreta";
-"unlock.submit_button.title" = "desbloquear";
+"unlock.submit_button.title" = "Desbloquear";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Houve uma mudança no Wire";
@@ -1897,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Acessar como novo dispositivo";
-"wipe_database.info_label" = "Os dados armazenados neste dispositivo só podem ser acessados com sua senha.\n\nSe você esqueceu sua senha, você pode excluir o banco de dados para efetuar login novamente como um novo dispositivo.\n\nExcluindo o banco de dados, ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "todos os dados e mensagens locais desta conta serão excluídos permanentemente.";
 
-"wipe_database.button.title" = "Quero apagar o banco de dados";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirmar exclusão do banco de dados";
-"wipe_database.alert.message" = "Digite 'Deletar' para verificar que você deseja excluir todos os dados neste dispositivo.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Digite 'Deletar'";
 "wipe_database.alert.confirm" = "Apagar";
 "wipe_database.alert.confirm_input" = "Apagar";
@@ -1923,7 +1923,7 @@
 "appLockModule.message.passcode" = "Desbloqueie o Wire com Código de Acesso";
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
 "appLockModule.unlockButton.title" = "Desbloquear";
-"appLockModule.goToSettingsButton.title" = "Ir para as configurações";
+"appLockModule.goToSettingsButton.title" = "Vá para os ajustes";
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Rolar para Baixo";

@@ -25,7 +25,6 @@ class CallHeaderBar: UIView {
 
     init() {
         super.init(frame: .zero)
-        backgroundColor = SemanticColors.View.backgroundDefault
         setupViews()
         setupConstraints()
     }
@@ -35,7 +34,7 @@ class CallHeaderBar: UIView {
     }
 
     private func setupViews() {
-        avatarView.backgroundColor = SemanticColors.View.backgroundAvatar
+        backgroundColor = SemanticColors.View.backgroundDefault
         avatarView.layer.masksToBounds = true
         avatarView.layer.cornerRadius = 4.0
         avatarView.contentMode = .scaleToFill
@@ -75,5 +74,10 @@ class CallHeaderBar: UIView {
 
     func setAvatar(_ avatar: UIImage) {
         avatarView.image = avatar
+    }
+
+    func setContent(hidden: Bool) {
+        avatarContainerView.isHidden = hidden
+        titleLabel.isHidden = hidden
     }
 }

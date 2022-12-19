@@ -19,6 +19,7 @@
 import Foundation
 import SnapshotTesting
 import XCTest
+import WireCommonComponents
 @testable import Wire
 
 final class CallParticipantsListHelper {
@@ -48,6 +49,7 @@ final class CallParticipantsListViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         mockParticipants = CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers())
+        UserDefaults.applicationGroup.set(false, forKey: DeveloperFlag.updatedCallingUI.rawValue)
     }
 
     override func tearDown() {
