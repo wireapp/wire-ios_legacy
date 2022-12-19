@@ -192,6 +192,14 @@ internal enum L10n {
         /// Turn on speaker
         internal static let description = L10n.tr("Accessibility", "calling.speakerOnButton.description", fallback: "Turn on speaker")
       }
+      internal enum SwipeDownParticipants {
+        /// Double tap to swipe down and hide participant’s details
+        internal static let hint = L10n.tr("Accessibility", "calling.swipeDownParticipants.hint", fallback: "Double tap to swipe down and hide participant’s details")
+      }
+      internal enum SwipeUpParticipants {
+        /// Double tap to swipe up and view all participant’s details
+        internal static let hint = L10n.tr("Accessibility", "calling.swipeUpParticipants.hint", fallback: "Double tap to swipe up and view all participant’s details")
+      }
       internal enum UserCellFullscreen {
         /// Quadruple tap for full screen
         internal static let hint = L10n.tr("Accessibility", "calling.userCellFullscreen.hint", fallback: "Quadruple tap for full screen")

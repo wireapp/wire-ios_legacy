@@ -34,7 +34,11 @@ class BottomSheetContainerViewController: UIViewController {
 
     // MARK: - Variables
     private var topConstraint = NSLayoutConstraint()
-    var state: BottomSheetState = .initial
+    var state: BottomSheetState = .initial {
+        didSet {
+            didChangeState()
+        }
+    }
     private var visibleControllerBottomConstraint: NSLayoutConstraint!
     private var bottomViewHeightConstraint: NSLayoutConstraint!
 
@@ -114,6 +118,8 @@ class BottomSheetContainerViewController: UIViewController {
         ])
         bottomSheetViewController.didMove(toParent: self)
     }
+
+    public func didChangeState() {}
 
     // MARK: - Bottom Sheet Actions
     public func showBottomSheet(animated: Bool = true) {
