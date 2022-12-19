@@ -211,6 +211,10 @@ extension AppStateCalculator: SessionManagerDelegate {
             .unauthenticated(error: NSError(code: .needsAuthenticationAfterMigration, userInfo: nil))
         transition(to: state)
     }
+
+    func sessionManagerDidPerformAPIMigrations() {
+        transition(to: .authenticated(completedRegistration: false))
+    }
 }
 
 // MARK: - AuthenticationCoordinatorDelegate
