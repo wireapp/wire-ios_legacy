@@ -242,3 +242,6 @@
 "calling.speakerButton.description" = "Speaker";
 "calling.hangUpButton.description" = "Hang Up";
 "calling.acceptButton.description" = "Accept";
+"calling.swipeUpParticipants.hint" = "Double tap to swipe up and view all participant’s details";
+"calling.swipeDownParticipants.hint" = "Double tap to swipe down and hide participant’s details";
+
