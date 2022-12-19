@@ -26,13 +26,13 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     private var topConstraint: NSLayoutConstraint?
     private let selfUser: UserType
 
-    fileprivate var collectionView: CallParticipantsListView!
-    let actionsView = CallingActionsView()
+    private var collectionView: CallParticipantsListView!
     private let stackView = UIStackView(axis: .vertical)
     private var participantsHeaderView = UIView()
     private var participantsHeaderLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .sectionText)
     private lazy var incomingCallActionsView: IncomingCallActionsView = IncomingCallActionsView()
 
+    let actionsView = CallingActionsView()
     weak var actionsDelegate: CallingActionsViewDelegate? {
         didSet {
             actionsView.delegate = actionsDelegate
