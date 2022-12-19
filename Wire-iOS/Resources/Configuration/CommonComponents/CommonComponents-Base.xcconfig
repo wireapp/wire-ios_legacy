@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+#include "../../../../Configuration/Datadog.xcconfig"
+
 // Build Options
 APPLICATION_EXTENSION_API_ONLY = YES
 

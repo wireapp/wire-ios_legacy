@@ -232,11 +232,13 @@ extension UNNotificationContent {
   }
 
   static func debugMessageIfNeeded(message: String) -> UNNotificationContent {
+      DatadogWrapper.shared()?.log(level: .debug, message: message)
       guard DeveloperFlag.nseDebugging.isOn else { return .empty }
       return debug(message: message)
   }
 
   static func debug(message: String) -> UNNotificationContent {
+      DatadogWrapper.shared()?.log(level: .debug, message: message)
       let content = UNMutableNotificationContent()
       content.title = "DEBUG 👀"
       content.body = message
