@@ -116,4 +116,9 @@ public extension FontSpec {
     static var headerRegularFont: Self {
         return self.init(.header, .regular)
     }
+
+    // MARK: - Body Two
+    static var bodyTwoSemibold: Self {
+        return self.init(.bodyTwo, .semibold)
+    }
 }

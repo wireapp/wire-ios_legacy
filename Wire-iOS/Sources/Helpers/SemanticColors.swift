@@ -83,6 +83,7 @@ public enum SemanticColors {
         static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
         static let foregroundDefaultBlack = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundDefaultWhite = UIColor(light: Asset.white, dark: Asset.black)
+        static let foregroundDefaultRed = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
         static let foregroundPlainDownArrow = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let backgroundJoinCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
