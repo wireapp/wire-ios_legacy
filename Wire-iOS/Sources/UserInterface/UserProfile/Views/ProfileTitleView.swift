@@ -22,8 +22,11 @@ import WireDataModel
 
 final class ProfileTitleView: UIView {
 
+    typealias LabelColors = SemanticColors.Label
+
     let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified)
-    private let titleLabel = DynamicFontLabel(fontSpec: .normalMediumFont, color: .textForeground)
+    private let titleLabel = DynamicFontLabel(fontSpec: .normalMediumFont,
+                                              color: LabelColors.textDefault)
 
     var showVerifiedShield = false {
         didSet {
@@ -68,7 +71,8 @@ final class ProfileTitleView: UIView {
     }
 
     func configure(with user: UserType) {
-        let attributedTitle = user.nameIncludingAvailability(color: SemanticColors.Label.textDefault, selfUser: ZMUser.selfUser())
+        let attributedTitle = user.nameIncludingAvailability(color: LabelColors.textDefault,
+                                                             selfUser: ZMUser.selfUser())
         titleLabel.attributedText = attributedTitle
         setupAccessibility()
     }
