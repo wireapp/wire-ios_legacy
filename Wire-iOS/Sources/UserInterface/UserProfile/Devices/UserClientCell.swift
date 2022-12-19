@@ -71,7 +71,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .smallSemiboldFont
-        titleLabel.textColor = SemanticColors.Label.textCellTitle
+        titleLabel.textColor = SemanticColors.Label.textDefault
         titleLabel.accessibilityIdentifier = "device_cell.name"
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false

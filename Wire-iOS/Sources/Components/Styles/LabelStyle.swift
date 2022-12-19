@@ -31,7 +31,7 @@ public struct LabelStyle {
         textColor: SemanticColors.Label.textSectionHeader)
     static let primaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
-        textColor: SemanticColors.Label.textCellTitle)
+        textColor: SemanticColors.Label.textDefault)
     static let secondaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.Label.textCellSubtitle)
