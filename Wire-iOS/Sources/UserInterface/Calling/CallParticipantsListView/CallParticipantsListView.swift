@@ -136,9 +136,9 @@ extension UserCell: CallParticipantsListCellConfigurable {
             shouldPulse: activeSpeakerState.isSpeakingNow)
         )
         videoIconView.set(style: VideoIconStyle(state: videoState))
+        configure(with: user.value, selfUser: selfUser)
         guard DeveloperFlag.updatedCallingUI.isOn else { return }
         backgroundColor = SemanticColors.View.backgroundDefaultWhite
-        configure(with: user.value, selfUser: selfUser)
     }
 
 }
