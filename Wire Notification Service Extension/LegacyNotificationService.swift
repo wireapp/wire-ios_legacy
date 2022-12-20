@@ -238,7 +238,6 @@ extension UNNotificationContent {
   }
 
   static func debug(message: String) -> UNNotificationContent {
-      DatadogWrapper.shared()?.log(level: .debug, message: message)
       let content = UNMutableNotificationContent()
       content.title = "DEBUG 👀"
       content.body = message
