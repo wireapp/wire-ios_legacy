@@ -139,10 +139,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
         let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
         let labelColor = SemanticColors.Label.textDefault
 
-        headlineLabel = DynamicFontLabel(fontSpec: .largeLightWithTextStyleFont, color: .textForeground)
+        headlineLabel = DynamicFontLabel(fontSpec: .largeLightWithTextStyleFont,
+                                         color: labelColor)
         headlineLabelContainer = ContentInsetView(headlineLabel, inset: textPadding)
         headlineLabel.textAlignment = .center
-        headlineLabel.textColor = labelColor
         headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
         headlineLabel.numberOfLines = 0
@@ -150,12 +150,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
         headlineLabel.accessibilityTraits.insert(.header)
 
         if stepDescription.subtext != nil {
-            subtextLabel = DynamicFontLabel(fontSpec: .normalRegularFont, color: .textForeground)
+            subtextLabel = DynamicFontLabel(fontSpec: .normalRegularFont,
+                                            color: labelColor)
             subtextLabelContainer = ContentInsetView(subtextLabel, inset: textPadding)
             subtextLabel.textAlignment = .center
             subtextLabel.text = stepDescription.subtext
             subtextLabel.font = AuthenticationStepController.subtextFont
-            subtextLabel.textColor = labelColor
             subtextLabel.numberOfLines = 0
             subtextLabel.lineBreakMode = .byWordWrapping
             subtextLabelContainer.isHidden = stepDescription.subtext == nil
