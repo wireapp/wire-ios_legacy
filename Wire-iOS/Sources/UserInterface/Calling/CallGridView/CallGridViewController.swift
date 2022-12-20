@@ -358,6 +358,8 @@ final class CallGridViewController: SpinnerCapableViewController {
             view?.isPaused = $0.isPaused
             view?.pinchToZoomRule = pinchToZoomRule
             view?.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
+            view?.accessibilityHint = configuration.callHasTwoParticipants ? "" : view?.accessibilityHint
+            view?.accessibilityTraits = configuration.callHasTwoParticipants ? .staticText : .button
         }
     }
 

@@ -23,7 +23,6 @@ protocol IconLabelButtonInput {
     func icon(forState state: UIControl.State) -> StyleKitIcon
     var label: String { get }
     var accessibilityIdentifier: String { get }
-    var accessibilityLabel: String { get }
 }
 
 class IconLabelButton: ButtonWithLargerHitArea {
@@ -46,8 +45,6 @@ class IconLabelButton: ButtonWithLargerHitArea {
         iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
         iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
         subtitleTransformLabel.text = input.label
-        accessibilityIdentifier = input.accessibilityIdentifier
-        accessibilityLabel = input.accessibilityLabel
     }
 
     @available(*, unavailable)

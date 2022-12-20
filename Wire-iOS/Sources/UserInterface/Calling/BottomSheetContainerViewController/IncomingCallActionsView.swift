@@ -47,6 +47,14 @@ class IncomingCallActionsView: UIView {
         pickUpButton.addTarget(self, action: #selector(pickUp), for: .touchUpInside)
         pickUpButton.subtitleTransformLabel.font = FontSpec(.small, .bold).font!
         endCallButton.subtitleTransformLabel.font = FontSpec(.small, .bold).font!
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias Calling = L10n.Accessibility.Calling
+
+        pickUpButton.accessibilityLabel = Calling.AcceptButton.description
+        endCallButton.accessibilityLabel = Calling.HangUpButton.description
     }
 
     private func createConstraints() {

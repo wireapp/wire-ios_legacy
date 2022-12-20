@@ -59,19 +59,6 @@ enum CallActionIconType: IconLabelButtonInput {
         }
     }
 
-    var accessibilityLabel: String {
-        typealias Calling = L10n.Accessibility.Calling
-
-        switch self {
-        case .flipCamera: return Calling.FlipCameraButton.description
-        case .camera: return Calling.VideoButton.description
-        case .microphone: return Calling.MuteButton.description
-        case .speaker: return Calling.SpeakerButton.description
-        case .endCall: return Calling.HangUpButton.description
-        case .pickUp: return "" // TODO: ACC-143
-        }
-    }
-
     private var normalIcon: StyleKitIcon {
         switch self {
         case .microphone: return .microphoneOff

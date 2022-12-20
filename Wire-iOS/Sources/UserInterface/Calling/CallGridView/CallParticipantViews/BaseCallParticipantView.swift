@@ -32,6 +32,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             updateBorderStyle()
             updateVideoKind()
             hideVideoViewsIfNeeded()
+            setupAccessibility()
         }
     }
 
@@ -53,6 +54,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             updateBorderStyle()
             updateFillMode()
             updateScalableView()
+            setupAccessibility()
         }
     }
 
@@ -103,6 +105,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         hideVideoViewsIfNeeded()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
+        setupAccessibility()
     }
 
     @available(*, unavailable)
@@ -116,6 +119,23 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         userDetailsView.name = stream.user?.name
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.activeSpeakerState.isSpeakingNow)
         userDetailsView.alpha = userDetailsAlpha
+    }
+
+    private func setupAccessibility() {
+        typealias Calling = L10n.Accessibility.Calling
+
+        guard let userName = userDetailsView.name else {
+            return
+        }
+
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        let microphoneState = userDetailsView.microphoneIconStyle.accessibilityLabel
+        let cameraState = (stream.isSharingVideo && !stream.isScreenSharing) ? Calling.CameraOn.description : Calling.CameraOff.description
+        let activeSpeaker = stream.isParticipantUnmutedAndSpeakingNow ? Calling.ActiveSpeaker.description : ""
+        let screenSharing = stream.isScreenSharing ? Calling.SharesScreen.description : ""
+        accessibilityLabel = "\(userName), \(microphoneState), \(cameraState), \(activeSpeaker), \(screenSharing)"
+        accessibilityHint = isMaximized ? Calling.UserCellMinimize.hint : Calling.UserCellFullscreen.hint
     }
 
     func setupViews() {
