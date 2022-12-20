@@ -41,7 +41,7 @@ final class TopPeopleCell: UICollectionViewCell {
     var displayName: String = "" {
         didSet {
             accessibilityValue = displayName
-            nameLabel.text = displayName.localizedCapitalized
+            nameLabel.text = displayName.localized
         }
     }
 
