@@ -49,7 +49,7 @@ final class ReplyRoundCornersView: UIControl {
 
         highlightLayer.alpha = 0
 
-        highlightLayer.backgroundColor = ViewColors.backgroundReplyMessageViewHighlighted.withAlphaComponent(0.48)
+        highlightLayer.backgroundColor = ViewColors.backgroundReplyMessageViewHighlighted
         grayBoxView.backgroundColor = ViewColors.backgroundSeparatorCell
 
         addSubview(containedView)
@@ -106,7 +106,7 @@ final class ReplyRoundCornersView: UIControl {
 
     private func setHighlighted(_ isHighlighted: Bool, animated: Bool) {
         let changes = {
-            self.highlightLayer.alpha = isHighlighted ? 1 : 0
+            self.highlightLayer.alpha = isHighlighted ? 0.48 : 0
         }
 
         if animated {
