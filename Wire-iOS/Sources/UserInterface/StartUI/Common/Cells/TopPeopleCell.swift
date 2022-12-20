@@ -41,7 +41,7 @@ final class TopPeopleCell: UICollectionViewCell {
     var displayName: String = "" {
         didSet {
             accessibilityValue = displayName
-            nameLabel.text = displayName.localizedUppercase
+            nameLabel.text = displayName.localized
         }
     }
 
@@ -122,7 +122,7 @@ final class TopPeopleCell: UICollectionViewCell {
             constraints.append(contentsOf: [conversationImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                                             conversationImageView.topAnchor.constraint(equalTo: contentView.topAnchor)])
 
-            constraints.append(nameLabel.topAnchor.constraint(equalTo: avatarContainer.bottomAnchor, constant: 8))
+            constraints.append(nameLabel.topAnchor.constraint(equalTo: avatarContainer.bottomAnchor, constant: 4))
 
             nameLabel.trailingAnchor.constraint(equalTo: avatarContainer.trailingAnchor).isActive = true
             nameLabel.leadingAnchor.constraint(equalTo: avatarContainer.leadingAnchor).isActive = true
@@ -137,8 +137,8 @@ final class TopPeopleCell: UICollectionViewCell {
     }
 
     private func updateForContext() {
-        nameLabel.font = FontSpec.smallLightFont.font!
-        nameLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: .dark)
+        nameLabel.font = FontSpec.bodyTwoSemibold.font!
+        nameLabel.textColor = SemanticColors.Label.textDefault
 
         badgeUserImageView.badgeColor = .white
 
