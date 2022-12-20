@@ -193,7 +193,7 @@ extension VoiceChannel {
     }
 
     fileprivate var shouldShowActiveSpeakerFrame: Bool {
-        if DeveloperFlag.updatedCallingUI.isOn { return true }
+        if DeveloperFlag.isUpdatedCallingUI { return true }
         return connectedParticipants.count > 2 && videoGridPresentationMode == .allVideoStreams
     }
 

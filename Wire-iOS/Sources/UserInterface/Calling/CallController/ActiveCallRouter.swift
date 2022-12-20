@@ -89,7 +89,7 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         UIResponder.currentFirst?.resignFirstResponder()
 
         var activeCallViewController: UIViewController!
-        if DeveloperFlag.updatedCallingUI.isOn {
+        if DeveloperFlag.isUpdatedCallingUI {
             let bottomSheetActiveCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel)
             bottomSheetActiveCallViewController.delegate = callController
             activeCallViewController = bottomSheetActiveCallViewController

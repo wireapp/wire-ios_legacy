@@ -66,3 +66,11 @@ public enum DeveloperFlag: String, CaseIterable {
     }
 
 }
+
+public extension DeveloperFlag {
+
+    static var isUpdatedCallingUI: Bool {
+        return DeveloperFlag.updatedCallingUI.isOn || AutomationHelper.sharedHelper.updatedCallingUI
+    }
+
+}

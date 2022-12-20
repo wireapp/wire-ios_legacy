@@ -284,7 +284,7 @@ final class CallViewController: UIViewController {
         updateAppearance()
         updateIdleTimer()
         configurationObserver?.didUpdateConfiguration(configuration: callInfoConfiguration)
-        guard DeveloperFlag.updatedCallingUI.isOn else { return }
+        guard DeveloperFlag.isUpdatedCallingUI else { return }
         showIncomingCallStatusViewIfNeeded(forConfiguration: callInfoConfiguration)
     }
 

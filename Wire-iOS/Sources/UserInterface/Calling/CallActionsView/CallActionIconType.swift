@@ -42,8 +42,8 @@ enum CallActionIconType: IconLabelButtonInput {
         case .microphone: return Voice.MuteButton.title
         case .camera: return Voice.VideoButton.title
         case .speaker: return Voice.SpeakerButton.title
-        case .flipCamera: return DeveloperFlag.updatedCallingUI.isOn ? Voice.FlipCameraButton.title : Voice.FlipVideoButton.title
-        case .endCall:  return DeveloperFlag.updatedCallingUI.isOn ? Voice.HangUpButton.title : Voice.EndCallButton.title
+        case .flipCamera: return DeveloperFlag.isUpdatedCallingUI ? Voice.FlipCameraButton.title : Voice.FlipVideoButton.title
+        case .endCall:  return DeveloperFlag.isUpdatedCallingUI ? Voice.HangUpButton.title : Voice.EndCallButton.title
         case .pickUp: return Voice.PickUpButton.title
         }
     }

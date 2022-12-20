@@ -82,9 +82,9 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     /// Update view visibility when this view controller is covered or not
-    var isCovered: Bool = !DeveloperFlag.updatedCallingUI.isOn {
+    var isCovered: Bool = !DeveloperFlag.isUpdatedCallingUI {
         didSet {
-            if DeveloperFlag.updatedCallingUI.isOn { isCovered = false }
+            if DeveloperFlag.isUpdatedCallingUI { isCovered = false }
             guard isCovered != oldValue else { return }
             notifyVisibilityChanged()
             displayIndicatorViewsIfNeeded()
@@ -126,7 +126,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Setup
 
     private func setupViews() {
-        if DeveloperFlag.updatedCallingUI.isOn {
+        if DeveloperFlag.isUpdatedCallingUI {
             gridView.backgroundColor = SemanticColors.View.backgroundCallGrid
         }
 
