@@ -27,22 +27,6 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
     private let fontSpec: FontSpec
 
     // MARK: - initialization
-    // TODO: [AGIS] Get rid of that initializer when Login/Sign is merged to develop
-    init(
-        text: String? = nil,
-        fontSpec: FontSpec = .normalRegularFont,
-        color: ColorSchemeColor,
-        variant: ColorSchemeVariant = ColorScheme.default.variant
-    ) {
-        self.fontSpec = fontSpec
-        super.init(frame: .zero)
-
-        self.text = text
-        self.font = fontSpec.font
-        self.textColor = UIColor.from(scheme: color, variant: variant)
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
-
     init(text: String? = nil,
          fontSpec: FontSpec = .normalRegularFont,
          color: UIColor
