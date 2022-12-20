@@ -20,10 +20,14 @@ import Foundation
 import UIKit
 
 final class ReplyRoundCornersView: UIControl {
+    // MARK: - Properties
+    typealias ViewColors = SemanticColors.View
+
     let containedView: UIView
     private let grayBoxView = UIView()
     private let highlightLayer = UIView()
 
+    // MARK: - Init
     init(containedView: UIView) {
         self.containedView = containedView
         super.init(frame: .zero)
@@ -31,16 +35,22 @@ final class ReplyRoundCornersView: UIControl {
         setupConstraints()
     }
 
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Setup Subviews and Constraints
     private func setupSubviews() {
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.from(scheme: .replyBorder).cgColor
+        layer.borderColor = ViewColors.backgroundSeparatorCell.cgColor
         layer.masksToBounds = true
 
         highlightLayer.alpha = 0
 
-        highlightLayer.backgroundColor = .from(scheme: .replyHighlight)
-        grayBoxView.backgroundColor = .from(scheme: .replyBorder)
+        highlightLayer.backgroundColor = ViewColors.backgroundReplyMessageViewHighlighted
+        grayBoxView.backgroundColor = ViewColors.backgroundSeparatorCell
 
         addSubview(containedView)
         addSubview(grayBoxView)
@@ -68,13 +78,7 @@ final class ReplyRoundCornersView: UIControl {
         ])
     }
 
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     // MARK: - UIControl
-
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         setHighlighted(true, animated: false)
         sendActions(for: .touchDown)
@@ -102,8 +106,7 @@ final class ReplyRoundCornersView: UIControl {
 
     private func setHighlighted(_ isHighlighted: Bool, animated: Bool) {
         let changes = {
-            self.highlightLayer.alpha = isHighlighted ? 1 : 0
-            self.layer.borderWidth = isHighlighted ? 0 : 1
+            self.highlightLayer.alpha = isHighlighted ? 0.48 : 0
         }
 
         if animated {
