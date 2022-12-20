@@ -20,8 +20,7 @@ import UIKit
 
 class CallHeaderBar: UIView {
     private let titleLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color:  SemanticColors.Label.textDefault)
-    private let avatarView = UIImageView()
-    private let avatarContainerView = UIView()
+    let minimalizeButton = UIButton()
 
     init() {
         super.init(frame: .zero)
@@ -35,20 +34,11 @@ class CallHeaderBar: UIView {
 
     private func setupViews() {
         backgroundColor = SemanticColors.View.backgroundDefault
-        avatarView.layer.masksToBounds = true
-        avatarView.layer.cornerRadius = 4.0
-        avatarView.contentMode = .scaleToFill
-        avatarContainerView.backgroundColor = SemanticColors.View.backgroundAvatar
-        avatarContainerView.layer.masksToBounds = true
-        avatarContainerView.layer.cornerRadius = 5.0
-        avatarContainerView.backgroundColor = .clear
-        avatarContainerView.layer.borderWidth = 2.0
-        avatarContainerView.layer.borderColor = UIColor.accent().cgColor
-
-        [avatarView, avatarContainerView, titleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        minimalizeButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        minimalizeButton.tintColor = SemanticColors.Button.foregroundDefaultBlack
+        [minimalizeButton, titleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         addSubview(titleLabel)
-        addSubview(avatarContainerView)
-        avatarContainerView.addSubview(avatarView)
+        addSubview(minimalizeButton) 
         titleLabel.accessibilityTraits = .header
     }
 
@@ -56,28 +46,16 @@ class CallHeaderBar: UIView {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
-            avatarView.widthAnchor.constraint(equalToConstant: 24.0),
-            avatarView.heightAnchor.constraint(equalToConstant: 24.0),
-            avatarView.centerXAnchor.constraint(equalTo: avatarContainerView.centerXAnchor),
-            avatarView.centerYAnchor.constraint(equalTo: avatarContainerView.centerYAnchor),
-            avatarContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-            avatarContainerView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
-            avatarContainerView.widthAnchor.constraint(equalToConstant: 32.0),
-            avatarContainerView.heightAnchor.constraint(equalToConstant: 32.0),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: avatarContainerView.trailingAnchor, constant: 6.0)
+            minimalizeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+            minimalizeButton.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
+            minimalizeButton.widthAnchor.constraint(equalToConstant: 32.0),
+            minimalizeButton.heightAnchor.constraint(equalToConstant: 32.0),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: minimalizeButton.trailingAnchor, constant: 6.0)
         ])
     }
+    
 
     func setTitle(title: String) {
         titleLabel.text = title
-    }
-
-    func setAvatar(_ avatar: UIImage) {
-        avatarView.image = avatar
-    }
-
-    func setContent(hidden: Bool) {
-        avatarContainerView.isHidden = hidden
-        titleLabel.isHidden = hidden
     }
 }

@@ -128,6 +128,10 @@ public enum SemanticColors {
         static let backgroundSeperatorSelected = UIColor(light: Asset.black, dark: Asset.white)
     }
 
+    public enum PageIndicator {
+        static let backgroundDefault = UIColor(light: Asset.gray40, dark: Asset.gray90)
+    }
+
     public enum Button {
         static let backgroundBarItem = UIColor(light: Asset.white, dark: Asset.gray90)
         static let backgroundSecondaryEnabled = UIColor(light: Asset.white, dark: Asset.gray95)
@@ -155,6 +159,7 @@ public enum SemanticColors {
         static let borderInputBarItemHighlighted = UIColor(light: Asset.blue300Light, dark: Asset.blue700Dark)
         static let textInputBarItemEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let textInputBarItemHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.white)
+        static let foregroundDefaultBlack =  UIColor(light: Asset.black, dark: Asset.white)
 
         /// Calling buttons
         static let backgroundCallingNormal = UIColor(light: Asset.white, dark: Asset.gray90)
