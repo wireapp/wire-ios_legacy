@@ -37,9 +37,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
-    let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont,
+    let titleLabel = DynamicFontLabel(fontSpec: .bodyTwoSemibold,
                                       color: LabelColors.textDefault)
-    let subtitleLabel = DynamicFontLabel(fontSpec: .smallRegularFont,
+    let subtitleLabel = DynamicFontLabel(fontSpec: .mediumRegularFont,
                                          color: LabelColors.textCellSubtitle)
     let connectButton = IconButton()
     let accessoryIconView = UIImageView()
