@@ -55,9 +55,9 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
     /// Prepare SUT for snapshot tests
     ///
     /// - Parameters:
-    ///   - variant: the color cariant
-    ///   - numberOfClients: number of clients other than self device. Default: display 3 cells, to show footer in same screen
-    func prepareSut(variant: ColorSchemeVariant?, numberOfClients: Int = 3) {
+    /// - mode: the color for UIUserInterfaceStyle
+    /// - numberOfClients: number of clients other than self device. Default: display 3 cells, to show footer in same screen
+    func prepareSut(mode: UIUserInterfaceStyle = .light, numberOfClients: Int = 3) {
         var clientsList: [UserClient]?
 
         for _ in 0 ..< numberOfClients {
@@ -71,14 +71,14 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
                                        selfClient: selfClient,
                                        credentials: nil,
                                        detailedView: true,
-                                       showTemporary: true,
-                                       variant: variant)
+                                       showTemporary: true)
 
         sut.isLoadingViewVisible = false
+        sut.overrideUserInterfaceStyle = mode
     }
 
     func testThatObserverIsNonRetained() {
-        prepareSut(variant: nil)
+        prepareSut()
 
         let emailCredentials = ZMEmailCredentials(email: "foo@bar.com", password: "12345678")
         sut.deleteUserClient(client, credentials: emailCredentials)
@@ -91,19 +91,17 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
     }
 
     func testForLightTheme() {
-        prepareSut(variant: .light)
-        sut.overrideUserInterfaceStyle = .light
+        prepareSut()
         verify(matching: sut)
     }
 
     func testForDarkTheme() {
-        prepareSut(variant: .dark)
-        sut.overrideUserInterfaceStyle = .dark
+        prepareSut(mode: .dark)
         verify(matching: sut)
     }
 
     func testForLightThemeWrappedInNavigationController() {
-        prepareSut(variant: .light)
+        prepareSut()
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
 
@@ -111,14 +109,14 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
     }
 
     func testForOneDeviceWithNoEditButton() {
-        prepareSut(variant: .light, numberOfClients: 0)
+        prepareSut(numberOfClients: 0)
         let navWrapperController = sut.wrapInNavigationController()
 
         verify(matching: navWrapperController)
     }
 
     func testForOneDeviceWithBackButtonAndNoEditButton() {
-        prepareSut(variant: .light, numberOfClients: 0)
+        prepareSut(numberOfClients: 0)
         let mockRootViewController = UIViewController()
         let navWrapperController = mockRootViewController.wrapInNavigationController()
         navWrapperController.pushViewController(sut, animated: false)
@@ -127,7 +125,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
     }
 
     func testForEditMode() {
-        prepareSut(variant: .light)
+        prepareSut()
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
         let editButton = sut.navigationItem.rightBarButtonItem!

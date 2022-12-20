@@ -130,7 +130,7 @@ final class TabBar: UIView {
         NSLayoutConstraint.activate([
             lineLeadingConstraint,
             selectionLineView.heightAnchor.constraint(equalToConstant: 1),
-            selectionLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            selectionLineView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             selectionLineView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: oneOverItemsCount, constant: -widthInset),
 
             stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: tabInset),

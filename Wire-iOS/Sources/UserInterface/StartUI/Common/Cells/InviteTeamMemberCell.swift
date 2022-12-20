@@ -26,7 +26,8 @@ class StartUIIconCell: UICollectionViewCell {
     typealias PeoplePicker = L10n.Localizable.Peoplepicker
 
     fileprivate let iconView = UIImageView()
-    fileprivate let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
+    fileprivate let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont,
+                                                  color: SemanticColors.Label.textDefault)
     fileprivate let separator = UIView()
 
     fileprivate var icon: StyleKitIcon? {
@@ -61,7 +62,6 @@ class StartUIIconCell: UICollectionViewCell {
 
     fileprivate func setupViews() {
         iconView.contentMode = .center
-        titleLabel.applyStyle(.primaryCellLabel)
         separator.backgroundColor = CellColors.backgroundSeparatorCell
         backgroundColor = CellColors.backgroundUserCell
         [iconView, titleLabel, separator].forEach(contentView.addSubview)

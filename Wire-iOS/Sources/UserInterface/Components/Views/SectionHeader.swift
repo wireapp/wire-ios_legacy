@@ -22,7 +22,8 @@ import WireCommonComponents
 
 final class SectionHeaderView: UIView {
 
-    let titleLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .sectionText)
+    let titleLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont,
+                                      color: SemanticColors.Label.textSectionHeader)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,7 +42,6 @@ final class SectionHeaderView: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         titleLabel.accessibilityTraits.insert(.header)
-        titleLabel.applyStyle(.headerLabel)
         addSubview(titleLabel)
     }
 

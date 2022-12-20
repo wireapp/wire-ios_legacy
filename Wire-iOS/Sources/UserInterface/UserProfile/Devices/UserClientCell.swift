@@ -23,8 +23,14 @@ import WireDataModel
 
 final class UserClientCell: SeparatorCollectionViewCell {
 
-    private let titleLabel = UILabel()
-    private let subtitleLabel = UILabel()
+    typealias IconColors = SemanticColors.Icon
+    typealias ViewColors = SemanticColors.View
+    typealias LabelColors = SemanticColors.Label
+
+    private let titleLabel = DynamicFontLabel(fontSpec: .bodyTwoSemibold,
+                                              color: LabelColors.textDefault)
+    private let subtitleLabel = DynamicFontLabel(fontSpec: .mediumRegularFont,
+                                                 color: LabelColors.textCellSubtitle)
 
     private let deviceTypeIconView = UIImageView()
     private let accessoryIconView = UIImageView()
@@ -42,8 +48,8 @@ final class UserClientCell: SeparatorCollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted
-            ? SemanticColors.View.backgroundUserCellHightLighted
-            : SemanticColors.View.backgroundUserCell
+            ? ViewColors.backgroundUserCellHightLighted
+            : ViewColors.backgroundUserCell
         }
     }
 
@@ -51,7 +57,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
         super.setUp()
 
         accessibilityIdentifier = "device_cell"
-        backgroundColor = SemanticColors.View.backgroundUserCell
+        backgroundColor = ViewColors.backgroundUserCell
 
         setUpDeviceIconView()
 
@@ -67,16 +73,12 @@ final class UserClientCell: SeparatorCollectionViewCell {
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
         accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
-        accessoryIconView.tintColor = SemanticColors.Icon.foregroundDefault
+        accessoryIconView.tintColor = IconColors.foregroundDefault
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = .smallSemiboldFont
-        titleLabel.textColor = SemanticColors.Label.textCellTitle
         titleLabel.accessibilityIdentifier = "device_cell.name"
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.font = .smallRegularFont
-        subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
         subtitleLabel.accessibilityIdentifier = "device_cell.identifier"
 
         iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, accessoryIconView])
@@ -107,7 +109,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
     private func setUpDeviceIconView() {
         deviceTypeIconView.setTemplateIcon(.devices, size: .tiny)
-        deviceTypeIconView.tintColor = SemanticColors.Icon.foregroundDefault
+        deviceTypeIconView.tintColor = IconColors.foregroundDefault
     }
 
     private func createConstraints() {
@@ -129,8 +131,10 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
 
-        titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
-        subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
+        titleLabel.text = client.deviceClass?.localizedDescription.localizedCapitalized ?? client.type.localizedDescription.localizedCapitalized
+        subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes,
+                                                                         boldAttributes: boldAttributes,
+                                                                         uppercase: true)
 
         updateDeviceIcon()
         setupAccessibility(isDeviceVerified: client.verified)
@@ -140,7 +144,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
         switch client?.deviceClass {
         case .legalHold?:
             deviceTypeIconView.setTemplateIcon(.legalholdactive, size: .tiny)
-            deviceTypeIconView.tintColor = SemanticColors.LegacyColors.vividRed
+            deviceTypeIconView.tintColor = IconColors.foregroundDefaultRed
             deviceTypeIconView.accessibilityIdentifier = "img.device_class.legalhold"
         default:
             setUpDeviceIconView()
