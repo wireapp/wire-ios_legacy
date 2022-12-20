@@ -28,7 +28,7 @@ class Tab: LegacyButton {
     }
 
     init() {
-        super.init(fontSpec: .smallSemiboldFont)
+        super.init(fontSpec: .bodyTwoSemibold)
 
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0)
         isSelected = false
