@@ -29,7 +29,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     private var collectionView: CallParticipantsListView!
     private let stackView = UIStackView(axis: .vertical)
     private var participantsHeaderView = UIView()
-    private var participantsHeaderLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .sectionText)
+    private var participantsHeaderLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: SemanticColors.Label.textSectionHeader)
     private lazy var incomingCallActionsView: IncomingCallActionsView = IncomingCallActionsView()
 
     let actionsView = CallingActionsView()
