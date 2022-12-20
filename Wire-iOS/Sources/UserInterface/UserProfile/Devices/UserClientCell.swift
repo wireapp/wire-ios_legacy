@@ -76,13 +76,9 @@ final class UserClientCell: SeparatorCollectionViewCell {
         accessoryIconView.tintColor = IconColors.foregroundDefault
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.smallSemiboldFont.font!
-        titleLabel.textColor = SemanticColors.Label.textDefault
         titleLabel.accessibilityIdentifier = "device_cell.name"
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.font = FontSpec.smallRegularFont.font!
-        subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
         subtitleLabel.accessibilityIdentifier = "device_cell.identifier"
 
         iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, accessoryIconView])
