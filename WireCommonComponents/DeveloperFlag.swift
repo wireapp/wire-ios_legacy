@@ -28,7 +28,7 @@ public enum DeveloperFlag: String, CaseIterable {
     case nseDebugging
     case nseDebugEntryPoint
     case useDevelopmentBackendAPI
-    case updatedCallingUI
+    case deprecatedCallingUI
 
     public var description: String {
         switch self {
@@ -49,8 +49,8 @@ public enum DeveloperFlag: String, CaseIterable {
 
         case .useDevelopmentBackendAPI:
             return "Turn on to use the developement backend API version instead of the latest production API version."
-        case .updatedCallingUI:
-            return "Turn on to use new calling UI with bottom sheet"
+        case .deprecatedCallingUI:
+            return "Turn on to use deprecated calling UI"
         }
     }
 
@@ -70,7 +70,7 @@ public enum DeveloperFlag: String, CaseIterable {
 public extension DeveloperFlag {
 
     static var isUpdatedCallingUI: Bool {
-        return DeveloperFlag.updatedCallingUI.isOn || AutomationHelper.sharedHelper.updatedCallingUI
+        return !(DeveloperFlag.deprecatedCallingUI.isOn || AutomationHelper.sharedHelper.deprecatedCallingUI)
     }
 
 }
