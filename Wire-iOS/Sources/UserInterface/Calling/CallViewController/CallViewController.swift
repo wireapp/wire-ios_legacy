@@ -294,6 +294,7 @@ final class CallViewController: UIViewController {
             establishingCallStatusView.removeFromSuperview()
             return
         }
+        establishingCallStatusView.setProfileImage(hidden: configuration.mediaState.isSendingVideo)
         establishingCallStatusView.updateState(state: state)
         establishingCallStatusView.setTitle(title: configuration.title)
         guard establishingCallStatusView.superview == nil else { return }
