@@ -1863,7 +1863,6 @@
 /* Begin PBXFileReference section */
 		010497D02940D8990046124D /* DatadogWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatadogWrapper.swift; sourceTree = "<group>"; };
 		010497D22940DE870046124D /* Datadog.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Datadog.xcframework; path = Carthage/Build/Datadog.xcframework; sourceTree = "<group>"; };
-		010497E2294202590046124D /* Datadog.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Datadog.xcconfig; sourceTree = "<group>"; };
 		060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsPropertyFactory+AppLock.swift"; sourceTree = "<group>"; };
 		061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInteractionRestrictionTextView.swift; sourceTree = "<group>"; };
 		061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ReplaceTests.swift"; sourceTree = "<group>"; };
@@ -3706,7 +3705,6 @@
 				A96867B426A5E5A000679D95 /* WireRequestStrategy.xcframework in Frameworks */,
 				A96867CA26A5E68400679D95 /* FLAnimatedImage.xcframework in Frameworks */,
 				A96867B226A5E5A000679D95 /* WireProtos.xcframework in Frameworks */,
-				01D97ADB294B6653001A04BD /* Datadog.xcframework in Frameworks */,
 				A96867C726A5E68100679D95 /* FormatterKit.xcframework in Frameworks */,
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
 				06D5C1DB2773527F00DFCD08 /* WireNotificationEngine.xcframework in Frameworks */,
@@ -7601,7 +7599,6 @@
 				F1FDF2C521ADA3F000E037A1 /* Images.xcassets */,
 				F122349821A715D90038DCAC /* Backend.bundle */,
 				F12C48F12199D2C200F49548 /* Base.xcconfig */,
-				010497E2294202590046124D /* Datadog.xcconfig */,
 				F12C48EF2199D2C200F49548 /* Debug.xcconfig */,
 				F12C48F02199D2C200F49548 /* Release.xcconfig */,
 				54AA3C7B24E53E0100FE1F94 /* Security-Flags.xcconfig */,
