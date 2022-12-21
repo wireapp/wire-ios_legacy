@@ -130,6 +130,10 @@ public enum SemanticColors {
         static let backgroundSeperatorSelected = UIColor(light: Asset.black, dark: Asset.white)
     }
 
+    public enum PageIndicator {
+        static let backgroundDefault = UIColor(light: Asset.gray40, dark: Asset.gray90)
+    }
+
     public enum Button {
         static let backgroundBarItem = UIColor(light: Asset.white, dark: Asset.gray90)
         static let backgroundSecondaryEnabled = UIColor(light: Asset.white, dark: Asset.gray95)

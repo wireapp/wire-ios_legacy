@@ -76,15 +76,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
             headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
         ])
         headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
-        guard !voiceChannel.isGroupCall, let user = voiceChannel.getSecondParticipant(), let session = ZMUserSession.shared() else { return }
-        user.fetchProfileImage(session: session,
-                                     imageCache: UIImage.defaultUserImageCache,
-                                     sizeLimit: UserImageView.Size.small.rawValue,
-                                     isDesaturated: false,
-                                     completion: { [weak self] (image, cacheHit) in
-            guard let image = image else { return }
-            self?.headerBar.setAvatar(image)
-        })
+        headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
     }
 
     @objc private func didChangeOrientation() {
@@ -137,7 +129,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
-        headerBar.setContent(hidden: configuration.state.isIncoming)
         let offset = configuration.state.isIncoming ? 280.0 : bottomSheetInitialOffset
         guard self.configuration.initialOffset != offset else { return }
         let height = configuration.state.isIncoming ? offset : view.bounds.height * 0.7
@@ -163,6 +154,10 @@ extension CallingBottomSheetViewController: CallViewControllerDelegate {
     func callViewControllerDidDisappear(_ callController: CallViewController,
                                         for conversation: ZMConversation?) {
         delegate?.activeCallViewControllerDidDisappear(self, for: conversation)
+    }
+
+    @objc func hideCallView() {
+        delegate?.activeCallViewControllerDidDisappear(self, for: voiceChannel.conversation)
     }
 }
 
