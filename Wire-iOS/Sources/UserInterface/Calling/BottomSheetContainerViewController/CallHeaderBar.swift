@@ -35,7 +35,7 @@ class CallHeaderBar: UIView {
     private func setupViews() {
         backgroundColor = SemanticColors.View.backgroundDefault
         minimalizeButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        minimalizeButton.tintColor = SemanticColors.Button.foregroundDefaultBlack
+        minimalizeButton.tintColor = SemanticColors.View.backgroundDefaultBlack
         [minimalizeButton, titleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         addSubview(titleLabel)
         addSubview(minimalizeButton) 
