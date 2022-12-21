@@ -301,7 +301,7 @@ final class CallViewController: UIViewController {
         establishingCallStatusView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(establishingCallStatusView)
         NSLayoutConstraint.activate([
-            establishingCallStatusView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0),
+            establishingCallStatusView.topAnchor.constraint(equalTo: view.topAnchor, constant: 46.0),
             establishingCallStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             establishingCallStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0)
         ])
