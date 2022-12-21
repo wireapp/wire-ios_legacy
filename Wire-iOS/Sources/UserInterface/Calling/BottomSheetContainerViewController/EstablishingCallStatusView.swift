@@ -104,6 +104,9 @@ class EstablishingCallStatusView: UIView {
         callStateLabel.text = state.displayString
     }
 
+    func setProfileImage(hidden: Bool) {
+        profileImageView.isHidden = hidden
+    }
 }
 
 // MARK: - Helper
