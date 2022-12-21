@@ -67,6 +67,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     var avatarView = UserImageView(size: .normal)
     var userSession = ZMUserSession.shared()
     private(set) var videoView: AVSVideoViewProtocol?
+    private var borderLayer = CALayer()
 
     // MARK: - Private Properties
 
@@ -149,6 +150,12 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         guard DeveloperFlag.isUpdatedCallingUI else { return }
         layer.cornerRadius = 6
         layer.masksToBounds = true
+
+        guard DeveloperFlag.isUpdatedCallingUI else { return }
+        borderLayer.borderColor = SemanticColors.View.backgroundDefaultWhite.cgColor
+        borderLayer.borderWidth = 5.0
+        borderLayer.cornerRadius = 6
+        layer.insertSublayer(borderLayer, above: layer)
     }
 
     func createConstraints() {
@@ -225,9 +232,15 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         let showBorderForActiveSpeaker = shouldShowActiveSpeakerFrame && stream.isParticipantUnmutedAndSpeakingNow
         let showBorderForAudioParticipant = shouldShowBorderWhenVideoIsStopped && !stream.isSharingVideo
 
-        let borderWidth = DeveloperFlag.isUpdatedCallingUI ? 2.0 : 1.0
-        layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? borderWidth : 0
-        layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
+        guard DeveloperFlag.isUpdatedCallingUI else {
+            layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? 1 : 0
+            layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
+            return
+        }
+
+        layer.borderWidth = showBorderForActiveSpeaker ? 2 : 0
+        layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.clear.cgColor
+        borderLayer.isHidden = !showBorderForActiveSpeaker
     }
 
     // MARK: - Orientation & Layout
@@ -235,6 +248,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     override func layoutSubviews() {
         super.layoutSubviews()
         detailsConstraints?.updateEdges(with: adjustedInsets)
+        borderLayer.frame = bounds
     }
 
     func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation,
