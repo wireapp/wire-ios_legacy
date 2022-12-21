@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 class RoundedPageIndicator: RoundedBlurView {
     let pageControl = UIPageControl()
@@ -30,6 +31,10 @@ class RoundedPageIndicator: RoundedBlurView {
 
         addSubview(pageControl)
         pageControl.currentPageIndicatorTintColor = .accent()
+        if DeveloperFlag.updatedCallingUI.isOn {
+            pageControl.pageIndicatorTintColor = SemanticColors.View.backgroundDefaultWhite
+            blurView.isHidden = true
+        }
 
         if #available(iOS 14.0, *) {
             pageControl.backgroundStyle = .minimal
