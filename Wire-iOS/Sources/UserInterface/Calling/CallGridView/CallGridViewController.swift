@@ -278,7 +278,9 @@ final class CallGridViewController: SpinnerCapableViewController {
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
         requestVideoStreamsIfNeeded(forPage: gridView.currentPage)
-        selfCallParticipantView?.avatarView.isHidden = !configuration.isConnected
+        if DeveloperFlag.updatedCallingUI.isOn {
+            selfCallParticipantView?.avatarView.isHidden = !configuration.isConnected
+        }
     }
 
     private func displaySpinnerIfNeeded() {
