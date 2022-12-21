@@ -1,6 +1,6 @@
 #!/bin/sh
 set -x
-if [ ${DATADOG_IMPORT} = 1 ]; then
+if [[ ${DATADOG_IMPORT} -eq 1 ]]; then
     echo "KEEP COPY OF DATADOG FRAMEWORK";
 else
     echo "REMOVE TRACE OF DATADOG FRAMEWORK";
