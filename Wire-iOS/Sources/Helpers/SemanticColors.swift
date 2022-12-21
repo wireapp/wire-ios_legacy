@@ -109,6 +109,7 @@ public enum SemanticColors {
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
         static let backgroundSecurityLevel = UIColor(light: Asset.gray20, dark: Asset.gray95)
         static let backgroundSeparatorConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let backgroundReplyMessageViewHighlighted = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
         static let borderCharacterInputField = UIColor(light: Asset.gray80, dark: Asset.gray40)
         static let borderCharacterInputFieldEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
