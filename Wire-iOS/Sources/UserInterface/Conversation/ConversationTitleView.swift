@@ -58,7 +58,7 @@ final class ConversationTitleView: TitleView {
         }
 
         super.configure(icons: attachments,
-                        title: conversation.displayName.capitalized,
+                        title: conversation.displayName.localized,
                         subtitle: subtitle,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
 
@@ -69,7 +69,7 @@ final class ConversationTitleView: TitleView {
         typealias Conversation = L10n.Accessibility.Conversation
 
         var components: [String] = []
-        components.append(conversation.displayName.capitalized)
+        components.append(conversation.displayName.localized)
 
         if conversation.securityLevel == .secure {
             components.append(Conversation.VerifiedIcon.description)
