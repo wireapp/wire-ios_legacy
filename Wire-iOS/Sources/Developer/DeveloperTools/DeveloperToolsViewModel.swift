@@ -23,6 +23,7 @@ import WireSyncEngine
 import WireTransport
 import UIKit
 import SwiftUI
+import WireCommonComponents
 
 @available(iOS 14, *)
 final class DeveloperToolsViewModel: ObservableObject {
@@ -160,6 +161,15 @@ final class DeveloperToolsViewModel: ObservableObject {
                     .text(TextItem(title: "Token type", value: String(describing: pushToken.tokenType))),
                     .text(TextItem(title: "Token data", value: pushToken.deviceTokenString)),
                     .button(ButtonItem(title: "Check registered tokens", action: checkRegisteredTokens))
+                ]
+            ))
+        }
+
+        if let dataDogUserId = DatadogWrapper.shared()?.datadogUserId {
+            sections.append(Section(
+                header: "Datadog",
+                items: [
+                    .text(TextItem(title: "User ID", value: String(describing: dataDogUserId))),
                 ]
             ))
         }
