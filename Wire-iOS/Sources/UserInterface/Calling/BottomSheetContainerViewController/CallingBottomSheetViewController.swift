@@ -129,7 +129,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
-        let offset = configuration.state.isIncoming ? 280.0 : bottomSheetInitialOffset
+        panGesture.isEnabled = !configuration.state.isIncoming
+        let offset = configuration.state.isIncoming ? 230.0 : bottomSheetInitialOffset
         guard self.configuration.initialOffset != offset else { return }
         let height = configuration.state.isIncoming ? offset : view.bounds.height * 0.7
         let newConfiguration = BottomSheetConfiguration(height: height, initialOffset: offset)
