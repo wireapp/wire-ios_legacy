@@ -40,7 +40,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
         groups = SearchGroup.all
 
         let groupItems: [UITabBarItem] = groups.enumerated().map { index, group in
-            UITabBarItem(title: group.name.localizedUppercase, image: nil, tag: index)
+            UITabBarItem(title: group.name.localized, image: nil, tag: index)
         }
 
         tabBar = TabBar(items: groupItems, selectedIndex: 0)
