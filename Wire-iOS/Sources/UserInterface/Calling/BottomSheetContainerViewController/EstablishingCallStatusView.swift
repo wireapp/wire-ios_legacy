@@ -81,6 +81,7 @@ class EstablishingCallStatusView: UIView {
     }
 
     private func setupConstraints() {
+        let spacerHeight = UIScreen.main.bounds.height / 9.0
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -88,7 +89,7 @@ class EstablishingCallStatusView: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileImageView.widthAnchor.constraint(equalToConstant: 128.0),
             profileImageView.heightAnchor.constraint(equalToConstant: 128.0),
-            spaceView.heightAnchor.constraint(equalToConstant: 100.0)
+            spaceView.heightAnchor.constraint(equalToConstant: spacerHeight)
         ])
     }
     
