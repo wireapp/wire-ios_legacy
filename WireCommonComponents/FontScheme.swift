@@ -33,6 +33,7 @@ public enum FontSize: String {
     case titleThree
     case subHeadline
     case bodyTwo
+    case buttonSmall
 }
 
 public enum FontWeight: String, CaseIterable {
@@ -228,6 +229,8 @@ public enum FontScheme {
         fontsByFontSpec[FontSpec(.titleThree, .semibold, .none)] = .systemFont(ofSize: 20, contentSizeCategory: contentSizeCategory, weight: .semibold)
         fontsByFontSpec[FontSpec(.subHeadline, .regular, .none)] = .systemFont(ofSize: 15, contentSizeCategory: contentSizeCategory, weight: .regular)
         fontsByFontSpec[FontSpec(.bodyTwo, .semibold, .none)] = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .semibold)
+
+        fontsByFontSpec[FontSpec(.buttonSmall, .bold, .none)] = .systemFont(ofSize: 14, contentSizeCategory: contentSizeCategory, weight: .bold)
     }
 
     public static func font(for fontType: FontSpec) -> UIFont? {
