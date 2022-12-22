@@ -155,7 +155,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         [gridView, thumbnailViewController.view].forEach {
             $0.fitIn(view: view)
         }
-        let topStackTopDistance = DeveloperFlag.updatedCallingUI.isOn ? 6.0 : 24.0
+        let topStackTopDistance = DeveloperFlag.isUpdatedCallingUI ? 6.0 : 24.0
         NSLayoutConstraint.activate([
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: topStackTopDistance),
