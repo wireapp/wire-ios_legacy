@@ -121,4 +121,9 @@ public extension FontSpec {
     static var bodyTwoSemibold: Self {
         return self.init(.bodyTwo, .semibold)
     }
+
+    // MARK: - Button Small
+    static var buttonSmallBold: Self {
+        return self.init(.buttonSmall, .bold)
+    }
 }
