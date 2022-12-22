@@ -139,8 +139,7 @@ extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
         panGesture.isEnabled = !configuration.state.isIncoming
         guard self.configuration.initialOffset != bottomSheetMinimalOffset else { return }
-        let height = view.bounds.height * 0.7//configuration.state.isIncoming ? bottomSheetInitialOffset : view.bounds.height * 0.7
-        let newConfiguration = BottomSheetConfiguration(height: height, initialOffset: bottomSheetMinimalOffset)
+        let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
         self.configuration = newConfiguration
         hideBottomSheet()
     }
