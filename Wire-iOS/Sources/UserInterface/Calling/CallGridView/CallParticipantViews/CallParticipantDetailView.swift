@@ -38,7 +38,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
     var microphoneIconStyle: MicrophoneIconStyle = .hidden {
         didSet {
             microphoneIconView.set(style: microphoneIconStyle)
-            guard DeveloperFlag.updatedCallingUI.isOn else { return }
+            guard DeveloperFlag.isUpdatedCallingUI else { return }
             makeMicrophone(hidden: true)
             labelContainerView.backgroundColor = .black
             nameLabel.textColor = .white
@@ -56,7 +56,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
     }
 
     override init() {
-        nameLabel = DeveloperFlag.updatedCallingUI.isOn
+        nameLabel = DeveloperFlag.isUpdatedCallingUI
                     ? DynamicFontLabel(fontSpec: .mediumRegularFont, color: .white)
                     : UILabel(key: nil, size: .medium, weight: .semibold, color: .textForeground, variant: .dark)
         super.init()
@@ -64,7 +64,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
 
     override func setupViews() {
         super.setupViews()
-        if DeveloperFlag.updatedCallingUI.isOn {
+        if DeveloperFlag.isUpdatedCallingUI {
             [microphoneImageView, labelContainerView].forEach {
                 $0.translatesAutoresizingMaskIntoConstraints = false
                 addSubview($0)
@@ -93,7 +93,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
 
     override func createConstraints() {
         super.createConstraints()
-        if DeveloperFlag.updatedCallingUI.isOn {
+        if DeveloperFlag.isUpdatedCallingUI {
             createUpdatedUIContraints()
             return
         }

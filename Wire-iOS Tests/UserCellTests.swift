@@ -36,7 +36,7 @@ final class UserCellTests: ZMSnapshotTestCase {
         mockUser.handle = "james_hetfield_1"
 
         conversation = MockGroupDetailsConversation()
-        UserDefaults.applicationGroup.set(false, forKey: DeveloperFlag.updatedCallingUI.rawValue)
+        UserDefaults.applicationGroup.set(true, forKey: DeveloperFlag.deprecatedCallingUI.rawValue)
     }
 
     override func tearDown() {

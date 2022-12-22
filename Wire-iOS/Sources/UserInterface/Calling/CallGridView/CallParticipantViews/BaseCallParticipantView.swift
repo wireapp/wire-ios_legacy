@@ -146,12 +146,12 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         backgroundColor = .graphite
         avatarView.user = stream.user
         avatarView.userSession = userSession
-        userDetailsView.alpha = DeveloperFlag.updatedCallingUI.isOn ? 1 : 0
-        guard DeveloperFlag.updatedCallingUI.isOn else { return }
+        userDetailsView.alpha = DeveloperFlag.isUpdatedCallingUI ? 1 : 0
+        guard DeveloperFlag.isUpdatedCallingUI else { return }
         layer.cornerRadius = 6
         layer.masksToBounds = true
 
-        guard DeveloperFlag.updatedCallingUI.isOn else { return }
+        guard DeveloperFlag.isUpdatedCallingUI else { return }
         borderLayer.borderColor = SemanticColors.View.backgroundDefaultWhite.cgColor
         borderLayer.borderWidth = 5.0
         borderLayer.cornerRadius = 6
@@ -232,7 +232,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         let showBorderForActiveSpeaker = shouldShowActiveSpeakerFrame && stream.isParticipantUnmutedAndSpeakingNow
         let showBorderForAudioParticipant = shouldShowBorderWhenVideoIsStopped && !stream.isSharingVideo
 
-        guard DeveloperFlag.updatedCallingUI.isOn else {
+        guard DeveloperFlag.isUpdatedCallingUI else {
             layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? 1 : 0
             layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
             return

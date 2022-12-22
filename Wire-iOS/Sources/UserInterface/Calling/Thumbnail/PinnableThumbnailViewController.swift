@@ -111,7 +111,7 @@ final class PinnableThumbnailViewController: UIViewController {
         thumbnailContainerView.addSubview(thumbnailView)
         thumbnailView.autoresizingMask = []
         thumbnailView.clipsToBounds = true
-        let cornerRadius = DeveloperFlag.updatedCallingUI.isOn ? 6.0 : 12.0
+        let cornerRadius = DeveloperFlag.isUpdatedCallingUI ? 6.0 : 12.0
         thumbnailView.shape = .rounded(radius: cornerRadius)
 
         thumbnailContainerView.layer.shadowRadius = 30

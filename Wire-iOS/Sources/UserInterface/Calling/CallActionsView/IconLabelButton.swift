@@ -95,7 +95,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     }
 
     private func updateState() {
-        if !DeveloperFlag.updatedCallingUI.isOn {
+        if !DeveloperFlag.isUpdatedCallingUI {
             apply(appearance)
             subtitleTransformLabel.font = titleLabel?.font
             subtitleTransformLabel.textColor = titleColor(for: state)

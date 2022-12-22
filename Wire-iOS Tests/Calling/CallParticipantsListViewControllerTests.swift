@@ -49,7 +49,7 @@ final class CallParticipantsListViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         mockParticipants = CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers())
-        UserDefaults.applicationGroup.set(false, forKey: DeveloperFlag.updatedCallingUI.rawValue)
+        UserDefaults.applicationGroup.set(true, forKey: DeveloperFlag.deprecatedCallingUI.rawValue)
     }
 
     override func tearDown() {
