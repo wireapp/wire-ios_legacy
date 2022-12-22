@@ -37,8 +37,6 @@ struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
     var presentationMode: VideoGridPresentationMode = .allVideoStreams
 
     var callHasTwoParticipants: Bool = false
-
-    var isConnected: Bool = false
 }
 
 final class CallGridViewControllerSnapshotTests: ZMSnapshotTestCase {
