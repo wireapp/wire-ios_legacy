@@ -114,11 +114,15 @@ final class ConversationListHeaderView: UICollectionReusableView {
     override var accessibilityValue: String? {
         get {
             typealias ConversationListHeader = L10n.Accessibility.ConversationsListHeader
+            typealias ConversationList = L10n.Accessibility.ConversationsList
 
             let state = collapsed
                         ? ConversationListHeader.CollapsedButton.description
                         : ConversationListHeader.ExpandedButton.description
-            return state + " \(folderBadge)"
+            guard folderBadge != 0 else {
+                return state
+            }
+            return "\(state), \(ConversationList.BadgeView.value(folderBadge))"
         }
 
         set {
