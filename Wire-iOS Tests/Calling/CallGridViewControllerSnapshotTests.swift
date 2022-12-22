@@ -22,6 +22,7 @@ import SnapshotTesting
 import WireCommonComponents
 
 struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
+    var isConnected: Bool = true
 
     var shouldShowActiveSpeakerFrame: Bool = true
 
