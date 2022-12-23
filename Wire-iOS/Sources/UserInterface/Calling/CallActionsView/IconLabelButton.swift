@@ -94,12 +94,10 @@ class IconLabelButton: ButtonWithLargerHitArea {
         ])
     }
 
-    private func updateState() {
-        if !DeveloperFlag.isUpdatedCallingUI {
+    func updateState() {
             apply(appearance)
             subtitleTransformLabel.font = titleLabel?.font
             subtitleTransformLabel.textColor = titleColor(for: state)
-        }
     }
 
     override var isHighlighted: Bool {

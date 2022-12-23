@@ -36,12 +36,12 @@ class CallingActionButton: IconLabelButton {
     override func apply(_ configuration: CallActionAppearance) {
         iconButton.borderWidth = 1
 
-        setTitleColor(configuration.textColorNormal, for: .normal)
+        setTitleColor(SemanticColors.Button.textCallingNormal, for: .normal)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingNormal, for: .normal)
         iconButton.setIconColor(SemanticColors.Button.iconCallingNormal, for: .normal)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingNormal, for: .normal)
 
-        setTitleColor(configuration.textColorNormal, for: .selected)
+        setTitleColor(SemanticColors.Button.textCallingNormal, for: .normal)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingSelected, for: .selected)
         iconButton.setIconColor(SemanticColors.Button.iconCallingSelected, for: .selected)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingSelected, for: .selected)
