@@ -108,7 +108,6 @@ final class AddParticipantsViewController: UIViewController {
     fileprivate let confirmButtonHeight: CGFloat = 56.0
     fileprivate let confirmButton: IconButton
     fileprivate let emptyResultView: EmptySearchResultsView
-    private lazy var bottomConstraint: NSLayoutConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomMargin)
     fileprivate let backButtonDescriptor = BackButtonDescription()
     private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
 
@@ -247,6 +246,8 @@ final class AddParticipantsViewController: UIViewController {
     }
 
     private func createConstraints() {
+        let buttonMargin: CGFloat = 24
+
         guard let searchHeaderView = searchHeaderViewController.view,
               let searchResultsView = searchResultsViewController.view,
               let margin = (searchResultsView as? SearchResultsView)?.accessoryViewMargin else {
@@ -265,13 +266,12 @@ final class AddParticipantsViewController: UIViewController {
 
             searchResultsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             searchResultsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            searchResultsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            searchResultsView.bottomAnchor.constraint(equalTo: confirmButton.topAnchor, constant: -buttonMargin),
 
             confirmButton.heightAnchor.constraint(equalToConstant: confirmButtonHeight),
             confirmButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: margin),
             confirmButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -margin),
-
-            bottomConstraint
+            confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -buttonMargin)
         ]
 
         if viewModel.botCanBeAdded {
@@ -315,9 +315,6 @@ final class AddParticipantsViewController: UIViewController {
 
         // Enable button & collection view content inset
         updateConfirmButtonState(state: !userSelection.users.isEmpty)
-
-        let bottomInset = confirmButton.isHidden ? bottomMargin : confirmButtonHeight + 16 + bottomMargin
-        searchResultsViewController.searchResultsView.collectionView.contentInset.bottom = bottomInset
 
         updateTitle()
 
@@ -368,7 +365,6 @@ final class AddParticipantsViewController: UIViewController {
                 return -weakSelf.bottomMargin
             }()
 
-            weakSelf.bottomConstraint.constant = -(keyboardHeight + margin)
             weakSelf.view.layoutIfNeeded()
         })
     }
