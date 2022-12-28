@@ -108,7 +108,7 @@ class CallingActionsView: UIView {
             verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
-            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
             topStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
             handleView.widthAnchor.constraint(equalToConstant: 129),
             handleView.heightAnchor.constraint(equalToConstant: 5)
@@ -117,9 +117,7 @@ class CallingActionsView: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
-        setNeedsLayout()
-        layoutIfNeeded()
+        allButtons.forEach( { $0.updateState() })
     }
 
     // MARK: - State Input

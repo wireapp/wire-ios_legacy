@@ -36,18 +36,18 @@ class CallingActionButton: IconLabelButton {
     override func apply(_ configuration: CallActionAppearance) {
         iconButton.borderWidth = 1
 
-        setTitleColor(configuration.textColorNormal, for: .normal)
+        setTitleColor(SemanticColors.Button.textCallingNormal, for: .normal)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingNormal, for: .normal)
         iconButton.setIconColor(SemanticColors.Button.iconCallingNormal, for: .normal)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingNormal, for: .normal)
 
-        setTitleColor(configuration.textColorNormal, for: .selected)
+        setTitleColor(SemanticColors.Button.textCallingNormal, for: . selected)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingSelected, for: .selected)
         iconButton.setIconColor(SemanticColors.Button.iconCallingSelected, for: .selected)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingSelected, for: .selected)
 
 
-        setTitleColor(configuration.textColorDisabled, for: .disabled)
+        setTitleColor(SemanticColors.Button.textCallingDisabled, for: .disabled)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingDisabled, for: .disabled)
         iconButton.setIconColor(SemanticColors.Button.iconCallingDisabled, for: .disabled)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingDisabled, for: .disabled)

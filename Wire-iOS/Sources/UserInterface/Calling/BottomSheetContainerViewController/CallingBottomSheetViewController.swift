@@ -38,7 +38,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         case .incoming(degradedUser: _):
             return 230.0
         default:
-            return 124.0
+            return 128.0
         }
     }
 
@@ -55,7 +55,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: selfUser, isOverlayEnabled: false)
 
         callingActionsInfoViewController = CallingActionsInfoViewController(participants: voiceChannel.getParticipantsList(), selfUser: selfUser)
-        super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: 124.0))
+        super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: 128.0))
 
         callingActionsInfoViewController.actionsDelegate = visibleVoiceChannelViewController
         callingActionsInfoViewController.actionsView.bottomSheetScrollingDelegate = self

@@ -20,7 +20,6 @@ import UIKit
 import WireDataModel
 
 class CallingActionsInfoViewController: UIViewController, UICollectionViewDelegateFlowLayout {
-    private let actionsViewHeight = 150.0
     private let participantsHeaderHeight: CGFloat = 42
     private let cellHeight: CGFloat = 56
     private var topConstraint: NSLayoutConstraint?
