@@ -87,13 +87,10 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     }
 
     @objc private func didChangeOrientation() {
-        if UIDevice.current.orientation.isLandscape {
-            let newConfiguration = BottomSheetConfiguration(height: view.bounds.height, initialOffset: bottomSheetMinimalOffset)
-            self.configuration = newConfiguration
-        } else {
-            let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
-            self.configuration = newConfiguration
-        }
+        let height = UIDevice.current.orientation.isLandscape ? (view.bounds.height - headerBar.bounds.height) : bottomSheetMaxHeight
+        let newConfiguration = BottomSheetConfiguration(height: height, initialOffset: bottomSheetMinimalOffset)
+        guard self.configuration != newConfiguration else { return }
+        self.configuration = newConfiguration
         hideBottomSheet()
     }
 

@@ -21,7 +21,7 @@ import UIKit
 class BottomSheetContainerViewController: UIViewController {
 
     // MARK: - Configuration
-    public struct BottomSheetConfiguration {
+    public struct BottomSheetConfiguration: Equatable {
         let height: CGFloat
         let initialOffset: CGFloat
     }
