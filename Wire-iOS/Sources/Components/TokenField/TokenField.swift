@@ -149,12 +149,8 @@ final class TokenField: UIView {
 
     private(set) var tokens = [Token<NSObjectProtocol>]()
     private var textAttributes: [NSAttributedString.Key: Any] {
-        let inputParagraphStyle = NSMutableParagraphStyle()
-        inputParagraphStyle.lineSpacing = lineSpacing
-
         return [.font: font,
-                .foregroundColor: textView.textColor ?? .clear,
-                .paragraphStyle: inputParagraphStyle]
+                .foregroundColor: textView.textColor ?? .clear]
     }
 
     // Collapse

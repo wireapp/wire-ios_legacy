@@ -108,8 +108,10 @@ final class AddParticipantsViewController: UIViewController {
     fileprivate let confirmButtonHeight: CGFloat = 56.0
     fileprivate let confirmButton: IconButton
     fileprivate let emptyResultView: EmptySearchResultsView
+    fileprivate lazy var bottomConstraint: NSLayoutConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                                                                      constant: -bottomMargin)
     fileprivate let backButtonDescriptor = BackButtonDescription()
-    private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
+    fileprivate let bottomMargin: CGFloat = 24
 
     weak var conversationCreationDelegate: AddParticipantsConversationCreationDelegate?
 
@@ -160,6 +162,7 @@ final class AddParticipantsViewController: UIViewController {
 
         confirmButton = IconButton(fontSpec: .normalSemiboldFont)
         confirmButton.applyStyle(.addParticipantsDisabledButtonStyle)
+        confirmButton.setBackgroundImageColor(SemanticColors.Button.backgroundPrimaryDisabled, for: .disabled)
         confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         confirmButton.layer.cornerRadius = 16
@@ -246,8 +249,7 @@ final class AddParticipantsViewController: UIViewController {
     }
 
     private func createConstraints() {
-        let buttonMargin: CGFloat = 24
-
+        let searchMargin: CGFloat = confirmButton.isHidden ? 0 : (confirmButtonHeight + bottomMargin * 2)
         guard let searchHeaderView = searchHeaderViewController.view,
               let searchResultsView = searchResultsViewController.view,
               let margin = (searchResultsView as? SearchResultsView)?.accessoryViewMargin else {
@@ -266,12 +268,12 @@ final class AddParticipantsViewController: UIViewController {
 
             searchResultsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             searchResultsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            searchResultsView.bottomAnchor.constraint(equalTo: confirmButton.topAnchor, constant: -buttonMargin),
+            searchResultsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -searchMargin),
 
             confirmButton.heightAnchor.constraint(equalToConstant: confirmButtonHeight),
             confirmButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: margin),
             confirmButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -margin),
-            confirmButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -buttonMargin)
+            bottomConstraint
         ]
 
         if viewModel.botCanBeAdded {
@@ -360,11 +362,8 @@ final class AddParticipantsViewController: UIViewController {
             guard let weakSelf = self else { return }
 
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            let margin: CGFloat = {
-                guard UIScreen.hasNotch, keyboardHeight > 0 else { return weakSelf.bottomMargin }
-                return -weakSelf.bottomMargin
-            }()
 
+            weakSelf.bottomConstraint.constant = -(keyboardHeight + weakSelf.bottomMargin)
             weakSelf.view.layoutIfNeeded()
         })
     }
