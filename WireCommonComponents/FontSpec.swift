@@ -79,6 +79,9 @@ public extension FontSpec {
     }
 
     // MARK: - Large
+    static var largeFont: Self {
+        return self.init(.large, .none)
+    }
     static var largeThinFont: Self {
         return self.init(.large, .thin)
     }
@@ -112,5 +115,15 @@ public extension FontSpec {
     }
     static var headerRegularFont: Self {
         return self.init(.header, .regular)
+    }
+
+    // MARK: - Body Two
+    static var bodyTwoSemibold: Self {
+        return self.init(.bodyTwo, .semibold)
+    }
+
+    // MARK: - Button Small
+    static var buttonSmallBold: Self {
+        return self.init(.buttonSmall, .bold)
     }
 }

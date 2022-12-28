@@ -72,7 +72,7 @@ final class LegalHoldDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
     override func viewDidAppear(_ animated: Bool) {

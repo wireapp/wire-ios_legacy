@@ -35,10 +35,22 @@ extension Notification.Name {
 }
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
+private let pushLog = ZMSLog(tag: "Push")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Private Property
+
+    private lazy var voIPPushManager: VoIPPushManager = {
+        return VoIPPushManager(
+            application: UIApplication.shared,
+            requiredPushTokenType: requiredPushTokenType,
+            pushTokenService: pushTokenService
+        )
+    }()
+
+    private let pushTokenService = PushTokenService()
+
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
         TrackingOperation(),
@@ -95,7 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         zmLog.info("application:willFinishLaunchingWithOptions \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
-
+        DatadogWrapper.shared()?.startMonitoring()
+        DatadogWrapper.shared()?.log(level: .info, message: "start app")
         // Initial log line to indicate the client version and build
         zmLog.info("Wire-ios version \(String(describing: Bundle.main.shortVersionString)) (\(String(describing: Bundle.main.infoDictionary?[kCFBundleVersionKey as String])))")
 
@@ -103,10 +116,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        SessionManager.shared?.updateDeviceToken(deviceToken)
+        pushLog.safePublic("application did register for remote notifications, storing standard token")
+        pushTokenService.storeLocalToken(.createAPNSToken(from: deviceToken))
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        voIPPushManager.registerForVoIPPushes()
+
         ZMSLog.switchCurrentLogToPrevious()
 
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
@@ -261,10 +277,10 @@ private extension AppDelegate {
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
         let jailbreakDetector = JailbreakDetector()
 
-        /// get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
+        // Get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
-        return SessionManager(
+        let sessionManager = SessionManager(
             maxNumberAccounts: maxNumberAccounts,
             appVersion: appVersion,
             mediaManager: mediaManager,
@@ -275,8 +291,13 @@ private extension AppDelegate {
             configuration: configuration,
             detector: jailbreakDetector,
             requiredPushTokenType: requiredPushTokenType,
+            pushTokenService: pushTokenService,
+            callKitManager: voIPPushManager.callKitManager,
             isDeveloperModeEnabled: Bundle.developerModeEnabled
         )
+
+        voIPPushManager.delegate = sessionManager
+        return sessionManager
     }
 
     private func queueInitializationOperations(launchOptions: LaunchOptions) {

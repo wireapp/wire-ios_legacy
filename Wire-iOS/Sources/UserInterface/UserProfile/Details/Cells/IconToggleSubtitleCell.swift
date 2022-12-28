@@ -38,7 +38,11 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
 
     override var accessibilityLabel: String? {
         get {
-            return titleLabel.text
+            guard let title = titleLabel.text,
+                  let subtitle = subtitleLabel.text else {
+                      return nil
+                  }
+            return "\(title), \(subtitle)"
         }
 
         set {
@@ -126,7 +130,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
 
     private func styleViews() {
         topContainer.backgroundColor = SemanticColors.View.backgroundUserCell
-        titleLabel.textColor = SemanticColors.Label.textCellTitle
+        titleLabel.textColor = SemanticColors.Label.textDefault
         subtitleLabel.textColor = SemanticColors.Label.textSectionFooter
         backgroundColor = .clear
         topContainer.addBorder(for: .bottom)

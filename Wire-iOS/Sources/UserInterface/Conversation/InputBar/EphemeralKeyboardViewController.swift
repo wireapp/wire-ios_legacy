@@ -130,6 +130,7 @@ final class EphemeralKeyboardViewController: UIViewController {
         createConstraints()
 
         view.backgroundColor = UIColor.from(scheme: .textForeground, variant: .light)
+        UIAccessibility.post(notification: .layoutChanged, argument: self)
     }
 
     public override func viewWillAppear(_ animated: Bool) {
