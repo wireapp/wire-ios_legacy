@@ -81,7 +81,7 @@ private extension DownStyle {
     static var labelStyle: DownStyle {
         let style = DownStyle()
         style.baseFont = UIFont.systemFont(ofSize: 14)
-        style.baseFontColor = SemanticColor.Label.textDefault
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.baseParagraphStyle = NSParagraphStyle.default
 
         return style
