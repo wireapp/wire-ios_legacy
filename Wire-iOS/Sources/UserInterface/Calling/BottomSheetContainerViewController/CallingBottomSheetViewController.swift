@@ -86,6 +86,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         let height = (size.width > size.height) ? (size.height - headerBar.bounds.height) : bottomSheetMaxHeight
         let newConfiguration = BottomSheetConfiguration(height: height, initialOffset: bottomSheetMinimalOffset)
         guard self.configuration != newConfiguration else { return }
