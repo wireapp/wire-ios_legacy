@@ -47,7 +47,7 @@ class CallingActionButton: IconLabelButton {
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingSelected, for: .selected)
 
 
-        setTitleColor(configuration.textColorDisabled, for: .disabled)
+        setTitleColor(SemanticColors.Button.textCallingDisabled, for: .disabled)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingDisabled, for: .disabled)
         iconButton.setIconColor(SemanticColors.Button.iconCallingDisabled, for: .disabled)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingDisabled, for: .disabled)
