@@ -47,7 +47,7 @@ open class AccessoryTextField: UITextField, DynamicTypeCapable {
                 self.placeholderColor = placeholderColor
                 self.backgroundColor = backgroundColor
                 self.cornerRadius = cornerRadius
-        }
+            }
     }
     // MARK: - Constants
     private let horizonalInset: CGFloat = 16
@@ -191,12 +191,12 @@ extension AccessoryTextField {
     }
     public override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
         return isLeftToRight
-            ? rightAccessoryViewRect(forBounds: bounds, isLeftToRight: isLeftToRight)
-            : .zero
+        ? rightAccessoryViewRect(forBounds: bounds, isLeftToRight: isLeftToRight)
+        : .zero
     }
     public override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
         return isLeftToRight
-            ? .zero
-            : rightAccessoryViewRect(forBounds: bounds, isLeftToRight: isLeftToRight)
+        ? .zero
+        : rightAccessoryViewRect(forBounds: bounds, isLeftToRight: isLeftToRight)
     }
 }

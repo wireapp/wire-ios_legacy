@@ -45,8 +45,8 @@ final class NoResultsView: UIView {
     }
 
     var placeholderColor: UIColor {
-        let backgroundColor = UIColor.from(scheme: .background)
-        return backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
+        let backgroundColor = SemanticColors.Label.textSettingsPasswordPlaceholder
+        return backgroundColor
     }
 
     override init(frame: CGRect) {
@@ -57,7 +57,7 @@ final class NoResultsView: UIView {
         label.numberOfLines = 0
         label.textColor = SemanticColors.Label.textDefault
         label.textAlignment = .center
-        label.font = .mediumSemiboldFont
+        label.font = FontSpec.mediumSemiboldFont.font!
         addSubview(label)
 
         iconView.contentMode = .scaleAspectFit

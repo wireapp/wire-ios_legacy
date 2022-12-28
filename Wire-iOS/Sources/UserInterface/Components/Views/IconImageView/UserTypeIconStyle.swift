@@ -41,6 +41,21 @@ enum UserTypeIconStyle: String, IconImageStyle {
     var accessibilitySuffix: String {
         return rawValue
     }
+
+    var accessibilityLabel: String {
+        typealias ContactsList = L10n.Accessibility.ContactsList
+
+        switch self {
+        case .guest:
+            return ContactsList.GuestIcon.description
+        case .external:
+            return ContactsList.ExternalIcon.description
+        case .member:
+            return ContactsList.MemberIcon.description
+        case .federated:
+            return ContactsList.FederatedIcon.description
+        }
+    }
 }
 
 extension UserTypeIconStyle {

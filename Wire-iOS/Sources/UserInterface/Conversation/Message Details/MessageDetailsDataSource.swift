@@ -43,6 +43,8 @@ protocol MessageDetailsDataSourceObserver: AnyObject {
 
 final class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserver {
 
+    typealias MessageDetails = L10n.Localizable.MessageDetails
+
     /// The presented message.
     let message: ZMConversationMessage
 
@@ -93,13 +95,13 @@ final class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserve
         switch (showLikesTab, showReceiptsTab) {
         case (true, true):
             self.displayMode = .combined
-            self.title = "message_details.combined_title".localized
+            self.title = MessageDetails.combinedTitle.capitalized
         case (false, true):
             self.displayMode = .receipts
-            self.title = "message_details.receipts_title".localized
+            self.title = MessageDetails.receiptsTitle.capitalized
         case (true, false):
             self.displayMode = .reactions
-            self.title = "message_details.likes_title".localized
+            self.title = MessageDetails.likesTitle.capitalized
         default:
             fatal("Trying to display a message that does not support reactions or receipts.")
         }

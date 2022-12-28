@@ -67,7 +67,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         }
 
         set {
-            // no-op
+            super.accessibilityIdentifier = newValue
         }
     }
 
@@ -77,7 +77,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         }
 
         set {
-            // no-op
+            super.accessibilityLabel = newValue
         }
     }
 

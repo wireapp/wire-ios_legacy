@@ -25,6 +25,8 @@ import WireCommonComponents
 private let zmLog = ZMSLog(tag: "UI")
 
 final class AudioMessageView: UIView, TransferView {
+
+    typealias AudioMessage = L10n.Accessibility.AudioMessage
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
     private weak var mediaPlaybackManager: MediaPlaybackManager?
@@ -91,7 +93,6 @@ final class AudioMessageView: UIView, TransferView {
         backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
-        playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
         playButton.accessibilityIdentifier = "AudioActionButton"
         playButton.layer.masksToBounds = true
 
@@ -107,10 +108,6 @@ final class AudioMessageView: UIView, TransferView {
         allViews.forEach(addSubview)
 
         createConstraints()
-
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [playButton, timeLabel])
-        accessibilityElements = currentElements
 
         setNeedsLayout()
         layoutIfNeeded()
@@ -206,6 +203,7 @@ final class AudioMessageView: UIView, TransferView {
             playerProgressView.setProgress(0, animated: false)
             waveformProgressView.setProgress(0, animated: false)
         }
+        timeLabel.isAccessibilityElement = false
     }
 
     func willDeleteMessage() {
@@ -244,7 +242,7 @@ final class AudioMessageView: UIView, TransferView {
         if let viewsState = state.viewsStateForAudio() {
             playButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
             playButton.backgroundColor = viewsState.playButtonBackgroundColor
-            playButton.accessibilityValue = viewsState.playButtonIcon == .play ? "play" : "pause"
+            playButton.accessibilityValue = viewsState.playButtonIcon == .play ? AudioMessage.Play.value : AudioMessage.Pause.value
         }
 
         updateVisibleViews(allViews, visibleViews: visibleViews, animated: !loadingView.isHidden)
@@ -285,17 +283,17 @@ final class AudioMessageView: UIView, TransferView {
 
         if audioTrackPlayer.isPlaying {
             playButton.setIcon(.pause, size: .tiny, for: [])
-            playButton.accessibilityValue = "pause"
+            playButton.accessibilityValue = AudioMessage.Pause.value
         } else {
             playButton.setIcon(.play, size: .tiny, for: [])
-            playButton.accessibilityValue = "play"
+            playButton.accessibilityValue = AudioMessage.Play.value
         }
     }
 
     private func updateInactivePlayer() {
         playButton.backgroundColor = FileMessageViewState.normalColor
         playButton.setIcon(.play, size: .tiny, for: [])
-        playButton.accessibilityValue = "play"
+        playButton.accessibilityValue = AudioMessage.Play.value
 
         playerProgressView.setProgress(0, animated: false)
         waveformProgressView.setProgress(0, animated: false)
@@ -438,7 +436,7 @@ final class AudioMessageView: UIView, TransferView {
             updateTimeLabel()
             updateProximityObserverState()
         }
-        /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+        // When state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
         else if state == .completed {
             updateTimeLabel()
         } else {
@@ -514,9 +512,9 @@ extension AudioMessageView: AudioTrackPlayerDelegate {
     }
 
     func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?) {
-        ///  Updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
-        ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
-        ///          This function may called from background thread (in case incoming call).
+        // Updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
+        // Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
+        // This function may called from background thread (in case incoming call).
         DispatchQueue.main.async { [weak self] in
             self?.updateUI(state: state)
         }

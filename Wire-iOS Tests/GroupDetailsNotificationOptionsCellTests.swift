@@ -29,6 +29,7 @@ class GroupDetailsNotificationOptionsCellTests: CoreDataSnapshotTestCase {
         super.setUp()
         cell = GroupDetailsNotificationOptionsCell(frame: CGRect(x: 0, y: 0, width: 350, height: 56))
         cell.colorSchemeVariant = .light
+        cell.overrideUserInterfaceStyle = .light
         conversation = self.createGroupConversation()
     }
 

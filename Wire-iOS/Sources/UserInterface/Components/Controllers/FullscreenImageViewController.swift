@@ -214,10 +214,10 @@ final class FullscreenImageViewController: UIViewController {
         let topBarHeight: CGFloat = navigationController?.navigationBar.frame.maxY ?? 0
 
         NSLayoutConstraint.activate([
-        snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
-        snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width),
-        snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height)
+            snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
+            snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width),
+            snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height)
         ])
         snapshotBackgroundView.alpha = 0
 
@@ -225,11 +225,17 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     private func setupScrollView() {
+        let inputBarButtonViewHeight: CGFloat = 56.0
+
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
 
-        scrollView.fitIn(view: view)
-
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -inputBarButtonViewHeight)
+        ])
         scrollView.contentInsetAdjustmentBehavior = .never
 
         scrollView.delegate = self
@@ -533,9 +539,12 @@ final class FullscreenImageViewController: UIViewController {
 
             highlightLayer = layer
 
-            animated ?
-            UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure) :
-            blackLayerClosure()
+            if animated {
+                UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure)
+            } else {
+                blackLayerClosure()
+            }
+
         } else {
 
             let removeLayerClosure: Completion = {
@@ -596,7 +605,7 @@ final class FullscreenImageViewController: UIViewController {
 
         hideMenu()
 
-        /// Notice: fix the case the the image is just fit on the screen and call scrollView.zoom causes images move outside the frame issue
+        // Notice: fix the case the the image is just fit on the screen and call scrollView.zoom causes images move outside the frame issue
         guard scrollView.minimumZoomScale != scrollView.maximumZoomScale else {
             return
         }
@@ -742,7 +751,7 @@ extension FullscreenImageViewController: MessageActionResponder {
     fileprivate func perform(action: MessageAction) {
         let sourceView: UIView
 
-        /// iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
+        // iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
         if action == .delete,
            let conversationImagesViewController = delegate as? ConversationImagesViewController {
             sourceView = conversationImagesViewController.deleteButton
@@ -795,8 +804,8 @@ extension FullscreenImageViewController: UIScrollViewDelegate {
         let imageWidth: CGFloat = imageView?.image?.size.width ?? 0
         let imageHeight: CGFloat = imageView?.image?.size.height ?? 0
 
-        let viewWidth = view.bounds.size.width
-        let viewHeight = view.bounds.size.height
+        let viewWidth = scrollView.bounds.size.width
+        let viewHeight = scrollView.bounds.size.height
 
         var horizontalInset: CGFloat = (viewWidth - scrollView.zoomScale * imageWidth) / 2
         horizontalInset = max(0, horizontalInset)

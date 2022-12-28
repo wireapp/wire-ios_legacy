@@ -38,7 +38,11 @@ final class Spinner: UIView {
                 return
             }
 
-            isAnimating ? startAnimationInternal() : stopAnimationInternal()
+            if isAnimating {
+                startAnimationInternal()
+            } else {
+                stopAnimationInternal()
+            }
         }
     }
 

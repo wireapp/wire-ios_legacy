@@ -78,6 +78,7 @@ final class TextSearchInputView: UIView {
         clearButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         clearButton.isHidden = true
         clearButton.accessibilityIdentifier = "cancel search"
+        clearButton.accessibilityLabel = L10n.Accessibility.SearchView.ClearButton.description
 
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 

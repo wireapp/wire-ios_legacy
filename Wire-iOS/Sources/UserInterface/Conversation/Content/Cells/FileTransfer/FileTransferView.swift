@@ -72,10 +72,14 @@ final class FileTransferView: UIView, TransferView {
         allViews.forEach(addSubview)
 
         createConstraints()
+        setupAccessibility()
+    }
 
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, actionButton])
-        accessibilityElements = currentElements
+
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        accessibilityHint = L10n.Accessibility.ConversationSearch.Item.hint
     }
 
     @available(*, unavailable)
@@ -191,6 +195,12 @@ final class FileTransferView: UIView, TransferView {
 
         topLabel.accessibilityValue = topLabel.attributedText?.string ?? ""
         bottomLabel.accessibilityValue = bottomLabel.attributedText?.string ?? ""
+
+        guard let fileName = topLabel.text,
+                let details = bottomLabel.text else {
+            return
+        }
+        accessibilityLabel = "\(L10n.Accessibility.ConversationSearch.FileName.description): \(fileName), \(details)"
     }
 
     fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {

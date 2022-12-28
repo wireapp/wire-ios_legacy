@@ -57,7 +57,7 @@ class CustomMessageView: UIView {
         ])
 
         messageLabel.font = FontSpec(.small, .light).font
-        messageLabel.textColor = UIColor.from(scheme: .textForeground)
+        messageLabel.textColor = SemanticColors.Label.textDefault
     }
 }
 

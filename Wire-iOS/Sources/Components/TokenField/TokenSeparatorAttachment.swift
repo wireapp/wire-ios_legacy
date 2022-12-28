@@ -39,6 +39,18 @@ final class TokenSeparatorAttachment: NSTextAttachment, TokenContainer {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var accessibilityLabel: String? {
+        get {
+            // Setting isAccessibilityElement to false does not seem to work for this
+            // `NSTextAttachment`. VoiceOver will still dictate “Attachment. PNG. File” which is
+            // really weird. Returning an empty label here so nothing will just be dictated at all.
+            return " "
+        }
+        set {
+            super.accessibilityLabel = newValue
+        }
+    }
+
     private func refreshImage() {
         image = imageForCurrentToken
     }

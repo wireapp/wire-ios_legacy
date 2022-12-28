@@ -101,8 +101,7 @@ final class ClientListViewController: UIViewController,
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true,
-                  showLegalHold: Bool = true,
-                  variant: ColorSchemeVariant? = .none) {
+                  showLegalHold: Bool = true) {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
@@ -160,6 +159,7 @@ final class ClientListViewController: UIViewController,
         self.createConstraints()
 
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        self.navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.ClientsList.BackButton.description
         setColor()
     }
 
@@ -362,7 +362,7 @@ final class ClientListViewController: UIViewController,
             }
 
             cell.accessibilityTraits = .button
-            cell.accessibilityHint = L10n.Accessibility.ClientList.DeviceDetails.hint
+            cell.accessibilityHint = L10n.Accessibility.ClientsList.DeviceDetails.hint
 
             return cell
         } else {
@@ -442,11 +442,7 @@ final class ClientListViewController: UIViewController,
     }
 
     private func setupControllerTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Registration.Devices.title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Registration.Devices.title.capitalized)
     }
 
 }

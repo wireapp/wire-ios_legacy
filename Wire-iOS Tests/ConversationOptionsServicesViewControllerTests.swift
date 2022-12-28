@@ -23,17 +23,15 @@ import SnapshotTesting
 final class MockServicesOptionsViewModelConfiguration: ConversationServicesOptionsViewModelConfiguration {
     // MARK: Properties
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
-    var title: String
     var allowServices: Bool
     var allowServicesChangedHandler: ((Bool) -> Void)?
     var areServicePresent = true
     var setAllowServices: SetHandler?
 
     // MARK: Init
-    init(allowServices: Bool, title: String = "", setAllowServices: SetHandler? = nil) {
+    init(allowServices: Bool, setAllowServices: SetHandler? = nil) {
         self.allowServices = allowServices
         self.setAllowServices = setAllowServices
-        self.title = title
     }
 
     func setAllowServices(_ allowServices: Bool, completion: @escaping (VoidResult) -> Void) {
@@ -112,7 +110,7 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
 
     func testThatItRendersItsGroupTitle() {
         // GIVEN
-        let config = MockServicesOptionsViewModelConfiguration(allowServices: true, title: "Italy Trip")
+        let config = MockServicesOptionsViewModelConfiguration(allowServices: true)
         let viewModel = ConversationServicesOptionsViewModel(configuration: config)
         let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .light)
 

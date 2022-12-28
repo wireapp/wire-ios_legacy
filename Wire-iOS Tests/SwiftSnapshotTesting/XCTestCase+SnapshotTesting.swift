@@ -174,25 +174,6 @@ extension XCTestCase {
 
     // MARK: - verify the snapshots in both dark and light scheme
 
-    func verifyInAllColorSchemes(createSut: () -> UIView,
-                                 file: StaticString = #file,
-                                 testName: String = #function,
-                                 line: UInt = #line) {
-		verifyInDarkScheme(createSut: createSut,
-						   name: "DarkTheme",
-						   file: file,
-						   testName: testName,
-						   line: line)
-
-		ColorScheme.default.variant = .light
-
-		verify(matching: createSut(),
-			   named: "LightTheme",
-			   file: file,
-			   testName: testName,
-			   line: line)
-	}
-
     func verifyInAllColorSchemes(createSut: () -> UIViewController,
                                  file: StaticString = #file,
                                  testName: String = #function,
@@ -211,19 +192,33 @@ extension XCTestCase {
                             line: line)
     }
 
-    func verifyInDarkScheme(createSut: () -> UIView,
-                            name: String? = nil,
-                            file: StaticString = #file,
-                            testName: String = #function,
-                            line: UInt = #line) {
-		ColorScheme.default.variant = .dark
+    func verifyViewInDarkScheme(createSut: () -> UIView,
+                                name: String? = nil,
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
+        let sut = createSut()
+        sut.overrideUserInterfaceStyle = .dark
+        verify(matching: createSut(),
+               named: name,
+               file: file,
+               testName: testName,
+               line: line)
+    }
 
-		verify(matching: createSut(),
-			   named: name,
-			   file: file,
-			   testName: testName,
-			   line: line)
-	}
+    func verifyViewInLightScheme(createSut: () -> UIView,
+                                 name: String? = nil,
+                                 file: StaticString = #file,
+                                 testName: String = #function,
+                                 line: UInt = #line) {
+        let sut = createSut()
+        sut.overrideUserInterfaceStyle = .light
+        verify(matching: createSut(),
+               named: name,
+               file: file,
+               testName: testName,
+               line: line)
+    }
 
     func verifyInDarkScheme(createSut: () -> UIViewController,
                             name: String? = nil,
@@ -347,16 +342,17 @@ extension XCTestCase {
                 testName: String = #function,
                 line: UInt = #line) {
 
-        let failure = verifySnapshot(matching: value,
-                                     as: customSize == nil ? .image : .image(on: ViewImageConfig(safeArea: UIEdgeInsets.zero, size: customSize!, traits: UITraitCollection())),
-                                     named: name,
-                                     record: recording,
-                                     snapshotDirectory: snapshotDirectory(file: file),
-                                     file: file,
-                                     testName: testName,
-                                     line: line)
+            let failure = verifySnapshot(matching: value,
+                                         as: customSize == nil ? .image : .image(on: ViewImageConfig(safeArea: UIEdgeInsets.zero, size: customSize!, traits: UITraitCollection())),
+                                         named: name,
+                                         record: recording,
+                                         snapshotDirectory: snapshotDirectory(file: file),
+                                         file: file,
+                                         testName: testName,
+                                         line: line)
 
-        XCTAssertNil(failure, file: file, line: line)
+            XCTAssertNil(failure, file: file, line: line)
+
     }
 
     func verify(matching value: UIView,
@@ -365,15 +361,16 @@ extension XCTestCase {
                 testName: String = #function,
                 line: UInt = #line) {
 
-        let failure = verifySnapshot(matching: value,
-                                     as: .image,
-                                     named: name,
-                                     snapshotDirectory: snapshotDirectory(file: file),
-                                     file: file,
-                                     testName: testName,
-                                     line: line)
+            let failure = verifySnapshot(matching: value,
+                                         as: .image,
+                                         named: name,
+                                         snapshotDirectory: snapshotDirectory(file: file),
+                                         file: file,
+                                         testName: testName,
+                                         line: line)
 
-        XCTAssertNil(failure, file: file, line: line)
+            XCTAssertNil(failure, file: file, line: line)
+
     }
 
     func verify(matching value: UIImage,
@@ -563,11 +560,11 @@ extension XCTestCase {
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         _ = container.addWidthConstraint(width: width)
 
-            if ColorScheme.default.variant == .light {
-                container.overrideUserInterfaceStyle = .light
-            } else {
-                container.overrideUserInterfaceStyle = .dark
-            }
+        if ColorScheme.default.variant == .light {
+            container.overrideUserInterfaceStyle = .light
+        } else {
+            container.overrideUserInterfaceStyle = .dark
+        }
 
         verifyWithWidthInName(matching: container,
                               width: width,
@@ -584,6 +581,7 @@ extension XCTestCase {
                        file: StaticString = #file,
                        testName: String = #function,
                        line: UInt = #line) {
+
         verifyInWidth(createSut: {
             createSut().view
         },

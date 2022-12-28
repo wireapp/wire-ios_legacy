@@ -112,6 +112,16 @@ final class ServiceDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .cross,
+                                                                 target: self,
+                                                                 action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
+        self.navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ServiceDetails.CloseButton.description
+    }
+
     private func setupViews() {
         actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
 
@@ -147,15 +157,6 @@ final class ServiceDetailViewController: UIViewController {
             actionButton.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 16),
             actionButton.heightAnchor.constraint(equalToConstant: 48)
         ])
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .cross,
-                                                                 target: self,
-                                                                 action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
 
     @objc
@@ -214,16 +215,22 @@ final class ServiceDetailViewController: UIViewController {
 
 fileprivate extension Button {
 
+    typealias PeoplePickerServices = L10n.Localizable.Peoplepicker.Services
+
     static func openServiceConversationButton() -> Button {
-        return Button(style: .accentColorTextButtonStyle, title: "peoplepicker.services.open_conversation.item".localized)
+        return Button(style: .accentColorTextButtonStyle,
+                      title: PeoplePickerServices.OpenConversation.item.capitalized)
     }
 
     static func createAddServiceButton() -> Button {
-        return Button(style: .accentColorTextButtonStyle, title: "peoplepicker.services.add_service.button".localized)
+        return Button(style: .accentColorTextButtonStyle,
+                      title: PeoplePickerServices.AddService.button.capitalized)
     }
 
     static func createDestructiveServiceButton() -> Button {
-        let button = Button(style: .accentColorTextButtonStyle, title: "participants.services.remove_integration.button".localized)
+        let button = Button(style: .accentColorTextButtonStyle,
+                            title: L10n.Localizable.Participants.Services.RemoveIntegration.button.capitalized)
+
         return button
     }
 

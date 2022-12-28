@@ -61,7 +61,7 @@ final class TokenField: UIView {
     // vertical alignment has been fixed for larger fonts.
     let tokenTitleFont: UIFont = FontSpec(.small, .regular).font!
 
-    var tokenTitleColor: UIColor = UIColor.white {
+    var tokenTitleColor: UIColor = SemanticColors.Label.textDefault {
         didSet {
             guard oldValue != tokenTitleColor else { return }
             updateTokenAttachments()

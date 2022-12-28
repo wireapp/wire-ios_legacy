@@ -44,6 +44,7 @@ final class CheckmarkCell: RightIconDetailsCell {
 
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
+        accessibilityTraits = .button
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
@@ -90,17 +91,17 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         set {
-            // no op
+            super.accessibilityLabel = newValue
         }
     }
 
     override var accessibilityValue: String? {
         get {
-            return "\(showCheckmark)"
+            return showCheckmark ? L10n.Accessibility.ConversationDetails.MessageTimeoutState.description : nil
         }
 
         set {
-            // no op
+            super.accessibilityValue = newValue
         }
     }
 }

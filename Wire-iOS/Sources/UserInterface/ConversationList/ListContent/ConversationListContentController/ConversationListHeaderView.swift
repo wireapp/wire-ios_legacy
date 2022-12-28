@@ -74,7 +74,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         let label = DynamicFontLabel(
             fontSpec: .smallRegularFont,
             color: .white)
-        label.textColor = SemanticColors.Label.textConversationListCell
+        label.textColor = SemanticColors.Label.textDefault
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return label
     }()
@@ -83,8 +83,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
         let margin: CGFloat = 12
         let roundedTextBadge = RoundedTextBadge(contentInset: UIEdgeInsets(top: 2, left: margin, bottom: 2, right: margin), font: FontSpec(.medium, .semibold).font!)
 
-        roundedTextBadge.textLabel.textColor = SemanticColors.Label.conversationListTableViewCellBadge
-        roundedTextBadge.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
+        roundedTextBadge.textLabel.textColor = SemanticColors.Label.textDefaultWhite
+        roundedTextBadge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
         roundedTextBadge.isHidden = true
 
         return roundedTextBadge
@@ -107,24 +107,33 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
 
         set {
-            // no op
+            super.accessibilityLabel = newValue
         }
     }
 
     override var accessibilityValue: String? {
         get {
-            return (collapsed ? "collapsed" : "expanded") + " \(folderBadge)"
+            typealias ConversationListHeader = L10n.Accessibility.ConversationsListHeader
+            typealias ConversationList = L10n.Accessibility.ConversationsList
+
+            let state = collapsed
+                        ? ConversationListHeader.CollapsedButton.description
+                        : ConversationListHeader.ExpandedButton.description
+            guard folderBadge != 0 else {
+                return state
+            }
+            return "\(state), \(ConversationList.BadgeView.value(folderBadge))"
         }
 
         set {
-            // no op
+            super.accessibilityValue = newValue
         }
     }
 
     private let arrowIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = SemanticColors.Label.textConversationListCell
         imageView.setTemplateIcon(.downArrow, size: .tiny)
+        imageView.tintColor = SemanticColors.Label.textDefault
         return imageView
     }()
 
@@ -140,7 +149,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
         backgroundColor = SemanticColors.View.backgroundConversationList
-        addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
+        addBorder(for: .bottom)
     }
 
     @objc

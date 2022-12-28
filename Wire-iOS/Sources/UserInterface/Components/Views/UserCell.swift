@@ -33,11 +33,14 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var hidesSubtitle: Bool = false
     typealias IconColors = SemanticColors.Icon
+    typealias LabelColors = SemanticColors.Label
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
-    let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
-    let subtitleLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: .sectionText)
+    let titleLabel = DynamicFontLabel(fontSpec: .bodyTwoSemibold,
+                                      color: LabelColors.textDefault)
+    let subtitleLabel = DynamicFontLabel(fontSpec: .mediumRegularFont,
+                                         color: LabelColors.textCellSubtitle)
     let connectButton = IconButton()
     let accessoryIconView = UIImageView()
     let userTypeIconView = IconImageView()
@@ -76,6 +79,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: IconColors.foregroundCheckMarkSelected) : nil
             checkmarkIconView.backgroundColor = isSelected ? IconColors.backgroundCheckMarkSelected : IconColors.backgroundCheckMark
             checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : IconColors.borderCheckMark.cgColor
+            setupAccessibility()
         }
     }
 
@@ -143,11 +147,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.accessibilityIdentifier = "user_cell.name"
-        titleLabel.applyStyle(.primaryCellLabel)
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
-        subtitleLabel.applyStyle(.secondaryCellLabel)
 
         avatar.userSession = ZMUserSession.shared()
         avatar.initialsFont = .avatarInitial
@@ -201,6 +203,43 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         ])
     }
 
+    private func setupAccessibility() {
+        typealias ContactsList = L10n.Accessibility.ContactsList
+        typealias ServicesList = L10n.Accessibility.ServicesList
+        typealias ClientsList = L10n.Accessibility.ClientsList
+        typealias CreateConversation = L10n.Accessibility.CreateConversation
+
+        guard let title = titleLabel.text,
+              let subtitle = subtitleLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
+        var content = "\(title), \(subtitle)"
+        if let userType = userTypeIconView.accessibilityLabel,
+           !userTypeIconView.isHidden {
+            content += ", \(userType)"
+        }
+
+        if !verifiedIconView.isHidden {
+            content += ", " + ClientsList.DeviceVerified.description
+        }
+
+        accessibilityLabel = content
+
+        if !checkmarkIconView.isHidden {
+            accessibilityHint = isSelected
+                                ? CreateConversation.SelectedUser.hint
+                                : CreateConversation.UnselectedUser.hint
+        } else if let user = user, user.isServiceUser {
+            accessibilityHint = ServicesList.ServiceCell.hint
+        } else {
+            accessibilityHint = ContactsList.UserCell.hint
+        }
+    }
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
 
@@ -216,7 +255,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
                   return
               }
         var attributedTitle = user.nameIncludingAvailability(
-            color: SemanticColors.Label.textCellTitle,
+            color: SemanticColors.Label.textDefault,
             selfUser: selfUser)
 
         if user.isSelfUser, let title = attributedTitle {
@@ -254,6 +293,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         } else {
             subtitleLabel.isHidden = true
         }
+        setupAccessibility()
     }
 
 }

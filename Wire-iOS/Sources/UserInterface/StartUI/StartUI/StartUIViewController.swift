@@ -29,7 +29,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     weak var delegate: StartUIDelegate?
 
-    let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
+    let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection())
 
     let groupSelector: SearchGroupSelector = SearchGroupSelector()
 
@@ -61,7 +61,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
     init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
-         isFederationEnabled: Bool = APIVersion.isFederationEnabled) {
+         isFederationEnabled: Bool = BackendInfo.isFederationEnabled) {
         self.isFederationEnabled = isFederationEnabled
         self.addressBookHelperType = addressBookHelperType
         self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
@@ -98,7 +98,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         navigationController?.navigationBar.barTintColor = backgroundColor
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = SemanticColors.Label.textDefault
-        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
+        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes()
 
     }
 
@@ -109,8 +109,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     func setupViews() {
         configGroupSelector()
-        emptyResultView = EmptySearchResultsView(variant: .dark,
-                                                 isSelfUserAdmin: selfUser.canManageTeam,
+        emptyResultView = EmptySearchResultsView(isSelfUserAdmin: selfUser.canManageTeam,
                                                  isFederationEnabled: isFederationEnabled)
 
         emptyResultView.delegate = self
@@ -119,10 +118,10 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView
         searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = "search.list"
 
-        if let team = (selfUser as? ZMUser)?.team {
-            title = team.name?.uppercased()
-        } else {
-            title = selfUser.name?.uppercased()
+        if let title = (selfUser as? ZMUser)?.team?.name {
+            navigationItem.setupNavigationBarTitle(title: title.capitalized)
+        } else if let title = selfUser.name {
+            navigationItem.setupNavigationBarTitle(title: title.capitalized)
         }
 
         searchHeader.delegate = self
@@ -161,7 +160,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
         let closeButton = UIBarButtonItem(icon: .cross, style: UIBarButtonItem.Style.plain, target: self, action: #selector(onDismissPressed))
 
-        closeButton.accessibilityLabel = "general.close".localized
+        closeButton.accessibilityLabel = L10n.Accessibility.ContactsList.CloseButton.description
         closeButton.accessibilityIdentifier = "close"
 
         navigationItem.rightBarButtonItem = closeButton
@@ -205,7 +204,8 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     }
 
     func showKeyboardIfNeeded() {
-        let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).count /// TODO: unwrap
+        // TODO: unwrap
+        let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).count
         if conversationCount > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
             _ = searchHeader.tokenField.becomeFirstResponder()
         }

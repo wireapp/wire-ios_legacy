@@ -59,10 +59,6 @@ extension ZMConversation {
             return conversation.teamRemoteIdentifier == selfUser.teamIdentifier
         }
 
-        var title: String {
-            return conversation.displayName.localizedUppercase
-        }
-
         var allowGuests: Bool {
             return conversation.allowGuests
         }

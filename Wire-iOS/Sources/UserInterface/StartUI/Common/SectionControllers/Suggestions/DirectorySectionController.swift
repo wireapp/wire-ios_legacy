@@ -59,6 +59,9 @@ final class DirectorySectionController: SearchSectionController {
         cell.userTypeIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
         cell.connectButton.isHidden = !user.canBeUnblocked
+        if user.canBeUnblocked {
+            cell.accessibilityHint = L10n.Accessibility.ContactsList.PendingConnection.hint
+        }
         cell.connectButton.tag = indexPath.row
         cell.connectButton.addTarget(self, action: #selector(connect(_:)), for: .touchUpInside)
 

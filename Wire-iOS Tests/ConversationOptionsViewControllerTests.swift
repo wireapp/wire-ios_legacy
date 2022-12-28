@@ -28,7 +28,6 @@ final class MockOptionsViewModelConfiguration: ConversationGuestOptionsViewModel
     var setAllowGuests: SetHandler?
     var allowGuestsChangedHandler: ((Bool) -> Void)?
     var guestLinkFeatureStatusChangedHandler: ((GuestLinkFeatureStatus) -> Void)?
-    var title: String
     var linkResult: Result<String?>?
     var deleteResult: VoidResult = .success
     var createResult: Result<String>?
@@ -36,11 +35,10 @@ final class MockOptionsViewModelConfiguration: ConversationGuestOptionsViewModel
     var areGuestPresent = true
     var isConversationFromSelfTeam = true
 
-    init(allowGuests: Bool, guestLinkFeatureStatus: GuestLinkFeatureStatus = .enabled, title: String = "", setAllowGuests: SetHandler? = nil) {
+    init(allowGuests: Bool, guestLinkFeatureStatus: GuestLinkFeatureStatus = .enabled, setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
         self.guestLinkFeatureStatus = guestLinkFeatureStatus
         self.setAllowGuests = setAllowGuests
-        self.title = title
     }
 
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
@@ -270,7 +268,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
 
     func testThatItRendersItsTitle() {
         // GIVEN
-        let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
         // THEN

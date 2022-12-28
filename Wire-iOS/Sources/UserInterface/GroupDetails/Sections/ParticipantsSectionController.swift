@@ -138,6 +138,7 @@ extension UserCell: ParticipantsCellConfigurable {
         configure(with: user, selfUser: SelfUser.current, conversation: conversation as? ZMConversation)
         accessoryIconView.isHidden = user.isSelfUser
         accessibilityIdentifier = identifier
+        accessibilityHint = L10n.Accessibility.ConversationDetails.ParticipantCell.hint
         self.showSeparator = showSeparator
     }
 }

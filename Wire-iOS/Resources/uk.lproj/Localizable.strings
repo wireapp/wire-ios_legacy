@@ -52,7 +52,7 @@
 "peoplepicker.search_placeholder" = "Пошук за іменем або ніком";
 "peoplepicker.header.top_people" = "Топ-контакти";
 "peoplepicker.button.create_conversation" = "Створити групу";
-"peoplepicker.button.add_to_conversation" = "Додати учасників до розмови";
+"peoplepicker.button.add_to_conversation" = "Додати учасників";
 "peoplepicker.header.conversations" = "Групи";
 "peoplepicker.header.team_conversations" = "Групи %@";
 "peoplepicker.header.send_invitation" = "Запросити";
@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "пропущений дзвінок";
 "conversation_list.voiceover.status.pause_media" = "призупити відтворення медіа";
 "conversation_list.voiceover.status.play_media" = "відтворити медіа";
-"conversation_list.voiceover.status.silenced" = "сповіщення вимкнено";
 "conversation_list.voiceover.status.typing" = "вводить текст";
 "conversation_list.voiceover.status.ping" = "пінг";
-"conversation_list.voiceover.status.mention" = "вас хтось згадав";
-"conversation_list.voiceover.status.reply" = "відповідь";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "нещодавні";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "список нещодавніх розмов";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "теки";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "список розмов, організованих в теки";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "заархівовано";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "перелік заархівованих розмов";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакти";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "шукати людей в Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "створити";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "створити повідомлення та зберегти для подальшого використання";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
@@ -227,8 +216,6 @@
 "list.section.requests" = "Запити";
 "list.section.favorites" = "Вподобання";
 
-"conversation.voiceover.verified" = "верифіковано";
-"conversation.voiceover.legalhold" = "правовий захист";
 "conversation.voiceover.value.active" = "активне";
 "conversation.voiceover.value.disabled" = "вимкнене";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Розмова";
 "compose.message.title" = "Повідомлення";
-
-"conversation_details.open_button.accessibility_hint" = "Торкніться двічі, щоб переглянути детальну інформацію про розмову.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Гості**";
-"conversation.banner.services" = "**Сервіси**";
-"conversation.banner.externals" = "**Зовнішні користувачі**";
-"conversation.banner.remotes" = "**Федеративні користувачі**";
+"conversation.banner.guests" = "Гості";
+"conversation.banner.services" = "Сервіси";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ присутні";
 "conversation.banner.are_active" = "%@ активні";
 "conversation.banner.separator" = " та ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Ви дзвонили";
 "content.system.ephemeral_time_remaining" = "%@ вийшов(-ла)";
 
-"content.system.self_user_new_client" = "**Ви** почали використовувати [новий пристрій](%@)";
-"content.system.self_user_new_self_client" = "**Ви** почали використовувати [цей пристрій](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "Ви";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Приєднався новий учасник.";
 "content.system.verify_devices" = "Верифікувати пристрої";
 
-"content.system.unverified_self_devices" = "**Ви** скасували верифікацію одного з [ваших пристроїв](%@)";
-"content.system.unverified_other_devices" = "**Ви** скасували верифікацію одного з [пристроїв користувача %1$@](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом певного часу. Деякі повідомлення можуть не відображатися тут.";
 "content.system.missing_messages.subtitle_start" = "Тим часом";
 
-"content.system.cannot_decrypt.self" = "Не вдалося розшифрувати **ваше** повідомлення.";
-"content.system.cannot_decrypt.other" = "Не вдалося розшифрувати повідомлення від **%@**.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "Виправити майбутні повідомлення";
 "content.system.cannot_decrypt.error_details" = "(Виправлена помилка: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "Тепер ви можете розшифрувати власні повідомлення. Щоб відновити втрачені повідомлення, **вам необхідно надіслати їх повторно**.";
-"content.system.cannot_decrypt_resolved.other" = "Тепер ви можете розшифрувати повідомлення від **%1$@**. Щоб відновити втрачені повідомлення, **попросіть %1$@ надіслати їх повторно.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "Ідентифікатор **вашого** пристрою змінився. Повідомлення не доставлене.";
-"content.system.cannot_decrypt_identity_changed.other" = "Ідентифікатор пристрою, що належить  користувачу **%@**, змінився. Повідомлення не доставлене."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ не зміг розшифрувати деякі з ваших повідомлень, але вирішив проблему з їх доставкою**. Це вплинуло на всі розмови, в яких ви обоє берете участь.";
-"content.system.session_reset.self" = "**Вам не вдалося розшифрувати деякі з ваших повідомлень, але ви вирішили проблему з їх доставкою**. Це вплинуло на всі ваші розмови.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Це повідомлення не може бути показане. Можливо, ваша версія Wire вийшла із вжитку.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Заблокувати";
 "profile.unblock_button_title_action" = "Розблокувати";
 
-"profile.cancel_connection_button_title" = "СКАСУВАТИ ЗАПИТ";
+"profile.cancel_connection_button_title" = "Скасувати запит";
 "profile.connection_request_state.blocked" = "ЗАБЛОКОВАНИЙ(-А)";
 "profile.create_conversation_button_title" = "Створити групу";
 "profile.open_conversation_button_title" = "Відкрити розмову";
@@ -920,7 +905,7 @@
 "device.type.unknown" = "Невідомо";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove integration";
+"participants.services.remove_integration.button" = "Remove service";
 
 // Group details
 "group_details.guest_options_cell.title" = "Гості";
@@ -961,8 +946,6 @@
 "self.about" = "Про програму";
 "self.sign_out" = "Вихід";
 "self.report_abuse" = "Надіслати звіт про зловживання";
-"self.voiceover.label" = "Профіль";
-"self.voiceover.hint" = "Відкрити профіль та налаштування";
 "self.new-device.voiceover.label" = "Профіль, нещодавно додані пристрої";
 
 "self.add_email_password" = "Додайте email та пароль";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Шифрувати повідомлення в режимі очікування";
 
-"self.settings.account_picture_group.picture" = "Картинка";
-"self.settings.account_picture_group.color" = "Колір";
+"self.settings.account_picture_group.picture" = "Картинка для профілю";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from Library";
+"self.settings.account_picture_group.alert.take_picture" = "Take Photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";
@@ -1884,10 +1870,10 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Створіть код допуску";
-"create_passcode.info_label" = "Він буде використаний для розблокування Wire. Якщо ви забудете цей пароль, то **його неможливо буде відновити.**";
-"create_passcode.info_label_forced_applock" = "Створіть пароль для розблокування Wire. Будь ласка,  запам'ятайте, що **його неможливо буде відновити.**";
-"create_passcode.create_button.title" = "створити код допуску";
+"create_passcode.title_label" = "Set a passcode";
+"create_passcode.info_label" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.info_label_forced_applock" = "The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.";
+"create_passcode.create_button.title" = "Set a Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "Не менше восьми символів";
@@ -1899,9 +1885,9 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Введіть ваш код допуску";
 "unlock.title_label" = "Введіть код допуску, щоб розблокувати Wire";
-"unlock.wipe_button" = "Доступ як з нового пристрою";
+"unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Невірний код допуску";
-"unlock.submit_button.title" = "розблокувати";
+"unlock.submit_button.title" = "Розблокувати";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "У Wire відбулися зміни";
@@ -1911,16 +1897,16 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Доступ як з нового пристрою";
-"wipe_database.info_label" = "Дані, що зберігаються на цьому пристрої, доступні лише з вашим кодом доступу.\n\nЯкщо ви забудете код доступу, то зможете очистити базу даних для входу в якості нового пристрою.\n\nВидаливши базу даних, ";
+"wipe_database.title_label" = "Forgot your app lock passcode?";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your app lock passcode. If you have forgotten your passpcode, you can reset this device. Please enter your Wire account password to reset this device and log in again. By resetting your device,";
 "wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього облікового запису будуть остаточно видалені.";
 
-"wipe_database.button.title" = "Я хочу видалити базу даних";
+"wipe_database.button.title" = "Reset Device";
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Підтвердити видалення бази даних";
-"wipe_database.alert.message" = "Введіть 'Видалити', щоб переконатися, що ви хочете видалити всі дані на цьому пристрої.";
+"wipe_database.alert.description" = "Reset Device";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device,\nto reset this device and log in again";
 "wipe_database.alert.placeholder" = "Введіть 'Видалити'";
 "wipe_database.alert.confirm" = "Видалити";
 "wipe_database.alert.confirm_input" = "Видалити";

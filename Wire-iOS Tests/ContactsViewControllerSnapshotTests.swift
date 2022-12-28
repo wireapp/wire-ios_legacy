@@ -27,9 +27,9 @@ final class ContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         XCTestCase.accentColor = .strongBlue
-        ColorScheme.default.variant = .dark
         sut = ContactsViewController()
         sut.searchHeaderViewController.overrideUserInterfaceStyle = .dark
+        sut.overrideUserInterfaceStyle = .dark
         sut.view.backgroundColor = .black
     }
 
@@ -92,7 +92,7 @@ final class ContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     private func wrapInNavigationController() {
-        let navigationController = UIViewController().wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
+        let navigationController = UIViewController().wrapInNavigationController(navigationControllerClass: NavigationController.self)
         navigationController.pushViewController(sut, animated: false)
         sut.tableView.reloadData()
     }

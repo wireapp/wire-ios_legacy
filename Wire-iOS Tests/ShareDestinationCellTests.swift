@@ -58,6 +58,7 @@ final class ShareDestinationCellTests: ZMSnapshotTestCase {
 
         accentColor = .vividRed
         sut = ShareDestinationCell(style: .default, reuseIdentifier: "reuseIdentifier")
+        sut.overrideUserInterfaceStyle = .dark
         sut.backgroundColor = .black
     }
 

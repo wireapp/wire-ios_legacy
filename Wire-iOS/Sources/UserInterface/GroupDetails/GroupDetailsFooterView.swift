@@ -42,6 +42,7 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
         leftButton.accessibilityIdentifier = "OtherUserMetaControllerLeftButton"
         rightIcon = .ellipsis
         rightButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"
+        rightButton.accessibilityLabel = L10n.Accessibility.ConversationDetails.MoreButton.description
     }
 
     override func leftButtonTapped(_ sender: IconButton) {

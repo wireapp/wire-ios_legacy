@@ -25,13 +25,46 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
         didSet { applyColorScheme(colorSchemeVariant) }
     }
 
+    override var accessibilityLabel: String? {
+        get {
+            return title
+        }
+
+        set {
+            super.accessibilityLabel = newValue
+        }
+    }
+
+    override var accessibilityValue: String? {
+        get {
+            return status
+        }
+
+        set {
+            super.accessibilityValue = newValue
+        }
+    }
+
+    override var accessibilityHint: String? {
+        get {
+            typealias CreateConversation = L10n.Accessibility.CreateConversation
+            return expanded ? CreateConversation.HideSettings.hint : CreateConversation.OpenSettings.hint
+        }
+
+        set {
+            super.accessibilityHint = newValue
+        }
+    }
+
     override func setUp() {
         super.setUp()
-        accessibilityIdentifier = "cell.groupdetails.options"
-        title = "conversation.create.options.title".localized
+
+        title = L10n.Localizable.Conversation.Create.Options.title
         icon = nil
         showSeparator = false
         contentLeadingOffset = 16
+
+        setupAccessibility()
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
@@ -43,11 +76,16 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
         // flip upside down if necessary
         if let cgImage = image.cgImage, expanded {
             accessory = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored).withRenderingMode(.alwaysTemplate)
-            accessoryColor = color
         } else {
-            accessory = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color).withRenderingMode(.alwaysTemplate)
-            accessoryColor = color
+            accessory = image
         }
+        accessoryColor = color
+    }
+
+    private func setupAccessibility() {
+        accessibilityIdentifier = "cell.groupdetails.options"
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 }
 

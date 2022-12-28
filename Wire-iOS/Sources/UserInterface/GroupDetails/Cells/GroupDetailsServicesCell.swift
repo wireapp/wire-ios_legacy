@@ -33,7 +33,8 @@ final class GroupDetailsServicesCell: GroupDetailsDisclosureOptionsCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.servicesoptions"
-        title  = L10n.Localizable.GroupDetails.ServicesOptionsCell.title
+        title = L10n.Localizable.GroupDetails.ServicesOptionsCell.title
+        accessibilityHint = L10n.Accessibility.ConversationDetails.OptionButton.hint
     }
 
     func configure(with conversation: GroupDetailsConversationType) {

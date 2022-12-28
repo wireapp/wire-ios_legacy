@@ -29,16 +29,52 @@ class IconToggleCell: DetailsCollectionViewCell {
         }
     }
 
+    override var accessibilityLabel: String? {
+        get {
+            return title
+        }
+
+        set {
+            super.accessibilityLabel = newValue
+        }
+    }
+
+    override var accessibilityValue: String? {
+        get {
+            return toggle.accessibilityValue
+        }
+
+        set {
+            super.accessibilityValue = newValue
+        }
+    }
+
+    override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return toggle.accessibilityTraits
+        }
+        set {
+            super.accessibilityTraits = newValue
+        }
+    }
+
     let toggle = Switch(style: .default)
     var action: ((Bool) -> Void)?
 
     override func setUp() {
         super.setUp()
+        isAccessibilityElement = true
         contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 
     @objc func toggleChanged(_ sender: UISwitch) {
         action?(sender.isOn)
+    }
+
+    override func accessibilityActivate() -> Bool {
+        isOn = !isOn
+
+        return true
     }
 }

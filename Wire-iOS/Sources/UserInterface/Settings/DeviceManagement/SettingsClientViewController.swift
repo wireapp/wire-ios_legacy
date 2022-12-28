@@ -57,15 +57,13 @@ final class SettingsClientViewController: UIViewController,
 
     convenience init(userClient: UserClient,
                      fromConversation: Bool,
-                     credentials: ZMEmailCredentials? = .none,
-                     variant: ColorSchemeVariant? = .none) {
-        self.init(userClient: userClient, credentials: credentials, variant: variant)
+                     credentials: ZMEmailCredentials? = .none) {
+        self.init(userClient: userClient, credentials: credentials)
         self.fromConversation = fromConversation
     }
 
     required init(userClient: UserClient,
-                  credentials: ZMEmailCredentials? = .none,
-                  variant: ColorSchemeVariant? = .none) {
+                  credentials: ZMEmailCredentials? = .none) {
         self.userClient = userClient
 
         super.init(nibName: nil, bundle: nil)
@@ -107,11 +105,8 @@ final class SettingsClientViewController: UIViewController,
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: userClient.deviceClass?.localizedDescription.localized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        guard let deviceClass = userClient.deviceClass?.localizedDescription.localized else { return }
+        navigationItem.setupNavigationBarTitle(title: deviceClass.capitalized)
     }
 
     override func viewWillAppear(_ animated: Bool) {

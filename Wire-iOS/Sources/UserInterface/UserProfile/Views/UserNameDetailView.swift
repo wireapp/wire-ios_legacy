@@ -98,7 +98,7 @@ final class UserNameDetailViewModel: NSObject {
     }
 
     static func attributedTitle(for user: UserType?, fallback: String) -> NSAttributedString {
-        return (user?.name ?? fallback) && normalBoldFont.font! && UIColor.from(scheme: .textForeground)
+        return (user?.name ?? fallback) && normalBoldFont.font! && SemanticColors.Label.textDefault
     }
 
     static func attributedSubtitle(for user: UserType?) -> NSAttributedString? {

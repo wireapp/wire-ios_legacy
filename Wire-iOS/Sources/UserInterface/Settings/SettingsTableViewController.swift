@@ -221,7 +221,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         typealias Accessibility = L10n.Accessibility.Settings
 
         navigationItem.rightBarButtonItem?.accessibilityLabel = Accessibility.CloseButton.description
-        navigationItem.backBarButtonItem?.accessibilityLabel = Accessibility.BackButton.description(group.title)
+        navigationItem.backBarButtonItem?.accessibilityLabel = group.accessibilityBackButtonText
     }
 
     func refreshData() {
@@ -284,11 +284,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: group.title.localized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: group.title.localized.capitalized)
     }
 
 }
@@ -306,6 +302,15 @@ extension SettingsTableViewController: ZMUserObserver {
     func userDidChange(_ note: UserChangeInfo) {
         if note.accentColorValueChanged {
             refreshData()
+        }
+
+        if note.imageMediumDataChanged, let userSession = ZMUserSession.shared() {
+            note.user.fetchProfileImage(session: userSession,
+                                        imageCache: UIImage.defaultUserImageCache,
+                                        sizeLimit: nil,
+                                        isDesaturated: false) { [weak self] (_, _) in
+                self?.refreshData()
+            }
         }
     }
 }

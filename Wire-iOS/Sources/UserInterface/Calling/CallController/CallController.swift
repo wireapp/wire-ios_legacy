@@ -62,9 +62,11 @@ final class CallController: NSObject {
     }
 
     private func presentOrMinimizeActiveCall(for conversation: ZMConversation) {
-        conversation == minimizedCall
-            ? minimizeCall()
-            : presentCall(in: conversation)
+        if conversation == minimizedCall {
+            minimizeCall()
+        } else {
+            presentCall(in: conversation)
+        }
     }
 
     private func minimizeCall() {

@@ -41,6 +41,7 @@ private class MockPulsingIconImageStyle: PulsingIconImageStyle, IconImageStyle {
 
     var icon: StyleKitIcon? { return .cake }
     var accessibilitySuffix: String { return "" }
+    var accessibilityLabel: String { return "" }
 }
 
 class PulsingIconImageViewTests: XCTestCase {

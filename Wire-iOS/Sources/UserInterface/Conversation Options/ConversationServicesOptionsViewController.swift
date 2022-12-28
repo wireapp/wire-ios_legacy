@@ -54,7 +54,9 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.GroupDetails.ServicesOptionsCell.title.capitalized)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ServiceConversationSettings.CloseButton.description
     }
 
     @available(*, unavailable)
@@ -92,7 +94,6 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
         tableView.reloadData()
 
         (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
-        title = state.title
     }
 
     func viewModel(_ viewModel: ConversationServicesOptionsViewModel, didReceiveError error: Error) {

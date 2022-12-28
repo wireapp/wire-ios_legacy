@@ -103,6 +103,18 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
     }
 
+    private func setupAccessibility(with rowType: ParticipantsRowType) {
+        isAccessibilityElement = true
+        accessibilityIdentifier = identifier
+
+        guard case let .showAll(count) = rowType else {
+            return
+        }
+        accessibilityTraits = .button
+        accessibilityLabel = Participants.showAll(count)
+        accessibilityHint = L10n.Accessibility.ConversationDetails.ShowParticipantsButton.hint
+    }
+
 }
 
 extension ShowAllParticipantsCell: CallParticipantsListCellConfigurable {
@@ -121,6 +133,6 @@ extension ShowAllParticipantsCell: ParticipantsCellConfigurable {
         titleLabel.text = Participants.showAll(count)
         backgroundColor = .from(scheme: .barBackground)
         cellIdentifier = "cell.call.show_all_participants"
-        accessibilityIdentifier = identifier
+        setupAccessibility(with: rowType)
     }
 }

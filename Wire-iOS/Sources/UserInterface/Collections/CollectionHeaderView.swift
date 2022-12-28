@@ -23,6 +23,9 @@ import WireSystem
 
 final class CollectionHeaderView: UICollectionReusableView {
 
+    typealias Section = L10n.Localizable.Collections.Section
+    typealias ConversationSearch = L10n.Accessibility.ConversationSearch
+
     var section: CollectionsSectionSet = .none {
         didSet {
             let icon: StyleKitIcon
@@ -51,6 +54,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     var totalItemsCount: UInt = 0 {
         didSet {
             actionButton.isHidden = totalItemsCount == 0
+            titleLabel.accessibilityHint = actionButton.isHidden ? "" : ConversationSearch.Section.hint
 
             let totalCountText = String(format: "collections.section.all.button".localized, totalItemsCount)
             actionButton.setTitle(totalCountText, for: .normal)
@@ -88,7 +92,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         addSubview(titleLabel)
 
         actionButton.contentHorizontalAlignment = .right
-        actionButton.accessibilityLabel = "open all"
+        actionButton.isAccessibilityElement = false
         actionButton.addTarget(self, action: #selector(CollectionHeaderView.didSelect(_:)), for: .touchUpInside)
         addSubview(actionButton)
 

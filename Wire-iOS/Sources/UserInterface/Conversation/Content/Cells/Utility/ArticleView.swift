@@ -70,7 +70,7 @@ final class ArticleView: UIView {
     }
 
     private func setupViews() {
-        accessibilityElements = [authorLabel, messageLabel, imageView]
+        accessibilityElements = [imageView, messageLabel, authorLabel]
         self.backgroundColor = self.containerColor
         self.layer.cornerRadius = 4
         self.clipsToBounds = true

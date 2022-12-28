@@ -18,6 +18,7 @@
 
 import Foundation
 import WireTransport
+import WireSyncEngine
 
 @available(iOS 14, *)
 final class PreferredAPIVersionViewModel: ObservableObject {
@@ -83,7 +84,7 @@ final class PreferredAPIVersionViewModel: ObservableObject {
 
         // Initial selection
         let selectedItem = sections.flatMap(\.items).first { item in
-            item.value == Value(apiVersion: APIVersion.preferredVersion)
+            item.value == Value(apiVersion: BackendInfo.preferredAPIVersion)
         }!
 
         selectedItemID = selectedItem.id
@@ -98,9 +99,9 @@ final class PreferredAPIVersionViewModel: ObservableObject {
 
             switch item.value {
             case .noPreference:
-                APIVersion.preferredVersion = nil
+                BackendInfo.preferredAPIVersion = nil
             case .apiVersion(let version):
-                APIVersion.preferredVersion = version
+                BackendInfo.preferredAPIVersion = version
             }
         }
     }

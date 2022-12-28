@@ -27,7 +27,8 @@ final class TopPeopleCellSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = TopPeopleCell(frame: CGRect(x: 0, y: 0, width: 56, height: 78))
         sut.user = MockUserType.createDefaultOtherUser()
-        sut.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .light
+        sut.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     override func tearDown() {

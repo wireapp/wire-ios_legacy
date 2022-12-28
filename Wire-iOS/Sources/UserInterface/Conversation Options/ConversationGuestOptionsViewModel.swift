@@ -20,7 +20,6 @@ import UIKit
 import WireUtilities
 
 protocol ConversationGuestOptionsViewModelConfiguration: AnyObject {
-    var title: String { get }
     var allowGuests: Bool { get }
     var guestLinkFeatureStatus: GuestLinkFeatureStatus { get }
     var isCodeEnabled: Bool { get }
@@ -46,7 +45,6 @@ final class ConversationGuestOptionsViewModel {
     struct State {
         var rows = [CellConfiguration]()
         var isLoading = false
-        var title = ""
     }
 
     private var showLoadingCell = false {
@@ -79,7 +77,6 @@ final class ConversationGuestOptionsViewModel {
 
     init(configuration: ConversationGuestOptionsViewModelConfiguration) {
         self.configuration = configuration
-        state.title = configuration.title
         updateRows()
         configuration.allowGuestsChangedHandler = { [weak self] allowGuests in
             guard let `self` = self else { return }
