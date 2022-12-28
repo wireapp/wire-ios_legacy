@@ -32,7 +32,7 @@ class RoundedPageIndicator: RoundedBlurView {
         addSubview(pageControl)
         pageControl.currentPageIndicatorTintColor = .accent()
         if DeveloperFlag.isUpdatedCallingUI {
-            pageControl.pageIndicatorTintColor = SemanticColors.View.backgroundDefaultWhite
+            backgroundColor = SemanticColors.View.borderInputBar
             blurView.isHidden = true
         }
 

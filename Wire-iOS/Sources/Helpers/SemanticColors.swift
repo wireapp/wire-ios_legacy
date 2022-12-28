@@ -92,7 +92,7 @@ public enum SemanticColors {
         static let backgroundPasswordRuleCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
         static let backgroundPhoneCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let backgroundMissedPhoneCall = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
-        static let foregroundMicrophone = UIColor(light: Asset.gray90, dark: Asset.gray90)
+        static let foregroundMicrophone = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
     }
 
     public enum View {
