@@ -41,7 +41,6 @@ class CallingActionButton: IconLabelButton {
         iconButton.setIconColor(SemanticColors.Button.iconCallingNormal, for: .normal)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingNormal, for: .normal)
 
-        setTitleColor(SemanticColors.Button.textCallingNormal, for: .normal)
         iconButton.setBorderColor(SemanticColors.Button.borderCallingSelected, for: .selected)
         iconButton.setIconColor(SemanticColors.Button.iconCallingSelected, for: .selected)
         iconButton.setBackgroundImageColor(SemanticColors.Button.backgroundCallingSelected, for: .selected)

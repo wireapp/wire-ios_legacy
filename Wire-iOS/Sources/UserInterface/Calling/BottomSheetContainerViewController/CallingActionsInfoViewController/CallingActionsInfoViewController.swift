@@ -72,7 +72,6 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         self.participants = participants
         self.selfUser = selfUser
         super.init(nibName: nil, bundle: nil)
-        participantsHeaderLabel.text = L10n.Localizable.Call.Participants.showAll(participants.count).uppercased()
     }
 
     @available(*, unavailable)
@@ -122,6 +121,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
         CallParticipantsListCellConfiguration.prepare(collectionView)
         view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
+        participantsHeaderLabel.text = L10n.Localizable.Call.Participants.showAll(participants.count).uppercased()
     }
 
     private func createStackViewConstraints() {

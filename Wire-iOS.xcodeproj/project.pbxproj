@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1180,7 +1180,6 @@
 		D38BC97628BF8AA700EB928F /* NotificationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455DF28AFC443005ACD74 /* NotificationServiceError.swift */; };
 		D3A74DBD29432E8B00DD272F /* EstablishingCallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */; };
 		D3A74DC7294CAFEF00DD272F /* AccessibilityActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */; };
-		D3C32396295C7E17005438F1 /* BorderedPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C32395295C7E17005438F1 /* BorderedPageControl.swift */; };
 		D3C34E6E28C1593C004A1AF1 /* AccessTokenEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */; };
 		D3C34E7628C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */; };
 		D3DA6E7B292F67680045CC57 /* CallingActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */; };
@@ -1824,7 +1823,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A96867AD26A5E59F00679D95 /* WireDataModel.xcframework in Embed Frameworks */,
-				01AAD75D294FD4CF00F1CFFD /* Datadog.xcframework in Embed Frameworks */,
 				A96867CE26A5E68600679D95 /* Down.xcframework in Embed Frameworks */,
 				A96867A726A5E52F00679D95 /* WireCanvas.xcframework in Embed Frameworks */,
 				A96867BD26A5E5A000679D95 /* WireTransport.xcframework in Embed Frameworks */,
@@ -3132,7 +3130,6 @@
 		D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallActionsView.swift; sourceTree = "<group>"; };
 		D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishingCallStatusView.swift; sourceTree = "<group>"; };
 		D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityActionView.swift; sourceTree = "<group>"; };
-		D3C32395295C7E17005438F1 /* BorderedPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedPageControl.swift; sourceTree = "<group>"; };
 		D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenEndpointTests.swift; sourceTree = "<group>"; };
 		D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationByIDEndpointTests.swift; sourceTree = "<group>"; };
 		D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsView.swift; sourceTree = "<group>"; };
@@ -4010,7 +4007,6 @@
 				63E128B626208BAD009D9AF2 /* CallGridHintNotificationLabel.swift */,
 				63E128BA26208DDC009D9AF2 /* CallGridEvent.swift */,
 				6305E31C265D34BD00A44933 /* RoundedPageIndicator.swift */,
-				D3C32395295C7E17005438F1 /* BorderedPageControl.swift */,
 			);
 			path = CallGridView;
 			sourceTree = "<group>";
@@ -8759,7 +8755,6 @@
 				EFA145F4231EA4980073BA5E /* ConversationListViewController.swift in Sources */,
 				D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */,
 				EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */,
-				D3C32396295C7E17005438F1 /* BorderedPageControl.swift in Sources */,
 				54B27986258113FD0043ED25 /* AuthenticatedRouter.swift in Sources */,
 				EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */,
 				87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */,

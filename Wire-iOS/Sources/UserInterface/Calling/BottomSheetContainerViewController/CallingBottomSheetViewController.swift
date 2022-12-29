@@ -85,10 +85,13 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
     }
 
+    // after rotating device recalculate bottom sheet max height
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        let height = (size.width > size.height) ? (size.height - headerBar.bounds.height) : bottomSheetMaxHeight
-        let newConfiguration = BottomSheetConfiguration(height: height, initialOffset: bottomSheetMinimalOffset)
+        let isHorizontal = size.width > size.height
+        // if horizontal then bottom sheet should take whole screen (without headerBar)
+        let bottomSheetMaxHeight = isHorizontal ? (size.height - headerBar.bounds.height) : bottomSheetMaxHeight
+        let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
         guard self.configuration != newConfiguration else { return }
         self.configuration = newConfiguration
         hideBottomSheet()
