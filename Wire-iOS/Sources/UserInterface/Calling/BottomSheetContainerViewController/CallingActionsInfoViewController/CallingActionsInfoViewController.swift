@@ -60,7 +60,6 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         }
     }
 
-
     var variant: ColorSchemeVariant = .light {
         didSet {
             updateAppearance()
@@ -112,6 +111,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         participantsHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         participantsHeaderLabel.applyStyle(.headerLabel)
         participantsHeaderLabel.accessibilityTraits.insert(.header)
+        participantsHeaderLabel.text = L10n.Localizable.Call.Participants.showAll(participants.count).uppercased()
 
         let collectionView = CallParticipantsListView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +121,6 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
         CallParticipantsListCellConfiguration.prepare(collectionView)
         view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
-        participantsHeaderLabel.text = L10n.Localizable.Call.Participants.showAll(participants.count).uppercased()
     }
 
     private func createStackViewConstraints() {
@@ -129,10 +128,9 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: view.topAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-
 
     private func createConstraints() {
         if !isIncomingCall {
