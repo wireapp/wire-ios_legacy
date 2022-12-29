@@ -20,7 +20,7 @@ import UIKit
 
 class BorderedPageControl: UIPageControl {
     let selectedPageIndicator = UIImage.circle(size: CGSize(width: 12, height: 12), color: .accent(), filled: true)
-    let defaultPageIndicator = UIImage.circle(size: CGSize(width: 11, height: 11), color: .accent(), filled: false)
+    let defaultPageIndicator = UIImage.circle(size: CGSize(width: 12, height: 12), color: .accent(), filled: false)
 
     override var currentPage: Int {
         didSet {
@@ -46,6 +46,7 @@ class BorderedPageControl: UIPageControl {
         if #available(iOS 14.0, *) {
             preferredIndicatorImage = defaultPageIndicator
         }
+        self.pageIndicatorTintColor = SemanticColors.View.backgroundSeparatorEditView
     }
 
     required init?(coder: NSCoder) {
