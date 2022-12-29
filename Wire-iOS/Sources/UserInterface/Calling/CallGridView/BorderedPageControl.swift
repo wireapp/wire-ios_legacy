@@ -46,7 +46,7 @@ class BorderedPageControl: UIPageControl {
         if #available(iOS 14.0, *) {
             preferredIndicatorImage = defaultPageIndicator
         }
-        self.pageIndicatorTintColor = SemanticColors.View.backgroundSeparatorEditView
+        self.pageIndicatorTintColor = SemanticColors.Switch.borderOffStateEnabled
     }
 
     required init?(coder: NSCoder) {
