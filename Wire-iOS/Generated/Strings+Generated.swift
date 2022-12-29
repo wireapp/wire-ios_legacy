@@ -164,6 +164,10 @@ internal enum L10n {
         /// End call
         internal static let description = L10n.tr("Accessibility", "calling.hangUpButton.description", fallback: "End call")
       }
+      internal enum HeaderBar {
+        /// Minimize calling view
+        internal static let description = L10n.tr("Accessibility", "calling.headerBar.description", fallback: "Minimize calling view")
+      }
       internal enum MicrophoneOff {
         /// Microphone off
         internal static let description = L10n.tr("Accessibility", "calling.microphoneOff.description", fallback: "Microphone off")

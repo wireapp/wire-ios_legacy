@@ -36,6 +36,7 @@ class CallHeaderBar: UIView {
         backgroundColor = SemanticColors.View.backgroundDefault
         minimalizeButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         minimalizeButton.tintColor = SemanticColors.View.backgroundDefaultBlack
+        minimalizeButton.accessibilityLabel = L10n.Accessibility.Calling.HeaderBar.description
         [minimalizeButton, titleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         addSubview(titleLabel)
         addSubview(minimalizeButton) 
