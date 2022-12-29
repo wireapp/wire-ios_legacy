@@ -21,7 +21,7 @@ import UIKit
 import WireCommonComponents
 
 class RoundedPageIndicator: RoundedBlurView {
-    let pageControl = UIPageControl()
+    let pageControl = BorderedPageControl()
 
     override func setupViews() {
         super.setupViews()
@@ -40,12 +40,12 @@ class RoundedPageIndicator: RoundedBlurView {
             pageControl.backgroundStyle = .minimal
             pageControl.allowsContinuousInteraction = false
         }
+        pageControl.isUserInteractionEnabled = false
     }
 
     override func createConstraints() {
         super.createConstraints()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             pageControl.centerYAnchor.constraint(equalTo: centerYAnchor),
             pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.pageControlMargin),
