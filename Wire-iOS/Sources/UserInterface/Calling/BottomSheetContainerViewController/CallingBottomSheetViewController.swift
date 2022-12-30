@@ -63,26 +63,31 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
 
-        addTopBar()
+        view.addSubview(headerBar)
+        setupViews()
+        addConstraints()
     }
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func addTopBar() {
+    private func setupViews() {
+        view.backgroundColor = SemanticColors.View.backgroundDefault
+        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
+        headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
+    }
+
+    private func addConstraints() {
         headerBar.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(headerBar)
 
         NSLayoutConstraint.activate([
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerBar.heightAnchor.constraint(equalToConstant: 74),
-            headerBar.topAnchor.constraint(equalTo: view.topAnchor),
+            headerBar.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            headerBar.safeBottomAnchor.constraint(equalTo: view.safeTopAnchor, constant: 45.0),
             headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
         ])
-        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
-        headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
     }
 
     // after rotating device recalculate bottom sheet max height

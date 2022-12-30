@@ -46,9 +46,9 @@ class CallHeaderBar: UIView {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             minimalizeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-            minimalizeButton.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 14.0),
+            minimalizeButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             minimalizeButton.widthAnchor.constraint(equalToConstant: 32.0),
             minimalizeButton.heightAnchor.constraint(equalToConstant: 32.0),
             titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: minimalizeButton.trailingAnchor, constant: 6.0)
