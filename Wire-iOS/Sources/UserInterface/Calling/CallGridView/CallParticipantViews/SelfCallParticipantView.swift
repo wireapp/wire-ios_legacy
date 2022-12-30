@@ -27,7 +27,7 @@ final class SelfCallParticipantView: BaseCallParticipantView {
 
     override var stream: Stream {
         didSet {
-            guard stream != oldValue else { return }
+            guard stream.videoState != self.videoState else { return }
             updateCaptureState(with: stream.videoState)
         }
     }
