@@ -33,10 +33,10 @@ class RoundedPageIndicator: RoundedBlurView {
 
         addSubview(pageControl)
         pageControl.currentPageIndicatorTintColor = .accent()
-        pageControl.pageIndicatorTintColor = SemanticColors.Switch.borderOffStateEnabled
 
         if DeveloperFlag.isUpdatedCallingUI {
             backgroundColor = SemanticColors.View.borderInputBar
+            pageControl.pageIndicatorTintColor = SemanticColors.Switch.borderOffStateEnabled
             blurView.isHidden = true
             if #available(iOS 14.0, *) {
                 pageControl.preferredIndicatorImage = defaultPageIndicator
@@ -70,13 +70,13 @@ class RoundedPageIndicator: RoundedBlurView {
     var currentPage: Int = 0 {
         didSet {
             pageControl.currentPage = currentPage
-            if #available(iOS 14.0, *) {
-                guard numberOfPages > 0 else { return }
-                let lastPageIndex = numberOfPages - 1
-                for index in 0...lastPageIndex {
-                    pageControl.setIndicatorImage(defaultPageIndicator, forPage: index)
-                }
-                pageControl.setIndicatorImage(selectedPageIndicator, forPage: currentPage)
+            if #available(iOS 14.0, *), DeveloperFlag.isUpdatedCallingUI {
+                    guard numberOfPages > 0 else { return }
+                    let lastPageIndex = numberOfPages - 1
+                    for index in 0...lastPageIndex {
+                        pageControl.setIndicatorImage(defaultPageIndicator, forPage: index)
+                    }
+                    pageControl.setIndicatorImage(selectedPageIndicator, forPage: currentPage)
             }
         }
     }
