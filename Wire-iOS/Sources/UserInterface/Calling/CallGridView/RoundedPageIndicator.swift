@@ -47,7 +47,6 @@ class RoundedPageIndicator: RoundedBlurView {
             pageControl.backgroundStyle = .minimal
             pageControl.allowsContinuousInteraction = false
         }
-        pageControl.isUserInteractionEnabled = false
     }
 
     override func createConstraints() {
