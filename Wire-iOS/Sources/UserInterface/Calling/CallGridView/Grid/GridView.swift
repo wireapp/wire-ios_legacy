@@ -89,6 +89,11 @@ final class GridView: UICollectionView {
         return numberOfItems / maxItemsPerPage + (numberOfItems % maxItemsPerPage == 0 ? 0 : 1)
     }
 
+    func scrollToPage(page: Int, animated: Bool) {
+        let destinationY = bounds.height * CGFloat(page)
+        guard contentSize.height > destinationY else { return }
+        setContentOffset(CGPoint(x: 0.0, y: destinationY), animated: animated)
+    }
 }
 
 // MARK: - Helpers
@@ -182,7 +187,6 @@ private extension GridView {
         let isOdd = !numberOfItems.isEven
         return isOdd && isLastRow
     }
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

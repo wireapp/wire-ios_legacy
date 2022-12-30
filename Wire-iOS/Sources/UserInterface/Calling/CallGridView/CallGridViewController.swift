@@ -140,6 +140,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         topStack.addArrangedSubview(hintView)
 
         view.addSubview(pageIndicator)
+        pageIndicator.pageControl.addTarget(self, action: #selector(didChangePage), for: .valueChanged)
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
@@ -163,6 +164,12 @@ final class CallGridViewController: SpinnerCapableViewController {
         ])
 
         pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
+    }
+
+    @objc func didChangePage(sender: UIPageControl) {
+        let newCurrentPage = sender.currentPage
+        pageIndicator.currentPage = newCurrentPage
+        gridView.scrollToPage(page: newCurrentPage, animated: true)
     }
 
     // MARK: - Public Interface
