@@ -63,7 +63,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
 
-        NotificationCenter.default.addObserver(self, selector: #selector(didChangeOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
         addTopBar()
     }
 
@@ -86,14 +85,15 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
     }
 
-    @objc private func didChangeOrientation() {
-        if UIDevice.current.orientation.isLandscape {
-            let newConfiguration = BottomSheetConfiguration(height: view.bounds.height, initialOffset: bottomSheetMinimalOffset)
-            self.configuration = newConfiguration
-        } else {
-            let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
-            self.configuration = newConfiguration
-        }
+    // after rotating device recalculate bottom sheet max height
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        let isLandscape = UIDevice.current.orientation.isLandscape
+        // if landscape then bottom sheet should take whole screen (without headerBar)
+        let bottomSheetMaxHeight = isLandscape ? (size.height - headerBar.bounds.height) : bottomSheetMaxHeight
+        let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
+        guard self.configuration != newConfiguration else { return }
+        self.configuration = newConfiguration
         hideBottomSheet()
     }
 

@@ -21,7 +21,7 @@ import UIKit
 class BottomSheetContainerViewController: UIViewController {
 
     // MARK: - Configuration
-    public struct BottomSheetConfiguration {
+    public struct BottomSheetConfiguration: Equatable {
         let height: CGFloat
         let initialOffset: CGFloat
     }
@@ -104,7 +104,6 @@ class BottomSheetContainerViewController: UIViewController {
         topConstraint = bottomSheetViewController.view.topAnchor
             .constraint(equalTo: self.view.bottomAnchor,
                         constant: -configuration.initialOffset)
-
 
         bottomViewHeightConstraint = bottomSheetViewController.view.heightAnchor
             .constraint(equalToConstant: configuration.height)
@@ -211,7 +210,7 @@ extension BottomSheetContainerViewController: UIGestureRecognizerDelegate {
 
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if let otherGestureView = otherGestureRecognizer.view as? UIScrollView,
-           otherGestureView.contentOffset.y > 0.0  {
+           otherGestureView.contentOffset.y > 0.0 {
             return false
         }
         return true

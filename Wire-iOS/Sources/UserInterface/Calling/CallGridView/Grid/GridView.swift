@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 protocol GridViewDelegate: AnyObject {
     func gridView(_ gridView: GridView, didChangePageTo page: Int)
@@ -189,6 +190,29 @@ private extension GridView {
 extension GridView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if DeveloperFlag.isUpdatedCallingUI {
+            return sizeForNewUIItem(withIndexPath: indexPath, collectionView: collectionView)
+        }
+        return sizeForOldUIItem(withIndexPath: indexPath, collectionView: collectionView)
+    }
+
+    private func sizeForNewUIItem(withIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
+        let itemsInRow = numberOfItemsIn(.row, for: indexPath)
+        let itemsInColumn = numberOfItemsIn(.column, for: indexPath)
+
+        let widthOfInterRowSpaces = CGFloat(itemsInRow - 1)
+        let maxWidth = collectionView.bounds.size.width - widthOfInterRowSpaces
+        let heightOfInterLineSpaces = CGFloat(itemsInColumn - 1)
+        let maxHeight = collectionView.bounds.size.height - heightOfInterLineSpaces
+
+        let width = maxWidth / CGFloat(itemsInRow)
+        let height = maxHeight / CGFloat(itemsInColumn)
+
+        return CGSize(width: width, height: height)
+    }
+
+    private func sizeForOldUIItem(withIndexPath indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
+
         let maxWidth = collectionView.bounds.size.width
         let maxHeight = collectionView.bounds.size.height
 
@@ -223,15 +247,15 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 
-        return .zero
-    }
+            return DeveloperFlag.isUpdatedCallingUI ? 1.0 : .zero
+        }
 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
 
-        return .zero
+            return DeveloperFlag.isUpdatedCallingUI ? 1.0 : .zero
     }
 
     func collectionView(

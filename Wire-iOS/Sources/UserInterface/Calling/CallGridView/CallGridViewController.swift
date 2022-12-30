@@ -126,10 +126,6 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Setup
 
     private func setupViews() {
-        if DeveloperFlag.isUpdatedCallingUI {
-            gridView.backgroundColor = SemanticColors.View.backgroundDefault
-            pageIndicator.backgroundColor = SemanticColors.PageIndicator.backgroundDefault
-        }
 
         gridView.dataSource = self
         gridView.gridViewDelegate = self
