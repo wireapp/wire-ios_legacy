@@ -144,13 +144,12 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         emailPasswordCell.textField.setBackgroundColor(.clear)
         emailPasswordCell.textField.setTextColor(.white)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: EmailAccountSection.Change.save.capitalized,
-            style: .done,
-            target: self,
-            action: #selector(saveButtonTapped)
-        )
-
+        let saveButtonItem: UIBarButtonItem = .createNavigationRightBarButtonItem(title: EmailAccountSection.Change.save.capitalized,
+                                                                                  systemImage: false,
+                                                                                  target: self,
+                                                                                  action: #selector(saveButtonTapped))
+        saveButtonItem.tintColor = UIColor.accent()
+        navigationItem.rightBarButtonItem = saveButtonItem
         updateSaveButtonState()
     }
 
