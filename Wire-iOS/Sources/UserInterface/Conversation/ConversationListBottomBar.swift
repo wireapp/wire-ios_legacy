@@ -18,10 +18,155 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
+
+//final class ClientTabBarController: UITabBarController {
+//
+//    private var account: Account
+//    private var selfUser: SelfUserType
+//
+//    init(account: Account, selfUser: SelfUserType) {
+//        self.account = account
+//        self.selfUser = selfUser
+//
+//        super.init(nibName: nil, bundle: nil)
+//        setupViews()
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//
+//    private func setupViews() {
+//        let startTab = ConversationListViewController(account: account, selfUser: selfUser)
+//        let listTab = ConversationListViewController(account: account, selfUser: selfUser)
+//        let foldersTab = ConversationListViewController(account: account, selfUser: selfUser)
+//        let archivedTab = ConversationListViewController(account: account, selfUser: selfUser)
+//
+////        listContentController.listViewModel.folderEnabled = true
+//
+//        startTab.tabBarItem = UITabBarItem(type: .startUI)
+//        listTab.tabBarItem = UITabBarItem(type: .list)
+//        foldersTab.tabBarItem = UITabBarItem(type: .folder)
+//        archivedTab.tabBarItem = UITabBarItem(type: .archive)
+//
+//        setViewControllers([startTab, listTab, foldersTab, archivedTab], animated: true)
+//    }
+//
+//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//
+//    }
+//
+//}
+
+extension UITabBarItem {
+
+    convenience init(type: TabBarItemType) {
+        let image = UIImage.imageForIcon(type.icon,
+                                         size: StyleKitIcon.Size.small.rawValue,
+                                         color: SemanticColors.Button.textBottomBarNormal).withRenderingMode(.alwaysTemplate)
+        self.init(title: type.title, image: image, selectedImage: nil)
+
+        tag = type.tag
+
+        /// Setup accessibility properties
+        accessibilityIdentifier = type.accessibilityIdentifier
+        accessibilityLabel = type.accessibilityLabel
+        accessibilityHint = type.accessibilityHint
+    }
+
+}
+
+enum TabBarItemType {
+
+    typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
+    typealias TabBar = L10n.Accessibility.TabBar
+
+    case startUI, list, folder, archive
+
+    var tag: Int {
+        switch self {
+        case .startUI:
+            return 1
+        case .list:
+            return 2
+        case .folder:
+            return 3
+        case .archive:
+            return 4
+        }
+    }
+
+    var icon: StyleKitIcon {
+        switch self {
+        case .startUI:
+            return .person
+        case .list:
+            return .conversation
+        case .folder:
+            return .folderList
+        case .archive:
+            return .archive
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .startUI:
+            return BottomBar.Contacts.title
+        case .list:
+            return BottomBar.Conversations.title
+        case .folder:
+            return BottomBar.Folders.title
+        case .archive:
+            return BottomBar.Archived.title
+        }
+    }
+
+    var accessibilityIdentifier: String {
+        switch self {
+        case .startUI:
+            return "bottomBarPlusButton"
+        case .list:
+            return "bottomBarRecentListButton"
+        case .folder:
+            return "bottomBarFolderListButton"
+        case .archive:
+            return "bottomBarArchivedButton"
+        }
+    }
+
+    var accessibilityLabel: String {
+        switch self {
+        case .startUI:
+            return TabBar.Contacts.description
+        case .list:
+            return TabBar.Conversations.description
+        case .folder:
+            return TabBar.Folders.description
+        case .archive:
+            return TabBar.Archived.description
+        }
+    }
+
+    var accessibilityHint: String {
+        switch self {
+        case .startUI:
+            return TabBar.Contacts.hint
+        case .list:
+            return TabBar.Conversations.hint
+        case .folder:
+            return TabBar.Folders.hint
+        case .archive:
+            return TabBar.Archived.hint
+        }
+    }
+
+}
 
 enum ConversationListButtonType {
     typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
-    typealias ConversationsList = L10n.Accessibility.ConversationsList
+    typealias TabBar = L10n.Accessibility.TabBar
 
     case archive, startUI, list, folder
     var accessibilityIdentifier: String {
@@ -51,31 +196,32 @@ enum ConversationListButtonType {
     var accessibilityLabel: String {
         switch self {
         case .startUI:
-            return ConversationsList.ContactsBottomBar.description
+            return TabBar.Contacts.description
         case .list:
-            return ConversationsList.RecentBottomBar.description
+            return TabBar.Conversations.description
         case .folder:
-            return ConversationsList.FolderBottomBar.description
+            return TabBar.Folders.description
         case .archive:
-            return ConversationsList.ArchiveBottomBar.description
+            return TabBar.Archived.description
         }
     }
     var accessibilityHint: String {
         switch self {
         case .startUI:
-            return ConversationsList.ContactsBottomBar.hint
+            return TabBar.Contacts.hint
         case .list:
-            return ConversationsList.RecentBottomBar.hint
+            return TabBar.Conversations.hint
         case .folder:
-            return ConversationsList.FolderBottomBar.hint
+            return TabBar.Folders.hint
         case .archive:
-            return ConversationsList.ArchiveBottomBar.hint
+            return TabBar.Archived.hint
         }
     }
 }
 
 protocol ConversationListBottomBarControllerDelegate: AnyObject {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType)
+    func didChangeTap(with type: ConversationListButtonType)
 }
 
 final class ConversationListBottomBarController: UIViewController {
@@ -223,7 +369,7 @@ final class ConversationListBottomBarController: UIViewController {
                                             : SemanticColors.Button.textBottomBarNormal
             subStackView.button.isSelected = subStackView.isEqual(selectedTabView)
             subStackView.accessibilityValue = subStackView.isEqual(selectedTabView)
-                                                ? L10n.Accessibility.ConversationsList.BottomBar.value
+                                                ? L10n.Accessibility.TabBar.Item.value
                                                 : nil
         }
     }
@@ -258,6 +404,7 @@ extension ConversationListBottomBarController: ConversationListViewModelRestorat
     }
 }
 
+// don't need
 extension ConversationListBottomBarController: ZMUserObserver {
 
     func userDidChange(_ changeInfo: UserChangeInfo) {

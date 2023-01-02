@@ -43,6 +43,8 @@ final class ConversationListViewController: UIViewController {
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
 
+    weak var delegate: ConversationListBottomBarControllerDelegate?
+
     fileprivate let noConversationLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString.attributedTextForNoConversationLabel
@@ -66,12 +68,25 @@ final class ConversationListViewController: UIViewController {
         return conversationListContentController
     }()
 
-    let bottomBarController: ConversationListBottomBarController = {
-        let conversationListBottomBarController = ConversationListBottomBarController()
-        conversationListBottomBarController.showArchived = true
+    let tabBar: UITabBar = {
+        let clientTabBar = UITabBar()
+        clientTabBar.barTintColor = SemanticColors.View.backgroundConversationList
+        clientTabBar.isTranslucent = false
 
-        return conversationListBottomBarController
+        let startTab = UITabBarItem(type: .startUI)
+        let listTab = UITabBarItem(type: .list)
+        let foldersTab = UITabBarItem(type: .folder)
+        let archivedTab = UITabBarItem(type: .archive)
+        clientTabBar.items = [startTab, listTab, foldersTab, archivedTab]
+        return clientTabBar
     }()
+
+//    let bottomBarController: ConversationListBottomBarController = {
+//        let conversationListBottomBarController = ConversationListBottomBarController()
+//        conversationListBottomBarController.showArchived = true
+//
+//        return conversationListBottomBarController
+//    }()
 
     let topBarViewController: ConversationListTopBarViewController
     let networkStatusViewController: NetworkStatusViewController = {
@@ -109,14 +124,14 @@ final class ConversationListViewController: UIViewController {
 
         setupTopBar()
         setupListContentController()
-        setupBottomBarController()
+        setupTabBar()
         setupNoConversationLabel()
         setupOnboardingHint()
         setupNetworkStatusBar()
 
         createViewConstraints()
 
-        onboardingHint.arrowPointToView = bottomBarController.startTabView
+//        onboardingHint.arrowPointToView = bottomBarController.startTabView
     }
 
     @available(*, unavailable)
@@ -212,10 +227,13 @@ final class ConversationListViewController: UIViewController {
         contentContainer.addSubview(onboardingHint)
     }
 
-    private func setupBottomBarController() {
-        bottomBarController.delegate = self
-        add(bottomBarController, to: contentContainer)
-        listContentController.listViewModel.restorationDelegate = bottomBarController
+    private func setupTabBar() {
+//        bottomBarController.delegate = self
+//        add(bottomBarController, to: contentContainer)
+//        listContentController.listViewModel.restorationDelegate = bottomBarController
+        delegate = self
+        tabBar.delegate = self
+        contentContainer.addSubview(tabBar)
     }
 
     private func setupNetworkStatusBar() {
@@ -226,7 +244,7 @@ final class ConversationListViewController: UIViewController {
     private func createViewConstraints() {
         guard
             let topBarView = topBarViewController.view,
-            let bottomBar = bottomBarController.view,
+            //let bottomBar = bottomBarController.view,
             let conversationList = listContentController.view
         else {
             return
@@ -235,7 +253,8 @@ final class ConversationListViewController: UIViewController {
         [contentContainer,
         topBarView,
         conversationList,
-        bottomBar,
+         tabBar,
+//        bottomBar,
         noConversationLabel,
         onboardingHint,
         networkStatusViewController.view].forEach {
@@ -259,15 +278,23 @@ final class ConversationListViewController: UIViewController {
             conversationList.topAnchor.constraint(equalTo: topBarView.bottomAnchor),
             conversationList.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
             conversationList.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
-            conversationList.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+//            conversationList.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+//            conversationList.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+            conversationList.bottomAnchor.constraint(equalTo: tabBar.topAnchor),
 
-            onboardingHint.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+//            onboardingHint.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+//            onboardingHint.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+            onboardingHint.bottomAnchor.constraint(equalTo: tabBar.topAnchor),
             onboardingHint.leftAnchor.constraint(equalTo: contentContainer.leftAnchor),
             onboardingHint.rightAnchor.constraint(equalTo: contentContainer.rightAnchor),
 
-            bottomBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
-            bottomBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
-            bottomBar.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+            //            bottomBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            //            bottomBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            //            bottomBar.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+
+            tabBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            tabBar.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
 
             noConversationLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
             noConversationLabel.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
@@ -324,17 +351,17 @@ final class ConversationListViewController: UIViewController {
     }
 
     func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
-        if showArchived == bottomBarController.showArchived {
-            return
-        }
-
-        UIView.performWithoutAnimation {
-            self.bottomBarController.showArchived = showArchived
-
-            UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
-                self.bottomBarController.view.layoutIfNeeded()
-            })
-        }
+//        if showArchived == bottomBarController.showArchived {
+//            return
+//        }
+//
+//        UIView.performWithoutAnimation {
+//            self.bottomBarController.showArchived = showArchived
+//
+//            UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
+//                self.bottomBarController.view.layoutIfNeeded()
+//            })
+//        }
     }
 
     func hideArchivedConversations() {
@@ -356,6 +383,30 @@ final class ConversationListViewController: UIViewController {
     var hasUsernameTakeoverViewController: Bool {
         return usernameTakeoverViewController != nil
     }
+}
+
+extension ConversationListViewController: UITabBarDelegate {
+
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        switch item.tag {
+        case 1:
+            delegate?.didChangeTap(with: .startUI)
+            print("1")
+        case 2:
+            delegate?.didChangeTap(with: .list)
+            print("2")
+        case 3:
+            delegate?.didChangeTap(with: .folder)
+            print("3")
+        case 4:
+            delegate?.didChangeTap(with: .archive)
+            print("4")
+        default:
+            print("default")
+
+        }
+    }
+
 }
 
 fileprivate extension NSAttributedString {

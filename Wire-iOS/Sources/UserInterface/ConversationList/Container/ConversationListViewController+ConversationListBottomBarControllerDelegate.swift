@@ -31,4 +31,18 @@ extension ConversationListViewController: ConversationListBottomBarControllerDel
             listContentController.listViewModel.folderEnabled = false
         }
     }
+
+    func didChangeTap(with type: ConversationListButtonType) {
+        switch type {
+        case .archive:
+            setState(.archived, animated: true)
+        case .startUI:
+            presentPeoplePicker()
+        case .folder:
+            listContentController.listViewModel.folderEnabled = true
+        case .list:
+            listContentController.listViewModel.folderEnabled = false
+        }
+    }
+
 }
