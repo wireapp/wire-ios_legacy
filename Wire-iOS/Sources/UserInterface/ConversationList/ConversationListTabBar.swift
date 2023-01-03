@@ -43,17 +43,17 @@ enum TabBarItemType {
             return 4
         }
     }
-    // TODO Katerina - new icons
-    var icon: StyleKitIcon {
+
+    var icon: UIImage {
         switch self {
         case .startUI:
-            return .person
+            return Asset.Images.contactsOutline.image
         case .list:
-            return .conversation
+            return Asset.Images.conversationsOutline.image
         case .folder:
-            return .folderList
+            return Asset.Images.foldersOutline.image
         case .archive:
-            return .archive
+            return Asset.Images.archiveOutline.image
         }
     }
 
@@ -206,12 +206,8 @@ extension ConversationListTabBar: UILargeContentViewerInteractionDelegate {
 private extension UITabBarItem {
 
     convenience init(type: TabBarItemType) {
-        let size: StyleKitIcon.Size = .tiny
-        let image = UIImage.imageForIcon(type.icon,
-                                         size: size.rawValue,
-                                         color: SemanticColors.Button.textBottomBarNormal)
         self.init(title: type.title,
-                  image: image.withRenderingMode(.alwaysTemplate),
+                  image: type.icon.withRenderingMode(.alwaysTemplate),
                   selectedImage: nil)
 
         tag = type.order

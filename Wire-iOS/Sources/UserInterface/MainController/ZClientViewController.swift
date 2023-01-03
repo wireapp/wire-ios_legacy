@@ -199,8 +199,7 @@ final class ZClientViewController: UIViewController {
 
     @objc
     private func openStartUI(_ sender: Any?) {
-        // TODO Katerina
-//        conversationListViewController.bottomBarController.startUIViewTapped()
+        conversationListViewController.delegate?.didChangeTab(with: .startUI)
     }
 
     private func createBackgroundViewController() {

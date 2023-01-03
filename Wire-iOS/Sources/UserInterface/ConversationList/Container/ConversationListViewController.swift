@@ -122,7 +122,7 @@ final class ConversationListViewController: UIViewController {
         createViewConstraints()
 
         // TODO Katerina
-        onboardingHint.arrowPointToView = tabBar
+        //onboardingHint.arrowPointToView = tabBar.startTab
         //bottomBarController.startTabView
     }
 
