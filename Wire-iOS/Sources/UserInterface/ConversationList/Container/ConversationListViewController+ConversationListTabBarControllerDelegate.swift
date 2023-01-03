@@ -17,22 +17,9 @@
 
 import Foundation
 
-extension ConversationListViewController: ConversationListBottomBarControllerDelegate {
+extension ConversationListViewController: ConversationListTabBarControllerDelegate {
 
-    func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType) {
-        switch buttonType {
-        case .archive:
-            setState(.archived, animated: true)
-        case .startUI:
-            presentPeoplePicker()
-        case .folder:
-            listContentController.listViewModel.folderEnabled = true
-        case .list:
-            listContentController.listViewModel.folderEnabled = false
-        }
-    }
-
-    func didChangeTap(with type: ConversationListButtonType) {
+    func didChangeTab(with type: TabBarItemType) {
         switch type {
         case .archive:
             setState(.archived, animated: true)

@@ -27,6 +27,9 @@ enum ConversationListState {
 }
 
 final class ConversationListViewController: UIViewController {
+
+    weak var delegate: ConversationListTabBarControllerDelegate?
+
     let viewModel: ViewModel
     /// internal View Model
     var state: ConversationListState = .conversationList
@@ -42,8 +45,6 @@ final class ConversationListViewController: UIViewController {
 
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
-
-    weak var delegate: ConversationListBottomBarControllerDelegate?
 
     fileprivate let noConversationLabel: UILabel = {
         let label = UILabel()
@@ -68,25 +69,12 @@ final class ConversationListViewController: UIViewController {
         return conversationListContentController
     }()
 
-    let tabBar: UITabBar = {
-        let clientTabBar = UITabBar()
-        clientTabBar.barTintColor = SemanticColors.View.backgroundConversationList
-        clientTabBar.isTranslucent = false
+    let tabBar: ConversationListTabBar = {
+        let conversationListTabBar = ConversationListTabBar()
+        conversationListTabBar.showArchived = true
 
-        let startTab = UITabBarItem(type: .startUI)
-        let listTab = UITabBarItem(type: .list)
-        let foldersTab = UITabBarItem(type: .folder)
-        let archivedTab = UITabBarItem(type: .archive)
-        clientTabBar.items = [startTab, listTab, foldersTab, archivedTab]
-        return clientTabBar
+        return conversationListTabBar
     }()
-
-//    let bottomBarController: ConversationListBottomBarController = {
-//        let conversationListBottomBarController = ConversationListBottomBarController()
-//        conversationListBottomBarController.showArchived = true
-//
-//        return conversationListBottomBarController
-//    }()
 
     let topBarViewController: ConversationListTopBarViewController
     let networkStatusViewController: NetworkStatusViewController = {
@@ -105,6 +93,8 @@ final class ConversationListViewController: UIViewController {
         self.init(viewModel: viewModel)
 
         viewModel.viewController = self
+
+        delegate = self
     }
 
     required init(viewModel: ViewModel) {
@@ -131,7 +121,8 @@ final class ConversationListViewController: UIViewController {
 
         createViewConstraints()
 
-//        onboardingHint.arrowPointToView = bottomBarController.startTabView
+        onboardingHint.arrowPointToView = tabBar
+        //bottomBarController.startTabView
     }
 
     @available(*, unavailable)
@@ -170,6 +161,7 @@ final class ConversationListViewController: UIViewController {
         }
 
         state = .conversationList
+        tabBar.selectedTab = listContentController.listViewModel.folderEnabled ? .folder : .list
 
         closePushPermissionDialogIfNotNeeded()
 
@@ -228,12 +220,9 @@ final class ConversationListViewController: UIViewController {
     }
 
     private func setupTabBar() {
-//        bottomBarController.delegate = self
-//        add(bottomBarController, to: contentContainer)
-//        listContentController.listViewModel.restorationDelegate = bottomBarController
-        delegate = self
         tabBar.delegate = self
         contentContainer.addSubview(tabBar)
+        listContentController.listViewModel.restorationDelegate = tabBar
     }
 
     private func setupNetworkStatusBar() {
@@ -244,7 +233,6 @@ final class ConversationListViewController: UIViewController {
     private func createViewConstraints() {
         guard
             let topBarView = topBarViewController.view,
-            //let bottomBar = bottomBarController.view,
             let conversationList = listContentController.view
         else {
             return
@@ -253,8 +241,7 @@ final class ConversationListViewController: UIViewController {
         [contentContainer,
         topBarView,
         conversationList,
-         tabBar,
-//        bottomBar,
+        tabBar,
         noConversationLabel,
         onboardingHint,
         networkStatusViewController.view].forEach {
@@ -278,19 +265,11 @@ final class ConversationListViewController: UIViewController {
             conversationList.topAnchor.constraint(equalTo: topBarView.bottomAnchor),
             conversationList.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
             conversationList.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
-//            conversationList.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
-//            conversationList.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
             conversationList.bottomAnchor.constraint(equalTo: tabBar.topAnchor),
 
-//            onboardingHint.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
-//            onboardingHint.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
             onboardingHint.bottomAnchor.constraint(equalTo: tabBar.topAnchor),
             onboardingHint.leftAnchor.constraint(equalTo: contentContainer.leftAnchor),
             onboardingHint.rightAnchor.constraint(equalTo: contentContainer.rightAnchor),
-
-            //            bottomBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
-            //            bottomBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
-            //            bottomBar.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
 
             tabBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
             tabBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
@@ -351,17 +330,10 @@ final class ConversationListViewController: UIViewController {
     }
 
     func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
-//        if showArchived == bottomBarController.showArchived {
-//            return
-//        }
-//
-//        UIView.performWithoutAnimation {
-//            self.bottomBarController.showArchived = showArchived
-//
-//            UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
-//                self.bottomBarController.view.layoutIfNeeded()
-//            })
-//        }
+        guard showArchived != tabBar.showArchived else {
+            return
+        }
+        tabBar.showArchived = showArchived
     }
 
     func hideArchivedConversations() {
@@ -383,27 +355,36 @@ final class ConversationListViewController: UIViewController {
     var hasUsernameTakeoverViewController: Bool {
         return usernameTakeoverViewController != nil
     }
+
 }
+
+// MARK: - UITabBarDelegate
 
 extension ConversationListViewController: UITabBarDelegate {
 
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        switch item.tag {
-        case 1:
-            delegate?.didChangeTap(with: .startUI)
-            print("1")
-        case 2:
-            delegate?.didChangeTap(with: .list)
-            print("2")
-        case 3:
-            delegate?.didChangeTap(with: .folder)
-            print("3")
-        case 4:
-            delegate?.didChangeTap(with: .archive)
-            print("4")
-        default:
-            print("default")
+        guard let type = item.type else {
+            return
+        }
+        delegate?.didChangeTab(with: type)
+    }
 
+}
+
+private extension UITabBarItem {
+
+    var type: TabBarItemType? {
+        switch self.tag {
+        case 1:
+            return .startUI
+        case 2:
+            return .list
+        case 3:
+            return .folder
+        case 4:
+            return .archive
+        default:
+            return nil
         }
     }
 

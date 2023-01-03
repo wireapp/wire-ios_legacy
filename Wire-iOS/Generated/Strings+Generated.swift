@@ -803,14 +803,14 @@ internal enum L10n {
         internal static let hint = L10n.tr("Accessibility", "tabBar.contacts.hint", fallback: "Double tap to search for people and open contact list")
       }
       internal enum Conversations {
-        /// Conversations
-        internal static let description = L10n.tr("Accessibility", "tabBar.conversations.description", fallback: "Conversations")
+        /// List of recent conversations
+        internal static let description = L10n.tr("Accessibility", "tabBar.conversations.description", fallback: "List of recent conversations")
         /// Double tap to open list of recent conversations
         internal static let hint = L10n.tr("Accessibility", "tabBar.conversations.hint", fallback: "Double tap to open list of recent conversations")
       }
       internal enum Folders {
-        /// Folders
-        internal static let description = L10n.tr("Accessibility", "tabBar.folders.description", fallback: "Folders")
+        /// List of conversations organized in folders
+        internal static let description = L10n.tr("Accessibility", "tabBar.folders.description", fallback: "List of conversations organized in folders")
         /// Double tap to open list of conversations organized in folders
         internal static let hint = L10n.tr("Accessibility", "tabBar.folders.hint", fallback: "Double tap to open list of conversations organized in folders")
       }

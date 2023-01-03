@@ -34,7 +34,6 @@ final class ZClientViewController: UIViewController {
 
     private(set) var mediaPlaybackManager: MediaPlaybackManager?
     let conversationListViewController: ConversationListViewController
-  //  let tabBarVC: UITabBarController
     var proximityMonitorManager: ProximityMonitorManager?
     var legalHoldDisclosureController: LegalHoldDisclosureController?
 
@@ -67,8 +66,6 @@ final class ZClientViewController: UIViewController {
         _userSession = userSession
         backgroundViewController = BackgroundViewController(user: selfUser, userSession: userSession as? ZMUserSession)
         conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
-
-      //  tabBarVC = ClientTabBarController(account: account, selfUser: selfUser)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -202,15 +199,11 @@ final class ZClientViewController: UIViewController {
 
     @objc
     private func openStartUI(_ sender: Any?) {
+        // TODO Katerina
 //        conversationListViewController.bottomBarController.startUIViewTapped()
     }
 
     private func createBackgroundViewController() {
-
-//        backgroundViewController.addToSelf(tabBarVC)
-//        tabBarVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        tabBarVC.view.frame = backgroundViewController.view.bounds
-
         backgroundViewController.addToSelf(conversationListViewController)
 
         conversationListViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
