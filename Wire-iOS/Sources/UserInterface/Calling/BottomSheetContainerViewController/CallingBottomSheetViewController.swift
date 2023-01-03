@@ -36,7 +36,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     var bottomSheetMinimalOffset: CGFloat {
         switch voiceChannel.state {
-        case .incoming(degradedUser: _):
+        case .incoming:
             return 230.0
         default:
             return 128.0
@@ -44,7 +44,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     }
 
     let callingActionsInfoViewController: CallingActionsInfoViewController
-    var visibleVoiceChannelViewController: CallViewController{
+    var visibleVoiceChannelViewController: CallViewController {
         didSet {
             transition(to: visibleVoiceChannelViewController, from: oldValue)
         }
@@ -201,7 +201,6 @@ extension CallingBottomSheetViewController: BottomSheetScrollingDelegate {
     }
 }
 
-
 extension VoiceChannel {
     fileprivate func getParticipantsList() -> CallParticipantsList {
         let sortedParticipants = participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
@@ -214,7 +213,7 @@ extension VoiceChannel {
     }
 }
 
-fileprivate class PassThroughOpaqueView: UIView {
+private class PassThroughOpaqueView: UIView {
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
             return false
     }
