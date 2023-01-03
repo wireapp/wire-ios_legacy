@@ -147,14 +147,13 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         avatarView.user = stream.user
         avatarView.userSession = userSession
         userDetailsView.alpha = DeveloperFlag.isUpdatedCallingUI ? 1 : 0
-        guard DeveloperFlag.isUpdatedCallingUI else { return }
-        layer.cornerRadius = 6
-        layer.masksToBounds = true
 
         guard DeveloperFlag.isUpdatedCallingUI else { return }
+        layer.cornerRadius = 3
+        layer.masksToBounds = true
         borderLayer.borderColor = SemanticColors.View.backgroundDefaultWhite.cgColor
         borderLayer.borderWidth = 5.0
-        borderLayer.cornerRadius = 6
+        borderLayer.cornerRadius = 3
         layer.insertSublayer(borderLayer, above: layer)
     }
 

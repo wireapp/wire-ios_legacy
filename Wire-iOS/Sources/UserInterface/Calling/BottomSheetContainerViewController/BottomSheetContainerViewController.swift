@@ -127,12 +127,14 @@ class BottomSheetContainerViewController: UIViewController {
         if animated {
             UIView.animate(withDuration: 0.2, animations: {
                 self.view.layoutIfNeeded()
+                self.bottomSheetChangedOffset(fullHeightPercentage: 1.0)
             }, completion: { _ in
                 self.state = .full
             })
         } else {
             self.view.layoutIfNeeded()
             self.state = .full
+            self.bottomSheetChangedOffset(fullHeightPercentage: 1.0)
         }
     }
 
@@ -147,12 +149,14 @@ class BottomSheetContainerViewController: UIViewController {
                            options: [.curveEaseOut],
                            animations: {
                 self.view.layoutIfNeeded()
+                self.bottomSheetChangedOffset(fullHeightPercentage: 0.0)
             }, completion: { _ in
                 self.state = .initial
             })
         } else {
             self.view.layoutIfNeeded()
             self.state = .initial
+            self.bottomSheetChangedOffset(fullHeightPercentage: 0.0)
         }
     }
 
@@ -178,6 +182,8 @@ class BottomSheetContainerViewController: UIViewController {
                 topConstraint.constant = newConstant
                 self.view.layoutIfNeeded()
             }
+            let percent = (-topConstraint.constant - configuration.initialOffset) / (configuration.height - configuration.initialOffset)
+            bottomSheetChangedOffset(fullHeightPercentage: percent)
         case .ended:
             if self.state == .full {
                 if velocity.y < 0 {
@@ -204,6 +210,7 @@ class BottomSheetContainerViewController: UIViewController {
         }
     }
 
+    func bottomSheetChangedOffset(fullHeightPercentage: CGFloat) {}
 }
 
 extension BottomSheetContainerViewController: UIGestureRecognizerDelegate {
