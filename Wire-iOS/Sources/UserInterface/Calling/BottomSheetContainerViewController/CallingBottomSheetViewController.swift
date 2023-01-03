@@ -32,6 +32,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     private var participantsObserverToken: Any?
     private let voiceChannel: VoiceChannel
     private let headerBar = CallHeaderBar()
+    private let overlay = PassThroughOpaqueView()
 
     var bottomSheetMinimalOffset: CGFloat {
         switch voiceChannel.state {
@@ -53,7 +54,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         self.voiceChannel = voiceChannel
         let selfUser: UserType = ZMUser.selfUser()
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: selfUser, isOverlayEnabled: false)
-
         callingActionsInfoViewController = CallingActionsInfoViewController(participants: voiceChannel.getParticipantsList(), selfUser: selfUser)
         super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: 128.0))
 
@@ -63,7 +63,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
 
-        view.addSubview(headerBar)
+        view.insertSubview(overlay, belowSubview: bottomSheetViewController.view)
+        view.insertSubview(headerBar, belowSubview: overlay)
         setupViews()
         addConstraints()
     }
@@ -76,17 +77,24 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         view.backgroundColor = SemanticColors.View.backgroundDefault
         headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
+        overlay.alpha = 0.0
+        overlay.backgroundColor = SemanticColors.View.backgroundOverlay
     }
 
     private func addConstraints() {
         headerBar.translatesAutoresizingMaskIntoConstraints = false
+        overlay.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerBar.topAnchor.constraint(equalTo: view.safeTopAnchor),
             headerBar.safeBottomAnchor.constraint(equalTo: view.safeTopAnchor, constant: 45.0),
-            headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required)
+            headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required),
+            overlay.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            overlay.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            overlay.topAnchor.constraint(equalTo: view.topAnchor),
+            overlay.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
@@ -137,6 +145,9 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController.delegate = self
     }
 
+    override func bottomSheetChangedOffset(fullHeightPercentage: CGFloat) {
+        overlay.alpha = fullHeightPercentage * 0.7
+    }
 }
 
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
@@ -198,5 +209,11 @@ extension VoiceChannel {
                              microphoneState: $0.state.microphoneState,
                              activeSpeakerState: $0.activeSpeakerState)
         }
+    }
+}
+
+fileprivate class PassThroughOpaqueView: UIView {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+            return false
     }
 }
