@@ -95,6 +95,8 @@ final class ConversationListViewController: UIViewController {
         viewModel.viewController = self
 
         delegate = self
+
+        onboardingHint.arrowPointToView = tabBar
     }
 
     required init(viewModel: ViewModel) {
@@ -120,10 +122,6 @@ final class ConversationListViewController: UIViewController {
         setupNetworkStatusBar()
 
         createViewConstraints()
-
-        // TODO Katerina
-        //onboardingHint.arrowPointToView = tabBar.startTab
-        //bottomBarController.startTabView
     }
 
     @available(*, unavailable)

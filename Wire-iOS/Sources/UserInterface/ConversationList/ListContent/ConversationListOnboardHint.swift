@@ -24,14 +24,16 @@ final class ConversationListOnboardingHint: UIView {
 
     let messageLabel: UILabel = DynamicFontLabel(fontSpec: .largeLightFont, color: SemanticColors.Label.textDefault)
     let arrowView: UIImageView = UIImageView()
-//    weak var arrowPointToView: UITabBarItem? {
-//        didSet {
-//            guard let arrowPointToView = arrowPointToView else { return }
-//
-//            NSLayoutConstraint.activate([
-//                arrowView.centerXAnchor.constraint(equalTo: arrowPointToView.imageInsets.leading)])
-//        }
-//    }
+    weak var arrowPointToView: UITabBar? {
+        didSet {
+            guard let arrowPointToTabBar = arrowPointToView,
+                  let items = arrowPointToTabBar.items else { return }
+            let itemWidth = UIScreen.main.bounds.width / CGFloat(items.count)
+
+            NSLayoutConstraint.activate([
+                arrowView.centerXAnchor.constraint(equalTo: arrowPointToTabBar.leadingAnchor, constant: itemWidth / 2)])
+        }
+    }
 
     override init(frame: CGRect) {
 
@@ -65,7 +67,6 @@ final class ConversationListOnboardingHint: UIView {
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             arrowView.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: margin),
-            arrowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
-            arrowView.centerXAnchor.constraint(equalTo: leadingAnchor, constant: margin)])
+            arrowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)])
     }
 }
