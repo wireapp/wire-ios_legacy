@@ -145,7 +145,6 @@ final class ConversationListTabBar: UITabBar {
     init() {
         super.init(frame: .zero)
         setupViews()
-
     }
 
     required init?(coder: NSCoder) {
@@ -187,31 +186,17 @@ extension ConversationListTabBar: ConversationListViewModelRestorationDelegate {
 // MARK: - UILargeContentViewerInteractionDelegate
 
 extension ConversationListTabBar: UILargeContentViewerInteractionDelegate {
-    // TODO Katerina - check iPad
+
     func largeContentViewerInteraction(_: UILargeContentViewerInteraction, itemAt: CGPoint) -> UILargeContentViewerItem? {
         setupLargeContentViewer(at: itemAt)
 
         return self
     }
 
-    private func setupLargeContentViewer(at: CGPoint) {
-        guard let itemsCount = items?.count else {
+    private func setupLargeContentViewer(at location: CGPoint) {
+        guard let tabBarItem = tabBarItem(at: location) else {
             return
         }
-        let itemWidth: CGFloat = (self.frame.width / CGFloat(itemsCount))
-        var type: TabBarItemType = .startUI
-        // TODO Katerina - improve
-        if at.x < itemWidth {
-            type = .startUI
-        } else if at.x > itemWidth && at.x < (2 * itemWidth) {
-            type = .list
-        } else if at.x > (2 * itemWidth) && at.x < (3 * itemWidth) {
-            type = .folder
-        } else if at.x > (3 * itemWidth) {
-            type = .archive
-        }
-
-        let tabBarItem = UITabBarItem(type: type)
         largeContentTitle = tabBarItem.title
         largeContentImage = tabBarItem.image
     }
@@ -235,6 +220,29 @@ private extension UITabBarItem {
         accessibilityIdentifier = type.accessibilityIdentifier
         accessibilityLabel = type.accessibilityLabel
         accessibilityHint = type.accessibilityHint
+    }
+
+}
+
+private extension UITabBar {
+
+    func tabBarItem(at location: CGPoint) -> UITabBarItem? {
+        guard let itemsCount = items?.count else {
+            return nil
+        }
+
+        let itemWidth: CGFloat = (self.frame.width / CGFloat(itemsCount))
+
+        switch location.x {
+        case 0 ..< itemWidth:
+            return UITabBarItem(type: .startUI)
+        case itemWidth ..< (2 * itemWidth):
+            return UITabBarItem(type: .list)
+        case (2 * itemWidth) ..< (3 * itemWidth):
+            return UITabBarItem(type: .folder)
+        default:
+            return UITabBarItem(type: .archive)
+        }
     }
 
 }

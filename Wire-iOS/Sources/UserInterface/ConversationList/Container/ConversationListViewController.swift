@@ -121,6 +121,7 @@ final class ConversationListViewController: UIViewController {
 
         createViewConstraints()
 
+        // TODO Katerina
         onboardingHint.arrowPointToView = tabBar
         //bottomBarController.startTabView
     }
@@ -411,5 +412,16 @@ fileprivate extension NSAttributedString {
         let attributedString = NSAttributedString(string: titleString.uppercased(), attributes: titleAttributes)
 
         return attributedString
+    }
+}
+
+extension UITabBar {
+    // Workaround for new UITabBar behavior where on iPad,
+    // the UITabBar shows the UITabBarItem icon next to the text
+    override open var traitCollection: UITraitCollection {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return UITraitCollection(horizontalSizeClass: .compact)
+        }
+        return super.traitCollection
     }
 }
