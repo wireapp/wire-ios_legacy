@@ -59,7 +59,7 @@ extension UIBarButtonItem {
                     action: buttonAction)
             } else {
                 rightBarButtonItem = UIBarButtonItem(
-                    title:  General.done,
+                    title: General.done,
                     style: .plain,
                     target: buttonTarget,
                     action: buttonAction)
