@@ -46,7 +46,9 @@ class ConversationStateAccessoryView: UIView {
         contentStack.spacing = 8
 
         legalHoldImageView.setContentHuggingPriority(.required, for: .horizontal)
-        legalHoldImageView.setIcon(.legalholdactive, size: 16, color: SemanticColors.LegacyColors.vividRed)
+
+        legalHoldImageView.setTemplateIcon(.legalholdactive, size: 16)
+        legalHoldImageView.tintColor = SemanticColors.Icon.foregroundDefaultRed
         contentStack.addArrangedSubview(legalHoldImageView)
 
         verifiedImageView.setContentHuggingPriority(.required, for: .horizontal)

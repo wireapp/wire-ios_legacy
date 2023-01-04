@@ -63,7 +63,6 @@ public enum SemanticColors {
         static let textCollectionSecondary = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textErrorDefault = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
         static let textPasswordRulesCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
-
     }
 
     public enum SearchBar {
