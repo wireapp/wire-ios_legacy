@@ -88,7 +88,9 @@ final class UserNameDetailViewModel: NSObject {
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
-        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor.from(scheme: .textDimmed))
+        AddressBookCorrelationFormatter(lightFont: smallLightFont,
+                                        boldFont: smallBoldFont,
+                                        color: SemanticColors.Label.textDefault)
     }()
 
     init(user: UserType?, fallbackName fallback: String, addressBookName: String?) {
