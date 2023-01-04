@@ -117,7 +117,7 @@ public extension FontSpec {
         return self.init(.header, .regular)
     }
 
-    //MARK: - Body
+    // MARK: - Body
     static var body: Self {
         return self.init(.body, .regular)
     }
