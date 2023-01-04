@@ -57,7 +57,7 @@ final class CollectionsView: UIView {
 
         noResultsView.label.accessibilityTraits = .header
         noResultsView.label.accessibilityLabel = L10n.Accessibility.ConversationSearch.NoItems.description
-        noResultsView.label.text = "collections.section.no_items".localized
+        noResultsView.label.text = L10n.Localizable.Collections.Section.noItems
         noResultsView.icon = .library
         noResultsView.isHidden = true
         addSubview(noResultsView)

@@ -41,7 +41,7 @@ final class AudioMessageView: UIView, TransferView {
     private let downloadProgressView = CircularProgressView()
     let playButton: IconButton = {
         let button = IconButton()
-        button.setIconColor(SemanticColors.Icon.foregroundCollectionCellPlayButton, for: .normal)
+        button.setIconColor(SemanticColors.Icon.foregroundDefaultWhite, for: .normal)
         return button
     }()
 
@@ -279,7 +279,7 @@ final class AudioMessageView: UIView, TransferView {
     private func updateActivePlayButton() {
         guard let audioTrackPlayer = audioTrackPlayer else { return }
 
-        playButton.backgroundColor = SemanticColors.Icon.foregroundConversationDefault
+        playButton.backgroundColor = SemanticColors.Icon.backgroundDefault
 
         if audioTrackPlayer.isPlaying {
             playButton.setIcon(.pause, size: .tiny, for: [])

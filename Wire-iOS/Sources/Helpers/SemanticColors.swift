@@ -75,7 +75,7 @@ public enum SemanticColors {
     }
 
     public enum Icon {
-        static let backgroundIconDefaultConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let backgroundDefault = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)
         static let borderCheckMark = UIColor(light: Asset.gray80, dark: Asset.gray60)
@@ -90,8 +90,6 @@ public enum SemanticColors {
         static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let foregroundAvailabilityBusy = UIColor(light: Asset.amber500Light, dark: Asset.amber500Dark)
         static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
-        static let foregroundConversationDefault = UIColor(light: Asset.gray70, dark: Asset.gray60)
-        static let foregroundCollectionCellPlayButton = UIColor(light: Asset.white, dark: Asset.black)
         static let backgroundPasswordRuleCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
         static let backgroundPhoneCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let backgroundMissedPhoneCall = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)

@@ -32,22 +32,26 @@ final class CollectionHeaderView: UICollectionReusableView {
 
             switch section {
             case CollectionsSectionSet.images:
-                titleLabel.text = "collections.section.images.title".localized
+                titleLabel.text = Section.Images.title
+                titleLabel.accessibilityLabel = ConversationSearch.ImagesSection.description
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                titleLabel.text = "collections.section.files.title".localized
+                titleLabel.text = Section.Files.title
+                titleLabel.accessibilityLabel = ConversationSearch.FilesSection.description
                 icon = .document
             case CollectionsSectionSet.videos:
-                titleLabel.text = "collections.section.videos.title".localized
+                titleLabel.text = Section.Videos.title
+                titleLabel.accessibilityLabel = ConversationSearch.VideosSection.description
                 icon = .movie
             case CollectionsSectionSet.links:
-                titleLabel.text = "collections.section.links.title".localized
+                titleLabel.text = Section.Links.title
+                titleLabel.accessibilityLabel = ConversationSearch.LinksSection.description
                 icon = .link
             default: fatal("Unknown section")
             }
 
             iconImageView.setTemplateIcon(icon, size: .tiny)
-            iconImageView.tintColor = SemanticColors.Icon.foregroundConversationDefault
+            iconImageView.tintColor = SemanticColors.Icon.backgroundDefault
         }
     }
 

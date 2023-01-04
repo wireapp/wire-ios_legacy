@@ -36,7 +36,7 @@ final class VideoMessageView: UIView, TransferView {
     private let playButton: IconButton = {
         let button = IconButton()
         button.setIconColor(
-            SemanticColors.Icon.foregroundCollectionCellPlayButton,
+            SemanticColors.Icon.foregroundDefaultWhite,
             for: .normal)
         return button
     }()
@@ -162,7 +162,7 @@ final class VideoMessageView: UIView, TransferView {
 
         if let viewsState = state.viewsStateForVideo() {
             self.playButton.setIcon(viewsState.playButtonIcon, size: 28, for: .normal)
-            self.playButton.backgroundColor = SemanticColors.Icon.foregroundConversationDefault
+            self.playButton.backgroundColor = SemanticColors.Icon.backgroundDefault
         }
 
         updateVisibleViews()

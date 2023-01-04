@@ -31,7 +31,7 @@ final class FileTransferView: UIView, TransferView {
     private let bottomLabel = UILabel()
     private let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = SemanticColors.Icon.foregroundConversationDefault
+        imageView.tintColor = SemanticColors.Icon.backgroundDefault
         return imageView
     }()
 
@@ -74,7 +74,6 @@ final class FileTransferView: UIView, TransferView {
         createConstraints()
         setupAccessibility()
     }
-
 
     private func setupAccessibility() {
         isAccessibilityElement = true

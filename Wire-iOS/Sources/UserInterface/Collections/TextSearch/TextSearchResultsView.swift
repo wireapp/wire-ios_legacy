@@ -41,7 +41,7 @@ final class TextSearchResultsView: UIView {
 
         noResultsView.label.accessibilityTraits = .header
         noResultsView.label.accessibilityLabel = L10n.Accessibility.ConversationSearch.EmptyResult.description
-        noResultsView.label.text = "collections.search.no_items".localized
+        noResultsView.label.text = L10n.Localizable.Collections.Search.noItems
         noResultsView.icon = .search
         addSubview(noResultsView)
     }
