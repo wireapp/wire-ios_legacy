@@ -42,7 +42,6 @@ final class AudioMessageView: UIView, TransferView {
     let playButton: IconButton = {
         let button = IconButton()
         button.setIconColor(SemanticColors.Icon.foregroundDefaultWhite, for: .normal)
-        button.setBackgroundImageColor(SemanticColors.Icon.backgroundDefault, for: .normal)
         return button
     }()
 
@@ -242,7 +241,7 @@ final class AudioMessageView: UIView, TransferView {
 
         if let viewsState = state.viewsStateForAudio() {
             playButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
-            playButton.backgroundColor = viewsState.playButtonBackgroundColor
+            playButton.setBackgroundImageColor(viewsState.playButtonBackgroundColor, for: .normal)
             playButton.accessibilityValue = viewsState.playButtonIcon == .play ? AudioMessage.Play.value : AudioMessage.Pause.value
         }
 
@@ -292,7 +291,6 @@ final class AudioMessageView: UIView, TransferView {
     }
 
     private func updateInactivePlayer() {
-        playButton.backgroundColor = FileMessageViewState.normalColor
         playButton.setIcon(.play, size: .tiny, for: [])
         playButton.accessibilityValue = AudioMessage.Play.value
 
