@@ -42,6 +42,7 @@ final class AudioMessageView: UIView, TransferView {
     let playButton: IconButton = {
         let button = IconButton()
         button.setIconColor(SemanticColors.Icon.foregroundDefaultWhite, for: .normal)
+        button.setBackgroundImageColor(SemanticColors.Icon.backgroundDefault, for: .normal)
         return button
     }()
 
