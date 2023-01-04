@@ -93,7 +93,7 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
     init(sender: UserType,
          systemMessageType: ZMSystemMessageType) {
         let viewModel = ReadReceiptViewModel(icon: .eye,
-                                             iconColor: SemanticColors.Icon.backgroundIconDefaultConversationView,
+                                             iconColor: SemanticColors.Icon.backgroundDefault,
                                              systemMessageType: systemMessageType, sender: sender)
 
         configuration = View.Configuration(icon: viewModel.image(),

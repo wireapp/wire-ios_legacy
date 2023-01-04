@@ -32,6 +32,7 @@ public enum FontSize: String {
     case header
     case titleThree
     case subHeadline
+    case body
     case bodyTwo
     case buttonSmall
 }
@@ -231,6 +232,7 @@ public enum FontScheme {
         fontsByFontSpec[FontSpec(.bodyTwo, .semibold, .none)] = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .semibold)
 
         fontsByFontSpec[FontSpec(.buttonSmall, .bold, .none)] = .systemFont(ofSize: 14, contentSizeCategory: contentSizeCategory, weight: .bold)
+        fontsByFontSpec[FontSpec(.body, .regular, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .regular)
     }
 
     public static func font(for fontType: FontSpec) -> UIFont? {

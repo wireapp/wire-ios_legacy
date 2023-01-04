@@ -107,7 +107,8 @@ final class ConversationListTopBarViewController: UIViewController {
     private func createLegalHoldView() -> UIView {
         let imageView = UIImageView()
 
-        imageView.setIcon(.legalholdactive, size: .tiny, color: SemanticColors.LegacyColors.vividRed)
+        imageView.setTemplateIcon(.legalholdactive, size: .tiny)
+        imageView.tintColor = SemanticColors.Icon.foregroundDefaultRed
         imageView.isUserInteractionEnabled = true
 
         let imageViewContainer = UIView()

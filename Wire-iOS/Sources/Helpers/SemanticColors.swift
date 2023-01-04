@@ -60,9 +60,9 @@ public enum SemanticColors {
         static let textConversationQuestOptionInfo = UIColor(light: Asset.Colors.gray90, dark: Asset.Colors.gray20)
         static let textConversationListItemSubtitleField = UIColor(light: Asset.Colors.gray90, dark: Asset.Colors.gray20)
         static let textMessageDetails = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray40)
+        static let textCollectionSecondary = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray60)
         static let textErrorDefault = UIColor(light: Asset.Colors.red500Light, dark: Asset.Colors.red500Dark)
         static let textPasswordRulesCheck = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray20)
-
     }
 
     public enum SearchBar {
@@ -74,7 +74,7 @@ public enum SemanticColors {
     }
 
     public enum Icon {
-        static let backgroundIconDefaultConversationView = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray60)
+        static let backgroundDefault = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray60)
         static let foregroundPlainCheckMark = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.Colors.white, dark: Asset.Colors.black)
         static let borderCheckMark = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray60)
@@ -107,6 +107,8 @@ public enum SemanticColors {
         static let backgroundConversationListTableViewCell = UIColor(light: Asset.Colors.white, dark: Asset.Colors.gray95)
         static let borderConversationListTableViewCell = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray70)
+        static let backgroundCollectionCell = UIColor(light: Asset.Colors.white, dark: Asset.Colors.gray90)
+        static let borderCollectionCell = UIColor(light: Asset.Colors.gray30, dark: Asset.Colors.gray80)
         static let backgroundSecurityLevel = UIColor(light: Asset.Colors.gray20, dark: Asset.Colors.gray95)
         static let backgroundSeparatorConversationView = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray60)
         static let backgroundReplyMessageViewHighlighted = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray80)
