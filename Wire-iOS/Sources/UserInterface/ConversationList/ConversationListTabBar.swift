@@ -24,7 +24,7 @@ protocol ConversationListTabBarControllerDelegate: AnyObject {
     func didChangeTab(with type: TabBarItemType)
 }
 
-enum TabBarItemType {
+enum TabBarItemType: Int, CaseIterable {
 
     typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
     typealias TabBar = L10n.Accessibility.TabBar
@@ -32,16 +32,7 @@ enum TabBarItemType {
     case startUI, list, folder, archive
 
     var order: Int {
-        switch self {
-        case .startUI:
-            return 1
-        case .list:
-            return 2
-        case .folder:
-            return 3
-        case .archive:
-            return 4
-        }
+        return rawValue
     }
 
     var icon: UIImage {

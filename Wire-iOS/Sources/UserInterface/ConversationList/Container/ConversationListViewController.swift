@@ -373,18 +373,7 @@ extension ConversationListViewController: UITabBarDelegate {
 private extension UITabBarItem {
 
     var type: TabBarItemType? {
-        switch self.tag {
-        case 1:
-            return .startUI
-        case 2:
-            return .list
-        case 3:
-            return .folder
-        case 4:
-            return .archive
-        default:
-            return nil
-        }
+        return TabBarItemType.allCases.first(where: { $0.rawValue == self.tag } )
     }
 
 }
