@@ -222,6 +222,13 @@ final class ConversationListViewController: UIViewController {
         tabBar.delegate = self
         contentContainer.addSubview(tabBar)
         listContentController.listViewModel.restorationDelegate = tabBar
+        tabBar.unselectedItemTintColor = SemanticColors.Label.textTabBar
+
+        tabBar.subviews.forEach {
+            if let label = $0.subviews[1] as? UILabel {
+                label.lineBreakMode = .byClipping
+            }
+        }
     }
 
     private func setupNetworkStatusBar() {
