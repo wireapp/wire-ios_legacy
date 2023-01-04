@@ -69,12 +69,6 @@ class TextView: UITextView {
         }
     }
 
-    var placeholderTextTransform: TextTransform = .upper {
-        didSet {
-            placeholderLabel.textTransform = placeholderTextTransform
-        }
-    }
-
     var lineFragmentPadding: CGFloat = 0 {
         didSet {
             textContainer.lineFragmentPadding = lineFragmentPadding
@@ -203,7 +197,6 @@ class TextView: UITextView {
         let linePadding = textContainer.lineFragmentPadding
         placeholderLabel.font = placeholderFont
         placeholderLabel.textColor = placeholderTextColor
-        placeholderLabel.textTransform = placeholderTextTransform
         placeholderLabel.textAlignment = placeholderTextAlignment
         placeholderLabel.isAccessibilityElement = false
 
