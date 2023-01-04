@@ -194,7 +194,7 @@ extension ConversationListTabBar: UILargeContentViewerInteractionDelegate {
 
 }
 
-private extension UITabBarItem {
+extension UITabBarItem {
 
     convenience init(type: TabBarItemType) {
         self.init(title: type.title,

@@ -82,7 +82,7 @@ final class ConversationListViewController: UIViewController {
         return viewController
     }()
 
-    fileprivate let onboardingHint: ConversationListOnboardingHint = {
+    let onboardingHint: ConversationListOnboardingHint = {
         let conversationListOnboardingHint = ConversationListOnboardingHint()
         return conversationListOnboardingHint
     }()

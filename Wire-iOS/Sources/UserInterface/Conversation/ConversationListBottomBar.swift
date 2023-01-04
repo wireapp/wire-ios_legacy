@@ -145,7 +145,7 @@
 //    private func addObservers() {
 //        guard let userSession = ZMUserSession.shared() else { return }
 //
-//        userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
+//       // userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
 //    }
 //
 //    private func setupStackViews() {
@@ -229,21 +229,21 @@
 //
 //// MARK: - Helper
 //
-//extension UIView {
+////extension UIView {
+////
+////    func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
+////        if !hide {
+////            alpha = 0
+////            isHidden = false
+////        }
+////
+////        let animations = { self.alpha = hide ? 0 : 1 }
+////        let completion: (Bool) -> Void = { _ in self.isHidden = hide }
+////        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(), animations: animations, completion: completion)
+////    }
+////
+////}
 //
-//    func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
-//        if !hide {
-//            alpha = 0
-//            isHidden = false
-//        }
-//
-//        let animations = { self.alpha = hide ? 0 : 1 }
-//        let completion: (Bool) -> Void = { _ in self.isHidden = hide }
-//        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(), animations: animations, completion: completion)
-//    }
-//
-//}
-
 //// MARK: - ConversationListViewModelRestorationDelegate
 //extension ConversationListBottomBarController: ConversationListViewModelRestorationDelegate {
 //    func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
@@ -255,19 +255,19 @@
 //    }
 //}
 //
-//// don't need
-//extension ConversationListBottomBarController: ZMUserObserver {
-//
-//    func userDidChange(_ changeInfo: UserChangeInfo) {
-//        guard changeInfo.accentColorValueChanged else { return }
-//
-//        switch selectedTab {
-//        case .list:
-//            listTabView.backgroundColor = .accent()
-//        case .folder:
-//            folderTabView.backgroundColor = .accent()
-//        default:
-//            return
-//        }
-//    }
-//}
+////// don't need
+////extension ConversationListBottomBarController: ZMUserObserver {
+////
+////    func userDidChange(_ changeInfo: UserChangeInfo) {
+////        guard changeInfo.accentColorValueChanged else { return }
+////
+////        switch selectedTab {
+////        case .list:
+////            listTabView.backgroundColor = .accent()
+////        case .folder:
+////            folderTabView.backgroundColor = .accent()
+////        default:
+////            return
+////        }
+////    }
+////}

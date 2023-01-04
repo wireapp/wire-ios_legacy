@@ -1587,7 +1587,7 @@
 		EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */; };
 		EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */; };
 		EF834B8422035AD400E92F13 /* ConversationContentViewController+MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF834B8322035AD400E92F13 /* ConversationContentViewController+MessageAction.swift */; };
-		EF84DF4E2130565B00033702 /* ConversationListBottomBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF84DF4D2130565A00033702 /* ConversationListBottomBarControllerTests.swift */; };
+		EF84DF4E2130565B00033702 /* ConversationListTabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF84DF4D2130565A00033702 /* ConversationListTabBarTests.swift */; };
 		EF864A0D236AEB400074DFF7 /* ZMConversation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF864A0C236AEB400074DFF7 /* ZMConversation+Additions.swift */; };
 		EF883F292151190900B440CC /* UserCellSubtitleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F282151190900B440CC /* UserCellSubtitleProtocol.swift */; };
 		EF883F2B21511DD700B440CC /* people-15Sections.json in Resources */ = {isa = PBXBuildFile; fileRef = EF883F2A21511DD700B440CC /* people-15Sections.json */; };
@@ -3522,7 +3522,7 @@
 		EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDestructionTimeoutValueTests.swift; sourceTree = "<group>"; };
 		EF82E1BF20EE79EC001B5196 /* ZMConversationMessage+CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+CountDown.swift"; sourceTree = "<group>"; };
 		EF834B8322035AD400E92F13 /* ConversationContentViewController+MessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+MessageAction.swift"; sourceTree = "<group>"; };
-		EF84DF4D2130565A00033702 /* ConversationListBottomBarControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListBottomBarControllerTests.swift; sourceTree = "<group>"; };
+		EF84DF4D2130565A00033702 /* ConversationListTabBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListTabBarTests.swift; sourceTree = "<group>"; };
 		EF864A0C236AEB400074DFF7 /* ZMConversation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Additions.swift"; sourceTree = "<group>"; };
 		EF883F282151190900B440CC /* UserCellSubtitleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCellSubtitleProtocol.swift; sourceTree = "<group>"; };
 		EF883F2A21511DD700B440CC /* people-15Sections.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "people-15Sections.json"; path = "PeoplePickerControllerTests/people-15Sections.json"; sourceTree = "<group>"; };
@@ -6626,7 +6626,7 @@
 				D525426720934629001C04C1 /* IconLabelButtonTests.swift */,
 				D50892FC2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift */,
 				D524BE5E207B99B800542A4E /* UIViewController+LoadingTests.swift */,
-				EF84DF4D2130565A00033702 /* ConversationListBottomBarControllerTests.swift */,
+				EF84DF4D2130565A00033702 /* ConversationListTabBarTests.swift */,
 				EF21A06A21305C4000B9120C /* ConversationTitleViewTests.swift */,
 				7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */,
 				5EF7BA60221AB89300815625 /* ProfileViewTests.swift */,
@@ -9729,7 +9729,7 @@
 				8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */,
 				EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */,
 				EFDBA242229414E100874A15 /* Account+Mock.swift in Sources */,
-				EF84DF4E2130565B00033702 /* ConversationListBottomBarControllerTests.swift in Sources */,
+				EF84DF4E2130565B00033702 /* ConversationListTabBarTests.swift in Sources */,
 				876041551F5451EA003CB161 /* AccountViewSnapshotTests.swift in Sources */,
 				EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */,
 				87656FD11FB5FF0300D5286C /* FilePreviewGeneratorTests.swift in Sources */,
