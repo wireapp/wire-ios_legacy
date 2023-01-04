@@ -373,7 +373,7 @@ extension ConversationListViewController: UITabBarDelegate {
 private extension UITabBarItem {
 
     var type: TabBarItemType? {
-        return TabBarItemType.allCases.first(where: { $0.rawValue == self.tag } )
+        return TabBarItemType.allCases.first(where: { $0.rawValue == self.tag })
     }
 
 }
