@@ -25,6 +25,7 @@ final class AvailabilityStringBuilder: NSObject {
 
         var title: String = ""
         var color = color
+        var iconColor = color
         let availability = user.availability
         var fontSize: FontSize = .small
 
@@ -40,11 +41,13 @@ final class AvailabilityStringBuilder: NSObject {
                 if color == nil {
                     color = SemanticColors.Label.textDefault
                 }
+                iconColor = self.color(for: availability)
             }
         case .participants:
             do {
                 title = (user.name ?? "").localizedUppercase
                 color = SemanticColors.Label.textDefault
+                iconColor = self.color(for: availability)
             }
         case .placeholder:
             do {
@@ -53,12 +56,13 @@ final class AvailabilityStringBuilder: NSObject {
                     return nil
                 }
 
-                title = "availability.\(availability.canonicalName)".localized.localizedUppercase
+                title = "availability.\(availability.canonicalName)".localized
             }
         }
 
-        guard let textColor = color else { return nil }
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.color(for: availability), and: fontSize)
+        guard let textColor = color,
+              let iconColor = iconColor else { return nil }
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: iconColor, and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }
