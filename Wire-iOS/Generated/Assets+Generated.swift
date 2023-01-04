@@ -160,9 +160,13 @@ internal enum Asset {
     internal static let white = ColorAsset(name: "White")
   }
   internal enum Images {
+    internal static let archiveFilled = ImageAsset(name: "Archive Filled")
     internal static let archiveOutline = ImageAsset(name: "Archive Outline")
+    internal static let contactsFilled = ImageAsset(name: "Contacts Filled")
     internal static let contactsOutline = ImageAsset(name: "Contacts Outline")
+    internal static let conversationsFilled = ImageAsset(name: "Conversations Filled")
     internal static let conversationsOutline = ImageAsset(name: "Conversations Outline")
+    internal static let foldersFilled = ImageAsset(name: "Folders Filled")
     internal static let foldersOutline = ImageAsset(name: "Folders Outline")
   }
 }

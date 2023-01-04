@@ -48,6 +48,19 @@ enum TabBarItemType: Int, CaseIterable {
         }
     }
 
+    var selectedIcon: UIImage {
+        switch self {
+        case .startUI:
+            return Asset.Images.contactsFilled.image
+        case .list:
+            return Asset.Images.conversationsFilled.image
+        case .folder:
+            return Asset.Images.foldersFilled.image
+        case .archive:
+            return Asset.Images.archiveFilled.image
+        }
+    }
+
     var title: String {
         switch self {
         case .startUI:
@@ -199,7 +212,7 @@ extension UITabBarItem {
     convenience init(type: TabBarItemType) {
         self.init(title: type.title,
                   image: type.icon.withRenderingMode(.alwaysTemplate),
-                  selectedImage: nil)
+                  selectedImage: type.selectedIcon.withRenderingMode(.alwaysTemplate))
 
         tag = type.order
 
