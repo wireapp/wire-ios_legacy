@@ -272,7 +272,7 @@ final class ConversationListViewController: UIViewController {
 
             tabBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
             tabBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
-            tabBar.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+            tabBar.bottomAnchor.constraint(equalTo: contentContainer.safeBottomAnchor),
 
             noConversationLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
             noConversationLabel.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
