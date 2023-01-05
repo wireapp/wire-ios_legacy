@@ -71,10 +71,13 @@ class AuthenticatedRouter: NSObject {
 
         super.init()
 
-        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification,
-                                               object: nil,
-                                               queue: .main,
-                                               using: notifyFeatureChange)
+        NotificationCenter.default.addObserver(
+            forName: .featureDidChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.notifyFeatureChange(notification)
+        }
     }
 
     private func notifyFeatureChange(_ note: Notification) {
