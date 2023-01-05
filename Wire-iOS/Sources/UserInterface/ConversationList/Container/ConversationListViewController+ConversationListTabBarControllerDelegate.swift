@@ -17,10 +17,10 @@
 
 import Foundation
 
-extension ConversationListViewController: ConversationListBottomBarControllerDelegate {
+extension ConversationListViewController: ConversationListTabBarControllerDelegate {
 
-    func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType) {
-        switch buttonType {
+    func didChangeTab(with type: TabBarItemType) {
+        switch type {
         case .archive:
             setState(.archived, animated: true)
         case .startUI:
@@ -31,4 +31,5 @@ extension ConversationListViewController: ConversationListBottomBarControllerDel
             listContentController.listViewModel.folderEnabled = false
         }
     }
+
 }

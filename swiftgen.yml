@@ -15,6 +15,7 @@
  xcassets:
    inputs:
      - Resources/Colors/Colors.xcassets
+     - Resources/Images/Images.xcassets
    outputs:
      - templateName: swift5
-       output: Colors+Generated.swift
+       output: Assets+Generated.swift
