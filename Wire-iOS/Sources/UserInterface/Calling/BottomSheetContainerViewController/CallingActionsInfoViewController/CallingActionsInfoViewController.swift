@@ -123,14 +123,6 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
 
-//    private func setupLargeContentViewer() {
-//        let interaction = UILargeContentViewerInteraction(delegate: self)
-//        addInteraction(interaction)
-//
-//        showsLargeContentViewer = true
-//        scalesLargeContentImage = true
-//    }
-
     private func createStackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -188,20 +180,3 @@ extension CallingActionsInfoViewController: CallInfoConfigurationObserver {
         actionsView.update(with: configuration)
     }
 }
-
-//extension CallingActionsInfoViewController: UILargeContentViewerInteractionDelegate {
-//
-//       func largeContentViewerInteraction(_: UILargeContentViewerInteraction, itemAt: CGPoint) -> UILargeContentViewerItem? {
-//           setupLargeContentViewer(at: itemAt)
-//
-//           return self
-//       }
-//
-//       private func setupLargeContentViewer(at location: CGPoint) {
-//           guard let tabBarItem = tabBarItem(at: location) else {
-//               return
-//           }
-//           largeContentTitle = tabBarItem.title
-//           largeContentImage = tabBarItem.image
-//       }
-//}

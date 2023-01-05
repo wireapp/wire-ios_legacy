@@ -334,6 +334,19 @@ extension XCTestCase {
         }
     }
 
+    func verifyInLandscape(matching value: UIViewController,
+                           file: StaticString = #file,
+                           testName: String = #function,
+                           line: UInt = #line) {
+
+        verify(matching: value,
+               as: .image(on: .iPhone8(.landscape)),
+               named: name,
+               file: file,
+               testName: testName,
+               line: line)
+    }
+
     func verify(matching value: UIViewController,
                 customSize: CGSize? = nil,
                 named name: String? = nil,
@@ -352,7 +365,6 @@ extension XCTestCase {
                                          line: line)
 
             XCTAssertNil(failure, file: file, line: line)
-
     }
 
     func verify(matching value: UIView,

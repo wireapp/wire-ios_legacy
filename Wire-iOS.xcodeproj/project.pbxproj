@@ -1179,7 +1179,7 @@
 		D36E027C294092E7006C3E5A /* IncomingCallActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */; };
 		D38BC97628BF8AA700EB928F /* NotificationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455DF28AFC443005ACD74 /* NotificationServiceError.swift */; };
 		D3A74DBD29432E8B00DD272F /* EstablishingCallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */; };
-		D3A74DC3294C530000DD272F /* CallingActionsViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC1294C510100DD272F /* CallingActionsViewTest.swift */; };
+		D3A74DC3294C530000DD272F /* CallingActionsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC1294C510100DD272F /* CallingActionsViewSnapshotTests.swift */; };
 		D3A74DC5294C5A6800DD272F /* CallingBottomSheetViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC4294C5A6800DD272F /* CallingBottomSheetViewControllerSnapshotTests.swift */; };
 		D3A74DC7294CAFEF00DD272F /* AccessibilityActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */; };
 		D3C34E6E28C1593C004A1AF1 /* AccessTokenEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */; };
@@ -3131,7 +3131,7 @@
 		D36E0279293758DD006C3E5A /* CallHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHeaderBar.swift; sourceTree = "<group>"; };
 		D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallActionsView.swift; sourceTree = "<group>"; };
 		D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishingCallStatusView.swift; sourceTree = "<group>"; };
-		D3A74DC1294C510100DD272F /* CallingActionsViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsViewTest.swift; sourceTree = "<group>"; };
+		D3A74DC1294C510100DD272F /* CallingActionsViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsViewSnapshotTests.swift; sourceTree = "<group>"; };
 		D3A74DC4294C5A6800DD272F /* CallingBottomSheetViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingBottomSheetViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityActionView.swift; sourceTree = "<group>"; };
 		D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenEndpointTests.swift; sourceTree = "<group>"; };
@@ -7001,7 +7001,7 @@
 		D3A74DC0294C50DF00DD272F /* UpdatedCallingUI */ = {
 			isa = PBXGroup;
 			children = (
-				D3A74DC1294C510100DD272F /* CallingActionsViewTest.swift */,
+				D3A74DC1294C510100DD272F /* CallingActionsViewSnapshotTests.swift */,
 				D3A74DC4294C5A6800DD272F /* CallingBottomSheetViewControllerSnapshotTests.swift */,
 			);
 			path = UpdatedCallingUI;
@@ -9566,7 +9566,7 @@
 				EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */,
 				5E294595219081A80045ACFA /* Date+Generator.swift in Sources */,
 				EE7F467225B1D058001B3EE4 /* AppLockModule.MockPresenter.swift in Sources */,
-				D3A74DC3294C530000DD272F /* CallingActionsViewTest.swift in Sources */,
+				D3A74DC3294C530000DD272F /* CallingActionsViewSnapshotTests.swift in Sources */,
 				EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */,
 				D35EEDC128C2004000949F02 /* LegacyNotificationService.swift in Sources */,
 				EEEED9A623F6AF80008C94CA /* TestingAppDelegate.swift in Sources */,

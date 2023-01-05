@@ -55,7 +55,7 @@ extension CallingStateMock {
     }
 }
 
-class CallingActionsViewTest: ZMSnapshotTestCase {
+class CallingActionsViewSnapshotTests: ZMSnapshotTestCase {
 
     fileprivate var sut: CallingActionsView!
     fileprivate var widthConstraint: NSLayoutConstraint!
