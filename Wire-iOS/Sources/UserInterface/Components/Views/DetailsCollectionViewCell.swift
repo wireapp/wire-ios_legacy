@@ -91,11 +91,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         leftIconView.setContentHuggingPriority(.required, for: .horizontal)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.normalLightFont.font
+        titleLabel.font = FontSpec.bodyTwoSemibold.font!
         titleLabel.applyStyle(.primaryCellLabel)
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.font = FontSpec.smallRegularFont.font
+        statusLabel.font = FontSpec.mediumRegularFont.font
         statusLabel.applyStyle(.secondaryCellLabel)
 
         leftIconContainer = UIView()
