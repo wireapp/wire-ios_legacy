@@ -30,12 +30,12 @@ class CallingActionButton: IconLabelButton {
         subtitleTransformLabel.font = titleLabel?.font
         iconButton.setIcon(input.icon(forState: .normal), size: .medium, for: .normal)
         iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
-        setupLargeContentViewer()
+        //setupLargeContentViewer()
     }
 
     private func setupLargeContentViewer() {
-        let interaction = UILargeContentViewerInteraction(delegate: self)
-        addInteraction(interaction)
+       // let interaction = UILargeContentViewerInteraction(delegate: self)
+        addInteraction(UILargeContentViewerInteraction())
 
         showsLargeContentViewer = true
         scalesLargeContentImage = true
@@ -62,15 +62,15 @@ class CallingActionButton: IconLabelButton {
 
 }
 
-extension CallingActionButton: UILargeContentViewerInteractionDelegate {
-
-    func largeContentViewerInteraction(_: UILargeContentViewerInteraction, itemAt: CGPoint) -> UILargeContentViewerItem? {
-        largeContentTitle = subtitleTransformLabel.text
-        largeContentImage = iconButton.imageView?.image
-
-        return self
-    }
-}
+//extension CallingActionButton: UILargeContentViewerInteractionDelegate {
+//
+//    func largeContentViewerInteraction(_: UILargeContentViewerInteraction, itemAt: CGPoint) -> UILargeContentViewerItem? {
+//        largeContentTitle = subtitleTransformLabel.text
+//        largeContentImage = iconButton.imageView?.image
+//
+//        return self
+//    }
+//}
 
 class EndCallButton: CallingActionButton {
 

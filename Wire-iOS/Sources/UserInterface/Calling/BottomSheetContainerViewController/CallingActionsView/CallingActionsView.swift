@@ -82,6 +82,11 @@ class CallingActionsView: UIView {
         videoButtonDisabledTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(performButtonAction))
         setupViews()
         createConstraints()
+//        showsLargeContentViewer = true
+//        scalesLargeContentImage = true
+//        addInteraction(UILargeContentViewerInteraction())
+//        largeContentTitle = cameraButton.subtitleTransformLabel.text
+//        largeContentImage = cameraButton.iconButton.imageView?.image
     }
 
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
