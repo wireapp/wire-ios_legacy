@@ -90,7 +90,8 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
 
         var activeCallViewController: UIViewController!
         if DeveloperFlag.isUpdatedCallingUI {
-            let bottomSheetActiveCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel)
+            let selfUser: UserType = ZMUser.selfUser()
+            let bottomSheetActiveCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel, selfUser: selfUser)
             bottomSheetActiveCallViewController.delegate = callController
             activeCallViewController = bottomSheetActiveCallViewController
         } else {

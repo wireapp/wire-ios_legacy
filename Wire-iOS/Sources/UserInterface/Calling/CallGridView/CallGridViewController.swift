@@ -357,7 +357,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     private func updateStates(with streams: [Stream]) {
-        streams.forEach {
+o        streams.forEach {
             let view = (cachedStreamView(for: $0) as? CallParticipantView)
 
             view?.stream = $0
