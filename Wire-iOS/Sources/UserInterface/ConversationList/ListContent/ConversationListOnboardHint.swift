@@ -24,12 +24,14 @@ final class ConversationListOnboardingHint: UIView {
 
     let messageLabel: UILabel = DynamicFontLabel(fontSpec: .largeLightFont, color: SemanticColors.Label.textDefault)
     let arrowView: UIImageView = UIImageView()
-    weak var arrowPointToView: UIView? {
+    weak var arrowPointToView: UITabBar? {
         didSet {
-            guard let arrowPointToView = arrowPointToView else { return }
+            guard let arrowPointToTabBar = arrowPointToView,
+                  let items = arrowPointToTabBar.items else { return }
+            let itemWidth = UIScreen.main.bounds.width / CGFloat(items.count)
 
             NSLayoutConstraint.activate([
-            arrowView.centerXAnchor.constraint(equalTo: arrowPointToView.centerXAnchor)])
+                arrowView.centerXAnchor.constraint(equalTo: arrowPointToTabBar.leadingAnchor, constant: itemWidth / 2)])
         }
     }
 

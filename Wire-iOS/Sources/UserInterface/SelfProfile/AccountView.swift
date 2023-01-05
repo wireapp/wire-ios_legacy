@@ -260,10 +260,10 @@ extension BaseAccountView: ZMUserObserver {
 final class PersonalAccountView: AccountView {
     let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
-        avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
+        avatarImageView.container.backgroundColor = SemanticColors.View.backgroundDefaultWhite
 
         avatarImageView.initialsFont = .smallSemiboldFont
-        avatarImageView.initialsColor = .from(scheme: .textForeground, variant: .light)
+        avatarImageView.initialsColor = SemanticColors.Label.textDefault
 
         return avatarImageView
     }()

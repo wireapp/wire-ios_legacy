@@ -70,7 +70,7 @@ final class CollectionCellHeader: UIView {
         let label = UILabel()
         label.isAccessibilityElement = false
         label.font = .smallLightFont
-        label.textColor = .from(scheme: .textDimmed)
+        label.textColor = SemanticColors.Label.textCollectionSecondary
 
         return label
     }()

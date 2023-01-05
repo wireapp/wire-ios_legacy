@@ -55,7 +55,7 @@ enum CallActionIconType: IconLabelButtonInput {
         case .speaker: return "CallSpeakerButton"
         case .flipCamera: return "CallFlipCameraButton"
         case .endCall: return "EndCallButton"
-        case .pickUp: return "PickUpButton" // TODO: ACC-143
+        case .pickUp: return "PickUpButton"
         }
     }
 

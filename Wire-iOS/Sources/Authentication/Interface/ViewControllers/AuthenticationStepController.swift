@@ -424,7 +424,7 @@ extension AuthenticationStepController {
 
             errorLabel.accessibilityIdentifier = "validation-failure"
             errorLabel.text = error.errorDescription
-            errorLabel.textColor = UIColor.from(scheme: .errorIndicator, variant: .light)
+            errorLabel.textColor = SemanticColors.Label.textErrorDefault
             errorLabelContainer.isHidden = false
             showSecondaryView(for: error)
 

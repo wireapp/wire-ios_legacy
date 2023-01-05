@@ -146,7 +146,7 @@ class CollectionCell: UICollectionViewCell {
 
     let secureContentsView: UIView = {
         let view = UIView()
-        view.backgroundColor = .from(scheme: .placeholderBackground)
+        view.backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         return view
     }()
@@ -155,7 +155,7 @@ class CollectionCell: UICollectionViewCell {
         return .exclamationMarkCircle
     }
 
-    fileprivate lazy var obfuscationView = {
+    lazy var obfuscationView = {
         return ObfuscationView(icon: self.obfuscationIcon)
     }()
 

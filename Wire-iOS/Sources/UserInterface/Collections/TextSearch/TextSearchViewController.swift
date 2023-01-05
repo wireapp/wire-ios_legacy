@@ -54,7 +54,8 @@ final class TextSearchViewController: NSObject {
         resultsView.tableView.dataSource = self
 
         searchBar.delegate = self
-        searchBar.placeholderString = "collections.search.field.placeholder".localized(uppercased: true)
+        searchBar.placeholderString = L10n.Localizable.Collections.Search.Field.placeholder.capitalized
+
     }
 
     func teardown() {

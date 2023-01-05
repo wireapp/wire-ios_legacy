@@ -27,9 +27,12 @@ protocol TextSearchInputViewDelegate: AnyObject {
 }
 
 final class TextSearchInputView: UIView {
+    typealias SearchBarColors = SemanticColors.SearchBar
+
     let iconView = UIImageView()
     let searchInput = SearchTextView(style: .default)
-    let placeholderLabel = UILabel()
+    let placeholderLabel = DynamicFontLabel(fontSpec: .body,
+                                            color: SearchBarColors.textInputViewPlaceholder)
     let clearButton = IconButton(style: .default)
 
     private let spinner = ProgressSpinner()
@@ -59,20 +62,20 @@ final class TextSearchInputView: UIView {
 
         backgroundColor = .clear
 
-        iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
+        iconView.setIcon(.search,
+                         size: .tiny,
+                         color: SearchBarColors.backgroundButton)
 
         iconView.contentMode = .center
         searchInput.delegate = self
         searchInput.autocorrectionType = .no
         searchInput.accessibilityLabel = "Search"
         searchInput.accessibilityIdentifier = "search input"
-        searchInput.keyboardAppearance = ColorScheme.default.keyboardAppearance
+        searchInput.keyboardAppearance = .default
         searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
-        searchInput.font = .normalFont
+        searchInput.font = FontSpec.body.font!
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
-        placeholderLabel.font = .smallRegularFont
-        placeholderLabel.applyStyle(.searchBarPlaceholder)
 
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
@@ -80,7 +83,7 @@ final class TextSearchInputView: UIView {
         clearButton.accessibilityIdentifier = "cancel search"
         clearButton.accessibilityLabel = L10n.Accessibility.SearchView.ClearButton.description
 
-        clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
+        clearButton.setIconColor(SearchBarColors.backgroundButton, for: .normal)
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
         spinner.iconSize = StyleKitIcon.Size.tiny.rawValue

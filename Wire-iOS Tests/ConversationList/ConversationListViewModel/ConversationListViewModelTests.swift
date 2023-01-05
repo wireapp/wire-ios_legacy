@@ -251,7 +251,7 @@ final class ConversationListViewModelTests: XCTestCase {
         sut.folderEnabled = true
         let mockConversation = ZMConversation()
         fillDummyConversations(mockConversation: mockConversation)
-        sut.setCollapsed(sectionIndex: Int(sectionGroups), collapsed: true)/// todo
+        sut.setCollapsed(sectionIndex: Int(sectionGroups), collapsed: true) // todo
 
         // WHEN
         XCTAssert(sut.collapsed(at: Int(sectionGroups)))
