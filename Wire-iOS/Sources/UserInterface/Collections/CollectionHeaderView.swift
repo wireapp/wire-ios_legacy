@@ -32,25 +32,26 @@ final class CollectionHeaderView: UICollectionReusableView {
 
             switch section {
             case CollectionsSectionSet.images:
-                titleLabel.text = Section.Images.title.uppercased()
+                titleLabel.text = Section.Images.title
                 titleLabel.accessibilityLabel = ConversationSearch.ImagesSection.description
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                titleLabel.text = Section.Files.title.uppercased()
+                titleLabel.text = Section.Files.title
                 titleLabel.accessibilityLabel = ConversationSearch.FilesSection.description
                 icon = .document
             case CollectionsSectionSet.videos:
-                titleLabel.text = Section.Videos.title.uppercased()
+                titleLabel.text = Section.Videos.title
                 titleLabel.accessibilityLabel = ConversationSearch.VideosSection.description
                 icon = .movie
             case CollectionsSectionSet.links:
-                titleLabel.text = Section.Links.title.uppercased()
+                titleLabel.text = Section.Links.title
                 titleLabel.accessibilityLabel = ConversationSearch.LinksSection.description
                 icon = .link
             default: fatal("Unknown section")
             }
 
-            iconImageView.setIcon(icon, size: .tiny, color: .lightGraphite)
+            iconImageView.setTemplateIcon(icon, size: .tiny)
+            iconImageView.tintColor = SemanticColors.Icon.backgroundDefault
         }
     }
 
@@ -67,7 +68,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .from(scheme: .textForeground)
+        label.textColor = SemanticColors.Label.textDefault
 
         return label
     }()

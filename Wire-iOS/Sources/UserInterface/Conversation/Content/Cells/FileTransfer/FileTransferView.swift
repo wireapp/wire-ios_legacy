@@ -31,20 +31,15 @@ final class FileTransferView: UIView, TransferView {
     private let bottomLabel = UILabel()
     private let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .textForeground)
-        return imageView
-    }()
-    private let fileEyeView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .background)
+        imageView.tintColor = SemanticColors.Icon.backgroundDefault
         return imageView
     }()
 
     private let loadingView = ThreeDotsLoadingView()
     private let actionButton = IconButton()
 
-    private let labelTextColor: UIColor = .from(scheme: .textForeground)
-    private let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    private let labelTextColor: UIColor = SemanticColors.Label.textDefault
+    private let labelTextBlendedColor: UIColor = SemanticColors.Label.textCollectionSecondary
     private let labelFont: UIFont = .smallLightFont
     private let labelBoldFont: UIFont = .smallSemiboldFont
 
@@ -52,7 +47,7 @@ final class FileTransferView: UIView, TransferView {
 
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .from(scheme: .placeholderBackground)
+        backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         topLabel.numberOfLines = 1
         topLabel.lineBreakMode = .byTruncatingMiddle
@@ -62,8 +57,6 @@ final class FileTransferView: UIView, TransferView {
         bottomLabel.accessibilityIdentifier = "FileTransferBottomLabel"
 
         fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
-
-        fileEyeView.setTemplateIcon(.eye, size: 8)
 
         actionButton.contentMode = .scaleAspectFit
         actionButton.setIconColor(.white, for: .normal)
@@ -75,7 +68,7 @@ final class FileTransferView: UIView, TransferView {
 
         loadingView.isHidden = true
 
-        allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
+        allViews = [topLabel, bottomLabel, fileTypeIconView, actionButton, progressView, loadingView]
         allViews.forEach(addSubview)
 
         createConstraints()
@@ -101,7 +94,6 @@ final class FileTransferView: UIView, TransferView {
         [topLabel,
          actionButton,
          fileTypeIconView,
-         fileEyeView,
          progressView,
          bottomLabel,
          loadingView].prepareForLayout()
@@ -120,9 +112,6 @@ final class FileTransferView: UIView, TransferView {
             fileTypeIconView.heightAnchor.constraint(equalToConstant: 32),
             fileTypeIconView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
             fileTypeIconView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
-
-            fileEyeView.centerXAnchor.constraint(equalTo: fileTypeIconView.centerXAnchor),
-            fileEyeView.centerYAnchor.constraint(equalTo: fileTypeIconView.centerYAnchor, constant: 3),
 
             progressView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
             progressView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
@@ -227,7 +216,7 @@ final class FileTransferView: UIView, TransferView {
             visibleViews.append(progressView)
             progressView.setProgress(message.fileMessageData!.progress, animated: !isInitial)
         case .uploaded, .downloaded:
-            visibleViews.append(contentsOf: [fileTypeIconView, fileEyeView])
+            visibleViews.append(contentsOf: [fileTypeIconView])
         default:
             break
         }
