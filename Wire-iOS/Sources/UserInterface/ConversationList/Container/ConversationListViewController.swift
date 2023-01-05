@@ -187,6 +187,15 @@ final class ConversationListViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.tabBar.subviews.forEach { (barButton) in
+            if let label = barButton.subviews[1] as? UILabel{
+                label.sizeToFit()
+            }
+        }
+    }
+
     override var shouldAutorotate: Bool {
         return true
     }
@@ -223,12 +232,6 @@ final class ConversationListViewController: UIViewController {
         contentContainer.addSubview(tabBar)
         listContentController.listViewModel.restorationDelegate = tabBar
         tabBar.unselectedItemTintColor = SemanticColors.Label.textTabBar
-
-        tabBar.subviews.forEach {
-            if let label = $0.subviews[1] as? UILabel {
-                label.lineBreakMode = .byClipping
-            }
-        }
     }
 
     private func setupNetworkStatusBar() {
