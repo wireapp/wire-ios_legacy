@@ -237,7 +237,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
         super.configureSubviews()
         nameLabel.numberOfLines = 0
         imageView.setTemplateIcon(.pencil, size: 16)
-        imageView.tintColor = SemanticColors.Icon.backgroundIconDefaultConversationView
+        imageView.tintColor = SemanticColors.Icon.backgroundDefault
         bottomContentView.addSubview(nameLabel)
     }
 
@@ -401,7 +401,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     let accessibilityLabel: String?
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
-        let color = SemanticColors.Icon.backgroundIconDefaultConversationView
+        let color = SemanticColors.Icon.backgroundDefault
         let textColor = SemanticColors.Label.textDefault
 
         let model = ParticipantsCellViewModel(font: .mediumFont, largeFont: .largeSemiboldFont, textColor: textColor, iconColor: color, message: message)
@@ -518,7 +518,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
             updateText = NSAttributedString(string: "content.system.message_timer_changes".localized(pov: sender.pov, args: senderText, timerString), attributes: baseAttributes)
         }
 
-        let icon = StyleKitIcon.hourglass.makeImage(size: 16, color: SemanticColors.Icon.backgroundIconDefaultConversationView)
+        let icon = StyleKitIcon.hourglass.makeImage(size: 16, color: SemanticColors.Icon.backgroundDefault)
         configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
         accessibilityLabel = updateText?.string
         actionController = nil
@@ -577,7 +577,7 @@ final class ConversationStartedSystemMessageCellDescription: NSObject, Conversat
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let color = SemanticColors.Label.textDefault
-        let iconColor = SemanticColors.Icon.backgroundIconDefaultConversationView
+        let iconColor = SemanticColors.Icon.backgroundDefault
         let model = ParticipantsCellViewModel(font: .mediumFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: iconColor, message: message)
 
         actionController = nil
