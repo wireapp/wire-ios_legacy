@@ -151,7 +151,7 @@ final class ZClientViewController: UIViewController {
 
         pendingInitialStateRestore = true
 
-        view.backgroundColor = .black
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         wireSplitViewController.delegate = self
         addToSelf(wireSplitViewController)
@@ -199,7 +199,7 @@ final class ZClientViewController: UIViewController {
 
     @objc
     private func openStartUI(_ sender: Any?) {
-        conversationListViewController.bottomBarController.startUIViewTapped()
+        conversationListViewController.delegate?.didChangeTab(with: .startUI)
     }
 
     private func createBackgroundViewController() {
