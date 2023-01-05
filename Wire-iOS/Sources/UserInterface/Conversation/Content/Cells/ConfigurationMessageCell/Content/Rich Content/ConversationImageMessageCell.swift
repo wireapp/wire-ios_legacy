@@ -49,7 +49,7 @@ final class ConversationImageMessageCell: UIView,
     private var widthConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
 
-    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
+    var containerColor: UIColor? =  SemanticColors.View.backgroundCollectionCell
     var containerHeightConstraint: NSLayoutConstraint!
 
     weak var message: ZMConversationMessage?
@@ -74,8 +74,8 @@ final class ConversationImageMessageCell: UIView,
 
     private func configureView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .from(scheme: .placeholderBackground)
-        containerView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
+        containerView.backgroundColor = SemanticColors.View.backgroundCollectionCell
+        containerView.layer.borderColor = SemanticColors.View.backgroundSeparatorCell.cgColor
 
         addSubview(containerView)
     }
