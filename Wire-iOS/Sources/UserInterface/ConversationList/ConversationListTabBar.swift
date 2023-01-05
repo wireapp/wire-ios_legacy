@@ -211,8 +211,8 @@ extension UITabBarItem {
 
     convenience init(type: TabBarItemType) {
         self.init(title: type.title,
-                  image: type.icon.withRenderingMode(.alwaysTemplate),
-                  selectedImage: type.selectedIcon.withRenderingMode(.alwaysTemplate))
+                  image: type.icon.resize(for: .medium).withRenderingMode(.alwaysTemplate),
+                  selectedImage: type.selectedIcon.resize(for: .medium).withRenderingMode(.alwaysTemplate))
 
         tag = type.order
 
