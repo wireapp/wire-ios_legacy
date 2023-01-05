@@ -76,6 +76,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
             labelContainerView.layer.masksToBounds = true
             microphoneImageView.image = StyleKitIcon.microphoneOff.makeImage(size: .tiny,
                                                                              color: SemanticColors.Icon.foregroundMicrophone)
+            microphoneImageView.tintColor = SemanticColors.Icon.foregroundMicrophone
             microphoneImageView.backgroundColor = SemanticColors.Icon.foregroundDefaultWhite
             microphoneImageView.contentMode = .center
             microphoneImageView.layer.cornerRadius = 3.0
