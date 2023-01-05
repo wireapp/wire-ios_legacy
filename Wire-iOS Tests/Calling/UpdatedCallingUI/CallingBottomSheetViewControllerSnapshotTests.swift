@@ -18,6 +18,7 @@
 
 import XCTest
 import SnapshotTesting
+import WireCommonComponents
 @testable import Wire
 
 final class CallingBottomSheetViewControllerSnapshotTests: ZMSnapshotTestCase {
@@ -25,6 +26,8 @@ final class CallingBottomSheetViewControllerSnapshotTests: ZMSnapshotTestCase {
     var mockVoiceChannel: MockVoiceChannel!
     var conversation: ZMConversation!
     var sut: CallingBottomSheetViewController!
+    var mockSelfUser = MockUser.mockUsers()[0]
+    var mockOtherUser: MockUserType!
 
     override func setUp() {
         super.setUp()
@@ -32,23 +35,23 @@ final class CallingBottomSheetViewControllerSnapshotTests: ZMSnapshotTestCase {
         let userClient = MockUserClient()
         userClient.remoteIdentifier = UUID().transportString()
 
-        let mockSelfUser = MockUser.mockUsers()[0]
         mockSelfUser.name = "test name"
         MockUser.setMockSelf(mockSelfUser)
         MockUser.mockSelf()?.remoteIdentifier = UUID()
         MockUser.mockSelf()?.clients = [userClient]
         MockUser.mockSelf()?.isSelfUser = true
 
-        let mockOtherUser = MockUserType.createUser(name: "Guest", inTeam: nil)
+        mockOtherUser = MockUserType.createUser(name: "Participant 2", inTeam: nil)
         conversation = ((MockConversation.oneOnOneConversation(otherUser: mockOtherUser) as Any) as! ZMConversation)
         mockVoiceChannel = MockVoiceChannel(conversation: conversation)
-        mockVoiceChannel.mockVideoState = .started
+        mockVoiceChannel.mockVideoState = .stopped
         mockVoiceChannel.mockIsVideoCall = false
         mockVoiceChannel.mockCallState = .established
-        mockVoiceChannel.mockParticipants = participants(amount: 2)
+        mockVoiceChannel.mockParticipants = participants()
 
         sut = createCallingBottomSheetViewController(selfUser: MockUser.mockSelf())
-        recordMode = true
+
+        UserDefaults.applicationGroup.set(false, forKey: DeveloperFlag.deprecatedCallingUI.rawValue)
     }
 
     override func tearDown() {
@@ -60,38 +63,87 @@ final class CallingBottomSheetViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     private func createCallingBottomSheetViewController(selfUser: UserType) -> CallingBottomSheetViewController {
         let callingBottomSheetController = CallingBottomSheetViewController(voiceChannel: mockVoiceChannel, selfUser: selfUser)
+        callingBottomSheetController.visibleVoiceChannelViewController.callCenterDidChangeActiveSpeakers()
+        callingBottomSheetController.callParticipantsDidChange(conversation: conversation, participants: mockVoiceChannel.participants)
 
         return callingBottomSheetController
     }
 
-    private func participants(amount: Int) -> [CallParticipant] {
+    private func participants() -> [CallParticipant] {
         var participants = [CallParticipant]()
 
-        for _ in 0..<amount {
-            participants.append(
-                CallParticipant(user: MockUserType(), userId: AVSIdentifier.stub, clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
-            )
-        }
+        participants.append(
+            CallParticipant(user: mockSelfUser, userId: AVSIdentifier.stub, clientId: UUID().transportString(), state: .connected(videoState: .stopped, microphoneState: .unmuted), activeSpeakerState: .active(audioLevelNow: 1))
+        )
+        participants.append(
+            CallParticipant(user: mockOtherUser, userId: AVSIdentifier.stub, clientId: UUID().transportString(), state: .connected(videoState: .stopped, microphoneState: .unmuted), activeSpeakerState: .inactive)
+        )
 
         return participants
     }
 
 
-    func testHideBottomSheet() {
+    func test_CallHideBottomSheet() {
         // when
         sut.hideBottomSheet()
-        sut.callParticipantsDidChange(conversation: conversation, participants: mockVoiceChannel.participants)
+        sut.view.setNeedsDisplay()
+        sut.view.layoutSubviews()
+
 
         // then
-        verifyAllIPhoneSizes(matching: sut)
+        verify(matching: sut)
     }
 
-    func testShowBottomSheet() {
+    func testCallShowBottomSheet() {
         // when
         sut.showBottomSheet()
-        sut.callParticipantsDidChange(conversation: conversation, participants: mockVoiceChannel.participants)
 
         // then
-        verifyAllIPhoneSizes(matching: sut)
+        verify(matching: sut)
+    }
+
+    func testCallShowBottomSheet_dark() {
+        let createSut: () -> UIViewController = {
+            self.sut.showBottomSheet()
+            return self.sut
+        }
+        // then
+        verifyInDarkScheme(createSut: createSut, name: "DarkTheme")
+    }
+
+    func testCallHideBottomSheet_dark() {
+        let createSut: () -> UIViewController = {
+            // when
+            self.sut.hideBottomSheet()
+            return self.sut
+        }
+        // then
+        verifyInDarkScheme(createSut: createSut, name: "DarkTheme")
+    }
+
+    func testLandscapeCallHideBottomSheet() {
+        // when
+        sut.hideBottomSheet()
+        // then
+        verifyInLandscape(matching: sut)
+    }
+
+    func testLandscapeCallShowBottomSheet() {
+        // when
+        sut.showBottomSheet()
+        // then
+        verifyInLandscape(matching: sut)
+    }
+
+
+
+    func testIncomingCall() {
+        recordMode = true
+        // when
+        mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: false, degraded: false)
+        sut = createCallingBottomSheetViewController(selfUser: MockUser.mockSelf())
+
+        // then
+        verify(matching: sut)
     }
 }

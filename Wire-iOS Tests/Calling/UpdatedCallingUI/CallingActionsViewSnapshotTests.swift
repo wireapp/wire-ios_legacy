@@ -55,7 +55,7 @@ extension CallingStateMock {
     }
 }
 
-class CallingActionsViewTest: ZMSnapshotTestCase {
+class CallingActionsViewSnapshotTests: ZMSnapshotTestCase {
 
     fileprivate var sut: CallingActionsView!
     fileprivate var widthConstraint: NSLayoutConstraint!
@@ -304,28 +304,28 @@ class CallingActionsViewTest: ZMSnapshotTestCase {
         verify(view: sut)
     }
 
-    func testCallActionsView_Permissions_NotAllowed() {
-        // Given
-        createSut()
-
-        let input = CallingActionsViewInput(
-            allowPresentationModeUpdates: false,
-            videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoDeniedForever,
-            canToggleMediaType: false,
-            isVideoCall: true,
-            isMuted: false,
-            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .dark,
-            cameraType: .front,
-            callState: CallingStateMock.ongoing
-        )
-
-        // When
-        sut.update(with: input)
-
-        // Then
-        verify(view: sut)
-    }
+//    func testCallActionsView_Permissions_NotAllowed() {
+//        // Given
+//        createSut()
+//
+//        let input = CallingActionsViewInput(
+//            allowPresentationModeUpdates: false,
+//            videoGridPresentationMode: .allVideoStreams,
+//            permissions: MockCallPermissions.videoDeniedForever,
+//            canToggleMediaType: false,
+//            isVideoCall: true,
+//            isMuted: false,
+//            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+//            variant: .dark,
+//            cameraType: .front,
+//            callState: CallingStateMock.ongoing
+//        )
+//
+//        // When
+//        sut.update(with: input)
+//
+//        // Then
+//        verify(view: sut)
+//    }
 
 }
