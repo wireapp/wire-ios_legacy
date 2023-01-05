@@ -60,6 +60,7 @@ public enum SemanticColors {
         static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textConversationListItemSubtitleField = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
+        static let textCollectionSecondary = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textErrorDefault = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
         static let textPasswordRulesCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
     }
@@ -73,7 +74,7 @@ public enum SemanticColors {
     }
 
     public enum Icon {
-        static let backgroundIconDefaultConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let backgroundDefault = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)
         static let borderCheckMark = UIColor(light: Asset.gray80, dark: Asset.gray60)
@@ -106,6 +107,8 @@ public enum SemanticColors {
         static let backgroundConversationListTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
+        static let backgroundCollectionCell = UIColor(light: Asset.white, dark: Asset.gray90)
+        static let borderCollectionCell = UIColor(light: Asset.gray30, dark: Asset.gray80)
         static let backgroundSecurityLevel = UIColor(light: Asset.gray20, dark: Asset.gray95)
         static let backgroundSeparatorConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundReplyMessageViewHighlighted = UIColor(light: Asset.gray40, dark: Asset.gray80)
