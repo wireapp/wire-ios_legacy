@@ -95,9 +95,14 @@ extension ZMConversation {
             $0.isGuest(in: self)
         }).count
 
-        return [
-            "conversation_guests": numGuests.logRound(),
-            "user_type": SelfUser.current.isGuest(in: self) ? "guest" : "user"
+        var attributes: [String: Any] = [
+            "conversation_guests": numGuests.logRound()
         ]
+
+        if let selfUser = SelfUser.provider?.selfUser {
+            attributes["user_type"] = selfUser.isGuest(in: self) ? "guest" : "user"
+        }
+
+        return attributes
     }
 }
