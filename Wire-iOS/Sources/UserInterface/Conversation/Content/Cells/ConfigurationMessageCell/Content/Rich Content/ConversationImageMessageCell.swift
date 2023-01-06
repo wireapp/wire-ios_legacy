@@ -74,6 +74,7 @@ final class ConversationImageMessageCell: UIView,
 
     private func configureView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
+
         containerView.layer.cornerRadius = 12
         containerView.layer.borderWidth = 1
         containerView.layer.masksToBounds = true
