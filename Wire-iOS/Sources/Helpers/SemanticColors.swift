@@ -78,6 +78,7 @@ public enum SemanticColors {
         static let backgroundDefault = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray60)
         static let foregroundPlainCheckMark = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.Colors.white, dark: Asset.Colors.black)
+        static let foregroundPlaceholder = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray60)
         static let borderCheckMark = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray60)
         static let backgroundCheckMark = UIColor(light: Asset.Colors.gray20, dark: Asset.Colors.gray90)
         static let backgroundCheckMarkSelected = UIColor(light: Asset.Colors.blue500Light, dark: Asset.Colors.blue500Dark)
