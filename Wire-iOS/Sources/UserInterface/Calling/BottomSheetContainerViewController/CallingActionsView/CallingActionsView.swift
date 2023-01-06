@@ -208,11 +208,15 @@ class CallingActionsView: UIView {
     }
 }
 
+// MARK: - UILargeContentViewerInteractionDelegate
+
 extension CallingActionsView: UILargeContentViewerInteractionDelegate {
 
     func largeContentViewerInteraction(_: UILargeContentViewerInteraction, itemAt: CGPoint) -> UILargeContentViewerItem? {
-//        largeContentTitle = subtitleTransformLabel.text
-//        largeContentImage = iconButton.imageView?.image
+        let itemWidth = self.frame.width / CGFloat(allButtons.count)
+        let position: Int = Int(itemAt.x / itemWidth)
+        largeContentTitle = allButtons[position].subtitleTransformLabel.text
+        largeContentImage = allButtons[position].iconButton.imageView?.image
 
         return self
     }

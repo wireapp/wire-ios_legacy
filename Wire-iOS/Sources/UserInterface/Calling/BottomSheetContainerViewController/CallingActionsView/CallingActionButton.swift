@@ -26,7 +26,7 @@ class CallingActionButton: IconLabelButton {
 
         subtitleTransformLabel.text = input.label
         subtitleTransformLabel.textTransform = .capitalize
-        titleLabel?.font = DynamicFontLabel(fontSpec: .smallRegularFont, color: SemanticColors.Label.textSectionHeader).font
+        titleLabel?.font = UIFont.systemFont(ofSize: 12)
         subtitleTransformLabel.font = titleLabel?.font
         iconButton.setIcon(input.icon(forState: .normal), size: .medium, for: .normal)
         iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
