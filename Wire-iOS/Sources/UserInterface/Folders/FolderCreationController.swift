@@ -124,10 +124,12 @@ final class FolderCreationController: UIViewController {
             navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
 
-        let nextButtonItem = UIBarButtonItem(title: FolderCreationName.Button.create.capitalized,
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(tryToProceed))
+        let nextButtonItem: UIBarButtonItem = .createNavigationRightBarButtonItem(
+            title: FolderCreationName.Button.create.capitalized,
+            systemImage: false,
+            target: self,
+            action: #selector(tryToProceed)
+       )
         nextButtonItem.accessibilityIdentifier = "button.newfolder.create"
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false
