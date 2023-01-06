@@ -218,5 +218,4 @@ extension CallingActionsView: UILargeContentViewerInteractionDelegate {
         return self
     }
 
-
 }
