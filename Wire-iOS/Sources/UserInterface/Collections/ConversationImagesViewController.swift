@@ -529,3 +529,20 @@ extension ConversationImagesViewController {
     }
 
 }
+
+// MARK: - Helper
+
+extension UIView {
+
+    func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
+        if !hide {
+            alpha = 0
+            isHidden = false
+        }
+
+        let animations = { self.alpha = hide ? 0 : 1 }
+        let completion: (Bool) -> Void = { _ in self.isHidden = hide }
+        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(), animations: animations, completion: completion)
+    }
+
+}

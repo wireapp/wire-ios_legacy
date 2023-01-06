@@ -58,7 +58,7 @@ final class AudioMessageView: UIView, TransferView {
 
     private let playerProgressView: ProgressView = {
         let progressView = ProgressView()
-        progressView.backgroundColor = .from(scheme: .separator)
+        progressView.backgroundColor = SemanticColors.View.backgroundSeparatorCell
         progressView.tintColor = .accent()
 
         return progressView

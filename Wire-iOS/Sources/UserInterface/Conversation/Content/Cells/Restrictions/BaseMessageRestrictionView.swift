@@ -28,7 +28,7 @@ class BaseMessageRestrictionView: UIView {
     let bottomLabel = UILabel()
     let iconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .textForeground)
+        imageView.tintColor = SemanticColors.Icon.foregroundDefault
         return imageView
     }()
 
@@ -59,7 +59,7 @@ class BaseMessageRestrictionView: UIView {
     // MARK: - Helpers
 
     func setupViews() {
-        backgroundColor = .from(scheme: .placeholderBackground)
+        backgroundColor = SemanticColors.View.backgroundCollectionCell
         setupLabels()
         setupIconView()
     }
@@ -90,8 +90,8 @@ class BaseMessageRestrictionView: UIView {
     func configure() {
         iconView.setTemplateIcon(messageType.icon, size: messageType.iconSize)
 
-        let titleString = messageType.title.localizedUppercase && .smallSemiboldFont && .from(scheme: .textForeground)
-        let subtitleString = messageType.subtitle.localizedUppercase && .smallLightFont && .from(scheme: .textDimmed)
+        let titleString = messageType.title.localizedUppercase && .smallSemiboldFont && SemanticColors.Label.textDefault
+        let subtitleString = messageType.subtitle.localizedUppercase && .smallLightFont && SemanticColors.Label.textCollectionSecondary
         topLabel.attributedText = titleString
         bottomLabel.attributedText = subtitleString
     }

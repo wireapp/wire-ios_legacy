@@ -207,15 +207,6 @@
 "conversationsListHeader.expandedButton.description" = "Expanded";
 
 "conversationsList.accountButton.hint" = "Double tap to open profile and settings";
-"conversationsList.contactsBottomBar.description" = "Contacts";
-"conversationsList.contactsBottomBar.hint" = "Double tap to search for people and open contact list";
-"conversationsList.recentBottomBar.description" = "Conversations";
-"conversationsList.recentBottomBar.hint" = "Double tap to open list of recent conversations";
-"conversationsList.folderBottomBar.description" = "Folders";
-"conversationsList.folderBottomBar.hint" = "Double tap to open list of conversations organized in folders";
-"conversationsList.archiveBottomBar.description" = "Archive";
-"conversationsList.archiveBottomBar.hint" = "Double tap to open list of archived conversations";
-"conversationsList.bottomBar.value" = "Selected";
 "conversationsList.silencedStatus.value" = "Silenced";
 "conversationsList.mentionStatus.value" = "You are mentioned";
 "conversationsList.replyStatus.value" = "Reply";
@@ -235,3 +226,13 @@
 "conversationAnnouncement.file.description" = "File %@ received from %@";
 "conversationAnnouncement.deletedMessage.description" = "%@ deleted a message";
 "conversationAnnouncement.editedMessage.description" = "%@ edited a message";
+
+"tabBar.contacts.description" = "Contacts";
+"tabBar.contacts.hint" = "Double tap to search for people and open contact list";
+"tabBar.conversations.description" = "List of recent conversations";
+"tabBar.conversations.hint" = "Double tap to open list of recent conversations";
+"tabBar.folders.description" = "List of conversations organized in folders";
+"tabBar.folders.hint" = "Double tap to open list of conversations organized in folders";
+"tabBar.archived.description" = "Archive";
+"tabBar.archived.hint" = "Double tap to open list of archived conversations";
+"tabBar.item.value" = "Selected";
