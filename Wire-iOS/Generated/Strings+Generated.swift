@@ -522,39 +522,17 @@ internal enum L10n {
         /// Double tap to open profile and settings
         internal static let hint = L10n.tr("Accessibility", "conversationsList.accountButton.hint", fallback: "Double tap to open profile and settings")
       }
-      internal enum ArchiveBottomBar {
-        /// Archive
-        internal static let description = L10n.tr("Accessibility", "conversationsList.archiveBottomBar.description", fallback: "Archive")
-        /// Double tap to open list of archived conversations
-        internal static let hint = L10n.tr("Accessibility", "conversationsList.archiveBottomBar.hint", fallback: "Double tap to open list of archived conversations")
-      }
       internal enum BadgeView {
         /// New messages: %d
         internal static func value(_ p1: Int) -> String {
           return L10n.tr("Accessibility", "conversationsList.badgeView.value", p1, fallback: "New messages: %d")
         }
       }
-      internal enum BottomBar {
-        /// Selected
-        internal static let value = L10n.tr("Accessibility", "conversationsList.bottomBar.value", fallback: "Selected")
-      }
       internal enum ConnectionRequest {
         /// Pending approval of connection request
         internal static let description = L10n.tr("Accessibility", "conversationsList.connectionRequest.description", fallback: "Pending approval of connection request")
         /// Double tap to open profile
         internal static let hint = L10n.tr("Accessibility", "conversationsList.connectionRequest.hint", fallback: "Double tap to open profile")
-      }
-      internal enum ContactsBottomBar {
-        /// Contacts
-        internal static let description = L10n.tr("Accessibility", "conversationsList.contactsBottomBar.description", fallback: "Contacts")
-        /// Double tap to search for people and open contact list
-        internal static let hint = L10n.tr("Accessibility", "conversationsList.contactsBottomBar.hint", fallback: "Double tap to search for people and open contact list")
-      }
-      internal enum FolderBottomBar {
-        /// Folders
-        internal static let description = L10n.tr("Accessibility", "conversationsList.folderBottomBar.description", fallback: "Folders")
-        /// Double tap to open list of conversations organized in folders
-        internal static let hint = L10n.tr("Accessibility", "conversationsList.folderBottomBar.hint", fallback: "Double tap to open list of conversations organized in folders")
       }
       internal enum ItemCell {
         /// Double tap to open conversation
@@ -569,12 +547,6 @@ internal enum L10n {
       internal enum MentionStatus {
         /// You are mentioned
         internal static let value = L10n.tr("Accessibility", "conversationsList.mentionStatus.value", fallback: "You are mentioned")
-      }
-      internal enum RecentBottomBar {
-        /// Conversations
-        internal static let description = L10n.tr("Accessibility", "conversationsList.recentBottomBar.description", fallback: "Conversations")
-        /// Double tap to open list of recent conversations
-        internal static let hint = L10n.tr("Accessibility", "conversationsList.recentBottomBar.hint", fallback: "Double tap to open list of recent conversations")
       }
       internal enum ReplyStatus {
         /// Reply
@@ -815,6 +787,36 @@ internal enum L10n {
       internal enum BackButton {
         /// Go back to Support
         internal static let description = L10n.tr("Accessibility", "supportSettings.backButton.description", fallback: "Go back to Support")
+      }
+    }
+    internal enum TabBar {
+      internal enum Archived {
+        /// Archive
+        internal static let description = L10n.tr("Accessibility", "tabBar.archived.description", fallback: "Archive")
+        /// Double tap to open list of archived conversations
+        internal static let hint = L10n.tr("Accessibility", "tabBar.archived.hint", fallback: "Double tap to open list of archived conversations")
+      }
+      internal enum Contacts {
+        /// Contacts
+        internal static let description = L10n.tr("Accessibility", "tabBar.contacts.description", fallback: "Contacts")
+        /// Double tap to search for people and open contact list
+        internal static let hint = L10n.tr("Accessibility", "tabBar.contacts.hint", fallback: "Double tap to search for people and open contact list")
+      }
+      internal enum Conversations {
+        /// List of recent conversations
+        internal static let description = L10n.tr("Accessibility", "tabBar.conversations.description", fallback: "List of recent conversations")
+        /// Double tap to open list of recent conversations
+        internal static let hint = L10n.tr("Accessibility", "tabBar.conversations.hint", fallback: "Double tap to open list of recent conversations")
+      }
+      internal enum Folders {
+        /// List of conversations organized in folders
+        internal static let description = L10n.tr("Accessibility", "tabBar.folders.description", fallback: "List of conversations organized in folders")
+        /// Double tap to open list of conversations organized in folders
+        internal static let hint = L10n.tr("Accessibility", "tabBar.folders.hint", fallback: "Double tap to open list of conversations organized in folders")
+      }
+      internal enum Item {
+        /// Selected
+        internal static let value = L10n.tr("Accessibility", "tabBar.item.value", fallback: "Selected")
       }
     }
   }

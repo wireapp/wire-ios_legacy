@@ -45,7 +45,8 @@ extension UIBarButtonItem {
         return item
     }
 
-    static func createNavigationBarButtonDoneItem(
+    static func createNavigationRightBarButtonItem(
+        title: String? = nil,
         systemImage: Bool,
         target buttonTarget: Any?,
         action buttonAction: Selector?,
@@ -59,7 +60,7 @@ extension UIBarButtonItem {
                     action: buttonAction)
             } else {
                 rightBarButtonItem = UIBarButtonItem(
-                    title: General.done,
+                    title: title,
                     style: .plain,
                     target: buttonTarget,
                     action: buttonAction)
@@ -75,27 +76,6 @@ extension UIBarButtonItem {
                 }
             }
             return rightBarButtonItem
-    }
 
-    static func createNavigationBarEditItem(
-        target buttonTarget: Any?,
-        action buttonAction: Selector?,
-        font buttonFont: FontSpec = FontSpec.headerRegularFont) -> UIBarButtonItem {
-            let rightBarButtonItem = UIBarButtonItem(
-                title: General.edit,
-                style: .plain,
-                target: buttonTarget,
-                action: buttonAction)
-
-            let buttonStates: [UIControl.State] = [.normal, .highlighted, .disabled, .selected, .focused, .application, .reserved]
-
-            if let buttonFont = buttonFont.font {
-                buttonStates.forEach { buttonState in
-                    rightBarButtonItem.setTitleTextAttributes(
-                        [NSAttributedString.Key.font: buttonFont],
-                        for: buttonState)
-                }
-            }
-            return rightBarButtonItem
-    }
+        }
 }

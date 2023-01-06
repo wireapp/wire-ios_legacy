@@ -245,12 +245,15 @@ final class ConversationCreationController: UIViewController {
             navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
 
-        let nextButtonItem = UIBarButtonItem(title: L10n.Localizable.General.next.capitalized, style: .plain, target: self, action: #selector(tryToProceed))
+        let nextButtonItem: UIBarButtonItem = .createNavigationRightBarButtonItem(title: L10n.Localizable.General.next.capitalized,
+                                                                                  systemImage: false,
+                                                                                  target: self,
+                                                                                  action: #selector(tryToProceed))
         nextButtonItem.accessibilityIdentifier = "button.newgroup.next"
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false
-
         navigationItem.rightBarButtonItem = nextButtonItem
+
     }
 
     func proceedWith(value: SimpleTextField.Value) {
