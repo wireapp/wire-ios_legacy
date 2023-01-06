@@ -100,6 +100,7 @@ class CallingActionsView: UIView {
         handleView.backgroundColor = SemanticColors.View.backgroundDragBarIndicator
         [handleView, topStackView].forEach(verticalStackView.addArrangedSubview) //add top handle
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
+        setupContentViewer()
     }
 
     private func createConstraints() {
@@ -113,6 +114,14 @@ class CallingActionsView: UIView {
             handleView.widthAnchor.constraint(equalToConstant: 129),
             handleView.heightAnchor.constraint(equalToConstant: 5)
         ])
+    }
+
+    private func setupContentViewer() {
+        showsLargeContentViewer = true
+        scalesLargeContentImage = true
+
+        let interaction = UILargeContentViewerInteraction(delegate: self)
+        addInteraction(interaction)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -194,4 +203,19 @@ class CallingActionsView: UIView {
         bottomSheetScrollingDelegate?.toggleBottomSheetVisibility()
         updateHandleViewAccessibilityLabel()
     }
+}
+
+// MARK: - UILargeContentViewerInteractionDelegate
+
+extension CallingActionsView: UILargeContentViewerInteractionDelegate {
+
+    func largeContentViewerInteraction(_: UILargeContentViewerInteraction, itemAt: CGPoint) -> UILargeContentViewerItem? {
+        let itemWidth = self.frame.width / CGFloat(allButtons.count)
+        let position: Int = Int(itemAt.x / itemWidth)
+        largeContentTitle = allButtons[position].subtitleTransformLabel.text
+        largeContentImage = allButtons[position].iconButton.imageView?.image
+
+        return self
+    }
+
 }
