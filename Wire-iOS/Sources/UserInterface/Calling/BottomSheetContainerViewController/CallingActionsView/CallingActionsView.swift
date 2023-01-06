@@ -122,9 +122,6 @@ class CallingActionsView: UIView {
 
         let interaction = UILargeContentViewerInteraction(delegate: self)
         addInteraction(interaction)
-        
-//        largeContentTitle = cameraButton.subtitleTransformLabel.text
-//        largeContentImage = cameraButton.iconButton.imageView?.image
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
