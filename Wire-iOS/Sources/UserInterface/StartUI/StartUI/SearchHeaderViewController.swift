@@ -51,7 +51,7 @@ final class SearchHeaderViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         userSelection.add(observer: self)
-        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView.resolvedColor(with: traitCollection)
     }
 
     override func viewDidLoad() {
@@ -69,7 +69,7 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
-        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView.resolvedColor(with: traitCollection)
         tokenField.textView.placeholder = L10n.Localizable.Peoplepicker.searchPlaceholder.capitalized
         tokenField.textView.keyboardAppearance = .default
         tokenField.textView.returnKeyType = .done
