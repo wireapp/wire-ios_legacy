@@ -99,8 +99,9 @@ final class ConversationReplyContentView: UIView {
         }
 
         private func setupContent() -> Content {
+            typealias LabelColors = SemanticColors.Label
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                             .foregroundColor: UIColor.from(scheme: .textForeground)]
+                                                             .foregroundColor: LabelColors.textDefault]
             switch quotedMessage {
             case let message? where message.isText:
                 let data = message.textMessageData!
@@ -108,17 +109,17 @@ final class ConversationReplyContentView: UIView {
 
             case let message? where message.isLocation:
                 let location = message.locationMessageData!
-                let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground))
+                let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: LabelColors.textDefault)
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? MessagePreview.location).localizedUppercase
                 return .text(initialString && attributes)
 
             case let message? where message.isAudio:
-                let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))
+                let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: LabelColors.textDefault)
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.audio.localizedUppercase
                 return .text(initialString && attributes)
 
             case let message? where message.isImage && !message.canBeShared:
-                let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground))
+                let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: LabelColors.textDefault)
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
                 return .text(initialString && attributes)
 
@@ -126,7 +127,7 @@ final class ConversationReplyContentView: UIView {
                 return .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
 
             case let message? where message.isVideo && !message.canBeShared:
-                let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground))
+                let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: LabelColors.textDefault)
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
                 return .text(initialString && attributes)
 
@@ -135,13 +136,13 @@ final class ConversationReplyContentView: UIView {
 
             case let message? where message.isFile:
                 let fileData = message.fileMessageData!
-                let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))
+                let imageIcon = NSTextAttachment.textAttachment(for: .document, with: LabelColors.textDefault)
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? MessagePreview.file).localizedUppercase
                 return .text(initialString && attributes)
 
             default:
                 let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic,
-                                                                       .foregroundColor: UIColor.from(scheme: .textDimmed)]
+                                                                       .foregroundColor: LabelColors.textCollectionSecondary]
                 return .text(NSAttributedString(string: "content.message.reply.broken_message".localized,
                                                 attributes: attributes))
             }
@@ -178,7 +179,7 @@ final class ConversationReplyContentView: UIView {
         senderComponent.label.accessibilityIdentifier = "original.sender"
         senderComponent.indicatorView.accessibilityIdentifier = "original.edit_icon"
         senderComponent.label.font = .mediumSemiboldFont
-        senderComponent.label.textColor = .from(scheme: .textForeground)
+        senderComponent.label.textColor = SemanticColors.Label.textDefault
         stackView.addArrangedSubview(senderComponent)
 
         contentTextView.textContainer.lineBreakMode = .byTruncatingTail
@@ -190,14 +191,14 @@ final class ConversationReplyContentView: UIView {
         contentTextView.isEditable = false
         contentTextView.isSelectable = false
         contentTextView.backgroundColor = .clear
-        contentTextView.textColor = .from(scheme: .textForeground)
+        contentTextView.textColor = SemanticColors.Label.textDefault
 
         contentTextView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
 
         restrictionLabel.accessibilityIdentifier = "original.restriction"
         restrictionLabel.font = .smallLightFont
-        restrictionLabel.textColor = .from(scheme: .textDimmed)
+        restrictionLabel.textColor = SemanticColors.Label.textCollectionSecondary
         stackView.addArrangedSubview(restrictionLabel)
 
         assetThumbnail.shape = .rounded(radius: 4)
@@ -206,7 +207,7 @@ final class ConversationReplyContentView: UIView {
 
         timestampLabel.accessibilityIdentifier = "original.timestamp"
         timestampLabel.font = .mediumFont
-        timestampLabel.textColor = .from(scheme: .textDimmed)
+        timestampLabel.textColor = SemanticColors.Label.textCollectionSecondary
         timestampLabel.numberOfLines = 1
         timestampLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(timestampLabel)
