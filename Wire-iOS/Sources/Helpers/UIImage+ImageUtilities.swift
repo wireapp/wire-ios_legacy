@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 extension UIImage {
     func imageScaled(with scaleFactor: CGFloat) -> UIImage? {
@@ -149,5 +150,16 @@ extension UIImage {
         UIGraphicsEndImageContext()
 
         self.init(cgImage: (image?.cgImage)!)
+    }
+}
+
+extension UIImage {
+    func resize(for size: StyleKitIcon.Size) -> UIImage {
+        let targetSize = CGSize(width: size.rawValue, height: size.rawValue)
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
     }
 }

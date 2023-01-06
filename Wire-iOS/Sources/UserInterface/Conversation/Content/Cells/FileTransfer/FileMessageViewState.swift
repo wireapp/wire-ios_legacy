@@ -86,7 +86,7 @@ public enum FileMessageViewState {
     }
 
     static let clearColor   = UIColor.clear
-    static let normalColor  = UIColor.black.withAlphaComponent(0.4)
+    static let normalColor  = SemanticColors.Icon.backgroundDefault
     static let failureColor = UIColor.red.withAlphaComponent(0.24)
 
     typealias ViewsStateMapping = [FileMessageViewState: FileMessageViewViewsState]

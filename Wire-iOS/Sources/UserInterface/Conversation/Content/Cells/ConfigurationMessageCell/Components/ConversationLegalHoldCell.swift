@@ -99,7 +99,7 @@ final class ConversationLegalHoldCellDescription: ConversationMessageCellDescrip
             attributedText += learnMore
         }
 
-        let icon = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: SemanticColors.LegacyColors.vividRed)
+        let icon = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefaultRed)
 
         return View.Configuration(attributedText: attributedText, icon: icon, conversation: conversation)
     }

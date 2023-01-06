@@ -64,7 +64,7 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
                 return
             }
             layer.borderColor = isEditingTextField
-            ? style.borderColorSelected.cgColor
+            ? style.borderColorSelected.resolvedColor(with: traitCollection).cgColor
             : style.borderColorNotSelected.cgColor
         }
     }

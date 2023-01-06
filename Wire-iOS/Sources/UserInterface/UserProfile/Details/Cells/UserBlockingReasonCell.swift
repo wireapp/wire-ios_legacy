@@ -18,6 +18,7 @@
 
 import UIKit
 import Down
+import WireCommonComponents
 
 final class UserBlockingReasonCell: UITableViewCell {
 
@@ -80,7 +81,7 @@ private extension DownStyle {
     static var labelStyle: DownStyle {
         let style = DownStyle()
         style.baseFont = UIFont.systemFont(ofSize: 14)
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.baseParagraphStyle = NSParagraphStyle.default
 
         return style

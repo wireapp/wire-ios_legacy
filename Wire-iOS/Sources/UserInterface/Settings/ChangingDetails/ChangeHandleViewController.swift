@@ -255,13 +255,12 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         footerLabel.numberOfLines = 0
         updateUI()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: HandleChange.save.capitalized,
-            style: .plain,
-            target: self,
-            action: #selector(saveButtonTapped)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = SemanticColors.Label.textDefault
+        let saveButtonItem: UIBarButtonItem = .createNavigationRightBarButtonItem(title: HandleChange.save.capitalized,
+                                                                                  systemImage: false,
+                                                                                  target: self,
+                                                                                  action: #selector(saveButtonTapped))
+        saveButtonItem.tintColor = .accent()
+        navigationItem.rightBarButtonItem = saveButtonItem
     }
 
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
@@ -272,7 +271,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
         let infoText = HandleChange.footer.attributedString && SemanticColors.Label.textSectionFooter
-        let alreadyTakenText = HandleChange.Footer.unavailable && SemanticColors.LegacyColors.vividRed
+        let alreadyTakenText = HandleChange.Footer.unavailable && SemanticColors.Label.textErrorDefault
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont
     }

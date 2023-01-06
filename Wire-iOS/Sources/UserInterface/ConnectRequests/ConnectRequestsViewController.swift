@@ -92,7 +92,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
 
     private func setupNavigationBar() {
         navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Inbox.title.capitalized)
-        let button = AuthenticationNavigationBar.makeBackButton(isLegacy: false)
+        let button = AuthenticationNavigationBar.makeBackButton()
         button.addTarget(self, action: #selector(onBackButtonPressed), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
