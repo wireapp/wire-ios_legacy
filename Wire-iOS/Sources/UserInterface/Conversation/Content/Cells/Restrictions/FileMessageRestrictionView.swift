@@ -26,7 +26,7 @@ final class FileMessageRestrictionView: BaseMessageRestrictionView {
 
     let fileBlockView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .background)
+        imageView.tintColor = SemanticColors.Icon.foregroundDefaultWhite
         return imageView
     }()
 
