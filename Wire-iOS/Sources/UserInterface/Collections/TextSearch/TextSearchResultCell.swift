@@ -161,10 +161,10 @@ final class TextSearchResultCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
 
-        let backgroundColor = SemanticColors.View.backgroundCollectionCell
-        let foregroundColor = SemanticColors.Label.textDefault
+        let backgroundColor = SemanticColors.View.backgroundDefault
+        let backgroundIsHighlighted = SemanticColors.View.backgroundUserCellHightLighted
 
-        contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor
+        contentView.backgroundColor = highlighted ? backgroundIsHighlighted : backgroundColor
     }
 }
 
