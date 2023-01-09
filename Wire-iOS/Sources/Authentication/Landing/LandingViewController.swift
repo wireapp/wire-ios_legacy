@@ -105,9 +105,8 @@ final class LandingViewController: AuthenticationStepViewController {
         let button = Button(style: .primaryTextButtonStyle,
                             cornerRadius: 16,
                             fontSpec: .buttonBigSemibold)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
         button.accessibilityIdentifier = "Login"
-        button.setTitle("landing.login.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(loginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -120,7 +119,7 @@ final class LandingViewController: AuthenticationStepViewController {
                             cornerRadius: 16,
                             fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Enterprise Login"
-        button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Enterprise.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(enterpriseLoginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -133,7 +132,7 @@ final class LandingViewController: AuthenticationStepViewController {
                             cornerRadius: 16,
                             fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Login with email"
-        button.setTitle("landing.login.email.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Email.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(loginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -146,7 +145,7 @@ final class LandingViewController: AuthenticationStepViewController {
                             cornerRadius: 16,
                             fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Log in with SSO"
-        button.setTitle("landing.login.sso.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Sso.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(ssoLoginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -170,7 +169,7 @@ final class LandingViewController: AuthenticationStepViewController {
                             cornerRadius: 12,
                             fontSpec: .buttonSmallBold)
         button.accessibilityIdentifier = "Create An Account"
-        button.setTitle("landing.create_account.title".localized, for: .normal)
+        button.setTitle(Landing.CreateAccount.title, for: .normal)
         button.addTarget(self,
                          action: #selector(createAccountButtonTapped(_:)),
                          for: .touchUpInside)
@@ -433,7 +432,7 @@ final class LandingViewController: AuthenticationStepViewController {
         } else {
             let cancelItem = UIBarButtonItem(icon: .cross, target: self, action: #selector(cancelButtonTapped))
             cancelItem.accessibilityIdentifier = "CancelButton"
-            cancelItem.accessibilityLabel = "general.cancel".localized
+            cancelItem.accessibilityLabel = L10n.Localizable.General.cancel
             navigationItem.rightBarButtonItem = cancelItem
         }
     }
@@ -448,8 +447,8 @@ final class LandingViewController: AuthenticationStepViewController {
     private func updateCustomBackendLabels() {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging, .qaDemo, .qaDemo2, .anta, .bella, .chala:
-            messageLabel.text = "landing.welcome_message".localized
-            subMessageLabel.text = "landing.welcome_submessage".localized
+            messageLabel.text = Landing.welcomeMessage
+            subMessageLabel.text = Landing.welcomeSubmessage
         case .custom(url: let url):
             guard SecurityFlags.customBackend.isEnabled else {
                 return
@@ -480,7 +479,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = true
-        logoView.accessibilityLabel = "landing.header".localized
+        logoView.accessibilityLabel = Landing.header
         logoView.accessibilityTraits.insert(.header)
     }
 
