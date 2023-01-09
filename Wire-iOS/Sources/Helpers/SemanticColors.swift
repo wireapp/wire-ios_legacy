@@ -127,6 +127,7 @@ public enum SemanticColors {
 
     public enum TabBar {
         static let backgroundSeperatorSelected = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
+        static let backgroundSeparator = UIColor(light: Asset.Colors.gray50, dark: Asset.Colors.gray80)
     }
 
     public enum Button {
