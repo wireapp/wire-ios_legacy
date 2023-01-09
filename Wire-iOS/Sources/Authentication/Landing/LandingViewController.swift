@@ -68,7 +68,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let messageLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: Landing.welcomeMessage,
-                                     fontSpec: .normalSemiboldFont,
+                                     fontSpec: .bodyTwoSemibold,
                                      color: SemanticColors.Label.textDefault)
 
         label.textAlignment = .center
@@ -102,7 +102,9 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginButton: Button = {
-        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
+        let button = Button(style: .primaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
@@ -114,8 +116,9 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var enterpriseLoginButton: Button = {
-        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        let button = Button(style: .secondaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Enterprise Login"
         button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -125,8 +128,10 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private lazy var loginWithEmailButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .full, variant: .light, fontSpec: .smallSemiboldFont)
+    private lazy var loginWithEmailButton: Button = {
+        let button = Button(style: .primaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Login with email"
         button.setTitle("landing.login.email.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -136,8 +141,10 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private lazy var loginWithSSOButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .empty, variant: .light, fontSpec: .smallSemiboldFont)
+    private lazy var loginWithSSOButton: Button = {
+        let button = Button(style: .secondaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Log in with SSO"
         button.setTitle("landing.login.sso.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -151,8 +158,6 @@ final class LandingViewController: AuthenticationStepViewController {
         let label = DynamicFontLabel(text: Landing.CreateAccount.infotitle,
                                      fontSpec: .mediumRegularFont,
                                      color: SemanticColors.Label.textDefault)
-        label.font = .systemFont(ofSize: 12)
-
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -161,8 +166,9 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var createAccountButton: Button = {
-        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 12, fontSpec: .normalMediumFont)
-        button.titleLabel?.font = .systemFont(ofSize: 14).withWeight(.bold)
+        let button = Button(style: .secondaryTextButtonStyle,
+                            cornerRadius: 12,
+                            fontSpec: .buttonSmallBold)
         button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
         button.addTarget(self,
