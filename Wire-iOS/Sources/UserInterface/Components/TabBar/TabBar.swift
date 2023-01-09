@@ -33,6 +33,7 @@ final class TabBar: UIView {
     private let tabInset: CGFloat = 16
 
     private let selectionLineView = UIView()
+    private let lineView = UIView()
     private(set) var tabs: [Tab] = []
     private lazy var lineLeadingConstraint: NSLayoutConstraint = selectionLineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: tabInset)
     private var didUpdateInitialBarPosition = false
@@ -84,8 +85,10 @@ final class TabBar: UIView {
         stackView.alignment = .fill
         addSubview(stackView)
 
+        addSubview(lineView)
         addSubview(selectionLineView)
         selectionLineView.backgroundColor = SemanticColors.TabBar.backgroundSeperatorSelected
+        lineView.backgroundColor = SemanticColors.TabBar.backgroundSeparator
     }
 
     override func layoutSubviews() {
@@ -126,9 +129,13 @@ final class TabBar: UIView {
         let oneOverItemsCount: CGFloat = 1 / CGFloat(items.count)
         let widthInset = tabInset * 2 * oneOverItemsCount
 
-        [self, selectionLineView, stackView].prepareForLayout()
+        [self, lineView, selectionLineView, stackView].prepareForLayout()
         NSLayoutConstraint.activate([
             lineLeadingConstraint,
+            lineView.heightAnchor.constraint(equalTo: selectionLineView.heightAnchor),
+            lineView.bottomAnchor.constraint(equalTo: selectionLineView.bottomAnchor),
+            lineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
             selectionLineView.heightAnchor.constraint(equalToConstant: 1),
             selectionLineView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             selectionLineView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: oneOverItemsCount, constant: -widthInset),
