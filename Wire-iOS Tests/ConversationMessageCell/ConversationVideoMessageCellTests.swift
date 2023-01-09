@@ -16,11 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
 @testable import Wire
 
-import XCTest
-
-final class ConversationVideoMessageCellTests: XCTestCase {
+final class ConversationVideoMessageCellTests: ZMSnapshotTestCase {
 
     var message: MockMessage!
     var mockSelfUser: MockUserType!

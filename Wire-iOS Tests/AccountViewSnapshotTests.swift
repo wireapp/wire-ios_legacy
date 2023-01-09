@@ -41,6 +41,7 @@ final class AccountViewSnapshotTests: ZMSnapshotTestCase {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
         let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
+        sut.overrideUserInterfaceStyle = .light
         // WHEN && THEN
         verify(matching: sut)
     }
@@ -49,6 +50,7 @@ final class AccountViewSnapshotTests: ZMSnapshotTestCase {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
         let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
+        sut.overrideUserInterfaceStyle = .light
         // WHEN 
         sut.selected = true
         // THEN
@@ -117,6 +119,7 @@ final class AccountViewSnapshotTests: ZMSnapshotTestCase {
         account.unreadConversationCount = 100
         let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         sut.unreadCountStyle = .current
+        sut.overrideUserInterfaceStyle = .light
 
         // WHEN
         sut.selected = true

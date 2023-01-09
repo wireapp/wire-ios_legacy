@@ -39,12 +39,11 @@ final class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
     }
 
     override func tearDown() {
-        disableDarkColorScheme()
+        invalidateStyle()
         super.tearDown()
     }
 
-    func disableDarkColorScheme() {
-        ColorScheme.default.variant = .light
+    func invalidateStyle() {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
@@ -54,8 +53,7 @@ final class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
                                    testName: String = #function,
                                    line: UInt = #line) {
         let sut = message.replyPreview()!.prepareForSnapshot()
-        sut.overrideUserInterfaceStyle = .light
-		verifyInLightScheme(createSut: {sut
+		verifyViewInLightScheme(createSut: {sut
 		}, file: file, testName: testName, line: line)
 	}
 
@@ -64,8 +62,7 @@ final class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
                                   testName: String = #function,
                                   line: UInt = #line) {
         let sut = message.replyPreview()!.prepareForSnapshot()
-        sut.overrideUserInterfaceStyle = .dark
-        verifyInDarkScheme(createSut: { sut
+        verifyViewInDarkScheme(createSut: { sut
         }, file: file, testName: testName, line: line)
     }
 

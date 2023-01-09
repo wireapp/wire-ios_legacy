@@ -35,7 +35,9 @@ final class VideoMessageView: UIView, TransferView {
     private let progressView = CircularProgressView()
     private let playButton: IconButton = {
         let button = IconButton()
-        button.setIconColor(.white, for: .normal)
+        button.setIconColor(
+            SemanticColors.Icon.foregroundDefaultWhite,
+            for: .normal)
         return button
     }()
     private let bottomGradientView = GradientView()
@@ -57,7 +59,7 @@ final class VideoMessageView: UIView, TransferView {
 
         self.previewImageView.contentMode = .scaleAspectFill
         self.previewImageView.clipsToBounds = true
-        self.previewImageView.backgroundColor = UIColor.from(scheme: .placeholderBackground)
+        self.previewImageView.backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityIdentifier = "VideoActionButton"
@@ -160,7 +162,7 @@ final class VideoMessageView: UIView, TransferView {
 
         if let viewsState = state.viewsStateForVideo() {
             self.playButton.setIcon(viewsState.playButtonIcon, size: 28, for: .normal)
-            self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
+            self.playButton.backgroundColor = SemanticColors.Icon.backgroundDefault
         }
 
         updateVisibleViews()

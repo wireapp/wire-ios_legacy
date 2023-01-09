@@ -37,9 +37,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
-    let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont,
+    let titleLabel = DynamicFontLabel(fontSpec: .bodyTwoSemibold,
                                       color: LabelColors.textDefault)
-    let subtitleLabel = DynamicFontLabel(fontSpec: .smallRegularFont,
+    let subtitleLabel = DynamicFontLabel(fontSpec: .mediumRegularFont,
                                          color: LabelColors.textCellSubtitle)
     let connectButton = IconButton()
     let accessoryIconView = UIImageView()
@@ -77,8 +77,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override var isSelected: Bool {
         didSet {
             checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: IconColors.foregroundCheckMarkSelected) : nil
-            checkmarkIconView.backgroundColor = isSelected ? IconColors.backgroundCheckMarkSelected : IconColors.backgroundCheckMark
+            checkmarkIconView.backgroundColor = isSelected ? .accent() : IconColors.backgroundCheckMark
             checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : IconColors.borderCheckMark.cgColor
+            checkmarkIconView.layer.borderWidth = isSelected ? 0 : 2
             setupAccessibility()
         }
     }

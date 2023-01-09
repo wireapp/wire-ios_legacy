@@ -22,7 +22,8 @@ import UIKit
 import WireSystem
 
 final class NoResultsView: UIView {
-    let label = UILabel()
+    let label = DynamicFontLabel(fontSpec: .body,
+                                 color: SemanticColors.Label.textCollectionSecondary)
     private let iconView = UIImageView()
 
     var placeholderText: String? {
@@ -37,14 +38,11 @@ final class NoResultsView: UIView {
 
     var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
-            iconView.tintColor = placeholderColor
+            if let icon = icon {
+                iconView.setTemplateIcon(icon, size: .custom(160))
+                iconView.tintColor = SemanticColors.Icon.foregroundPlaceholder
+            }
         }
-    }
-
-    var placeholderColor: UIColor {
-        let backgroundColor = SemanticColors.Label.textSettingsPasswordPlaceholder
-        return backgroundColor
     }
 
     override init(frame: CGRect) {
@@ -53,9 +51,7 @@ final class NoResultsView: UIView {
         accessibilityElements = [label]
 
         label.numberOfLines = 0
-        label.textColor = SemanticColors.Label.textSettingsPasswordPlaceholder
         label.textAlignment = .center
-        label.font = FontSpec.mediumSemiboldFont.font!
         addSubview(label)
 
         iconView.contentMode = .scaleAspectFit

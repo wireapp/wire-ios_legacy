@@ -26,7 +26,7 @@ class StartUIIconCell: UICollectionViewCell {
     typealias PeoplePicker = L10n.Localizable.Peoplepicker
 
     fileprivate let iconView = UIImageView()
-    fileprivate let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont,
+    fileprivate let titleLabel = DynamicFontLabel(fontSpec: .bodyTwoSemibold,
                                                   color: SemanticColors.Label.textDefault)
     fileprivate let separator = UIView()
 

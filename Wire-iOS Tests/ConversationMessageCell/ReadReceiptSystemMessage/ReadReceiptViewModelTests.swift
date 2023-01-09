@@ -41,7 +41,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
 
     private func createSut(type: ZMSystemMessageType) {
         sut = ReadReceiptViewModel(icon: .eye,
-                                   iconColor: UIColor.from(scheme: .textDimmed),
+                                   iconColor: SemanticColors.Label.textSettingsPasswordPlaceholder,
                                    systemMessageType: type,
                                    sender: mockMessage.senderUser!)
     }

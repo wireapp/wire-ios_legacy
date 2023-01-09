@@ -381,7 +381,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     private var legalholdItem: UIBarButtonItem {
         let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
         item.setLegalHoldAccessibility()
-        item.tintColor = SemanticColors.LegacyColors.vividRed
+        item.tintColor = SemanticColors.Icon.foregroundDefaultRed
         return item
     }
 

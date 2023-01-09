@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class MessageDetailsViewControllerTests: XCTestCase {
+final class MessageDetailsViewControllerTests: ZMSnapshotTestCase {
 
     var conversation: SwiftMockConversation!
     var mockSelfUser: MockUserType!

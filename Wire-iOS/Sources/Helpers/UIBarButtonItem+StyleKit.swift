@@ -21,9 +21,16 @@ import UIKit
 
 extension UIBarButtonItem {
 
-    convenience init(icon: StyleKitIcon, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
+    typealias IconColors = SemanticColors.Icon
+    typealias General = L10n.Localizable.General
+
+    convenience init(icon: StyleKitIcon,
+                     style: UIBarButtonItem.Style = .plain,
+                     target: Any?,
+                     action: Selector?) {
         self.init(
-            image: icon.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground)),
+            image: icon.makeImage(size: .tiny,
+                                  color: IconColors.foregroundDefaultBlack),
             style: style,
             target: target,
             action: action
@@ -32,17 +39,18 @@ extension UIBarButtonItem {
 
     static func createCloseItem() -> UIBarButtonItem {
         let item = UIBarButtonItem(icon: .cross, target: nil, action: nil)
-        item.tintColor = SemanticColors.Icon.foregroundDefault
+        item.tintColor = IconColors.foregroundDefault
         item.accessibilityIdentifier = "close"
-        item.accessibilityLabel = L10n.Localizable.General.close
+        item.accessibilityLabel = General.close
         return item
     }
 
-    static func createNavigationBarButtonDoneItem(
+    static func createNavigationRightBarButtonItem(
+        title: String? = nil,
         systemImage: Bool,
         target buttonTarget: Any?,
         action buttonAction: Selector?,
-        font buttonFont: FontSpec = FontSpec.headerRegularFont) -> UIBarButtonItem {
+        font buttonFont: FontSpec = .headerRegularFont) -> UIBarButtonItem {
 
             var rightBarButtonItem: UIBarButtonItem
             if systemImage {
@@ -52,7 +60,7 @@ extension UIBarButtonItem {
                     action: buttonAction)
             } else {
                 rightBarButtonItem = UIBarButtonItem(
-                    title: "general.done".localized,
+                    title: title,
                     style: .plain,
                     target: buttonTarget,
                     action: buttonAction)
@@ -68,27 +76,6 @@ extension UIBarButtonItem {
                 }
             }
             return rightBarButtonItem
-    }
 
-    static func createNavigationBarEditItem(
-        target buttonTarget: Any?,
-        action buttonAction: Selector?,
-        font buttonFont: FontSpec = FontSpec.headerRegularFont) -> UIBarButtonItem {
-            let rightBarButtonItem = UIBarButtonItem(
-                title: "general.edit".localized,
-                style: .plain,
-                target: buttonTarget,
-                action: buttonAction)
-
-            let buttonStates: [UIControl.State] = [.normal, .highlighted, .disabled, .selected, .focused, .application, .reserved]
-
-            if let buttonFont = buttonFont.font {
-                buttonStates.forEach { buttonState in
-                    rightBarButtonItem.setTitleTextAttributes(
-                        [NSAttributedString.Key.font: buttonFont],
-                        for: buttonState)
-                }
-            }
-            return rightBarButtonItem
-    }
+        }
 }

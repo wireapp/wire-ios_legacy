@@ -27,13 +27,13 @@ final class TextSearchResultCell: UITableViewCell {
     fileprivate let userImageView = UserImageView()
     fileprivate let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.from(scheme: .separator)
+        view.backgroundColor = SemanticColors.View.backgroundSeparatorCell
         return view
     }()
     fileprivate var observerToken: Any?
     let resultCountView: RoundedTextBadge = {
         let roundedTextBadge = RoundedTextBadge()
-        roundedTextBadge.backgroundColor = .lightGraphite
+        roundedTextBadge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
 
         return roundedTextBadge
     }()
@@ -66,7 +66,7 @@ final class TextSearchResultCell: UITableViewCell {
 
         createConstraints()
 
-        textLabel?.textColor = .from(scheme: .background)
+        textLabel?.textColor = SemanticColors.Label.textDefaultWhite
         textLabel?.font = .smallSemiboldFont
     }
 
@@ -161,10 +161,10 @@ final class TextSearchResultCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
 
-        let backgroundColor = UIColor.from(scheme: .contentBackground)
-        let foregroundColor = UIColor.from(scheme: .textForeground)
+        let backgroundColor = SemanticColors.View.backgroundDefault
+        let backgroundIsHighlighted = SemanticColors.View.backgroundUserCellHightLighted
 
-        contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor
+        contentView.backgroundColor = highlighted ? backgroundIsHighlighted : backgroundColor
     }
 }
 
