@@ -186,8 +186,6 @@ public enum LogLevel {
     case warn
 
 }
-
-
 public class DatadogWrapper {
 
     public static let shared: DatadogWrapper? = nil
