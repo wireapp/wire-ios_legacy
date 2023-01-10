@@ -97,7 +97,6 @@ public class DatadogWrapper {
                     message: String,
                     error: Error? = nil,
                     attributes: [String: Encodable]? = nil) {
-        guard DeveloperFlag.datadogEnabled.isOn else { return }
         logger?.log(level: level, message: message, error: error, attributes: attributes)
     }
 }
