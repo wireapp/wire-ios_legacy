@@ -188,7 +188,18 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
                                                                       action: #selector(onLongPress(_:)))
         addGestureRecognizer(longPressGestureRecognizer)
 
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+
+        addGestureRecognizer(tapGesture)
+
         storage = String()
+    }
+
+    @objc
+    private func hideKeyboard() {
+        self.endEditing(true)
     }
 
     private func createConstraints() {
