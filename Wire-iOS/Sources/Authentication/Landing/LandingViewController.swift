@@ -20,6 +20,7 @@ import UIKit
 import WireSystem
 import WireTransport
 import WireSyncEngine
+import WireCommonComponents
 
 protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
@@ -68,7 +69,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let messageLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: Landing.welcomeMessage,
-                                     fontSpec: .normalSemiboldFont,
+                                     fontSpec: .bodyTwoSemibold,
                                      color: SemanticColors.Label.textDefault)
 
         label.textAlignment = .center
@@ -102,10 +103,11 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginButton: Button = {
-        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        let button = Button(style: .primaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Login"
-        button.setTitle("landing.login.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(loginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -114,10 +116,11 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var enterpriseLoginButton: Button = {
-        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        let button = Button(style: .secondaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Enterprise Login"
-        button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Enterprise.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(enterpriseLoginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -125,10 +128,12 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private lazy var loginWithEmailButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .full, variant: .light, fontSpec: .smallSemiboldFont)
+    private lazy var loginWithEmailButton: Button = {
+        let button = Button(style: .primaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Login with email"
-        button.setTitle("landing.login.email.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Email.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(loginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -136,10 +141,12 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private lazy var loginWithSSOButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .empty, variant: .light, fontSpec: .smallSemiboldFont)
+    private lazy var loginWithSSOButton: Button = {
+        let button = Button(style: .secondaryTextButtonStyle,
+                            cornerRadius: 16,
+                            fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Log in with SSO"
-        button.setTitle("landing.login.sso.button.title".localized, for: .normal)
+        button.setTitle(Landing.Login.Sso.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(ssoLoginButtonTapped(_:)),
                          for: .touchUpInside)
@@ -151,8 +158,6 @@ final class LandingViewController: AuthenticationStepViewController {
         let label = DynamicFontLabel(text: Landing.CreateAccount.infotitle,
                                      fontSpec: .mediumRegularFont,
                                      color: SemanticColors.Label.textDefault)
-        label.font = .systemFont(ofSize: 12)
-
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -161,10 +166,11 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var createAccountButton: Button = {
-        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 12, fontSpec: .normalMediumFont)
-        button.titleLabel?.font = .systemFont(ofSize: 14).withWeight(.bold)
+        let button = Button(style: .secondaryTextButtonStyle,
+                            cornerRadius: 12,
+                            fontSpec: .buttonSmallBold)
         button.accessibilityIdentifier = "Create An Account"
-        button.setTitle("landing.create_account.title".localized, for: .normal)
+        button.setTitle(Landing.CreateAccount.title, for: .normal)
         button.addTarget(self,
                          action: #selector(createAccountButtonTapped(_:)),
                          for: .touchUpInside)
@@ -427,7 +433,7 @@ final class LandingViewController: AuthenticationStepViewController {
         } else {
             let cancelItem = UIBarButtonItem(icon: .cross, target: self, action: #selector(cancelButtonTapped))
             cancelItem.accessibilityIdentifier = "CancelButton"
-            cancelItem.accessibilityLabel = "general.cancel".localized
+            cancelItem.accessibilityLabel = L10n.Localizable.General.cancel
             navigationItem.rightBarButtonItem = cancelItem
         }
     }
@@ -442,8 +448,8 @@ final class LandingViewController: AuthenticationStepViewController {
     private func updateCustomBackendLabels() {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging, .qaDemo, .qaDemo2, .anta, .bella, .chala:
-            messageLabel.text = "landing.welcome_message".localized
-            subMessageLabel.text = "landing.welcome_submessage".localized
+            messageLabel.text = Landing.welcomeMessage
+            subMessageLabel.text = Landing.welcomeSubmessage
         case .custom(url: let url):
             guard SecurityFlags.customBackend.isEnabled else {
                 return
@@ -474,7 +480,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = true
-        logoView.accessibilityLabel = "landing.header".localized
+        logoView.accessibilityLabel = Landing.header
         logoView.accessibilityTraits.insert(.header)
     }
 
