@@ -172,10 +172,12 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([
             userDetailsView.heightAnchor.constraint(equalToConstant: 24),
             avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            avatarView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            avatarView.widthAnchor.constraint(equalToConstant: 88),
+            avatarView.centerYAnchor.constraint(equalTo: centerYAnchor).withPriority(.defaultLow),
+            avatarView.widthAnchor.constraint(equalToConstant: 72),
             avatarView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.7),
-            avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor)
+            avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor).withPriority(.required),
+            userDetailsView.topAnchor.constraint(greaterThanOrEqualTo: avatarView.bottomAnchor, constant: 16).withPriority(.defaultHigh - 1),
+            avatarView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor).withPriority(.required)
         ])
     }
 
