@@ -56,7 +56,7 @@ class CallingActionsView: UIView {
     private let flipCameraButton = CallingActionButton.flipCameraButton()
     private let endCallButton =  EndCallButton.endCallButton()
     private let handleView = AccessibilityActionView()
-    private let largePickUpButton =  PickUpButton.bigPickUpButton()
+    private let largePickUpButton = PickUpButton.bigPickUpButton()
     private let largeHangUpButton =  EndCallButton.bigEndCallButton()
 
     private var establishedCallButtons: [IconLabelButton] {
