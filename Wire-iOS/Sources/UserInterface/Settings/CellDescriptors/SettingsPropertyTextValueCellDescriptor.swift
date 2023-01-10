@@ -22,6 +22,47 @@ import UIKit
 
 private let zmLog = ZMSLog(tag: "UI")
 
+class SettingsPropertyTextValueCellDescriptor2: SettingsPropertyCellDescriptorType {
+    static let cellType: SettingsTableCellProtocol.Type = SettingsInfoCell.self
+
+    var title: String {
+        return "Something"
+    }
+    var visible: Bool = true
+    let identifier: String?
+    weak var group: SettingsGroupCellDescriptorType?
+    var settingsProperty: SettingsProperty
+
+    init(settingsProperty: SettingsProperty, identifier: String? = .none) {
+        self.settingsProperty = settingsProperty
+        self.identifier = identifier
+    }
+
+    func featureCell(_ cell: SettingsCellType) {
+//        cell.titleText = title
+        guard let textCell = cell as? SettingsTextCell else { return }
+        textCell.textInput.text = "AAAAA"
+//
+//        if let stringValue = settingsProperty.rawValue() as? String {
+//            textCell.textInput.text = stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+//        }
+//
+//        if settingsProperty.enabled {
+//            textCell.textInput.accessibilityTraits.remove(.staticText)
+//            textCell.textInput.accessibilityIdentifier = title + "Field"
+//        } else {
+//            textCell.textInput.accessibilityTraits.insert(.staticText)
+//            textCell.textInput.accessibilityIdentifier = title + "FieldDisabled"
+//        }
+//
+//        textCell.textInput.isEnabled = settingsProperty.enabled
+//        textCell.textInput.isAccessibilityElement = true
+    }
+
+    func select(_ value: SettingsPropertyValue?) {
+    }
+}
+
 class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCellProtocol.Type = SettingsTextCell.self
     var title: String {

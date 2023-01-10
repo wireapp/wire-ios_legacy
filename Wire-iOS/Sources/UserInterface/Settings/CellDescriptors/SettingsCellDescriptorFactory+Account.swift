@@ -81,6 +81,7 @@ extension SettingsCellDescriptorFactory {
 
         let user = SelfUser.current
 
+        cellDescriptors.append(nameElement2())
         if !user.usesCompanyLogin {
             if !user.hasTeam || user.phoneNumber?.isEmpty == false,
                let phoneElement = phoneElement() {
@@ -172,6 +173,13 @@ extension SettingsCellDescriptorFactory {
         settingsProperty.enabled = enabled
 
         return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
+    }
+
+    func nameElement2(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor2 {
+        var settingsProperty = settingsPropertyFactory.property(.profileName)
+        settingsProperty.enabled = enabled
+        return SettingsPropertyTextValueCellDescriptor2(settingsProperty: settingsProperty)
+        //return textValueCellDescriptor(propertyName: .profileName, enabled: enabled)
     }
 
     func nameElement(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {

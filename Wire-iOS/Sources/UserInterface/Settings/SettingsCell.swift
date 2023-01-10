@@ -401,6 +401,97 @@ final class SettingsTextCell: SettingsTableCell,
     }
 }
 
+final class SettingsInfoCell: SettingsTableCell,/* CellConfigurationConfigurable,*/ UITextFieldDelegate {
+
+    private var contentStackView: UIStackView!
+    private var textInput: UITextField! //= SimpleTextField()
+    private let titleLabel = DynamicFontLabel(text: "Profile name",
+                                              fontSpec: .accountTeam,
+                                              color: SemanticColors.Label.textUserPropertyCellName)
+   // private let subtitleLabel = UILabel()
+
+    override func setup() {
+        super.setup()
+        selectionStyle = .none
+        backgroundColor = SemanticColors.View.backgroundUserCell
+
+//        textInput = TailEditingTextField(frame: .zero)
+//        textInput = UITextField(frame: .zero)
+        textInput = SimpleTextField()
+        //textInput.delegate = self
+        textInput.textColor = SemanticColors.Label.textDefault
+        textInput.font = FontSpec.bodyTwoSemibold.font!
+        //  textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+        //textInput.isAccessibilityElement = true
+        textInput.placeholder = "Something"
+        textInput.text = "Jaqueline Olaho"
+
+        contentStackView = UIStackView(arrangedSubviews: [titleLabel, textInput])
+        contentStackView.axis = .vertical
+        contentStackView.distribution = .fillEqually
+        contentStackView.alignment = .leading
+       // contentStackView.spacing = 4
+
+        contentView.addSubview(contentStackView)
+
+        createConstraints()
+
+        //        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
+//        contentView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    private func createConstraints() {
+//        textInput.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            textInput.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+//            textInput.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+//            textInput.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+//            textInput.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8)
+//        ])
+
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
+            contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4)
+        ])
+
+
+
+
+    }
+
+//    @objc
+//    func onCellSelected(_ sender: AnyObject!) {
+//        if !textInput.isFirstResponder {
+//            textInput.becomeFirstResponder()
+//        }
+//    }
+
+    // MARK: - UITextFieldDelegate
+
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        if string.rangeOfCharacter(from: CharacterSet.newlines) != .none {
+//            textField.resignFirstResponder()
+//            return false
+//        } else {
+//            return true
+//        }
+//    }
+
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        return true
+//    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if let text = textInput.text {
+//            descriptor?.select(SettingsPropertyValue.string(value: text))
+//        }
+    }
+}
+
+
 final class SettingsStaticTextTableCell: SettingsTableCell {
 
     override func setup() {
