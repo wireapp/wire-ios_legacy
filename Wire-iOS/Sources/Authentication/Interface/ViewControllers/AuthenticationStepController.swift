@@ -100,9 +100,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = SemanticColors.View.backgroundDefault
-
-
-
         createViews()
         createConstraints()
         updateBackButton()
@@ -112,12 +109,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         super.viewDidAppear(animated)
         configureObservers()
         showKeyboard()
-
-        let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-
-        self.view.addGestureRecognizer(tapGesture)
         UIAccessibility.post(notification: .screenChanged, argument: headlineLabel)
     }
 
@@ -208,6 +199,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
         contentStack.distribution = .fill
         contentStack.alignment = .fill
 
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(dismissKeyboard))
+        
+        tapGesture.cancelsTouchesInView = false
+
+        view.addGestureRecognizer(tapGesture)
         view.addSubview(contentStack)
         view.addSubview(footerViewStackView)
     }
@@ -368,6 +365,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         showKeyboard()
     }
 
+    @objc
     func showKeyboard() {
         mainView.becomeFirstResponderIfPossible()
     }
