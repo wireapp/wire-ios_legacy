@@ -165,7 +165,7 @@ final class DeveloperToolsViewModel: ObservableObject {
             ))
         }
 
-        if let dataDogUserId = DatadogWrapper.shared()?.datadogUserId {
+        if let dataDogUserId = DatadogWrapper.shared?.datadogUserId {
             sections.append(Section(
                 header: "Datadog",
                 items: [
