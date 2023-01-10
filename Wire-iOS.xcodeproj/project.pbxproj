@@ -1823,6 +1823,7 @@
 			files = (
 				A96867AD26A5E59F00679D95 /* WireDataModel.xcframework in Embed Frameworks */,
 				A96867CE26A5E68600679D95 /* Down.xcframework in Embed Frameworks */,
+				01AAD75D294FD4CF00F1CFFD /* Datadog.xcframework in Embed Frameworks */,
 				A96867A726A5E52F00679D95 /* WireCanvas.xcframework in Embed Frameworks */,
 				A96867BD26A5E5A000679D95 /* WireTransport.xcframework in Embed Frameworks */,
 				A96867C826A5E68100679D95 /* FormatterKit.xcframework in Embed Frameworks */,
