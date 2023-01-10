@@ -425,12 +425,15 @@ final class SettingsInfoCell: SettingsTableCell,/* CellConfigurationConfigurable
         //textInput.isAccessibilityElement = true
         textInput.placeholder = "Something"
         textInput.text = "Jaqueline Olaho"
+        textInput.layer.borderWidth = 2
+        textInput.layer.borderColor = UIColor.accent().cgColor
+        textInput.layer.cornerRadius = 12
 
         contentStackView = UIStackView(arrangedSubviews: [titleLabel, textInput])
         contentStackView.axis = .vertical
-        contentStackView.distribution = .fillEqually
+        contentStackView.distribution = .fill
         contentStackView.alignment = .leading
-       // contentStackView.spacing = 4
+        contentStackView.spacing = 10
 
         contentView.addSubview(contentStackView)
 
