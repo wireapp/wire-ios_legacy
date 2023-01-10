@@ -26,7 +26,7 @@ public class DatadogWrapper {
 
     /// Get shared instance only if Developer Flag is on.
 
-    public static lazy var shared: DatadogWrapper? = {
+    public static var shared: DatadogWrapper? = {
         let bundle = Bundle(for: DatadogWrapper.self)
 
         guard
