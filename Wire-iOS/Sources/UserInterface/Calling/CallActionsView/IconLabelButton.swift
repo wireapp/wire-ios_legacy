@@ -31,6 +31,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private(set) var iconButton = IconButton()
     private(set) var subtitleTransformLabel = TransformLabel()
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private var widthConstraint: NSLayoutConstraint!
 
     var appearance: CallActionAppearance = .dark(blurred: false) {
         didSet {
@@ -38,12 +39,12 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    init(input: IconLabelButtonInput) {
+    init(input: IconLabelButtonInput, iconSize: StyleKitIcon.Size = .tiny) {
         super.init()
         setupViews()
         createConstraints()
-        iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
-        iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
+        iconButton.setIcon(input.icon(forState: .normal), size: iconSize, for: .normal)
+        iconButton.setIcon(input.icon(forState: .selected), size: iconSize, for: .selected)
         subtitleTransformLabel.text = input.label
     }
 
@@ -75,8 +76,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
     }
 
     private func createConstraints() {
+        widthConstraint = widthAnchor.constraint(equalToConstant: IconLabelButton.width)
         NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: IconLabelButton.width),
+            widthConstraint,
             iconButton.widthAnchor.constraint(equalTo: widthAnchor),
             iconButton.heightAnchor.constraint(equalTo: iconButton.heightAnchor),
             blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
@@ -98,6 +100,11 @@ class IconLabelButton: ButtonWithLargerHitArea {
             apply(appearance)
             subtitleTransformLabel.font = titleLabel?.font
             subtitleTransformLabel.textColor = titleColor(for: state)
+    }
+
+    func updateButtonWidth(width: CGFloat) {
+        widthConstraint.constant = width
+        blurView.layer.cornerRadius = width / 2
     }
 
     override var isHighlighted: Bool {

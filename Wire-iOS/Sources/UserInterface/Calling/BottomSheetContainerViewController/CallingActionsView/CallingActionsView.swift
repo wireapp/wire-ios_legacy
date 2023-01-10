@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 protocol CallingActionsViewDelegate: AnyObject {
     func callingActionsViewPerformAction(_ action: CallAction)
@@ -41,10 +42,12 @@ class CallingActionsView: UIView {
         }
     }
 
-    private let verticalStackView = UIStackView(axis: .vertical)
+    let verticalStackView = UIStackView(axis: .vertical)
     private let topStackView = UIStackView(axis: .horizontal)
+    private let botttomStackView = UIStackView(axis: .horizontal)
     private var input: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
+    private var verticalStackViewTopContraint: NSLayoutConstraint!
 
     // Buttons
     private let microphoneButton = CallingActionButton.microphoneButton()
@@ -53,8 +56,10 @@ class CallingActionsView: UIView {
     private let flipCameraButton = CallingActionButton.flipCameraButton()
     private let endCallButton =  EndCallButton.endCallButton()
     private let handleView = AccessibilityActionView()
+    private let largePickUpButton =  PickUpButton.bigPickUpButton()
+    private let largeHangUpButton =  EndCallButton.bigEndCallButton()
 
-    private var allButtons: [IconLabelButton] {
+    private var establishedCallButtons: [IconLabelButton] {
         return [flipCameraButton, cameraButton, microphoneButton, speakerButton, endCallButton]
     }
 
@@ -66,8 +71,12 @@ class CallingActionsView: UIView {
             handleView.accessibilityElementsHidden = isIncomingCall
             if isIncomingCall  {
                 [microphoneButton, cameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
+                addIncomingCallControllButtons()
+                verticalStackViewTopContraint.constant = 16.0
             } else {
-                allButtons.forEach(topStackView.addArrangedSubview)
+                establishedCallButtons.forEach(topStackView.addArrangedSubview)
+                removeIncomingCallControllButtons()
+                verticalStackViewTopContraint.constant = 8.0
             }
             topStackView.distribution = isIncomingCall ? .equalSpacing : .fillEqually
             setNeedsDisplay()
@@ -95,22 +104,21 @@ class CallingActionsView: UIView {
         verticalStackView.alignment = .center
         verticalStackView.spacing = 10
         addSubview(verticalStackView)
-        allButtons.forEach(topStackView.addArrangedSubview)
+        establishedCallButtons.forEach(topStackView.addArrangedSubview)
         handleView.layer.cornerRadius = 3.0
         handleView.backgroundColor = SemanticColors.View.backgroundDragBarIndicator
-        [handleView, topStackView].forEach(verticalStackView.addArrangedSubview) //add top handle
-        allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
+        [handleView, topStackView].forEach(verticalStackView.addArrangedSubview)
+        [flipCameraButton, cameraButton, microphoneButton, speakerButton, endCallButton, largeHangUpButton, largePickUpButton].forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         setupContentViewer()
     }
 
     private func createConstraints() {
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        verticalStackViewTopContraint = verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 8)
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
-            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
-            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            topStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
+            verticalStackViewTopContraint,
+            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22.0),
+            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22.0),
             handleView.widthAnchor.constraint(equalToConstant: 129),
             handleView.heightAnchor.constraint(equalToConstant: 5)
         ])
@@ -126,7 +134,30 @@ class CallingActionsView: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        allButtons.forEach( { $0.updateState() })
+        establishedCallButtons.forEach( { $0.updateState() })
+    }
+
+    private func addIncomingCallControllButtons() {
+        [largeHangUpButton, largePickUpButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.updateButtonWidth(width: 72.0)
+            $0.subtitleTransformLabel.font = FontSpec(.small, .bold).font!
+            addSubview($0)
+        }
+
+        NSLayoutConstraint.activate([
+            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 16),
+            largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
+            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -16),
+            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
+        ])
+    }
+
+    private func removeIncomingCallControllButtons() {
+        [largeHangUpButton, largePickUpButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.removeFromSuperview()
+        }
     }
 
     // MARK: - State Input
@@ -173,7 +204,8 @@ class CallingActionsView: UIView {
         case videoButtonDisabledTapRecognizer: return .alertVideoUnavailable
         case speakerButton: return .toggleSpeakerState
         case flipCameraButton: return .flipCamera
-        case endCallButton: return .terminateCall
+        case endCallButton, largeHangUpButton: return .terminateCall
+        case largePickUpButton: return .acceptCall
         default: fatalError("Unexpected Button: \(button)")
         }
     }
@@ -210,10 +242,10 @@ class CallingActionsView: UIView {
 extension CallingActionsView: UILargeContentViewerInteractionDelegate {
 
     func largeContentViewerInteraction(_: UILargeContentViewerInteraction, itemAt: CGPoint) -> UILargeContentViewerItem? {
-        let itemWidth = self.frame.width / CGFloat(allButtons.count)
+        let itemWidth = self.frame.width / CGFloat(establishedCallButtons.count)
         let position: Int = Int(itemAt.x / itemWidth)
-        largeContentTitle = allButtons[position].subtitleTransformLabel.text
-        largeContentImage = allButtons[position].iconButton.imageView?.image
+        largeContentTitle = establishedCallButtons[position].subtitleTransformLabel.text
+        largeContentImage = establishedCallButtons[position].iconButton.imageView?.image
 
         return self
     }

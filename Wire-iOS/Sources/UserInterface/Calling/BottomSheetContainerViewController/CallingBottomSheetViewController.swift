@@ -37,7 +37,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     var bottomSheetMinimalOffset: CGFloat {
         switch voiceChannel.state {
         case .incoming:
-            return 230.0
+            return UIDevice.current.orientation.isLandscape ? 128.0 : 230.0
         default:
             return 128.0
         }
@@ -57,7 +57,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         callingActionsInfoViewController = CallingActionsInfoViewController(participants: voiceChannel.getParticipantsList(), selfUser: selfUser)
         super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: 128.0))
 
-        callingActionsInfoViewController.actionsDelegate = visibleVoiceChannelViewController
+        callingActionsInfoViewController.setCallingActionsViewDelegate(actionsDelegate: visibleVoiceChannelViewController)
         callingActionsInfoViewController.actionsView.bottomSheetScrollingDelegate = self
         visibleVoiceChannelViewController.configurationObserver = self
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
@@ -107,6 +107,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
         guard self.configuration != newConfiguration else { return }
         self.configuration = newConfiguration
+        callingActionsInfoViewController.updateActionViewHeight()
         hideBottomSheet()
     }
 
