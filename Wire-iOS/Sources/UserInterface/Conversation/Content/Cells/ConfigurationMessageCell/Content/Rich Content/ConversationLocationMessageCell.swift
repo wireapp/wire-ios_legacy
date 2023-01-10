@@ -44,8 +44,8 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
     weak var message: ZMConversationMessage?
 
     var labelFont: UIFont? = .normalFont
-    var labelTextColor: UIColor? = .from(scheme: .textForeground)
-    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
+    var labelTextColor: UIColor? = SemanticColors.Label.textDefault
+    var containerColor: UIColor? = SemanticColors.View.backgroundCollectionCell
     var containerHeightConstraint: NSLayoutConstraint!
 
     var isSelected: Bool = false
@@ -70,9 +70,11 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
 
     private func configureViews() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.layer.cornerRadius = 4
+        containerView.layer.cornerRadius = 12
         containerView.clipsToBounds = true
-        containerView.backgroundColor = .from(scheme: .placeholderBackground)
+        containerView.layer.borderWidth = 1
+        containerView.layer.borderColor = SemanticColors.View.borderCollectionCell.cgColor
+        containerView.backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
