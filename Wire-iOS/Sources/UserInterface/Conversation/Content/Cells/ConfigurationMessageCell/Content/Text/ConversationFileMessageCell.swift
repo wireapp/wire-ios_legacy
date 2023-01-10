@@ -50,8 +50,11 @@ final class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
     }
 
     private func configureSubview() {
-        shape = .rounded(radius: 4)
-        backgroundColor = .from(scheme: .placeholderBackground)
+        shape = .rounded(radius: 12)
+        backgroundColor = SemanticColors.View.backgroundCollectionCell
+        containerView.layer.cornerRadius = 12
+        containerView.layer.borderWidth = 1
+        containerView.layer.borderColor = SemanticColors.View.borderCollectionCell.cgColor
         clipsToBounds = true
 
         addSubview(containerView)

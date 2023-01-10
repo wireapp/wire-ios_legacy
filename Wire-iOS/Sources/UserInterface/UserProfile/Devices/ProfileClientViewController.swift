@@ -150,7 +150,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         showMyDeviceButton.setTitle(ProfileDevicesDetail.ShowMyDevice.title.capitalized, for: [])
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         showMyDeviceButton.setTitleColor(UIColor.accent(), for: .normal)
-        showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
+        showMyDeviceButton.titleLabel?.font = FontSpec.headerRegularFont.font!
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: showMyDeviceButton)
     }
 

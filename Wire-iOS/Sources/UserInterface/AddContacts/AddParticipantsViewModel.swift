@@ -83,10 +83,13 @@ struct AddParticipantsViewModel {
             return item
         case .create(let values):
             let key = values.participants.isEmpty ? "peoplepicker.group.skip" : "peoplepicker.group.done"
-            let item = UIBarButtonItem(title: key.localized.capitalized, style: .plain, target: target, action: action)
-            item.tintColor = UIColor.accent()
-            item.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
-            return item
+            let newItem: UIBarButtonItem = .createNavigationRightBarButtonItem(title: key.localized.capitalized,
+                                                                               systemImage: false,
+                                                                               target: target,
+                                                                               action: action)
+            newItem.tintColor = UIColor.accent()
+            newItem.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
+            return newItem
         }
     }
 

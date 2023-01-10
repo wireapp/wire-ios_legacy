@@ -61,6 +61,7 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
                         line: UInt = #line) {
         let state = HandleChangeState(currentHandle: currentHandle, newHandle: newHandle, availability: availability)
         let sut = ChangeHandleViewController(state: state, federationEnabled: federationEnabled)
+        sut.overrideUserInterfaceStyle = .light
         verify(matching: sut.prepareForSettingsSnapshots(), file: file, testName: testName, line: line)
     }
 }
