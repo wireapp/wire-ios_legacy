@@ -21,6 +21,8 @@ import WireDataModel
 import WireSyncEngine
 import avs
 
+private let zmLog = ZMSLog(tag: "calling")
+
 protocol CallInfoConfigurationObserver: AnyObject {
     func didUpdateConfiguration(configuration: CallInfoConfiguration)
 }
@@ -30,9 +32,10 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     weak var delegate: ActiveCallViewControllerDelegate?
     private var participantsObserverToken: Any?
-    private let voiceChannel: VoiceChannel
+    private var voiceChannel: VoiceChannel
     private let headerBar = CallHeaderBar()
     private let overlay = PassThroughOpaqueView()
+    private var callStateObserverToken: Any?
 
     var bottomSheetMinimalOffset: CGFloat {
         switch voiceChannel.state {
@@ -71,6 +74,16 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        guard let userSession = ZMUserSession.shared() else {
+            zmLog.error("UserSession not available when initializing \(type(of: self))")
+            return
+        }
+        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
     }
 
     private func setupViews() {
@@ -122,10 +135,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         }
     }
 
-    func transition(to toViewController: UIViewController, from fromViewController: UIViewController) {
+    func transition(to toViewController: CallViewController, from fromViewController: CallViewController) {
         guard toViewController != fromViewController else { return }
-        toViewController.view.frame = view.bounds
-        toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         addChild(toViewController)
 
         transition(from: fromViewController,
@@ -134,8 +145,11 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
                    options: .transitionCrossDissolve,
                    animations: nil,
                    completion: { _ in
-                toViewController.didMove(toParent: self)
-                fromViewController.removeFromParent()
+            self.addContentViewController(contentViewController: toViewController)
+            NSLayoutConstraint.activate(
+                [self.headerBar.bottomAnchor.constraint(equalTo: toViewController.view.topAnchor).withPriority(.required)])
+            fromViewController.removeFromParent()
+            self.view.bringSubviewToFront(self.bottomSheetViewController.view)
         })
     }
 
@@ -144,8 +158,14 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
               let voiceChannel = conversation.voiceChannel else {
             return
         }
-        visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser())
+        self.voiceChannel = voiceChannel
+        visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser(), isOverlayEnabled: false)
+        visibleVoiceChannelViewController.configurationObserver = self
         visibleVoiceChannelViewController.delegate = self
+        callingActionsInfoViewController.setCallingActionsViewDelegate(actionsDelegate: visibleVoiceChannelViewController)
+        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
+        callingActionsInfoViewController.participants = voiceChannel.getParticipantsList()
+        participantsObserverToken = voiceChannel.addParticipantObserver(self)
     }
 
     override func bottomSheetChangedOffset(fullHeightPercentage: CGFloat) {
