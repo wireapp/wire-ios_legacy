@@ -191,7 +191,6 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         storage = String()
     }
 
-
     private func createConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
