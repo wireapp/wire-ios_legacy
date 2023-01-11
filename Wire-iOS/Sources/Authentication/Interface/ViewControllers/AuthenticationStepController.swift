@@ -100,7 +100,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = SemanticColors.View.backgroundDefault
-
         createViews()
         createConstraints()
         updateBackButton()
@@ -370,6 +369,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     override func accessibilityPerformMagicTap() -> Bool {
         return (mainView as? MagicTappable)?.performMagicTap() == true
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 
 }

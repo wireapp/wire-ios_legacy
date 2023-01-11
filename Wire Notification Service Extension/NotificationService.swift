@@ -36,8 +36,8 @@ public class NotificationService: UNNotificationServiceExtension{
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
-        DatadogWrapper.shared()?.startMonitoring()
-        DatadogWrapper.shared()?.log(level: .debug, message: "request: \(request.debugDescription)")
+        DatadogWrapper.shared?.startMonitoring()
+        DatadogWrapper.shared?.log(level: .debug, message: "request: \(request.debugDescription)")
         if DeveloperFlag.breakMyNotifications.isOn {
             // By doing nothing, we hope to get in a state where iOS will no
             // longer deliver pushes to us.
