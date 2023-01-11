@@ -81,7 +81,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 56
+        tableView.estimatedRowHeight = UITableView.automaticDimension//56
         view.addSubview(tableView)
         view.addSubview(footerContainer)
         footerContainer.addSubview(footerSeparator)
@@ -260,6 +260,8 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
         property.select(SettingsPropertyValue.none)
         tableView.deselectRow(at: indexPath, animated: false)
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
