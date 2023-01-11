@@ -1179,7 +1179,6 @@
 		D35EEDCC28C7E95F00949F02 /* CookieProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */; };
 		D36E027829374EEA006C3E5A /* NSLayoutConstraint+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */; };
 		D36E027A293758DD006C3E5A /* CallHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E0279293758DD006C3E5A /* CallHeaderBar.swift */; };
-		D36E027C294092E7006C3E5A /* IncomingCallActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */; };
 		D38BC97628BF8AA700EB928F /* NotificationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455DF28AFC443005ACD74 /* NotificationServiceError.swift */; };
 		D3A74DBD29432E8B00DD272F /* EstablishingCallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */; };
 		D3A74DC7294CAFEF00DD272F /* AccessibilityActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */; };
@@ -1823,8 +1822,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A96867AD26A5E59F00679D95 /* WireDataModel.xcframework in Embed Frameworks */,
-				01AAD75D294FD4CF00F1CFFD /* Datadog.xcframework in Embed Frameworks */,
 				A96867CE26A5E68600679D95 /* Down.xcframework in Embed Frameworks */,
+				01AAD75D294FD4CF00F1CFFD /* Datadog.xcframework in Embed Frameworks */,
 				A96867A726A5E52F00679D95 /* WireCanvas.xcframework in Embed Frameworks */,
 				A96867BD26A5E5A000679D95 /* WireTransport.xcframework in Embed Frameworks */,
 				A96867C826A5E68100679D95 /* FormatterKit.xcframework in Embed Frameworks */,
@@ -3130,7 +3129,6 @@
 		D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieProvider.swift; sourceTree = "<group>"; };
 		D36E027729374EEA006C3E5A /* NSLayoutConstraint+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Helper.swift"; sourceTree = "<group>"; };
 		D36E0279293758DD006C3E5A /* CallHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHeaderBar.swift; sourceTree = "<group>"; };
-		D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallActionsView.swift; sourceTree = "<group>"; };
 		D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishingCallStatusView.swift; sourceTree = "<group>"; };
 		D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityActionView.swift; sourceTree = "<group>"; };
 		D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenEndpointTests.swift; sourceTree = "<group>"; };
@@ -7024,7 +7022,6 @@
 				D3DE46042923BB13000F1055 /* BottomSheetContainerViewController.swift */,
 				D30880FA292CD8F200DDEAB0 /* CallingBottomSheetViewController.swift */,
 				D36E0279293758DD006C3E5A /* CallHeaderBar.swift */,
-				D36E027B294092E7006C3E5A /* IncomingCallActionsView.swift */,
 				D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */,
 			);
 			path = BottomSheetContainerViewController;
@@ -8327,8 +8324,7 @@
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
 				5E8FFC2221EF86000052DF03 /* EmailLinkVerificationStepDescription.swift in Sources */,
-				EF6E9FF0231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift in Sources */,
-				D36E027C294092E7006C3E5A /* IncomingCallActionsView.swift in Sources */,
+				EF6E9FF0231D4CDF000B7785 /* ConversationListViewController+ConversationListTabBarControllerDelegate.swift in Sources */,
 				EF6E9FF0231D4CDF000B7785 /* ConversationListViewController+ConversationListTabBarControllerDelegate.swift in Sources */,
 				F19F067021ECC62A00426BD1 /* UIImage+Decoding.swift in Sources */,
 				55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */,

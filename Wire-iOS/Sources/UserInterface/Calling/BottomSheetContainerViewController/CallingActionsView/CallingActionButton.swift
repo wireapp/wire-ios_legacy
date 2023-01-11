@@ -21,15 +21,15 @@ import WireCommonComponents
 
 class CallingActionButton: IconLabelButton {
 
-    override init(input: IconLabelButtonInput) {
+    override init(input: IconLabelButtonInput, iconSize: StyleKitIcon.Size = .tiny) {
         super.init(input: input)
 
         subtitleTransformLabel.text = input.label
         subtitleTransformLabel.textTransform = .capitalize
         titleLabel?.font = UIFont.systemFont(ofSize: 12)
         subtitleTransformLabel.font = titleLabel?.font
-        iconButton.setIcon(input.icon(forState: .normal), size: .medium, for: .normal)
-        iconButton.setIcon(input.icon(forState: .selected), size: .medium, for: .selected)
+        iconButton.setIcon(input.icon(forState: .normal), size: iconSize, for: .normal)
+        iconButton.setIcon(input.icon(forState: .selected), size: iconSize, for: .selected)
     }
 
     override func apply(_ configuration: CallActionAppearance) {
