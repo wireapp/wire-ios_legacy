@@ -57,6 +57,7 @@ enum AuthenticationCoordinatorAction {
     case startBackupFlow
     case signOut(warn: Bool)
     case addEmailAndPassword(ZMEmailCredentials)
+    case configureDevicePermissions
 
     var retainsModal: Bool {
         switch self {

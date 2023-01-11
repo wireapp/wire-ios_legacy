@@ -82,6 +82,9 @@ indirect enum AuthenticationFlowStep: Equatable {
     case incrementalUserCreation(UnregisteredUser, IntermediateRegistrationStep)
     case createUser(UnregisteredUser)
 
+    // Configuration
+    case configureDevice
+
     // MARK: - Properties
 
     /// Whether the authentication steps generates a user interface.
@@ -118,6 +121,9 @@ indirect enum AuthenticationFlowStep: Equatable {
         case .activateCredentials: return false
         case .incrementalUserCreation(_, let intermediateStep): return intermediateStep.needsInterface
         case .createUser: return false
+
+        // Configuration
+        case .configureDevice: return false
         }
     }
 
