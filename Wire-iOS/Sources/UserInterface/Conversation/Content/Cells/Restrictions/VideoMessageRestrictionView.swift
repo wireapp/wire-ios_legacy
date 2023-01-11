@@ -45,7 +45,7 @@ final class VideoMessageRestrictionView: BaseMessageRestrictionView {
 
         iconView.clipsToBounds = true
         iconView.layer.cornerRadius = 16
-        iconView.backgroundColor = .from(scheme: .iconSelected)
+        iconView.backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
 
     override func createConstraints() {

@@ -49,7 +49,7 @@ final class ConversationImageMessageCell: UIView,
     private var widthConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
 
-    var containerColor: UIColor? = .from(scheme: .placeholderBackground)
+    var containerColor: UIColor? =  SemanticColors.View.backgroundCollectionCell
     var containerHeightConstraint: NSLayoutConstraint!
 
     weak var message: ZMConversationMessage?
@@ -74,8 +74,12 @@ final class ConversationImageMessageCell: UIView,
 
     private func configureView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .from(scheme: .placeholderBackground)
-        containerView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
+
+        containerView.layer.cornerRadius = 12
+        containerView.layer.borderWidth = 1
+        containerView.layer.masksToBounds = true
+        containerView.backgroundColor = SemanticColors.View.backgroundCollectionCell
+        containerView.layer.borderColor = SemanticColors.View.backgroundSeparatorCell.cgColor
 
         addSubview(containerView)
     }
@@ -116,7 +120,7 @@ final class ConversationImageMessageCell: UIView,
         widthConstraint?.constant = imageSize.width
         heightConstraint?.constant = imageSize.height
 
-        containerView.backgroundColor = UIColor.from(scheme: .placeholderBackground)
+        containerView.backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         if object.isObfuscated {
             setup(obfuscationView)
@@ -126,7 +130,7 @@ final class ConversationImageMessageCell: UIView,
         } else {
             setup(imageResourceView)
             imageResourceView.contentMode = .scaleAspectFill
-            imageResourceView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
+            imageResourceView.layer.borderColor = SemanticColors.View.backgroundSeparatorCell.cgColor
             imageResourceView.layer.borderWidth = 0
 
             let imageResource = object.isObfuscated ? nil : object.image.image
@@ -156,7 +160,7 @@ final class ConversationImageMessageCell: UIView,
             containerView.backgroundColor = UIColor.clear
             imageResourceView.layer.borderWidth = 0
         } else {
-            containerView.backgroundColor = UIColor.from(scheme: .placeholderBackground)
+            containerView.backgroundColor = SemanticColors.View.backgroundCollectionCell
             imageResourceView.layer.borderWidth = UIScreen.hairline
         }
     }

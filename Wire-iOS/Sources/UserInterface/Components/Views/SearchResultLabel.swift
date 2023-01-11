@@ -60,7 +60,7 @@ final public class SearchResultLabel: UILabel, Copyable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.lineBreakMode = .byTruncatingTail
-        textColor = .from(scheme: .textForeground)
+        textColor = SemanticColors.Label.textDefault
     }
 
     @available(*, unavailable)
