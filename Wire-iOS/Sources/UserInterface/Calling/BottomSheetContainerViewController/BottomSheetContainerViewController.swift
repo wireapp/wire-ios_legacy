@@ -42,8 +42,8 @@ class BottomSheetContainerViewController: UIViewController {
     private var visibleControllerBottomConstraint: NSLayoutConstraint!
     private var bottomViewHeightConstraint: NSLayoutConstraint!
 
-    let contentViewController: UIViewController
-    let bottomSheetViewController: UIViewController
+    private(set) var contentViewController: UIViewController
+    private(set) var bottomSheetViewController: UIViewController
 
     var configuration: BottomSheetConfiguration {
         didSet {
@@ -81,26 +81,17 @@ class BottomSheetContainerViewController: UIViewController {
     }
 
     private func setupUI() {
-        self.addChild(contentViewController)
+        addContentViewController(contentViewController: contentViewController)
+        addBottomSheetViewController(bottomSheetViewController: bottomSheetViewController)
+    }
+
+    private func addBottomSheetViewController(bottomSheetViewController: UIViewController) {
         self.addChild(bottomSheetViewController)
-        self.view.addSubview(contentViewController.view)
         self.view.addSubview(bottomSheetViewController.view)
 
         bottomSheetViewController.view.addGestureRecognizer(panGesture)
-        contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         bottomSheetViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
-        visibleControllerBottomConstraint = contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -configuration.initialOffset)
-        NSLayoutConstraint.activate([
-            contentViewController.view.leftAnchor
-                .constraint(equalTo: self.view.leftAnchor),
-            contentViewController.view.rightAnchor
-                .constraint(equalTo: self.view.rightAnchor),
-            contentViewController.view.topAnchor
-                .constraint(equalTo: self.view.topAnchor).withPriority(.defaultLow),
-            visibleControllerBottomConstraint
-        ])
-        contentViewController.didMove(toParent: self)
         topConstraint = bottomSheetViewController.view.topAnchor
             .constraint(equalTo: self.view.bottomAnchor,
                         constant: -configuration.initialOffset)
@@ -116,6 +107,26 @@ class BottomSheetContainerViewController: UIViewController {
             topConstraint
         ])
         bottomSheetViewController.didMove(toParent: self)
+    }
+
+    func addContentViewController(contentViewController: UIViewController) {
+        self.contentViewController = contentViewController
+        self.addChild(contentViewController)
+        self.view.addSubview(contentViewController.view)
+        contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        visibleControllerBottomConstraint = contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -configuration.initialOffset)
+
+        NSLayoutConstraint.activate([
+            contentViewController.view.leftAnchor
+                .constraint(equalTo: self.view.leftAnchor),
+            contentViewController.view.rightAnchor
+                .constraint(equalTo: self.view.rightAnchor),
+            contentViewController.view.topAnchor
+                .constraint(equalTo: self.view.topAnchor).withPriority(.defaultLow),
+            visibleControllerBottomConstraint
+        ])
+        contentViewController.didMove(toParent: self)
+
     }
 
     public func didChangeState() {}
