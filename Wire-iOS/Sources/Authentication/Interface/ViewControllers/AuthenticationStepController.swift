@@ -359,7 +359,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         showKeyboard()
     }
 
-    @objc
     func showKeyboard() {
         mainView.becomeFirstResponderIfPossible()
     }
