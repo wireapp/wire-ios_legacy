@@ -199,12 +199,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         contentStack.distribution = .fill
         contentStack.alignment = .fill
 
-        let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(dismissKeyboard))
-        
-        tapGesture.cancelsTouchesInView = false
-
-        view.addGestureRecognizer(tapGesture)
         view.addSubview(contentStack)
         view.addSubview(footerViewStackView)
     }
@@ -370,13 +364,16 @@ class AuthenticationStepController: AuthenticationStepViewController {
         mainView.becomeFirstResponderIfPossible()
     }
 
-    @objc
     func dismissKeyboard() {
         mainView.resignFirstResponder()
     }
 
     override func accessibilityPerformMagicTap() -> Bool {
         return (mainView as? MagicTappable)?.performMagicTap() == true
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 
 }
