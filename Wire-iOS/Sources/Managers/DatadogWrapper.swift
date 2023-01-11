@@ -24,33 +24,35 @@ import UIKit
 
 public class DatadogWrapper {
 
-    /// Get shared instance only if Developer Flag is on
-    public static func shared() -> DatadogWrapper? {
-        guard let appID = Bundle(for: DatadogWrapper.self).infoForKey("DatadogAppId"),
-              let clientToken = Bundle(for: DatadogWrapper.self).infoForKey("DatadogClientToken")
-              else {
-                  print("missing Datadog appID and clientToken - logging disabled")
-                  return nil
-              }
-        if sharedInstance == nil {
-            sharedInstance = DatadogWrapper(appID: appID, clientToken: clientToken)
+    /// Get shared instance only if Developer Flag is on.
+
+    public static var shared: DatadogWrapper? = {
+        let bundle = Bundle(for: DatadogWrapper.self)
+
+        guard
+            let appID = bundle.infoForKey("DatadogAppId"),
+            let clientToken = bundle.infoForKey("DatadogClientToken")
+        else {
+            print("missing Datadog appID and clientToken - logging disabled")
+            return nil
         }
-        return sharedInstance
-    }
 
-    static var sharedInstance: DatadogWrapper?
+        return DatadogWrapper(appID: appID, clientToken: clientToken)
+    }()
 
-    /// SHA256 string to identify current Device across app and extensions
+    /// SHA256 string to identify current Device across app and extensions.
+
     public var datadogUserId: String
 
     var logger: Logger?
     var defaultLevel: LogLevel
 
-    private init(appID: String,
-                 clientToken: String,
-                 environment: BackendEnvironmentProvider = BackendEnvironment.shared,
-                 level: LogLevel = .debug) {
-
+    private init(
+        appID: String,
+        clientToken: String,
+        environment: BackendEnvironmentProvider = BackendEnvironment.shared,
+        level: LogLevel = .debug
+    ) {
         Datadog.initialize(
             appContext: .init(),
             trackingConsent: .granted,
@@ -69,6 +71,7 @@ public class DatadogWrapper {
                 .trackRUMLongTasks()
                 .build()
         )
+
         defaultLevel = level
         logger = Logger.builder
             .sendNetworkInfo(true)
@@ -90,37 +93,65 @@ public class DatadogWrapper {
           )
         Datadog.setUserInfo(id: datadogUserId)
         RemoteMonitoring.remoteLogger = self
-        log(level: defaultLevel, message: "Datadog startMonitoring for device: \(datadogUserId)")
+
+        log(
+            level: defaultLevel,
+            message: "Datadog startMonitoring for device: \(datadogUserId)"
+        )
     }
 
-    public func log(level: LogLevel,
-                    message: String,
-                    error: Error? = nil,
-                    attributes: [String: Encodable]? = nil) {
-        guard DeveloperFlag.datadogEnabled.isOn else { return }
-        logger?.log(level: level, message: message, error: error, attributes: attributes)
+    public func log(
+        level: LogLevel,
+        message: String,
+        error: Error? = nil,
+        attributes: [String: Encodable]? = nil
+    ) {
+        logger?.log(
+            level: level,
+            message: message,
+            error: error,
+            attributes: attributes
+        )
     }
 }
 
 extension DatadogWrapper: RemoteLogger {
-    public func log(message: String, error: Error?, attributes: [String: Encodable]?, level: RemoteMonitoring.Level) {
-        log(level: level.logLevel, message: message, error: error, attributes: attributes)
+
+    public func log(
+        message: String,
+        error: Error?,
+        attributes: [String: Encodable]?,
+        level: RemoteMonitoring.Level
+    ) {
+        log(
+            level: level.logLevel,
+            message: message,
+            error: error,
+            attributes: attributes
+        )
     }
+
 }
 
 extension RemoteMonitoring.Level {
+
     var logLevel: LogLevel {
         switch self {
         case .debug:
             return .debug
+
         case .info:
             return .info
+
         case .notice:
             return .notice
+
         case .warn:
             return .warn
+
         case .error:
             return .error
+
         case .critical:
             return .critical
         }
@@ -132,6 +163,7 @@ extension RemoteMonitoring.Level {
 import CryptoKit
 
 extension String {
+
     var sha256String: String {
         let inputData = Data(self.utf8)
         let hashed = SHA256.hash(data: inputData)
@@ -147,24 +179,27 @@ extension String {
 #else
 
 public enum LogLevel {
+
     case debug
     case critical
     case info
     case warn
-}
-// no op interface
-public class DatadogWrapper {
-    public static func shared() -> DatadogWrapper? {
-        return nil
-    }
 
-    public func log(level: LogLevel,
-                    message: String,
-                    error: Error? = nil,
-                    attributes: [String: Encodable]? = nil) {}
+}
+public class DatadogWrapper {
+
+    public static let shared: DatadogWrapper? = nil
+
+    public func log(
+        level: LogLevel,
+        message: String,
+        error: Error? = nil,
+        attributes: [String: Encodable]? = nil
+    ) {}
 
     public func startMonitoring() {}
 
     public var datadogUserId: String = "NONE"
 }
+
 #endif
