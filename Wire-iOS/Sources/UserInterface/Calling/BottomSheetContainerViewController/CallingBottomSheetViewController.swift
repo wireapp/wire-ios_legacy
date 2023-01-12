@@ -182,9 +182,9 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     private func updateState() {
         switch callInfoConfiguration?.state {
-            case .established: startCallDurationTimer()
-            case .terminating: stopCallDurationTimer()
-            default: break
+        case .established: startCallDurationTimer()
+        case .terminating: stopCallDurationTimer()
+        default: break
         }
     }
 
