@@ -129,9 +129,6 @@ public enum SemanticColors {
         static let backgroundPurple = UIColor(light: Asset.Colors.purple100Light, dark: Asset.Colors.purple900Dark)
         static let backgroundTurqoise = UIColor(light: Asset.Colors.turquoise100Light, dark: Asset.Colors.turquoise900Dark)
         static let backgroundOverlay = UIColor(light: Asset.Colors.black, dark: Asset.Colors.black)
-        static let backgroundSecurityLevelUnclassified = UIColor(light: Asset.Colors.blue500Light, dark: Asset.Colors.blue500Dark)
-        static let backgroundSecurityLevelClassified = UIColor(light: Asset.Colors.blue50Light, dark: Asset.Colors.blue900Light)
-        static let borderSecurityLevelClassified = UIColor(light: Asset.Colors.blue100Light, dark: Asset.Colors.blue700Light)
     }
 
     public enum TabBar {

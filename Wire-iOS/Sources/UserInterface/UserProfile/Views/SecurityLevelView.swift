@@ -51,7 +51,7 @@ final class SecurityLevelView: UIView {
 
     func configure(with classification: SecurityClassification) {
         securityLevelLabel.font = FontSpec.smallSemiboldFont.font!
-
+        
         guard
             classification != .none,
             let levelText = classification.levelText
@@ -65,13 +65,13 @@ final class SecurityLevelView: UIView {
 
         case .classified:
             securityLevelLabel.textColor = isUpdatedCallingUI ? SemanticColors.Label.textSecurityLevelClassified : SemanticColors.Label.textDefault
-            backgroundColor = isUpdatedCallingUI ? SemanticColors.View.backgroundSecurityLevelClassified : SemanticColors.View.backgroundSecurityLevel
+            backgroundColor = isUpdatedCallingUI ? .accentDimmedFlat : SemanticColors.View.backgroundSecurityLevel
             iconImageView.setIcon(.checkmark, size: .tiny, color: SemanticColors.Icon.backgroundCheckMarkSelected)
-            topBorder.backgroundColor = isUpdatedCallingUI ? SemanticColors.View.borderSecurityLevelClassified : SemanticColors.View.backgroundSeparatorCell
+            topBorder.backgroundColor = isUpdatedCallingUI ? .accent() : SemanticColors.View.backgroundSeparatorCell
 
         case .notClassified:
             securityLevelLabel.textColor = isUpdatedCallingUI ? SemanticColors.Label.textDefaultWhite : SemanticColors.Label.textDefault
-            backgroundColor = isUpdatedCallingUI ? SemanticColors.View.backgroundSecurityLevelUnclassified : SemanticColors.View.backgroundSecurityLevel
+            backgroundColor = isUpdatedCallingUI ? .accent() : SemanticColors.View.backgroundSecurityLevel
             iconImageView.setIcon(.exclamationMarkCircle, size: .tiny, color: SemanticColors.Icon.foregroundCheckMarkSelected)
             topBorder.backgroundColor = isUpdatedCallingUI ? .clear : SemanticColors.View.backgroundSeparatorCell
 
