@@ -26,7 +26,7 @@ class SettingsPropertyTextValueCellDescriptor2: SettingsPropertyCellDescriptorTy
     static let cellType: SettingsTableCellProtocol.Type = SettingsInfoCell.self
 
     var title: String {
-        return "Something"
+        return settingsProperty.propertyName.settingsPropertyLabelText
     }
     var visible: Bool = true
     let identifier: String?
@@ -39,10 +39,15 @@ class SettingsPropertyTextValueCellDescriptor2: SettingsPropertyCellDescriptorTy
     }
 
     func featureCell(_ cell: SettingsCellType) {
-//        cell.titleText = title
-        guard let textCell = cell as? SettingsTextCell else { return }
-        textCell.textInput.text = "AAAAA"
-//
+        //cell.titleText = title
+        guard let textCell = cell as? SettingsInfoCell else { return }
+        textCell.title = title
+        textCell.isAccessoryIconHidden = !settingsProperty.enabled
+        textCell.textInput.isEnabled = settingsProperty.enabled
+        if let stringValue = settingsProperty.rawValue() as? String {
+            textCell.value = stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+
 //        if let stringValue = settingsProperty.rawValue() as? String {
 //            textCell.textInput.text = stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
 //        }

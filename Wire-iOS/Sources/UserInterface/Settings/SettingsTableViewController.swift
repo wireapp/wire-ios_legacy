@@ -248,6 +248,14 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCellProtocol {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
+            if let cellIt = cell as? SettingsInfoCell {
+                cellIt.textDidChanges = {
+                    UIView.animate(withDuration: 0.3) {
+                        self.tableView.beginUpdates()
+                        self.tableView.endUpdates()
+                    }
+                }
+            }
             return cell
         }
 
@@ -260,8 +268,6 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
         property.select(SettingsPropertyValue.none)
         tableView.deselectRow(at: indexPath, animated: false)
-        tableView.beginUpdates()
-        tableView.endUpdates()
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

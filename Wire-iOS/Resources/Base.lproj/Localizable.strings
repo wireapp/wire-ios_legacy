@@ -994,6 +994,7 @@
 "self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Name";
+"self.settings.account_section.profile_name.title" = "Profile name";
 "self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
 "self.settings.account_section.handle.title" = "Username";

@@ -4642,6 +4642,10 @@ internal enum L10n {
               internal static let copyLink = L10n.tr("Localizable", "self.settings.account_section.profile_link.actions.copy_link", fallback: "Copy Profile Link")
             }
           }
+          internal enum ProfileName {
+            /// Profile name
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.profile_name.title", fallback: "Profile name")
+          }
           internal enum Team {
             /// Team
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.team.title", fallback: "Team")

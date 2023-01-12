@@ -223,7 +223,7 @@ extension SettingsPropertyName {
 
         // Profile
         case .profileName:
-            return Account.Name.title
+            return Account.ProfileName.title
         case .handle:
             return Account.Handle.title
         case .email:

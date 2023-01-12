@@ -401,99 +401,204 @@ final class SettingsTextCell: SettingsTableCell,
     }
 }
 
-class SettingsInfoCell: SettingsTableCell, UITextFieldDelegate {
+// TODO move to separate file
+final class SettingsInfoCell: SettingsTableCell {
 
-//    // MARK: Data
-//    var tweet: Tweet? {
-//        didSet {
-//            guard let tweet = tweet else {
-//                tweetText.text = nil
-//                return
-//            }
-//
-//            tweetText.text = tweet.text
-//
-//            if let mediaURL = tweet.mediaURL {
-//                KingfisherManager.shared.retrieveImage(with: mediaURL) { result in
-//                    switch result {
-//                    case .success(let value):
-//                        self.mediaView.image = value.image
-//                        let aspectRatio = self.vStack.frame.width / value.image.size.width
-//                        // UPDATING THE CONSTRAINT TO MATCH THE IMAGE HEIGHT HERE!!!
-//                        self.mediaViewHeightAnchor.constant = value.image.size.height * aspectRatio
-//                    case .failure(let error):
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }
-//    }
+    // MARK: - Properties
 
+    private let titleLabel: DynamicFontLabel = {
+        return DynamicFontLabel(fontSpec: .accountTeam, color: SemanticColors.Label.textUserPropertyCellName)
+    }()
+
+    var textInput: TextFieldWithPadding = {
+        return TextFieldWithPadding(frame: .zero)
+    }()
+
+    private let clearButton: IconButton = {
+        return IconButton(style: .default)
+    }()
+
+    private let subtitleLabel: DynamicFontLabel = {
+        return DynamicFontLabel(fontSpec: .mediumRegularFont, color: SemanticColors.Label.textUserPropertyCellName)
+    }()
+
+    private lazy var contentStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [textInput, subtitleLabel])
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 8
+        stack.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        return stack
+    }()
+
+    private let accessoryIconView: UIImageView = {
+        let iconView = UIImageView()
+        iconView.clipsToBounds = true
+        iconView.contentMode = .scaleAspectFill
+        iconView.setTemplateIcon(.pencil, size: .tiny)
+        iconView.tintColor = SemanticColors.Icon.foregroundDefault
+
+        return iconView
+    }()
+
+    // TODO Magic numbers
+    private lazy var textInputHeightConstraint: NSLayoutConstraint = textInput.heightAnchor.constraint(equalToConstant: 24)
+    private lazy var bottomTitleConstraint: NSLayoutConstraint = titleLabel.bottomAnchor.constraint(equalTo: contentStackView.topAnchor, constant: -8)
+    private lazy var bottomStackConstraint: NSLayoutConstraint = contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6)
+
+    // TODO clean
+    var textDidChanges: (() -> Void)? = nil
+
+    // TODO clean
     private var isEditingTextField: Bool = false {
         didSet {
             if isEditingTextField {
                 textInput.layer.borderWidth = 1
                 textInput.layer.borderColor = UIColor.accent().cgColor
                 textInput.layer.cornerRadius = 12
-                backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
-                titleLabel.textColor = .accent()
-                mediaViewHeightAnchor.constant = 48
+                UIView.animate(withDuration: 0.3) {
+                    self.backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
+                    self.titleLabel.textColor = .accent()
+                    self.textInput.font = FontSpec.body.font!
+                    self.clearButton.isHidden = false
+                    self.subtitleLabel.isHidden = false
+                    self.isAccessoryIconHidden = true
+                    self.subtitleLabel.text = "At least 2 characters. a-z, 0-9, and '.','-','_' only."
+                }
+                textInputHeightConstraint.constant = 48
+                bottomTitleConstraint.constant = -4
+                bottomStackConstraint.constant = -12
             } else {
                 textInput.layer.borderWidth = 0
-                backgroundView?.backgroundColor = SemanticColors.View.backgroundUserCell
-                titleLabel.textColor = SemanticColors.Label.textUserPropertyCellName
-                mediaViewHeightAnchor.constant = 24
+                UIView.animate(withDuration: 0.3) {
+                    self.backgroundView?.backgroundColor = SemanticColors.View.backgroundUserCell
+                    self.titleLabel.textColor = SemanticColors.Label.textUserPropertyCellName
+                    self.textInput.font = FontSpec.bodyTwoSemibold.font!
+                    self.clearButton.isHidden = true
+                    self.subtitleLabel.isHidden = true
+                    self.isAccessoryIconHidden = false
+                    self.subtitleLabel.text = ""
+
+                }
+                textInputHeightConstraint.constant = 24
+                bottomTitleConstraint.constant = -8
+                bottomStackConstraint.constant = -6
             }
+            textDidChanges?()
+
         }
     }
 
-    private let titleLabel = DynamicFontLabel(text: "Profile name",
-                                              fontSpec: .accountTeam,
-                                              color: SemanticColors.Label.textUserPropertyCellName)
+    var isAccessoryIconHidden: Bool = false {
+        didSet {
+            accessoryIconView.isHidden = isAccessoryIconHidden
+        }
+    }
 
-    private lazy var mediaViewHeightAnchor = textInput.heightAnchor.constraint(equalToConstant: 24)
-    let textInput: SimpleTextField = {
-        let textInput = SimpleTextField()
+    var title: String = "" {
+        didSet {
+            titleLabel.text = title
+            textInput.placeholder = title
+        }
+    }
+
+    var value: String = "" {
+        didSet {
+            textInput.text = value
+        }
+    }
+
+    override func setup() {
+        super.setup()
+
+        backgroundView = UIView()
+        backgroundView?.backgroundColor = SemanticColors.View.backgroundUserCell
+
+        textInput = TextFieldWithPadding(frame: .zero)
         textInput.textColor = SemanticColors.Label.textDefault
-        textInput.font = FontSpec.body.font!
-        textInput.text = "@jaquelineolaho"
-        return textInput
-    }()
+        textInput.backgroundColor = SemanticColors.View.backgroundDefaultWhite
+        textInput.font = FontSpec.bodyTwoSemibold.font!
 
-    private lazy var vStack: UIStackView = {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        let stack = UIStackView(arrangedSubviews: [titleLabel, textInput])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.alignment = .leading
-        stack.spacing = 8
-        stack.setContentCompressionResistancePriority(.required, for: .vertical)
-        return stack
-    }()
-
-    // MARK: Overrides
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        loadView()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func prepareForReuse() {
-        mediaViewHeightAnchor.constant = 24
-    }
-
-    private func loadView() {
         textInput.delegate = self
-        contentView.addSubview(vStack)
-        vStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
-        vStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        vStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        vStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
+        textInput.autocorrectionType = .no
+        textInput.spellCheckingType = .no
 
-        NSLayoutConstraint.activate([mediaViewHeightAnchor])
+        clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
+        clearButton.setIconColor(SemanticColors.Icon.foregroundDefaultBlack, for: .normal)
+        clearButton.isHidden = true
+        clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
+        clearButton.accessibilityIdentifier = "clear button"
+        clearButton.accessibilityLabel = L10n.Accessibility.SearchView.ClearButton.description
+
+        subtitleLabel.isHidden = true
+
+        [titleLabel, contentStackView, clearButton, accessoryIconView].forEach {
+            contentView.addSubview($0)
+        }
+
+        createConstraints()
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
+        contentView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    private func createConstraints() {
+        [titleLabel, contentStackView, clearButton, accessoryIconView].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            bottomTitleConstraint,
+
+            textInput.trailingAnchor.constraint(equalTo: contentStackView.trailingAnchor),
+            textInput.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor),
+            textInputHeightConstraint,
+
+            clearButton.widthAnchor.constraint(equalToConstant: 16),
+            clearButton.heightAnchor.constraint(equalTo: clearButton.widthAnchor),
+            clearButton.centerYAnchor.constraint(equalTo: textInput.centerYAnchor),
+            clearButton.trailingAnchor.constraint(equalTo: textInput.trailingAnchor, constant: -16),
+
+            accessoryIconView.widthAnchor.constraint(equalTo: accessoryIconView.heightAnchor),
+            accessoryIconView.heightAnchor.constraint(equalToConstant: 16),
+            accessoryIconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            accessoryIconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            bottomStackConstraint
+        ])
+    }
+
+    // MARK: - Actions
+
+    @objc
+    private func onCellSelected(_ sender: AnyObject!) {
+        if !textInput.isFirstResponder {
+            textInput.becomeFirstResponder()
+        }
+    }
+
+    @objc
+    private func onClearButtonPressed() {
+        textInput.text = ""
+    }
+
+}
+
+// MARK: - UITextFieldDelegate
+
+extension SettingsInfoCell: UITextFieldDelegate {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.rangeOfCharacter(from: CharacterSet.newlines) != .none {
+            textField.resignFirstResponder()
+            return false
+        } else {
+            return true
+        }
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -503,163 +608,27 @@ class SettingsInfoCell: SettingsTableCell, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         isEditingTextField = false
     }
+
 }
 
-final class SettingsInfoCell1: SettingsTableCell,/* CellConfigurationConfigurable,*/ UITextFieldDelegate {
+class TextFieldWithPadding: UITextField {
+    var textPadding = UIEdgeInsets(
+        top: 0,
+        left: 16,
+        bottom: 0,
+        right: 32
+    )
 
-    private var contentStackView: UIStackView!
-    private var textInput: SimpleTextField! //= SimpleTextField()
-    private let titleLabel = DynamicFontLabel(text: "Profile name",
-                                              fontSpec: .accountTeam,
-                                              color: SemanticColors.Label.textUserPropertyCellName)
-    lazy var textInputHeight: NSLayoutConstraint = textInput.heightAnchor.constraint(equalToConstant: 24)
-
-   // private let subtitleLabel = UILabel()
-
-    private var isEditingTextField: Bool = false {
-        didSet {
-            if isEditingTextField {
-                textInput.layer.borderWidth = 1
-                textInput.layer.borderColor = UIColor.accent().cgColor
-                textInput.layer.cornerRadius = 12
-                backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
-                titleLabel.textColor = .accent()
-                textInputHeight.constant = 48
-//                    self.textInputHeight.isActive = true
-            } else {
-                textInput.layer.borderWidth = 0
-                backgroundView?.backgroundColor = SemanticColors.View.backgroundUserCell
-                titleLabel.textColor = SemanticColors.Label.textUserPropertyCellName
-                textInputHeight.constant = 24
-//                    self.textInputHeight.isActive = false
-            }
-            //self.layoutIfNeeded()
-           // setNeedsLayout()
-            self.invalidateIntrinsicContentSize()
-        }
-    }
-    override func prepareForReuse() {
-        super.prepareForReuse()
-
-        textInputHeight.constant = 24
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
     }
 
-    override func setup() {
-        super.setup()
-
-        selectionStyle = .none
-        backgroundView = UIView()
-//        selectedBackgroundView = UIView()
-//        backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
-
-//        textInput = TailEditingTextField(frame: .zero)
-//        textInput = UITextField(frame: .zero)
-        textInput = SimpleTextField()
-       // textInputHeight.priority = .defaultHigh
-        //textInput.delegate = self
-        textInput.textColor = SemanticColors.Label.textDefault
-//        textInput.font = FontSpec.bodyTwoSemibold.font!
-        textInput.font = FontSpec.body.font!
-        //  textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
-        //textInput.isAccessibilityElement = true
-        textInput.placeholder = "Something"
-//        textInput.text = "Jaqueline Olaho"
-        textInput.text = "@jaquelineolaho"
-
-       // textInput.returnKeyType = .done
-        textInput.textFieldDelegate = self
-
-//        contentStackView = UIStackView(arrangedSubviews: [titleLabel, textInput])
-//        contentStackView.axis = .vertical
-//        contentStackView.distribution = .fill
-//        contentStackView.alignment = .leading
-//        contentStackView.spacing = 10
-
-//        contentView.addSubview(contentStackView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(textInput)
-
-        setContentCompressionResistancePriority(.required, for: .vertical)
-        createConstraints()
-
-        //        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
-//        contentView.addGestureRecognizer(tapGestureRecognizer)
-
-    }
-
-    private func createConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        textInput.translatesAutoresizingMaskIntoConstraints = false
-//        titleLabel.setContentHuggingPriority(.required, for: .vertical)
-//        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            titleLabel.bottomAnchor.constraint(equalTo: textInput.topAnchor, constant: -4),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-
-            //textInput.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            textInput.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            textInput.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            textInput.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            textInputHeight
-        ])
-
-//        contentStackView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-//            contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
-//            contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-//            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4)
-//        ])
-
-    }
-
-//    @objc
-//    func onCellSelected(_ sender: AnyObject!) {
-//        if !textInput.isFirstResponder {
-//            textInput.becomeFirstResponder()
-//        }
-//    }
-
-    // MARK: - UITextFieldDelegate
-
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if string.rangeOfCharacter(from: CharacterSet.newlines) != .none {
-//            textField.resignFirstResponder()
-//            return false
-//        } else {
-//            return true
-//        }
-//    }
-
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        return true
-//    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if let text = textInput.text {
-//            descriptor?.select(SettingsPropertyValue.string(value: text))
-//        }
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
     }
 }
-
-extension SettingsInfoCell1: SimpleTextFieldDelegate {
-    func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
-
-    }
-    func textFieldReturnPressed(_ textField: SimpleTextField) {
-
-    }
-    func textFieldDidEndEditing(_ textField: SimpleTextField) {
-        isEditingTextField = false
-    }
-    func textFieldDidBeginEditing(_ textField: SimpleTextField) {
-        isEditingTextField = true
-    }
-}
-
 
 final class SettingsStaticTextTableCell: SettingsTableCell {
 
