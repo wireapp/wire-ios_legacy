@@ -28,6 +28,11 @@ protocol ObservableSessionManager: SessionManagerType {
 
     var loginDelegate: LoginDelegate? { get set }
 
+    func markNetworkSessionsAsReady(_ ready: Bool)
+    func saveProxyCredentials(username: String, password: String)
+    func removeProxyCredentials()
+    func resolveAPIVersion(completion: @escaping (Error?) -> Void) // TODO: maybe move this to other protocol
+
     var activeUnauthenticatedSession: UnauthenticatedSession { get }
 
     /**

@@ -5,8 +5,8 @@ github "wireapp/Down" "2.3.3"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 16.0.0
-github "wireapp/wire-ios-notification-engine" ~> 15.0.0
-github "wireapp/wire-ios-share-engine" ~> 255.0.0
-github "wireapp/wire-ios-sync-engine" ~> 436.0.0
+github "wireapp/wire-ios-notification-engine" ~> 16.0.0
+github "wireapp/wire-ios-share-engine" ~> 256.0.0
+github "wireapp/wire-ios-sync-engine" ~> 437.0.0
 github "wireapp/wire-ios-ziphy" ~> 19.0.0
 github "DataDog/dd-sdk-ios" ~> 1.14.0

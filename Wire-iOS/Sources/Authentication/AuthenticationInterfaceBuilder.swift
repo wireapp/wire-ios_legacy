@@ -34,6 +34,12 @@ class AuthenticationInterfaceBuilder {
     /// The object to use when checking for features.
     let featureProvider: AuthenticationFeatureProvider
 
+    var backendEnvironmentProvider: () -> BackendEnvironmentProvider
+
+    var backendEnvironment: BackendEnvironmentProvider {
+        return backendEnvironmentProvider()
+    }
+
     // MARK: - Initialization
 
     /**
@@ -41,8 +47,10 @@ class AuthenticationInterfaceBuilder {
      * - parameter featureProvider: The object to use when checking for features
      */
 
-    init(featureProvider: AuthenticationFeatureProvider) {
+    init(featureProvider: AuthenticationFeatureProvider,
+         backendEnvironmentProvider: @escaping () -> BackendEnvironmentProvider = { BackendEnvironment.shared }) {
         self.featureProvider = featureProvider
+        self.backendEnvironmentProvider = backendEnvironmentProvider
     }
 
     // MARK: - Interface Building
@@ -61,7 +69,7 @@ class AuthenticationInterfaceBuilder {
     func makeViewController(for step: AuthenticationFlowStep) -> AuthenticationStepViewController? {
         switch step {
         case .landingScreen:
-            let landingViewController = LandingViewController()
+            let landingViewController = LandingViewController(backendEnvironmentProvider: backendEnvironmentProvider)
             landingViewController.configure(with: featureProvider)
             return landingViewController
 
@@ -210,7 +218,7 @@ class AuthenticationInterfaceBuilder {
      */
 
     private func makeCredentialsViewController(for flowType: AuthenticationCredentialsViewController.FlowType) -> AuthenticationCredentialsViewController {
-        let viewController = AuthenticationCredentialsViewController(flowType: flowType)
+        let viewController = AuthenticationCredentialsViewController(flowType: flowType, backendEnvironmentProvider: backendEnvironmentProvider)
         viewController.configure(with: featureProvider)
         return viewController
     }

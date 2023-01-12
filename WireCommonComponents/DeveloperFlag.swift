@@ -28,7 +28,6 @@ public enum DeveloperFlag: String, CaseIterable {
     case nseDebugging
     case nseDebugEntryPoint
     case useDevelopmentBackendAPI
-    case datadogEnabled
 
     public var description: String {
         switch self {
@@ -49,8 +48,6 @@ public enum DeveloperFlag: String, CaseIterable {
 
         case .useDevelopmentBackendAPI:
             return "Turn on to use the developement backend API version instead of the latest production API version."
-        case .datadogEnabled:
-            return "Turn on to use the use Datadog logs in extension or app."
         }
     }
 
