@@ -56,7 +56,7 @@ public class DatadogWrapper {
         Datadog.initialize(
             appContext: .init(),
             trackingConsent: .granted,
-            callInfoConfiguration: Datadog.Configuration
+            configuration: Datadog.Configuration
                 .builderUsing(
                     rumApplicationID: appID,
                     clientToken: clientToken,
@@ -87,7 +87,7 @@ public class DatadogWrapper {
     public func startMonitoring() {
         Global.rum = RUMMonitor.initialize()
         Global.sharedTracer = Tracer.initialize(
-            callInfoConfiguration: Tracer.Configuration(
+            configuration: Tracer.Configuration(
               sendNetworkInfo: true
             )
           )
