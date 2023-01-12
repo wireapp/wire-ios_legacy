@@ -47,7 +47,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         default:
             offset = UIDevice.current.orientation.isLandscape ? 128.0 : 112.0
         }
-        if case .established(_) = callInfoConfiguration?.state, let configuration = callInfoConfiguration, configuration.classification != .none {
+        if case .established = callInfoConfiguration?.state, let configuration = callInfoConfiguration, configuration.classification != .none {
             offset += SecurityLevelView.SecurityLevelViewHeight
         }
         return offset
@@ -172,7 +172,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController.configurationObserver = self
         visibleVoiceChannelViewController.delegate = self
         callingActionsInfoViewController.setCallingActionsViewDelegate(actionsDelegate: visibleVoiceChannelViewController)
-//        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
         callingActionsInfoViewController.participants = voiceChannel.getParticipantsList()
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
     }
@@ -180,8 +179,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     override func bottomSheetChangedOffset(fullHeightPercentage: CGFloat) {
         overlay.alpha = fullHeightPercentage * 0.7
     }
-
-    //----------------------------------------------
 
     private func updateState() {
         switch callInfoConfiguration?.state {
