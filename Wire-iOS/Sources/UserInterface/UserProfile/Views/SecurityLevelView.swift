@@ -29,6 +29,9 @@ extension ZMUserSession: ClassificationProviding {}
 
 final class SecurityLevelView: UIView {
     private let securityLevelLabel = UILabel()
+    private let iconImageView = UIImageView()
+    private let topBorder = UIView()
+    private let bottomBorder = UIView()
     typealias SecurityLocalization = L10n.Localizable.SecurityClassification
 
     init() {
@@ -55,21 +58,27 @@ final class SecurityLevelView: UIView {
             isHidden = true
             return
         }
+        let isUpdatedCallingUI = DeveloperFlag.isUpdatedCallingUI
 
         switch classification {
 
         case .classified:
-            securityLevelLabel.textColor = SemanticColors.Label.textDefault
-            backgroundColor = SemanticColors.View.backgroundSecurityLevel
+            securityLevelLabel.textColor = isUpdatedCallingUI ? SemanticColors.Label.textSecurityLevelClassified : SemanticColors.Label.textDefault
+            backgroundColor = isUpdatedCallingUI ? SemanticColors.View.backgroundSecurityLevelClassified : SemanticColors.View.backgroundSecurityLevel
+            iconImageView.setIcon(.checkmark, size: .tiny, color: SemanticColors.Icon.backgroundCheckMarkSelected)
+            topBorder.backgroundColor = isUpdatedCallingUI ? SemanticColors.View.borderSecurityLevelClassified : SemanticColors.View.backgroundSeparatorCell
 
         case .notClassified:
-            securityLevelLabel.textColor = SemanticColors.Label.textDefault
-            backgroundColor = SemanticColors.View.backgroundSecurityLevel
+            securityLevelLabel.textColor = isUpdatedCallingUI ? SemanticColors.Label.textDefaultWhite : SemanticColors.Label.textDefault
+            backgroundColor = isUpdatedCallingUI ? SemanticColors.View.backgroundSecurityLevelUnclassified : SemanticColors.View.backgroundSecurityLevel
+            iconImageView.setIcon(.exclamationMarkCircle, size: .tiny, color: SemanticColors.Icon.foregroundCheckMarkSelected)
+            topBorder.backgroundColor = isUpdatedCallingUI ? .clear : SemanticColors.View.backgroundSeparatorCell
 
         default:
             isHidden = true
             assertionFailure("should not reach this point")
         }
+        bottomBorder.backgroundColor = topBorder.backgroundColor
 
         let securityLevelText = SecurityLocalization.securityLevel
         securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
@@ -81,6 +90,8 @@ final class SecurityLevelView: UIView {
         with otherUsers: [UserType],
         provider: ClassificationProviding? = ZMUserSession.shared()
     ) {
+
+//        let classification: SecurityClassification = .classified //qwer £!@#$%^&
         guard let classification = provider?.classification(with: otherUsers) else {
             isHidden = true
             return
@@ -93,18 +104,26 @@ final class SecurityLevelView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         securityLevelLabel.textAlignment = .center
-        self.addBorder(for: .top)
-        self.addBorder(for: .bottom)
-        addSubview(securityLevelLabel)
+        iconImageView.isHidden = !DeveloperFlag.isUpdatedCallingUI
+        iconImageView.contentMode = .scaleAspectFit
+        [topBorder, securityLevelLabel, iconImageView, bottomBorder].forEach { addSubview($0) }
+
+        topBorder.addConstraintsForBorder(for: .top, borderWidth: 1.0, to: self)
+        bottomBorder.addConstraintsForBorder(for: .bottom, borderWidth: 1.0, to: self)
     }
 
     private func createConstraints() {
-        [securityLevelLabel].prepareForLayout()
-
-        securityLevelLabel.fitIn(view: self)
+        [securityLevelLabel, iconImageView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24)
+          securityLevelLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+          securityLevelLabel.topAnchor.constraint(equalTo: topAnchor),
+          securityLevelLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24),
+          iconImageView.widthAnchor.constraint(equalToConstant: 11.0),
+          iconImageView.heightAnchor.constraint(equalToConstant: 11.0),
+          iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+          iconImageView.trailingAnchor.constraint(equalTo: securityLevelLabel.leadingAnchor, constant: -10.0)
         ])
     }
 }
@@ -115,27 +134,27 @@ private extension SecurityClassification {
 
     var levelText: String? {
         switch self {
-        case .none:
-            return nil
-
         case .classified:
             return SecurityClassificationLevel.bund
 
         case .notClassified:
             return L10n.Localizable.SecurityClassification.Level.notClassified
+
+        default:
+            return nil
         }
     }
 
     var accessibilitySuffix: String {
         switch self {
-        case .none:
-            return ""
-
         case .classified:
             return "Classified"
 
         case .notClassified:
             return "Unclassified"
+
+        default:
+            return ""
         }
     }
 }

@@ -36,6 +36,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     private let headerBar = CallHeaderBar()
     private let overlay = PassThroughOpaqueView()
     private var callStateObserverToken: Any?
+    private weak var callDurationTimer: Timer?
+    private var callInfoConfiguration: CallInfoConfiguration?
 
     var bottomSheetMinimalOffset: CGFloat {
         switch voiceChannel.state {
@@ -76,6 +78,10 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        stopCallDurationTimer()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -88,7 +94,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     private func setupViews() {
         view.backgroundColor = SemanticColors.View.backgroundDefault
-        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
+//        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
         overlay.alpha = 0.0
         overlay.backgroundColor = SemanticColors.View.backgroundOverlay
@@ -102,7 +108,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerBar.topAnchor.constraint(equalTo: view.safeTopAnchor),
-            headerBar.safeBottomAnchor.constraint(equalTo: view.safeTopAnchor, constant: 45.0),
+//            headerBar.safeBottomAnchor.constraint(equalTo: view.safeTopAnchor, constant: 45.0),
             headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required),
             overlay.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             overlay.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -163,7 +169,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         visibleVoiceChannelViewController.configurationObserver = self
         visibleVoiceChannelViewController.delegate = self
         callingActionsInfoViewController.setCallingActionsViewDelegate(actionsDelegate: visibleVoiceChannelViewController)
-        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
+//        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
         callingActionsInfoViewController.participants = voiceChannel.getParticipantsList()
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
     }
@@ -171,10 +177,35 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     override func bottomSheetChangedOffset(fullHeightPercentage: CGFloat) {
         overlay.alpha = fullHeightPercentage * 0.7
     }
+
+    //----------------------------------------------
+
+    private func updateState() {
+        switch callInfoConfiguration?.state {
+            case .established: startCallDurationTimer()
+            case .terminating: stopCallDurationTimer()
+            default: break
+        }
+    }
+
+    private func startCallDurationTimer() {
+        stopCallDurationTimer()
+        guard let configuration = callInfoConfiguration else { return }
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [headerBar, callInfoConfiguration] _ in
+            headerBar.updateConfiguration(configuration: configuration)
+        }
+    }
+
+    private func stopCallDurationTimer() {
+        callDurationTimer?.invalidate()
+        callDurationTimer = nil
+    }
 }
 
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
+        callInfoConfiguration = configuration
+        updateState()
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
         panGesture.isEnabled = !configuration.state.isIncoming
         guard self.configuration.initialOffset != bottomSheetMinimalOffset else { return }
@@ -204,21 +235,6 @@ extension CallingBottomSheetViewController: CallViewControllerDelegate {
 
     @objc func hideCallView() {
         delegate?.activeCallViewControllerDidDisappear(self, for: voiceChannel.conversation)
-    }
-}
-
-extension CallingBottomSheetViewController: BottomSheetScrollingDelegate {
-    var isBottomSheetExpanded: Bool {
-        return state == .full
-    }
-
-    func toggleBottomSheetVisibility() {
-        switch state {
-        case .full:
-            hideBottomSheet(animated: false)
-        case .initial:
-            showBottomSheet(animated: false)
-        }
     }
 }
 
