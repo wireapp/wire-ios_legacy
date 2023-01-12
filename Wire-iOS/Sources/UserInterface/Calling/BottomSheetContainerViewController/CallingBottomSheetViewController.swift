@@ -47,7 +47,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         default:
             offset = UIDevice.current.orientation.isLandscape ? 128.0 : 112.0
         }
-        
         if case .established(_) = callInfoConfiguration?.state, let configuration = callInfoConfiguration, configuration.classification != .none {
             offset += SecurityLevelView.SecurityLevelViewHeight
         }
@@ -100,7 +99,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     private func setupViews() {
         view.backgroundColor = SemanticColors.View.backgroundDefault
-//        headerBar.setTitle(title: voiceChannel.conversation?.displayName ?? "")
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
         overlay.alpha = 0.0
         overlay.backgroundColor = SemanticColors.View.backgroundOverlay
@@ -114,7 +112,6 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerBar.topAnchor.constraint(equalTo: view.safeTopAnchor),
-//            headerBar.safeBottomAnchor.constraint(equalTo: view.safeTopAnchor, constant: 45.0),
             headerBar.bottomAnchor.constraint(equalTo: visibleVoiceChannelViewController.view.topAnchor).withPriority(.required),
             overlay.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             overlay.trailingAnchor.constraint(equalTo: view.trailingAnchor),
