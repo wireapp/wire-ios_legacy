@@ -31,7 +31,13 @@ final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFix
         accentColor = .strongBlue
 
         featureProvider = MockAuthenticationFeatureProvider()
-        builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
+        builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider, backendEnvironmentProvider: {
+            let backendEnvironmentProvider = MockEnvironment()
+            let proxy: FakeProxySettings? = nil
+            backendEnvironmentProvider.proxy = proxy
+            backendEnvironmentProvider.environmentType = EnvironmentTypeProvider(environmentType: .staging)
+            return backendEnvironmentProvider
+        })
     }
 
     override func tearDown() {
@@ -83,11 +89,39 @@ final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFix
 
     // MARK: - Login
 
-    func testLoginScreen_Phone() {
+    func testLoginScreen_Phone() throws {
         runSnapshotTest(for: .provideCredentials(.phone, nil))
     }
 
     func testLoginScreen_Email() {
+        runSnapshotTest(for: .provideCredentials(.email, nil))
+    }
+
+    func testLoginScreen_Email_WithProxyAuthenticated() {
+        let backendEnvironmentProvider = MockEnvironment()
+        backendEnvironmentProvider.environmentType = EnvironmentTypeProvider(environmentType: .custom(url: URL(string: "https://api.example.org")!))
+        backendEnvironmentProvider.proxy = FakeProxySettings(host: "api.example.org", port: 1345, needsAuthentication: true)
+        backendEnvironmentProvider.backendURL = URL(string: "https://api.example.org")!
+        builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider, backendEnvironmentProvider: { backendEnvironmentProvider })
+        runSnapshotTest(for: .provideCredentials(.email, nil), customSize: .init(width: CGSize.iPhoneSize.iPhone4_7Inch.width, height: 1000)) // setting higher value for scrollview content
+    }
+
+    func testLoginScreen_Email_WithConfig() {
+        let backendEnvironmentProvider = MockEnvironment()
+        backendEnvironmentProvider.environmentType = EnvironmentTypeProvider(environmentType: .custom(url: URL(string: "https://api.example.org")!))
+        backendEnvironmentProvider.proxy = nil
+        backendEnvironmentProvider.backendURL = URL(string: "https://api.example.org")!
+        builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider, backendEnvironmentProvider: { backendEnvironmentProvider })
+        runSnapshotTest(for: .provideCredentials(.email, nil))
+    }
+
+    func testLoginScreen_Email_WithProxyNoAuthentication() {
+        let backendEnvironmentProvider = MockEnvironment()
+        backendEnvironmentProvider.environmentType = EnvironmentTypeProvider(environmentType: .custom(url: URL(string: "https://api.example.org")!))
+        backendEnvironmentProvider.proxy = FakeProxySettings(host: "api.example.org", port: 1345, needsAuthentication: false)
+        backendEnvironmentProvider.backendURL = URL(string: "https://api.example.org")!
+
+        builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider, backendEnvironmentProvider: { backendEnvironmentProvider })
         runSnapshotTest(for: .provideCredentials(.email, nil))
     }
 
@@ -163,7 +197,9 @@ final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFix
     private func runSnapshotTest(for step: AuthenticationFlowStep,
                                  file: StaticString = #file,
                                  testName: String = #function,
-                                 line: UInt = #line) {
+                                 line: UInt = #line,
+                                 customSize: CGSize? = nil
+        ) {
         if let viewController = builder.makeViewController(for: step) {
             if !step.needsInterface {
                 return XCTFail("An interface was generated but we didn't expect one.", file: file, line: line)
@@ -173,6 +209,7 @@ final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFix
             navigationController.viewControllers = [viewController]
 
             verify(matching: navigationController,
+                   customSize: customSize,
                    file: file,
                    testName: testName,
                    line: line)

@@ -67,10 +67,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
     private var contentCenter: NSLayoutConstraint!
-
+    private var contentCenterConstraintActivation: Bool
     private var rightItemAction: AuthenticationCoordinatorAction?
 
-    var contentCenterXAnchor: NSLayoutYAxisAnchor {
+    var contentCenterYAnchor: NSLayoutYAxisAnchor {
         return contentStack.centerYAnchor
     }
 
@@ -81,8 +81,9 @@ class AuthenticationStepController: AuthenticationStepViewController {
      * - parameter description: The description of the step interface.
      */
 
-    required init(description: AuthenticationStepDescription) {
+    required init(description: AuthenticationStepDescription, contentCenterConstraintActivation: Bool = true) {
         self.stepDescription = description
+        self.contentCenterConstraintActivation = contentCenterConstraintActivation
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -208,7 +209,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     }
 
     /**
-     * Updates the constrains for display in regular or compact latout.
+     * Updates the constrains for display in regular or compact layout.
      * - parameter isRegular: Whether the current size class is regular.
      */
 
@@ -222,7 +223,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         }
     }
 
-    private func createConstraints() {
+    func createConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         // Arrangement
@@ -238,24 +239,27 @@ class AuthenticationStepController: AuthenticationStepViewController {
             contentStack.wr_addCustomSpacing(16, after: headlineLabelContainer)
             contentStack.wr_addCustomSpacing(44, after: subtextLabelContainer)
         } else {
-            contentStack.wr_addCustomSpacing(44, after: headlineLabelContainer)
+            contentStack.wr_addCustomSpacing(contentCenterConstraintActivation ? 44 : 0, after: headlineLabelContainer)
         }
 
         contentStack.wr_addCustomSpacing(16, after: mainView)
         contentStack.wr_addCustomSpacing(16, after: errorLabelContainer)
 
         // Fixed Constraints
-        contentCenter = contentCenterXAnchor.constraint(equalTo: view.centerYAnchor)
+        contentCenter = contentCenterYAnchor.constraint(equalTo: view.centerYAnchor)
+        contentCenter.isActive = contentCenterConstraintActivation
+        contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = contentCenterConstraintActivation
+
+        let labelConstraint = headlineLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64)
+        labelConstraint.priority = .init(999)
 
         NSLayoutConstraint.activate([
             // contentStack
-            contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentCenter,
             contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 10),
             contentStack.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -10),
 
             // labels
-            headlineLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),
+            labelConstraint,
 
             // height
             mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: AuthenticationStepController.mainViewHeight),
@@ -331,7 +335,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         updateKeyboard(with: keyboardFrame)
     }
 
-    private func updateKeyboard(with keyboardFrame: CGRect) {
+    func updateKeyboard(with keyboardFrame: CGRect) {
         let minimumKeyboardSpacing: CGFloat = 24
         let currentOffset = abs(contentCenter.constant)
 

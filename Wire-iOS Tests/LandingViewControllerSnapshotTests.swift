@@ -18,9 +18,10 @@
 
 import XCTest
 import SnapshotTesting
+import WireTransport
 @testable import Wire
 
-final class LandingViewControllerSnapshotTests: XCTestCase {
+final class LandingViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: LandingViewController!
 
@@ -35,9 +36,42 @@ final class LandingViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForInitState() {
+        sut = LandingViewController()
         let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
         navigationController.setOverrideTraitCollection(UITraitCollection(horizontalSizeClass: .compact), forChild: sut)
         navigationController.viewControllers = [sut]
         verifyInAllDeviceSizes(matching: navigationController)
+    }
+
+    func testForBackendWithCustomURL() {
+        let customBackend = MockEnvironment()
+        customBackend.backendURL = URL(string: "https://api.example.org")!
+        customBackend.proxy = nil
+        customBackend.environmentType = EnvironmentTypeProvider(environmentType: .custom(url: URL(string: "https://api.example.org")!))
+        sut = LandingViewController(backendEnvironmentProvider: {
+            customBackend
+        })
+        let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
+        navigationController.setOverrideTraitCollection(UITraitCollection(horizontalSizeClass: .compact), forChild: sut)
+        navigationController.viewControllers = [sut]
+        verifyInAllDeviceSizes(matching: navigationController)
+    }
+
+}
+
+class FakeProxySettings: NSObject, ProxySettingsProvider {
+
+    var host: String
+    var port: Int
+    var needsAuthentication: Bool
+
+    internal init(host: String = "api.example.org", port: Int = 1345, needsAuthentication: Bool = false) {
+        self.host = host
+        self.port = port
+        self.needsAuthentication = needsAuthentication
+    }
+
+    func socks5Settings(proxyUsername: String?, proxyPassword: String?) -> [AnyHashable: Any]? {
+        return nil
     }
 }

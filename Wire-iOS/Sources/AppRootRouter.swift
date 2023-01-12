@@ -58,7 +58,8 @@ public class AppRootRouter: NSObject {
     init(viewController: RootViewController,
          navigator: NavigatorProtocol,
          sessionManager: SessionManager,
-         appStateCalculator: AppStateCalculator) {
+         appStateCalculator: AppStateCalculator
+    ) {
         self.rootViewController = viewController
         self.navigator = navigator
         self.sessionManager = sessionManager
@@ -141,7 +142,7 @@ public class AppRootRouter: NSObject {
 
     // MARK: - Transition
 
-    /// A queue on which we disspatch app state transitions.
+    /// A queue on which we dispatch app state transitions.
 
     private let appStateTransitionQueue = DispatchQueue(label: "AppRootRouter.appStateTransitionQueue")
 
@@ -276,8 +277,11 @@ extension AppRootRouter {
     }
 
     private func showDatabaseLoadingFailure(completion: @escaping () -> Void) {
-        let blockerViewController = BlockerViewController(context: .databaseFailure,
-                                                          sessionManager: sessionManager)
+        let blockerViewController = BlockerViewController(
+            context: .databaseFailure,
+            sessionManager: sessionManager
+        )
+
         rootViewController.set(childViewController: blockerViewController,
                                completion: completion)
     }
@@ -326,8 +330,10 @@ extension AppRootRouter {
         }
 
         authenticationCoordinator.delegate = appStateCalculator
-        authenticationCoordinator.startAuthentication(with: error,
-                                                      numberOfAccounts: SessionManager.numberOfAccounts)
+        authenticationCoordinator.startAuthentication(
+            with: error,
+            numberOfAccounts: SessionManager.numberOfAccounts
+        )
 
         rootViewController.set(childViewController: navigationController,
                                completion: completion)

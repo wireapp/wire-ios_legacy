@@ -34,6 +34,7 @@ final class NetworkConditionHelperTests: XCTestCase {
     }
 
     func testThatSharedInstanceReturnQualityTypeWifi() {
+        SessionManager.shared?.markNetworkSessionsAsReady(true)
         XCTAssertEqual(NetworkConditionHelper.shared.qualityType(), .typeWifi)
     }
 

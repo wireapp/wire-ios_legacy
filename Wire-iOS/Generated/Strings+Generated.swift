@@ -2396,6 +2396,16 @@ internal enum L10n {
         internal static let tooShort = L10n.tr("Localizable", "create_passcode.validation.too_short", fallback: "At least eight characters long")
       }
     }
+    internal enum Credentials {
+      internal enum GeneralError {
+        internal enum Alert {
+          /// These account credentials are incorrect. Please verify your details and try again.
+          internal static let message = L10n.tr("Localizable", "credentials.general-error.alert.message", fallback: "These account credentials are incorrect. Please verify your details and try again.")
+          /// Invalid Information
+          internal static let title = L10n.tr("Localizable", "credentials.general-error.alert.title", fallback: "Invalid Information")
+        }
+      }
+    }
     internal enum DarkTheme {
       internal enum Option {
         /// Dark
@@ -3025,6 +3035,24 @@ internal enum L10n {
       internal static let welcomeMessage = L10n.tr("Localizable", "landing.welcome_message", fallback: "Trying to create a Pro or Enterprise account for your business or organization?")
       /// Unfortunately, that's not possible in the app - once you have created your team, you can log in here
       internal static let welcomeSubmessage = L10n.tr("Localizable", "landing.welcome_submessage", fallback: "Unfortunately, that's not possible in the app - once you have created your team, you can log in here")
+      internal enum Alert {
+        internal enum CreateNewAccount {
+          internal enum NotSupported {
+            /// Creating a new personal account on an on-premise backend with proxy support is currently not possible.
+            internal static let message = L10n.tr("Localizable", "landing.alert.create-new-account.not-supported.message", fallback: "Creating a new personal account on an on-premise backend with proxy support is currently not possible.")
+            /// Not supported
+            internal static let title = L10n.tr("Localizable", "landing.alert.create-new-account.not-supported.title", fallback: "Not supported")
+          }
+        }
+        internal enum Sso {
+          internal enum NotSupported {
+            /// Log in via SSO on an on-premise backend with proxy support is currently not possible.
+            internal static let message = L10n.tr("Localizable", "landing.alert.sso.not-supported.message", fallback: "Log in via SSO on an on-premise backend with proxy support is currently not possible.")
+            /// Not supported
+            internal static let title = L10n.tr("Localizable", "landing.alert.sso.not-supported.title", fallback: "Not supported")
+          }
+        }
+      }
       internal enum CreateAccount {
         /// Chat with friends and family?
         internal static let infotitle = L10n.tr("Localizable", "landing.create_account.infotitle", fallback: "Chat with friends and family?")
@@ -3043,6 +3071,16 @@ internal enum L10n {
         /// Connected to "%@"
         internal static func title(_ p1: Any) -> String {
           return L10n.tr("Localizable", "landing.custom_backend.title", String(describing: p1), fallback: "Connected to \"%@\"")
+        }
+        internal enum Alert {
+          /// On-premise Backend
+          internal static let title = L10n.tr("Localizable", "landing.custom_backend.alert.title", fallback: "On-premise Backend")
+          internal enum Message {
+            /// Backend name:
+            internal static let backendName = L10n.tr("Localizable", "landing.custom_backend.alert.message.backend-name", fallback: "Backend name:")
+            /// Backend URL:
+            internal static let backendUrl = L10n.tr("Localizable", "landing.custom_backend.alert.message.backend-url", fallback: "Backend URL:")
+          }
         }
         internal enum MoreInfo {
           internal enum Alert {
@@ -3933,6 +3971,26 @@ internal enum L10n {
         /// 
         /// You can change this option in your account settings.
         internal static let body = L10n.tr("Localizable", "profile.read_receipts_memo.body", fallback: "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.")
+      }
+    }
+    internal enum ProxyCredentials {
+      /// This backend is configured to use the following proxy server: %@.
+      internal static func caption(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "proxy-credentials.caption", String(describing: p1), fallback: "This backend is configured to use the following proxy server: %@.")
+      }
+      /// Proxy Credentials
+      internal static let title = L10n.tr("Localizable", "proxy-credentials.title", fallback: "Proxy Credentials")
+      internal enum Password {
+        /// Proxy Password
+        internal static let label = L10n.tr("Localizable", "proxy-credentials.password.label", fallback: "Proxy Password")
+        /// Password
+        internal static let placeholder = L10n.tr("Localizable", "proxy-credentials.password.placeholder", fallback: "Password")
+      }
+      internal enum Username {
+        /// Proxy Email or Username
+        internal static let label = L10n.tr("Localizable", "proxy-credentials.username.label", fallback: "Proxy Email or Username")
+        /// Email or Username
+        internal static let placeholder = L10n.tr("Localizable", "proxy-credentials.username.placeholder", fallback: "Email or Username")
       }
     }
     internal enum Push {

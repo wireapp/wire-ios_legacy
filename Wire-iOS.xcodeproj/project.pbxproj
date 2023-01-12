@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		010497D52940DEAC0046124D /* DatadogWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010497D02940D8990046124D /* DatadogWrapper.swift */; };
 		010497E3294202D70046124D /* Datadog.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 010497D22940DE870046124D /* Datadog.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		010497D92940F4F40046124D /* TextFieldWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010497D62940F4F30046124D /* TextFieldWrapper.swift */; };
+		010497DA2940F4F40046124D /* CustomBackendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010497D72940F4F40046124D /* CustomBackendView.swift */; };
+		010497DB2940F4F40046124D /* ProxyCredentialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010497D82940F4F40046124D /* ProxyCredentialsViewController.swift */; };
+		010497E12940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010497E02940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift */; };
 		0139E49C296EE1E200E17ADE /* Datadog.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 010497D22940DE870046124D /* Datadog.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		060E5336257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */; };
 		061275DE26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */; };
@@ -35,6 +39,7 @@
 		065A5AF1279B0834002D4D1E /* WireNotificationEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; };
 		065A5AF3279B083B002D4D1E /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
 		065A5AF5279B0840002D4D1E /* WireSyncEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19D266657AF00E713FC /* WireSyncEngine.xcframework */; };
+		065B7E842861F48500EF9595 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
 		0665DF6E28E494360094482B /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665DF6D28E494360094482B /* ImagePickerManager.swift */; };
 		0665DF7028EE366D0094482B /* ZMConversationMessage+Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665DF6F28EE366D0094482B /* ZMConversationMessage+Announcement.swift */; };
 		0665DF7328F01D3B0094482B /* ProfileImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665DF7228F01D3B0094482B /* ProfileImagePickerManager.swift */; };
@@ -1864,6 +1869,10 @@
 /* Begin PBXFileReference section */
 		010497D02940D8990046124D /* DatadogWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatadogWrapper.swift; sourceTree = "<group>"; };
 		010497D22940DE870046124D /* Datadog.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Datadog.xcframework; path = Carthage/Build/Datadog.xcframework; sourceTree = "<group>"; };
+		010497D62940F4F30046124D /* TextFieldWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWrapper.swift; sourceTree = "<group>"; };
+		010497D72940F4F40046124D /* CustomBackendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBackendView.swift; sourceTree = "<group>"; };
+		010497D82940F4F40046124D /* ProxyCredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyCredentialsViewController.swift; sourceTree = "<group>"; };
+		010497E02940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationShowCustomBackendInfoHandler.swift; sourceTree = "<group>"; };
 		060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsPropertyFactory+AppLock.swift"; sourceTree = "<group>"; };
 		061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInteractionRestrictionTextView.swift; sourceTree = "<group>"; };
 		061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ReplaceTests.swift"; sourceTree = "<group>"; };
@@ -4596,6 +4605,9 @@
 			children = (
 				EF25F7DD1FC45F8E0040C3CC /* ValidatedTextField.swift */,
 				5E21344321CCED3B00273D0D /* PhoneNumberInputView.swift */,
+				010497D72940F4F40046124D /* CustomBackendView.swift */,
+				010497D82940F4F40046124D /* ProxyCredentialsViewController.swift */,
+				010497D62940F4F30046124D /* TextFieldWrapper.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4732,6 +4744,7 @@
 				5E21344E21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift */,
 				5E8FFC2321F086230052DF03 /* AuthenticationReauthenticateInputHandler.swift */,
 				5EFD914F21CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift */,
+				010497E02940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift */,
 				5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */,
 				5E8FFC1F21EF83FF0052DF03 /* AuthenticationAddEmailPasswordInputHandler.swift */,
 			);
@@ -8321,6 +8334,7 @@
 				A947673F23DF2414009C6AE9 /* UIViewController+isInsidePopover.swift in Sources */,
 				16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */,
 				5E21345321E39AE100273D0D /* EmailPasswordTextField.swift in Sources */,
+				010497DB2940F4F40046124D /* ProxyCredentialsViewController.swift in Sources */,
 				A9806A4023E4293400691DFE /* TokenFieldDelegate.swift in Sources */,
 				1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */,
 				EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */,
@@ -8789,6 +8803,7 @@
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
 				D5C34E8E203D75C5004A0986 /* ConversationGuestOptionsViewController.swift in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
+				010497DA2940F4F40046124D /* CustomBackendView.swift in Sources */,
 				A96131A023E81CC300194608 /* ParticipantDeviceHeaderView.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Registration.swift in Sources */,
@@ -8842,6 +8857,7 @@
 				067F605D28B8EC8000FCC334 /* DebugCommand.swift in Sources */,
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
 				5E4BC1C0218A0A4300A8682E /* UnknownMessageCellDescription.swift in Sources */,
+				010497D92940F4F40046124D /* TextFieldWrapper.swift in Sources */,
 				A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */,
 				BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */,
 				EF2E2F6F223BB6560038D7D9 /* ScreenCurtain.RootViewController.swift in Sources */,
@@ -9258,6 +9274,7 @@
 				7C440E7523472C5200D91B5F /* FolderCreationController.swift in Sources */,
 				A95C76C0240E87440047CD29 /* ConversationButtonMessageCell.swift in Sources */,
 				E514F2AB287DA58000D1A8AB /* SearchTextView.swift in Sources */,
+				010497E12940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift in Sources */,
 				EE430EC825C20D080056BDE3 /* ScreenCurtainDelegate.swift in Sources */,
 				D5168F552010F24C00F8222A /* TokenTextAttachment.swift in Sources */,
 				A955D3DA23F57F4600304851 /* ZMUserSession+RequestProxy.swift in Sources */,

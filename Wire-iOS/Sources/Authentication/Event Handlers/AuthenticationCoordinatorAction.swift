@@ -48,7 +48,7 @@ enum AuthenticationCoordinatorAction {
     case continueFlowWithLoginCode(String)
     case switchCredentialsType(AuthenticationCredentialsType)
     case startRegistrationFlow(UnverifiedCredentials)
-    case startLoginFlow(AuthenticationLoginRequest)
+    case startLoginFlow(AuthenticationLoginRequest, AuthenticationProxyCredentialsInput?)
     case setUserName(String)
     case setUserPassword(String)
     case updateBackendEnvironment(url: URL)
@@ -113,4 +113,29 @@ struct AuthenticationCoordinatorErrorAlert {
 enum AuthenticationLoginRequest {
     case email(address: String, password: String)
     case phoneNumber(String)
+}
+
+struct AuthenticationProxyCredentialsInput {
+    var username: String
+    var password: String
+}
+
+extension AuthenticationCoordinatorAction {
+
+    static var presentCustomBackendAlert: Self {
+        typealias Alert = L10n.Localizable.Landing.CustomBackend.Alert
+
+        let env = BackendEnvironment.shared
+
+        let info = [
+            Alert.Message.backendName,
+            env.title,
+            Alert.Message.backendUrl,
+            env.backendURL.absoluteString
+        ].joined(separator: "\n")
+
+        return .presentAlert(.init(title: Alert.title,
+                                            message: info,
+                                            actions: [.ok]))
+    }
 }
