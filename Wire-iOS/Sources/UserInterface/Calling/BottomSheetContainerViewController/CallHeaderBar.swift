@@ -19,7 +19,10 @@
 import UIKit
 
 class CallHeaderBar: UIView {
-    private let titleLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color:  SemanticColors.Label.textDefault)
+    private let verticalStackView = UIStackView(axis: .vertical)
+    private let titleLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color: SemanticColors.Label.textDefault)
+    private let timeLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: SemanticColors.Label.textDefault)
+    private let bitrateLabel = BitRateLabel(fontSpec: .smallRegularFont, color: SemanticColors.Label.textCollectionSecondary)
     let minimalizeButton = UIButton()
 
     init() {
@@ -38,25 +41,37 @@ class CallHeaderBar: UIView {
         minimalizeButton.tintColor = SemanticColors.View.backgroundDefaultBlack
         minimalizeButton.accessibilityLabel = L10n.Accessibility.Calling.HeaderBar.description
         [minimalizeButton, titleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        addSubview(titleLabel)
-        addSubview(minimalizeButton) 
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(minimalizeButton)
+        addSubview(verticalStackView)
         titleLabel.accessibilityTraits = .header
+        verticalStackView.alignment = .center
+        verticalStackView.spacing = 0.0
+        verticalStackView.addArrangedSubview(titleLabel)
+        verticalStackView.addArrangedSubview(timeLabel)
+        verticalStackView.addArrangedSubview(bitrateLabel)
+
+        bitrateLabel.accessibilityIdentifier = "bitrate-indicator"
+        timeLabel.accessibilityIdentifier = "time label"
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            verticalStackView.topAnchor.constraint(equalTo: safeTopAnchor, constant: 10.0),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6.0),
             minimalizeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
             minimalizeButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             minimalizeButton.widthAnchor.constraint(equalToConstant: 32.0),
             minimalizeButton.heightAnchor.constraint(equalToConstant: 32.0),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: minimalizeButton.trailingAnchor, constant: 6.0)
+            verticalStackView.leadingAnchor.constraint(greaterThanOrEqualTo: minimalizeButton.trailingAnchor, constant: 6.0)
         ])
     }
-    
 
-    func setTitle(title: String) {
-        titleLabel.text = title
+    func updateConfiguration(configuration: CallStatusViewInputType) {
+        titleLabel.text = configuration.title
+        timeLabel.text = configuration.displayString
+        bitrateLabel.isHidden = !configuration.shouldShowBitrateLabel
+        bitrateLabel.bitRateStatus = BitRateStatus(configuration.isConstantBitRate)
     }
 }

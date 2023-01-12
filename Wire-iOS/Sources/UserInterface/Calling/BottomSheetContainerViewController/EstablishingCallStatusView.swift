@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 import WireCommonComponents
 
 extension CallStatusViewState {
@@ -24,13 +25,13 @@ extension CallStatusViewState {
 
     var isIncoming: Bool {
         switch self {
-        case .ringingIncoming(_): return true
+        case .ringingIncoming: return true
         default: return false
         }
     }
     var requiresShowingStatusView: Bool {
         switch self {
-        case .none, .established(_): return false
+        case .none, .established: return false
         default: return true
         }
     }
@@ -56,6 +57,7 @@ class EstablishingCallStatusView: UIView {
     private let callStateLabel = DynamicFontLabel(text: L10n.Localizable.Voice.Calling.title,
                                                   fontSpec: .mediumRegularFont,
                                                   color: SemanticColors.Label.textDefault)
+    private let securityLevelView = SecurityLevelView()
     private let spaceView = UIView()
     private let profileImageView = UIImageView()
     private let stackView = UIStackView(axis: .vertical)
@@ -71,17 +73,17 @@ class EstablishingCallStatusView: UIView {
     }
 
     private func setupViews() {
-        [stackView, profileImageView, spaceView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [stackView, profileImageView, securityLevelView, spaceView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         stackView.alignment = .center
         stackView.spacing = 8
         addSubview(stackView)
-        [titleLabel, callStateLabel, spaceView, profileImageView].forEach(stackView.addArrangedSubview)
+        [titleLabel, callStateLabel, securityLevelView, spaceView, profileImageView].forEach(stackView.addArrangedSubview)
         profileImageView.layer.cornerRadius = 64.0
         profileImageView.layer.masksToBounds = true
     }
 
     private func setupConstraints() {
-        let spacerHeight = UIScreen.main.bounds.height / 9.0
+        let spacerHeight = (UIScreen.main.bounds.height / 9.0) - 20.0
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -89,10 +91,11 @@ class EstablishingCallStatusView: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileImageView.widthAnchor.constraint(equalToConstant: 128.0),
             profileImageView.heightAnchor.constraint(equalToConstant: 128.0),
-            spaceView.heightAnchor.constraint(equalToConstant: spacerHeight)
+            spaceView.heightAnchor.constraint(equalToConstant: spacerHeight),
+            securityLevelView.widthAnchor.constraint(equalTo: widthAnchor)
         ])
     }
-    
+
     func setTitle(title: String) {
         titleLabel.text = title
     }
@@ -107,6 +110,10 @@ class EstablishingCallStatusView: UIView {
 
     func setProfileImage(hidden: Bool) {
         profileImageView.isHidden = hidden
+    }
+
+    func configureSecurityLevelView(with otherUsers: [UserType]) {
+        securityLevelView.configure(with: otherUsers)
     }
 }
 
