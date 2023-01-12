@@ -28,6 +28,7 @@ protocol ClassificationProviding {
 extension ZMUserSession: ClassificationProviding {}
 
 final class SecurityLevelView: UIView {
+    static let SecurityLevelViewHeight = 24.0
     private let securityLevelLabel = UILabel()
     private let iconImageView = UIImageView()
     private let topBorder = UIView()
@@ -80,7 +81,7 @@ final class SecurityLevelView: UIView {
         }
         bottomBorder.backgroundColor = topBorder.backgroundColor
 
-        let securityLevelText = SecurityLocalization.securityLevel
+        let securityLevelText = isUpdatedCallingUI ? SecurityLocalization.securityLevel.capitalizingFirstLetter() : SecurityLocalization.securityLevel.uppercased()
         securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
 
         accessibilityIdentifier = "ClassificationBanner" + classification.accessibilitySuffix
@@ -91,7 +92,6 @@ final class SecurityLevelView: UIView {
         provider: ClassificationProviding? = ZMUserSession.shared()
     ) {
 
-//        let classification: SecurityClassification = .classified //qwer £!@#$%^&
         guard let classification = provider?.classification(with: otherUsers) else {
             isHidden = true
             return
@@ -119,7 +119,7 @@ final class SecurityLevelView: UIView {
           securityLevelLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
           securityLevelLabel.topAnchor.constraint(equalTo: topAnchor),
           securityLevelLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24),
+          securityLevelLabel.heightAnchor.constraint(equalToConstant: SecurityLevelView.SecurityLevelViewHeight),
           iconImageView.widthAnchor.constraint(equalToConstant: 11.0),
           iconImageView.heightAnchor.constraint(equalToConstant: 11.0),
           iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),

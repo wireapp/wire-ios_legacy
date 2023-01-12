@@ -28,6 +28,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     private var collectionView: CallParticipantsListView!
     private let stackView = UIStackView(axis: .vertical)
     private var participantsHeaderView = UIView()
+    private let securityLevelView = SecurityLevelView()
     private var participantsHeaderLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: SemanticColors.Label.textSectionHeader)
     private var actionsViewHeightConstraint: NSLayoutConstraint!
     var isIncomingCall: Bool = false
@@ -80,7 +81,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .fill
-        stackView.spacing = 6
+        stackView.spacing = 0
 
         actionsView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         actionsView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
@@ -102,7 +103,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         collectionView.bounces = true
         collectionView.delegate = self
         self.collectionView = collectionView
-        [actionsView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
+        [actionsView, securityLevelView, participantsHeaderView, collectionView].forEach(stackView.addArrangedSubview)
         CallParticipantsListCellConfiguration.prepare(collectionView)
         view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
@@ -125,13 +126,15 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             participantsHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            participantsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            participantsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            securityLevelView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
 
     func updateActionViewHeight() {
         guard UIDevice.current.orientation.isLandscape else {
-            actionsViewHeightConstraint.constant =  isIncomingCall ? 230 : 128
+            actionsViewHeightConstraint.constant =  isIncomingCall ? 230 : 112
             actionsView.verticalStackView.alignment = .fill
             return
         }
@@ -166,5 +169,6 @@ extension CallingActionsInfoViewController: CallInfoConfigurationObserver {
         actionsView.isIncomingCall = isIncomingCall
         actionsView.update(with: configuration)
         updateActionViewHeight()
+        securityLevelView.configure(with: configuration.classification)
     }
 }

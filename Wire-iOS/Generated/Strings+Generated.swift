@@ -4429,8 +4429,8 @@ internal enum L10n {
       }
     }
     internal enum SecurityClassification {
-      /// SECURITY LEVEL:
-      internal static let securityLevel = L10n.tr("Localizable", "security_classification.security_level", fallback: "SECURITY LEVEL:")
+      /// Security level:
+      internal static let securityLevel = L10n.tr("Localizable", "security_classification.security_level", fallback: "Security level:")
       internal enum Level {
         /// VS-NfD
         internal static let bund = L10n.tr("Localizable", "security_classification.level.bund", fallback: "VS-NfD")

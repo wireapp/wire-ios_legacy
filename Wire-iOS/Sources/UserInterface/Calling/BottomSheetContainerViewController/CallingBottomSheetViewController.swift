@@ -40,12 +40,17 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     private var callInfoConfiguration: CallInfoConfiguration?
 
     var bottomSheetMinimalOffset: CGFloat {
+        var offset = 0.0
         switch voiceChannel.state {
         case .incoming:
-            return UIDevice.current.orientation.isLandscape ? 128.0 : 230.0
+            offset = UIDevice.current.orientation.isLandscape ? 128.0 : 230.0
         default:
-            return 128.0
+            offset = UIDevice.current.orientation.isLandscape ? 128.0 : 112.0
         }
+        if case .established(_) = callInfoConfiguration?.state, callInfoConfiguration?.classification != .none {
+            offset += SecurityLevelView.SecurityLevelViewHeight
+        }
+        return offset
     }
 
     let callingActionsInfoViewController: CallingActionsInfoViewController
