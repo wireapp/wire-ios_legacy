@@ -38,6 +38,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     private var callStateObserverToken: Any?
     private weak var callDurationTimer: Timer?
     private var callInfoConfiguration: CallInfoConfiguration?
+    private let callDegradationController = CallDegradationController()
 
     var bottomSheetMinimalOffset: CGFloat {
         var offset = 0.0
@@ -65,7 +66,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         let selfUser: UserType = ZMUser.selfUser()
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: selfUser, isOverlayEnabled: false)
         callingActionsInfoViewController = CallingActionsInfoViewController(participants: voiceChannel.getParticipantsList(), selfUser: selfUser)
-        super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: 128.0))
+        super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: 112.0))
 
         callingActionsInfoViewController.setCallingActionsViewDelegate(actionsDelegate: visibleVoiceChannelViewController)
         callingActionsInfoViewController.actionsView.bottomSheetScrollingDelegate = self
@@ -73,6 +74,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         participantsObserverToken = voiceChannel.addParticipantObserver(self)
         visibleVoiceChannelViewController.delegate = self
 
+        callDegradationController.targetViewController = self
         view.insertSubview(overlay, belowSubview: bottomSheetViewController.view)
         view.insertSubview(headerBar, belowSubview: overlay)
         setupViews()
@@ -102,11 +104,14 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
         overlay.alpha = 0.0
         overlay.backgroundColor = SemanticColors.View.backgroundOverlay
+        addToSelf(callDegradationController)
+        callDegradationController.delegate = self
     }
 
     private func addConstraints() {
         headerBar.translatesAutoresizingMaskIntoConstraints = false
         overlay.translatesAutoresizingMaskIntoConstraints = false
+        callDegradationController.view.fitIn(view: view)
 
         NSLayoutConstraint.activate([
             headerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -191,7 +196,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     private func startCallDurationTimer() {
         stopCallDurationTimer()
         guard let configuration = callInfoConfiguration else { return }
-        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [headerBar, callInfoConfiguration] _ in
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [headerBar] _ in
             headerBar.updateConfiguration(configuration: configuration)
         }
     }
@@ -206,6 +211,7 @@ extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
         callInfoConfiguration = configuration
         updateState()
+        callDegradationController.state = configuration.degradationState
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
         panGesture.isEnabled = !configuration.state.isIncoming
         guard self.configuration.initialOffset != bottomSheetMinimalOffset else { return }
@@ -226,6 +232,17 @@ extension CallingBottomSheetViewController: WireCallCenterCallStateObserver {
         updateVisibleVoiceChannelViewController()
     }
 }
+
+extension CallingBottomSheetViewController: CallDegradationControllerDelegate {
+    func continueDegradedCall() {
+        visibleVoiceChannelViewController.callingActionsViewPerformAction(.continueDegradedCall)
+    }
+
+    func cancelDegradedCall() {
+        visibleVoiceChannelViewController.callingActionsViewPerformAction(.terminateDegradedCall)
+    }
+}
+
 
 extension CallingBottomSheetViewController: CallViewControllerDelegate {
     func callViewControllerDidDisappear(_ callController: CallViewController,
