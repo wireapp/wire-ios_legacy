@@ -20,8 +20,8 @@ import UIKit
 
 class CallHeaderBar: UIView {
     private let verticalStackView = UIStackView(axis: .vertical)
-    private let titleLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color:  SemanticColors.Label.textDefault)
-    private let timeLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color:  SemanticColors.Label.textDefault)
+    private let titleLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color: SemanticColors.Label.textDefault)
+    private let timeLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: SemanticColors.Label.textDefault)
     private let bitrateLabel = BitRateLabel(fontSpec: .smallRegularFont, color: SemanticColors.Label.textCollectionSecondary)
     let minimalizeButton = UIButton()
 

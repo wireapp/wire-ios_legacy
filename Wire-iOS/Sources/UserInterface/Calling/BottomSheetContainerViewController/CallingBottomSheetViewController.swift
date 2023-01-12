@@ -243,7 +243,6 @@ extension CallingBottomSheetViewController: CallDegradationControllerDelegate {
     }
 }
 
-
 extension CallingBottomSheetViewController: CallViewControllerDelegate {
     func callViewControllerDidDisappear(_ callController: CallViewController,
                                         for conversation: ZMConversation?) {

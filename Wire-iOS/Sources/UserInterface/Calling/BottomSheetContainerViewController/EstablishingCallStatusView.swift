@@ -25,13 +25,13 @@ extension CallStatusViewState {
 
     var isIncoming: Bool {
         switch self {
-        case .ringingIncoming(_): return true
+        case .ringingIncoming: return true
         default: return false
         }
     }
     var requiresShowingStatusView: Bool {
         switch self {
-        case .none, .established(_): return false
+        case .none, .established: return false
         default: return true
         }
     }
@@ -95,7 +95,7 @@ class EstablishingCallStatusView: UIView {
             securityLevelView.widthAnchor.constraint(equalTo: widthAnchor)
         ])
     }
-    
+
     func setTitle(title: String) {
         titleLabel.text = title
     }
