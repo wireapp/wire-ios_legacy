@@ -103,16 +103,16 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         case .login(let credentialsType, let credentials):
             let showProxyCredentials = backendEnvironmentProvider().proxy?.needsAuthentication == true
             let description = LogInStepDescription()
-            self.init(description: description, contentCenterConstraintActivation: !showProxyCredentials)
+            self.init(description: description, contentCenterConstraintActivation: false)
             self.credentialsType = credentials?.primaryCredentialsType ?? credentialsType
             self.prefilledCredentials = credentials
-            self.shouldUseScrollView = showProxyCredentials
+            self.shouldUseScrollView = true
         case .reauthentication(let credentials):
             let description = ReauthenticateStepDescription(prefilledCredentials: credentials)
-            self.init(description: description, contentCenterConstraintActivation: true)
+            self.init(description: description, contentCenterConstraintActivation: false)
             self.credentialsType = credentials?.primaryCredentialsType ?? .email
             self.prefilledCredentials = credentials
-            self.shouldUseScrollView = false
+            self.shouldUseScrollView = true
         case .registration:
             let description = PersonalRegistrationStepDescription()
             self.init(description: description, contentCenterConstraintActivation: true)
