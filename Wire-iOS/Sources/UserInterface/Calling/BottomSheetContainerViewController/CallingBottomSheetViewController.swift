@@ -47,7 +47,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         default:
             offset = UIDevice.current.orientation.isLandscape ? 128.0 : 112.0
         }
-        if case .established(_) = callInfoConfiguration?.state, callInfoConfiguration?.classification != .none {
+        
+        if case .established(_) = callInfoConfiguration?.state, let configuration = callInfoConfiguration, configuration.classification != .none {
             offset += SecurityLevelView.SecurityLevelViewHeight
         }
         return offset
