@@ -73,18 +73,17 @@ extension SettingsCellDescriptorFactory {
     func infoSection() -> SettingsSectionDescriptorType {
         let federationEnabled = BackendInfo.isFederationEnabled
         var cellDescriptors: [SettingsCellDescriptorType] = []
-        cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
-                           handleElement(
-                            enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle),
-                            federationEnabled: federationEnabled
+        cellDescriptors = [nameElement2(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
+                           //            nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
+                           handleElement2(
+                            enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle)
                            )]
 
         let user = SelfUser.current
 
-        cellDescriptors.append(nameElement2())
         if !user.usesCompanyLogin {
             if !user.hasTeam || user.phoneNumber?.isEmpty == false,
-               let phoneElement = phoneElement() {
+               let phoneElement = phoneElement2() {
                 cellDescriptors.append(phoneElement)
             }
 
@@ -92,11 +91,11 @@ extension SettingsCellDescriptorFactory {
         }
 
         if user.hasTeam {
-            cellDescriptors.append(teamElement())
+            cellDescriptors.append(teamElement2())
         }
 
         if federationEnabled {
-            cellDescriptors.append(domainElement())
+            cellDescriptors.append(domainElement2())
         }
 
         if URL.selfUserProfileLink != nil {
@@ -168,6 +167,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     // MARK: - Elements
+    // TODO improve
     private func textValueCellDescriptor(propertyName: SettingsPropertyName, enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
         var settingsProperty = settingsPropertyFactory.property(propertyName)
         settingsProperty.enabled = enabled
@@ -175,11 +175,10 @@ extension SettingsCellDescriptorFactory {
         return SettingsPropertyTextValueCellDescriptor(settingsProperty: settingsProperty)
     }
 
-    func nameElement2(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor2 {
+    func nameElement2(enabled: Bool = true) -> SettingsInfoCellDescriptor {
         var settingsProperty = settingsPropertyFactory.property(.profileName)
         settingsProperty.enabled = enabled
-        return SettingsPropertyTextValueCellDescriptor2(settingsProperty: settingsProperty)
-        //return textValueCellDescriptor(propertyName: .profileName, enabled: enabled)
+        return SettingsInfoCellDescriptor(settingsProperty: settingsProperty)
     }
 
     func nameElement(enabled: Bool = true) -> SettingsPropertyTextValueCellDescriptor {
@@ -209,54 +208,105 @@ extension SettingsCellDescriptorFactory {
         }
     }
 
-    func phoneElement() -> SettingsCellDescriptorType? {
+//    func emailElement2(enabled: Bool = true) -> SettingsInfoCellDescriptor {
+//        if enabled {
+//            return SettingsExternalScreenCellDescriptor(
+//                title: "self.settings.account_section.email.title".localized,
+//                isDestructive: false,
+//                presentationStyle: .navigation,
+//                presentationAction: { () -> (UIViewController?) in
+//                    return ChangeEmailViewController(user: ZMUser.selfUser())
+//                },
+//                previewGenerator: { _ in
+//                    if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
+//                        return SettingsCellPreview.text(email)
+//                    } else {
+//                        return SettingsCellPreview.text("self.add_email_password".localized)
+//                    }
+//                },
+//                accessoryViewMode: .alwaysHide
+//            )
+//        } else {
+//            var settingsProperty = settingsPropertyFactory.property(.email)
+//            settingsProperty.enabled = enabled
+//            return SettingsInfoCellDescriptor(settingsProperty: settingsProperty)
+//        }
+//    }
+
+//    func phoneElement() -> SettingsCellDescriptorType? {
+//        if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+//            return textValueCellDescriptor(propertyName: .phone, enabled: false)
+//        } else {
+//            return nil
+//        }
+//    }
+
+    func phoneElement2() -> SettingsInfoCellDescriptor? {
         if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-            return textValueCellDescriptor(propertyName: .phone, enabled: false)
+            var settingsProperty = settingsPropertyFactory.property(.phone)
+            settingsProperty.enabled = false
+            return SettingsInfoCellDescriptor(settingsProperty: settingsProperty)
         } else {
             return nil
         }
     }
 
-    func handleElement(enabled: Bool = true, federationEnabled: Bool) -> SettingsCellDescriptorType {
-        typealias AccountSection = L10n.Localizable.Self.Settings.AccountSection
-        if enabled {
-            let presentation: () -> ChangeHandleViewController = {
-                return ChangeHandleViewController()
-            }
+//    func handleElement(enabled: Bool = true, federationEnabled: Bool) -> SettingsCellDescriptorType {
+//        typealias AccountSection = L10n.Localizable.Self.Settings.AccountSection
+//        if enabled {
+//            let presentation: () -> ChangeHandleViewController = {
+//                return ChangeHandleViewController()
+//            }
+//
+//            if let selfUser = ZMUser.selfUser(), nil != selfUser.handle {
+//                let preview: PreviewGeneratorType = { _ in
+//                    guard let handleDisplayString = selfUser.handleDisplayString(withDomain: federationEnabled) else {
+//                        return .none
+//                    }
+//                    return .text(handleDisplayString)
+//                }
+//                return SettingsExternalScreenCellDescriptor(
+//                    title: AccountSection.Handle.title,
+//                    isDestructive: false,
+//                    presentationStyle: .navigation,
+//                    presentationAction: presentation,
+//                    previewGenerator: preview,
+//                    accessoryViewMode: .alwaysHide
+//                )
+//            }
+//
+//            return SettingsExternalScreenCellDescriptor(
+//                title: AccountSection.AddHandle.title,
+//                presentationAction: presentation
+//            )
+//        } else {
+//            return textValueCellDescriptor(propertyName: .handle, enabled: enabled)
+//        }
+//    }
 
-            if let selfUser = ZMUser.selfUser(), nil != selfUser.handle {
-                let preview: PreviewGeneratorType = { _ in
-                    guard let handleDisplayString = selfUser.handleDisplayString(withDomain: federationEnabled) else {
-                        return .none
-                    }
-                    return .text(handleDisplayString)
-                }
-                return SettingsExternalScreenCellDescriptor(
-                    title: AccountSection.Handle.title,
-                    isDestructive: false,
-                    presentationStyle: .navigation,
-                    presentationAction: presentation,
-                    previewGenerator: preview,
-                    accessoryViewMode: .alwaysHide
-                )
-            }
-
-            return SettingsExternalScreenCellDescriptor(
-                title: AccountSection.AddHandle.title,
-                presentationAction: presentation
-            )
-        } else {
-            return textValueCellDescriptor(propertyName: .handle, enabled: enabled)
-        }
+    func handleElement2(enabled: Bool = true) -> SettingsInfoCellDescriptor {
+            var settingsProperty = settingsPropertyFactory.property(.handle)
+            settingsProperty.enabled = enabled
+            return SettingsInfoCellDescriptor(settingsProperty: settingsProperty)
     }
 
-    func teamElement() -> SettingsCellDescriptorType {
-        return textValueCellDescriptor(propertyName: .team, enabled: false)
+//    func teamElement() -> SettingsCellDescriptorType {
+//        return textValueCellDescriptor(propertyName: .team, enabled: false)
+//    }
+    func teamElement2() -> SettingsInfoCellDescriptor {
+        var settingsProperty = settingsPropertyFactory.property(.team)
+        settingsProperty.enabled = false
+        return SettingsInfoCellDescriptor(settingsProperty: settingsProperty)
     }
 
-    func domainElement() -> SettingsCellDescriptorType {
-        return textValueCellDescriptor(propertyName: .domain, enabled: false)
+    func domainElement2() -> SettingsInfoCellDescriptor {
+        var settingsProperty = settingsPropertyFactory.property(.domain)
+        settingsProperty.enabled = false
+        return SettingsInfoCellDescriptor(settingsProperty: settingsProperty)
     }
+//    func domainElement() -> SettingsCellDescriptorType {
+//        return textValueCellDescriptor(propertyName: .domain, enabled: false)
+//    }
 
     func profileLinkElement() -> SettingsCellDescriptorType {
         return SettingsProfileLinkCellDescriptor()

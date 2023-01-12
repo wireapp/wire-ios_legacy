@@ -81,7 +81,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = UITableView.automaticDimension//56
+        tableView.estimatedRowHeight = 56
         view.addSubview(tableView)
         view.addSubview(footerContainer)
         footerContainer.addSubview(footerSeparator)
@@ -249,8 +249,8 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
             if let cellIt = cell as? SettingsInfoCell {
-                cellIt.textDidChanges = {
-                    UIView.animate(withDuration: 0.3) {
+                cellIt.textFieldDidChanges = {
+                    UIView.animate(withDuration: 0.4) {
                         self.tableView.beginUpdates()
                         self.tableView.endUpdates()
                     }

@@ -1,20 +1,20 @@
-// 
+//
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
-// 
+// Copyright (C) 2023 Wire Swiss GmbH
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import Foundation
 import WireUtilities
@@ -22,44 +22,56 @@ import UIKit
 
 private let zmLog = ZMSLog(tag: "UI")
 
-class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorType {
-    static let cellType: SettingsTableCellProtocol.Type = SettingsTextCell.self
+class SettingsInfoCellDescriptor: SettingsPropertyCellDescriptorType {
+    static let cellType: SettingsTableCellProtocol.Type = SettingsInfoCell.self
+
     var title: String {
         return settingsProperty.propertyName.settingsPropertyLabelText
     }
     var visible: Bool = true
-    let identifier: String?
+    var identifier: String?
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
 
-    init(settingsProperty: SettingsProperty, identifier: String? = .none) {
+    init(settingsProperty: SettingsProperty) {
         self.settingsProperty = settingsProperty
-        self.identifier = identifier
     }
 
     func featureCell(_ cell: SettingsCellType) {
-        cell.titleText = title
-        guard let textCell = cell as? SettingsTextCell else { return }
-
+        guard let textCell = cell as? SettingsInfoCell else { return }
+        textCell.title = title
+        textCell.isAccessoryIconHidden = !settingsProperty.enabled
+        textCell.textInput.isEnabled = settingsProperty.enabled
         if let stringValue = settingsProperty.rawValue() as? String {
-            textCell.textInput.text = stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            textCell.value = stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
         }
+        textCell.isSubtitleHidden = settingsProperty.propertyName == .handle
 
         if settingsProperty.enabled {
-            textCell.textInput.accessibilityTraits.remove(.staticText)
-            textCell.textInput.accessibilityIdentifier = title + "Field"
+           // .staticText
+//            textCell.textInput.accessibilityTraits.remove(.staticText)
+//            textCell.textInput.accessibilityIdentifier = title + "Field"
         } else {
-            textCell.textInput.accessibilityTraits.insert(.staticText)
-            textCell.textInput.accessibilityIdentifier = title + "FieldDisabled"
+//            textCell.textInput.accessibilityTraits.insert(.staticText)
+//            textCell.textInput.accessibilityIdentifier = title + "FieldDisabled"
         }
 
-        textCell.textInput.isEnabled = settingsProperty.enabled
-        textCell.textInput.isAccessibilityElement = true
+       // textCell.textInput.isEnabled = settingsProperty.enabled
     }
 
     func select(_ value: SettingsPropertyValue?) {
-        if let stringValue = value?.value() as? String {
+        switch settingsProperty.propertyName {
+        case .profileName:
+            selectProfileName(value: value)
+        case .handle:
+            selectHandle(value: value)
+        default:
+            return
+        }
+    }
 
+    private func selectProfileName( value: SettingsPropertyValue?) {
+        if let stringValue = value?.value() as? String {
             do {
                 try self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
             } catch let error as NSError {
@@ -81,4 +93,8 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
             }
         }
     }
+
+    private func selectHandle( value: SettingsPropertyValue?) {
+    }
+
 }
