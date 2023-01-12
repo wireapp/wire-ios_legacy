@@ -67,7 +67,6 @@ class CallHeaderBar: UIView {
             verticalStackView.leadingAnchor.constraint(greaterThanOrEqualTo: minimalizeButton.trailingAnchor, constant: 6.0)
         ])
     }
-    
 
     func updateConfiguration(configuration: CallStatusViewInputType) {
         titleLabel.text = configuration.title
