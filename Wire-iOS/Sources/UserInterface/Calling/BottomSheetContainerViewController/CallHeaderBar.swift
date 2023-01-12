@@ -50,6 +50,9 @@ class CallHeaderBar: UIView {
         verticalStackView.addArrangedSubview(titleLabel)
         verticalStackView.addArrangedSubview(timeLabel)
         verticalStackView.addArrangedSubview(bitrateLabel)
+
+        bitrateLabel.accessibilityIdentifier = "bitrate-indicator"
+        timeLabel.accessibilityIdentifier = "CallStatusLabel"
     }
 
     private func setupConstraints() {
