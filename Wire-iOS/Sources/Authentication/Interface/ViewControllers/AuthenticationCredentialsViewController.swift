@@ -101,7 +101,6 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     convenience init(flowType: FlowType, backendEnvironmentProvider: @escaping () -> BackendEnvironmentProvider = { BackendEnvironment.shared }) {
         switch flowType {
         case .login(let credentialsType, let credentials):
-            let showProxyCredentials = backendEnvironmentProvider().proxy?.needsAuthentication == true
             let description = LogInStepDescription()
             self.init(description: description, contentCenterConstraintActivation: false)
             self.credentialsType = credentials?.primaryCredentialsType ?? credentialsType
