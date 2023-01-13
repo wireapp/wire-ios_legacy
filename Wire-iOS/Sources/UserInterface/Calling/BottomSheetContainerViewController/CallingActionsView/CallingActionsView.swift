@@ -127,6 +127,7 @@ class CallingActionsView: UIView {
             verticalStackViewTopContraint,
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22.0),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22.0),
+            topStackView.heightAnchor.constraint(equalToConstant: 84),
             handleView.widthAnchor.constraint(equalToConstant: 129),
             handleView.heightAnchor.constraint(equalToConstant: 5)
         ])
