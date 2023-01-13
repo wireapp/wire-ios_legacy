@@ -175,6 +175,16 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "clientsList.keyFingerprint.description", fallback: "Key fingerprint")
       }
     }
+    internal enum Connection {
+      internal enum ArchiveButton {
+        /// Archive connection
+        internal static let description = L10n.tr("Accessibility", "connection.archiveButton.description", fallback: "Archive connection")
+      }
+      internal enum CancelButton {
+        /// Cancel connection
+        internal static let description = L10n.tr("Accessibility", "connection.cancelButton.description", fallback: "Cancel connection")
+      }
+    }
     internal enum ContactsList {
       internal enum CloseButton {
         /// Close contact list

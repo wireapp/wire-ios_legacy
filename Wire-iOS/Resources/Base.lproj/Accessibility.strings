@@ -242,3 +242,6 @@
 "tabBar.phone.description" = "Log in via phone number";
 "authentication.forgotPasswordButton.description" = "Change your password";
 "authentication.backButton.description" = "Go back to start screen";
+
+"connection.archiveButton.description" = "Archive connection";
+"connection.cancelButton.description" = "Cancel connection";
