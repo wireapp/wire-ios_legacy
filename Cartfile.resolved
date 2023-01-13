@@ -1,5 +1,4 @@
-github "DataDog/dd-sdk-ios" "1.14.0"
-github "microsoft/plcrashreporter" "1.11.0"
+binary "datadog_binary.json" "1.14.0"
 github "wireapp/DifferenceKit" "1.1.5_xcframework"
 github "wireapp/Down" "2.3.3"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
