@@ -108,6 +108,7 @@ final class BackupPasswordViewController: UIViewController {
 
         passwordView.placeholder = HistoryBackup.Password.placeholder.capitalized
         passwordView.accessibilityIdentifier = "password input"
+        passwordView.accessibilityHint = PasswordRuleSet.localizedErrorMessage
         passwordView.returnKeyType = .done
         passwordView.isSecureTextEntry = true
         passwordView.delegate = self

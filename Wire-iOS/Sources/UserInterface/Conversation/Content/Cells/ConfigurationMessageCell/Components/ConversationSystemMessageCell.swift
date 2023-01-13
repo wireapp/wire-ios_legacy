@@ -590,6 +590,7 @@ final class ConversationStartedSystemMessageCellDescription: NSObject, Conversat
             let conversation = message.conversationLike as? ZMConversation {
             conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
         }
+        accessibilityLabel = configuration.message.string
     }
 
 }
