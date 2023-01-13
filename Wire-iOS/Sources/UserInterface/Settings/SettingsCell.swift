@@ -247,6 +247,7 @@ class SettingsTableCell: SettingsTableCellProtocol {
     func setupAccessibility() {
         isAccessibilityElement = true
         accessibilityTraits = .button
+        accessibilityValue = valueLabel.text
         let badgeValue = badgeLabel.text ?? ""
         accessibilityHint = badgeValue.isEmpty ? "" : L10n.Accessibility.Settings.DeviceCount.hint("\(badgeValue)")
     }
@@ -321,13 +322,12 @@ final class SettingsValueCell: SettingsTableCell {
 
 final class SettingsTextCell: SettingsTableCell,
                               UITextFieldDelegate {
-    var textInput: UITextField!
+    var textInput: UITextField = TailEditingTextField(frame: CGRect.zero)
 
     override func setup() {
         super.setup()
         selectionStyle = .none
 
-        textInput = TailEditingTextField(frame: CGRect.zero)
         textInput.delegate = self
         textInput.textAlignment = .right
         textInput.textColor = SemanticColors.Label.textDefault
@@ -366,10 +366,9 @@ final class SettingsTextCell: SettingsTableCell,
         super.setupAccessibility()
 
         var currentElements = accessibilityElements ?? []
-        if let textInput = textInput {
-            currentElements.append(textInput)
-        }
+        currentElements.append(textInput)
         accessibilityElements = currentElements
+        accessibilityValue = textInput.text
     }
 
     @objc

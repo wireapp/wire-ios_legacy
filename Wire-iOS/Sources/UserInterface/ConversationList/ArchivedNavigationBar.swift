@@ -24,7 +24,7 @@ final class ArchivedNavigationBar: UIView {
 
     let titleLabel: UILabel = {
         let label = DynamicFontLabel(
-            fontSpec: .mediumSemiboldFont,
+            fontSpec: .headerSemiboldFont,
             color: NavigationColors.textDefault
         )
         return label
@@ -52,7 +52,7 @@ final class ArchivedNavigationBar: UIView {
         dismissButton.setIcon(.cross, size: .tiny, for: [])
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
-        dismissButton.accessibilityLabel = "general.close".localized
+        dismissButton.accessibilityLabel = L10n.Localizable.General.close
         dismissButton.setIconColor(NavigationColors.textDefault, for: .normal)
         [titleLabel, dismissButton].forEach(addSubview)
         addBorder(for: .bottom)

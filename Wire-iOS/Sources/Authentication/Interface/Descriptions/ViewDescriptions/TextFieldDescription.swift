@@ -57,6 +57,7 @@ extension TextFieldDescription: ViewDescriptor {
         textField.addTarget(self, action: #selector(TextFieldDescription.editingChanged), for: .editingChanged)
         textField.confirmButton.accessibilityLabel = self.actionDescription
         textField.showConfirmButton = showConfirmButton
+        textField.accessibilityHint = PasswordRuleSet.localizedErrorMessage
 
         textField.enableConfirmButton = { [weak self] in
             if self?.useDeferredValidation == true {
