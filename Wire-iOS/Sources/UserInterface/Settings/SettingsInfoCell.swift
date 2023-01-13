@@ -114,11 +114,7 @@ final class SettingsInfoCell: SettingsTableCell {
         }
     }
 
-    var isSubtitleHidden: Bool = true {
-        didSet {
-            subtitleLabel.isHidden = isSubtitleHidden
-        }
-    }
+    var isSubtitleHidden: Bool = true
 
     var title: String = "" {
         didSet {

@@ -32,9 +32,16 @@ class SettingsInfoCellDescriptor: SettingsPropertyCellDescriptorType {
     var identifier: String?
     weak var group: SettingsGroupCellDescriptorType?
     var settingsProperty: SettingsProperty
+    let presentationStyle: PresentationStyle?
+    weak var viewController: UIViewController?
+    let presentationAction: () -> (UIViewController?)
 
-    init(settingsProperty: SettingsProperty) {
+    init(settingsProperty: SettingsProperty,
+         presentationStyle: PresentationStyle?,
+         presentationAction: @escaping () -> (UIViewController?)) {
         self.settingsProperty = settingsProperty
+        self.presentationStyle = presentationStyle
+        self.presentationAction = presentationAction
     }
 
     func featureCell(_ cell: SettingsCellType) {
@@ -60,11 +67,20 @@ class SettingsInfoCellDescriptor: SettingsPropertyCellDescriptorType {
     }
 
     func select(_ value: SettingsPropertyValue?) {
-        switch settingsProperty.propertyName {
-        case .profileName:
-            selectProfileName(value: value)
-        case .handle:
-            selectHandle(value: value)
+        guard let controllerToShow = self.generateViewController(),
+        let presentationStyle = presentationStyle else {
+            switch settingsProperty.propertyName {
+            case .profileName:
+                selectProfileName(value: value)
+            default:
+                return
+            }
+            return
+        }
+
+        switch presentationStyle {
+        case .navigation:
+            viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
         default:
             return
         }
@@ -94,7 +110,8 @@ class SettingsInfoCellDescriptor: SettingsPropertyCellDescriptorType {
         }
     }
 
-    private func selectHandle( value: SettingsPropertyValue?) {
+    func generateViewController() -> UIViewController? {
+        return self.presentationAction()
     }
 
 }
