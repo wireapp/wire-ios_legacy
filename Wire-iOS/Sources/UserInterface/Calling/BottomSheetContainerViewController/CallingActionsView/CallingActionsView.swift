@@ -142,7 +142,7 @@ class CallingActionsView: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        establishedCallButtons.forEach( { $0.updateState() })
+        establishedCallButtons.forEach { $0.updateState() }
     }
 
     private func addIncomingCallControllButtons() {
@@ -157,7 +157,7 @@ class CallingActionsView: UIView {
             largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 16),
             largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
             largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -16),
-            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
+            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12)
         ])
     }
 
