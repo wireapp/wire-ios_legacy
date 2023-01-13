@@ -131,6 +131,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         textField.placeholder = RegistrationEnterPhoneNumber.placeholder.capitalized
         textField.accessibilityLabel = RegistrationEnterPhoneNumber.placeholder.capitalized
         textField.accessibilityIdentifier = "PhoneNumberField"
+        textField.addDoneButtonOnKeyboard()
         textField.showConfirmButton = false
 
         textField.delegate = self

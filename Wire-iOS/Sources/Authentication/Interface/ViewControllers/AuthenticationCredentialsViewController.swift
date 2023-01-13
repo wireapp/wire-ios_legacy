@@ -370,7 +370,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-    
+
     func updateViewsForProxy() {
         if case .custom = backendEnvironment.environmentType.value {
             tabBar.isHidden = true
