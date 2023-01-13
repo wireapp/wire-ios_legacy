@@ -97,9 +97,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
     }
 
     func updateState() {
-            apply(appearance)
-            subtitleTransformLabel.font = titleLabel?.font
-            subtitleTransformLabel.textColor = titleColor(for: state)
+        apply(appearance)
+        subtitleTransformLabel.font = titleLabel?.font
+        subtitleTransformLabel.textColor = titleColor(for: state)
     }
 
     func updateButtonWidth(width: CGFloat) {

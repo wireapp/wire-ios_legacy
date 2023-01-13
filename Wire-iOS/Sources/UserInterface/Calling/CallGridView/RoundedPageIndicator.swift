@@ -71,12 +71,12 @@ class RoundedPageIndicator: RoundedBlurView {
         didSet {
             pageControl.currentPage = currentPage
             if #available(iOS 14.0, *), DeveloperFlag.isUpdatedCallingUI {
-                    guard numberOfPages > 0 else { return }
-                    let lastPageIndex = numberOfPages - 1
-                    for index in 0...lastPageIndex {
-                        pageControl.setIndicatorImage(defaultPageIndicator, forPage: index)
-                    }
-                    pageControl.setIndicatorImage(selectedPageIndicator, forPage: currentPage)
+                guard numberOfPages > 0 else { return }
+                let lastPageIndex = numberOfPages - 1
+                for index in 0...lastPageIndex {
+                    pageControl.setIndicatorImage(defaultPageIndicator, forPage: index)
+                }
+                pageControl.setIndicatorImage(selectedPageIndicator, forPage: currentPage)
             }
         }
     }
