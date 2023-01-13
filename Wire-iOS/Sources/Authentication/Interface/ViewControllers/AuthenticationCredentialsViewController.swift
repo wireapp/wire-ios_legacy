@@ -340,12 +340,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         ])
 
         if shouldUseScrollView {
-            let topMargin: CGFloat = 86
-
             NSLayoutConstraint.activate([
                 contentStack.widthAnchor.constraint(equalToConstant: 375),
                 contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: topMargin)
+                contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 86)
             ])
         }
     }
