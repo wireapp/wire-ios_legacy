@@ -253,8 +253,13 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
     private func setupDefaultView() {
         let horizontalMargin: CGFloat = 31
+        let emptyView = UIView()
         contentStack.spacing = 24
 
+        if stepDescription.subtext == nil && shouldUseScrollView {
+            contentStack.addArrangedSubview(emptyView)
+            contentStack.setCustomSpacing(56, after: emptyView)
+        }
         contentStack.addArrangedSubview(tabBar)
         contentStack.addArrangedSubview(emailInputField)
         contentStack.addArrangedSubview(emailPasswordInputField)
@@ -263,7 +268,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         contentStack.addArrangedSubview(loginButton)
 
         contentStack.isLayoutMarginsRelativeArrangement = true
-        contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: horizontalMargin, bottom: 0, trailing: horizontalMargin)
+        contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0,
+                                                                        leading: horizontalMargin,
+                                                                        bottom: 0,
+                                                                        trailing: horizontalMargin)
     }
 
     override func createMainView() -> UIView {
@@ -332,10 +340,12 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         ])
 
         if shouldUseScrollView {
+            let topMargin: CGFloat = 86
+
             NSLayoutConstraint.activate([
                 contentStack.widthAnchor.constraint(equalToConstant: 375),
                 contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 86)
+                contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: topMargin)
             ])
         }
     }
@@ -360,7 +370,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-
+    
     func updateViewsForProxy() {
         if case .custom = backendEnvironment.environmentType.value {
             tabBar.isHidden = true
