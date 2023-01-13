@@ -31,7 +31,7 @@ protocol ArchivedListViewControllerDelegate: AnyObject {
 final class ArchivedListViewController: UIViewController {
 
     fileprivate var collectionView: UICollectionView!
-    fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized(uppercased: true))
+    fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: L10n.Localizable.ArchivedList.title.capitalized)
     fileprivate let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
     fileprivate let swipeIdentifier = "ArchivedList"
     fileprivate let viewModel = ArchivedListViewModel()
