@@ -43,13 +43,6 @@ enum CallActionAppearance: Equatable {
         }
     }
 
-    var backgroundColorDisabled: UIColor {
-        switch self {
-        case .light: return UIColor.black.withAlphaComponent(0.16)
-        case .dark: return UIColor.white.withAlphaComponent(0.4)
-        }
-    }
-
     var backgroundColorSelectedAndHighlighted: UIColor {
         switch self {
         case .light: return UIColor.black.withAlphaComponent(0.16)
@@ -70,19 +63,4 @@ enum CallActionAppearance: Equatable {
         case .dark: return UIColor.from(scheme: .iconNormal, variant: .light)
         }
     }
-
-    var textColorNormal: UIColor {
-        switch self {
-        case .light: return UIColor.from(scheme: .iconNormal, variant: .light)
-        case .dark: return UIColor.from(scheme: .iconNormal, variant: .dark)
-        }
-    }
-
-    var textColorDisabled: UIColor {
-        switch self {
-        case .light: return UIColor.black.withAlphaComponent(0.16)
-        case .dark: return UIColor.white.withAlphaComponent(0.4)
-        }
-    }
-
 }

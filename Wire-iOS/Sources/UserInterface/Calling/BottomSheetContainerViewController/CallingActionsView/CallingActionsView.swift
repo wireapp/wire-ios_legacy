@@ -106,9 +106,17 @@ class CallingActionsView: UIView {
         addSubview(verticalStackView)
         establishedCallButtons.forEach(topStackView.addArrangedSubview)
         handleView.layer.cornerRadius = 3.0
-        handleView.backgroundColor = SemanticColors.View.backgroundDragBarIndicator
+        handleView.backgroundColor = SemanticColors.View.backgroundCallDragBarIndicator
         [handleView, topStackView].forEach(verticalStackView.addArrangedSubview)
-        [flipCameraButton, cameraButton, microphoneButton, speakerButton, endCallButton, largeHangUpButton, largePickUpButton].forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
+        [
+            flipCameraButton,
+            cameraButton,
+            microphoneButton,
+            speakerButton,
+            endCallButton,
+            largeHangUpButton,
+            largePickUpButton
+        ].forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         setupContentViewer()
     }
 

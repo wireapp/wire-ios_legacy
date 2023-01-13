@@ -67,7 +67,7 @@ class PickUpButton: CallingActionButton {
 
     override func apply(_ configuration: CallActionAppearance) {
         let greenColor = SemanticColors.Button.backgroundPickUp
-        setTitleColor(configuration.textColorNormal, for: .normal)
+        setTitleColor(SemanticColors.Label.textDefault, for: .normal)
         iconButton.setIconColor(SemanticColors.View.backgroundDefaultWhite, for: .normal)
         iconButton.setBackgroundImageColor(greenColor, for: .normal)
     }
