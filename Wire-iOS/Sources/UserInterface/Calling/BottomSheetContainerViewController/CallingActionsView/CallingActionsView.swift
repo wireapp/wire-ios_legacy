@@ -69,7 +69,7 @@ class CallingActionsView: UIView {
             topStackView.removeSubviews()
             handleView.isHidden = isIncomingCall
             handleView.accessibilityElementsHidden = isIncomingCall
-            if isIncomingCall  {
+            if isIncomingCall {
                 [microphoneButton, cameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
                 addIncomingCallControllButtons()
                 verticalStackViewTopContraint.constant = 16.0

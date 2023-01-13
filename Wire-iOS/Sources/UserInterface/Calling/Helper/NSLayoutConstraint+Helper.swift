@@ -29,8 +29,7 @@ extension NSLayoutConstraint {
             view.topAnchor.constraint(equalTo: container.topAnchor, constant: insets.top),
             view.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -insets.bottom),
             view.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: insets.left),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -insets.right),
+            view.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -insets.right)
         ]
     }
 }
-

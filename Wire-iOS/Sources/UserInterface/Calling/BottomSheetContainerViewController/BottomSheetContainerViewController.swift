@@ -129,7 +129,7 @@ class BottomSheetContainerViewController: UIViewController {
 
     }
 
-    public func didChangeState() {} //for overriding
+    public func didChangeState() {} // for overriding
 
     // MARK: - Bottom Sheet Actions
     public func showBottomSheet(animated: Bool = true) {
