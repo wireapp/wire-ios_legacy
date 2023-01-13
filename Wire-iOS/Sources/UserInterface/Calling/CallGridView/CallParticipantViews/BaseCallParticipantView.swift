@@ -99,7 +99,11 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         super.init(frame: .zero)
 
         setupViews()
-        createConstraints()
+        if DeveloperFlag.isUpdatedCallingUI {
+            createConstraintsForNewUI()
+        } else {
+            createConstraints()
+        }
         updateUserDetails()
         updateVideoKind()
         updateBorderStyle()
@@ -158,10 +162,26 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     }
 
     func createConstraints() {
+        [avatarView, userDetailsView].prepareForLayout()
 
-        [avatarView, userDetailsView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        detailsConstraints = UserDetailsConstraints(
+            view: userDetailsView,
+            superview: self,
+            safeAreaInsets: adjustedInsets
+        )
+
+        NSLayoutConstraint.activate([
+            userDetailsView.heightAnchor.constraint(equalToConstant: 24),
+            avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            avatarView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            avatarView.widthAnchor.constraint(equalToConstant: 88),
+            avatarView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.7),
+            avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor)
+        ])
+    }
+
+    func createConstraintsForNewUI() {
+        [avatarView, userDetailsView].prepareForLayout()
 
         detailsConstraints = UserDetailsConstraints(
             view: userDetailsView,
@@ -174,7 +194,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
             avatarView.centerYAnchor.constraint(equalTo: centerYAnchor).withPriority(.defaultLow),
             avatarView.widthAnchor.constraint(equalToConstant: 72),
-            avatarView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.7),
+            avatarView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.7).withPriority(.required),
             avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor).withPriority(.required),
             userDetailsView.topAnchor.constraint(greaterThanOrEqualTo: avatarView.bottomAnchor, constant: 16).withPriority(.defaultHigh - 1),
             avatarView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor).withPriority(.required)
@@ -186,7 +206,6 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
         borderLayer.borderColor = SemanticColors.View.backgroundDefaultWhite.cgColor
     }
-
 
     private func hideVideoViewsIfNeeded() {
         scalableView?.isHidden = !stream.isSharingVideo

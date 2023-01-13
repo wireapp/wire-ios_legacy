@@ -120,15 +120,14 @@ public enum SemanticColors {
         static let borderCharacterInputField = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray40)
         static let borderCharacterInputFieldEnabled = UIColor(light: Asset.Colors.blue500Light, dark: Asset.Colors.blue500Dark)
         static let borderInputBar = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray100)
-        static let backgroundAvatar = UIColor(light: Asset.Colors.gray100, dark: Asset.Colors.gray50)
-        static let backgroundDragBarIndicator = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray70)
+        static let backgroundCallDragBarIndicator = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray70)
         static let backgroundBlue = UIColor(light: Asset.Colors.blue100Light, dark: Asset.Colors.blue900Dark)
         static let backgroundGreen = UIColor(light: Asset.Colors.green100Light, dark: Asset.Colors.green900Dark)
         static let backgroundAmber = UIColor(light: Asset.Colors.amber100Light, dark: Asset.Colors.amber900Dark)
         static let backgroundRed = UIColor(light: Asset.Colors.red100Light, dark: Asset.Colors.red900Dark)
         static let backgroundPurple = UIColor(light: Asset.Colors.purple100Light, dark: Asset.Colors.purple900Dark)
         static let backgroundTurqoise = UIColor(light: Asset.Colors.turquoise100Light, dark: Asset.Colors.turquoise900Dark)
-        static let backgroundOverlay = UIColor(light: Asset.Colors.black, dark: Asset.Colors.black)
+        static let backgroundCallOverlay = UIColor(light: Asset.Colors.black, dark: Asset.Colors.black)
     }
 
     public enum TabBar {

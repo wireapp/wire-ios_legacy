@@ -73,7 +73,7 @@ class EstablishingCallStatusView: UIView {
     }
 
     private func setupViews() {
-        [stackView, profileImageView, securityLevelView, spaceView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [stackView, profileImageView, securityLevelView, spaceView].prepareForLayout()
         stackView.alignment = .center
         stackView.spacing = 8
         addSubview(stackView)

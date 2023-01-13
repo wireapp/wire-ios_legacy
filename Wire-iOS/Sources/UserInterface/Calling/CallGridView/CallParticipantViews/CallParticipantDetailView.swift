@@ -57,7 +57,7 @@ final class CallParticipantDetailsView: RoundedBlurView {
 
     override init() {
         nameLabel = DeveloperFlag.isUpdatedCallingUI
-                    ? DynamicFontLabel(fontSpec: .mediumRegularFont, color: .white)
+        ? DynamicFontLabel(fontSpec: .mediumRegularFont, color: SemanticColors.Label.textWhite)
                     : UILabel(key: nil, size: .medium, weight: .semibold, color: .textForeground, variant: .dark)
         super.init()
     }

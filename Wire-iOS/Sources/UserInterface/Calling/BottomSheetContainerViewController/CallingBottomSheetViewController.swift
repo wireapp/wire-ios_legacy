@@ -103,7 +103,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         view.backgroundColor = SemanticColors.View.backgroundDefault
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
         overlay.alpha = 0.0
-        overlay.backgroundColor = SemanticColors.View.backgroundOverlay
+        overlay.backgroundColor = SemanticColors.View.backgroundCallOverlay
         addToSelf(callDegradationController)
         callDegradationController.delegate = self
     }
@@ -168,10 +168,14 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     }
 
     func updateVisibleVoiceChannelViewController() {
-        guard let conversation = ZMUserSession.shared()?.priorityCallConversation, visibleVoiceChannelViewController.conversation != conversation,
-              let voiceChannel = conversation.voiceChannel else {
+        guard
+            let conversation = ZMUserSession.shared()?.priorityCallConversation,
+            visibleVoiceChannelViewController.conversation != conversation,
+            let voiceChannel = conversation.voiceChannel
+        else {
             return
         }
+
         self.voiceChannel = voiceChannel
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: ZMUser.selfUser(), isOverlayEnabled: false)
         visibleVoiceChannelViewController.configurationObserver = self
