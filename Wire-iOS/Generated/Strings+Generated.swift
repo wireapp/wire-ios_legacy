@@ -135,6 +135,16 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "audioRecord.stopButton.description", fallback: "Stop recording")
       }
     }
+    internal enum Authentication {
+      internal enum BackButton {
+        /// Go back to start screen
+        internal static let description = L10n.tr("Accessibility", "authentication.backButton.description", fallback: "Go back to start screen")
+      }
+      internal enum ForgotPasswordButton {
+        /// Change your password
+        internal static let description = L10n.tr("Accessibility", "authentication.forgotPasswordButton.description", fallback: "Change your password")
+      }
+    }
     internal enum Calling {
       internal enum AcceptButton {
         /// Accept
@@ -219,15 +229,6 @@ internal enum L10n {
       internal enum VideoOnButton {
         /// Turn on camera
         internal static let description = L10n.tr("Accessibility", "calling.videoOnButton.description", fallback: "Turn on camera")
-      }
-    internal enum Authentication {
-      internal enum BackButton {
-        /// Go back to start screen
-        internal static let description = L10n.tr("Accessibility", "authentication.backButton.description", fallback: "Go back to start screen")
-      }
-      internal enum ForgotPasswordButton {
-        /// Change your password
-        internal static let description = L10n.tr("Accessibility", "authentication.forgotPasswordButton.description", fallback: "Change your password")
       }
     }
     internal enum ClientsList {
