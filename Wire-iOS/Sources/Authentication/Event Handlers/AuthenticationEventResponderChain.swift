@@ -168,6 +168,7 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationButtonTapInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationAddEmailPasswordInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationReauthenticateInputHandler(), to: &userInputObservers)
+        registerHandler(AuthenticationShowCustomBackendInfoHandler(), to: &userInputObservers)
     }
 
     /// Registers a handler inside the specified type erased array.

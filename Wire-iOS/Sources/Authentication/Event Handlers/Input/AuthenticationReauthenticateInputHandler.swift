@@ -38,14 +38,14 @@ final class AuthenticationReauthenticateInputHandler: AuthenticationEventHandler
         if context is Void {
             // If we get `Void`, start the company login flow.
             return [.startCompanyLogin(code: nil)]
-        } else if let (email, password) = context as? (String, String) {
-            // If we get `(String, String)`, start the email flow
-            let request = AuthenticationLoginRequest.email(address: email, password: password)
-            return [.startLoginFlow(request)]
+        } else if let (emailAndPassword, proxyCredentials) = context as? (EmailPasswordInput, AuthenticationProxyCredentialsInput?) {
+            // If we get `(EmailPasswordInput, AuthenticationProxyCredentialsInput?)`, start the email flow
+            let request = AuthenticationLoginRequest.email(address: emailAndPassword.email, password: emailAndPassword.password)
+            return [.startLoginFlow(request, proxyCredentials)]
         } else if let fullNumber = (context as? PhoneNumber)?.fullNumber {
             // If we get `PhoneNumber`, start the phone login flow
             let request = AuthenticationLoginRequest.phoneNumber(fullNumber)
-            return [.startLoginFlow(request)]
+            return [.startLoginFlow(request, nil)]
         } else {
             zmLog.error("Unable to handle context type: \(type(of: context))")
         }

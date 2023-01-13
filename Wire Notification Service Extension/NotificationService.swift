@@ -19,7 +19,7 @@
 import Foundation
 import WireCommonComponents
 import UserNotifications
-#if canImport(Datadog)
+#if DATADOG_IMPORT
 import Datadog
 #endif
 

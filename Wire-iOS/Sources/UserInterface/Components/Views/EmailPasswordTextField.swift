@@ -22,6 +22,11 @@ protocol EmailPasswordTextFieldDelegate: AnyObject {
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField)
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField)
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
+    func textField(_ textField: UITextField, editing: Bool)
+}
+
+extension EmailPasswordTextFieldDelegate {
+    func textField(_ textField: UITextField, editing: Bool) {}
 }
 
 class RevisedEmailPasswordTextField: EmailPasswordTextField {
@@ -237,6 +242,13 @@ class EmailPasswordTextField: UIView, MagicTappable {
 }
 
 extension EmailPasswordTextField: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        delegate?.textField(textField, editing: true)
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.textField(textField, editing: false)
+    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailField {

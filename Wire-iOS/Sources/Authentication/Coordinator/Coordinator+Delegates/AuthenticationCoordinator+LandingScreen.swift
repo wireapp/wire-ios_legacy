@@ -19,28 +19,87 @@
 import Foundation
 import UIKit
 import WireCommonComponents
+import WireTransport
 
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
     func landingViewControllerDidChooseLogin() {
         if let fastloginCredentials = AutomationHelper.sharedHelper.automationEmailCredentials {
             let loginRequest = AuthenticationLoginRequest.email(address: fastloginCredentials.email, password: fastloginCredentials.password)
-            executeActions([.showLoadingView, .startLoginFlow(loginRequest)])
+            let proxyCredentials = BackendEnvironment.shared.proxyCredentialsInput
+
+            executeActions([.showLoadingView, .startLoginFlow(loginRequest, proxyCredentials)])
         } else {
             stateController.transition(to: .provideCredentials(.email, nil))
         }
     }
 
     func landingViewControllerDidChooseCreateAccount() {
+        typealias Alert = L10n.Localizable.Landing.Alert.CreateNewAccount.NotSupported
+
+        guard !shouldShowProxyWarning else {
+            showProxyAlert(title: Alert.title, message: Alert.message)
+            return
+        }
+
         let unregisteredUser = makeUnregisteredUser()
         stateController.transition(to: .createCredentials(unregisteredUser))
     }
 
     func landingViewControllerDidChooseEnterpriseLogin() {
+        typealias Alert = L10n.Localizable.Landing.Alert.Sso.NotSupported
+
+        guard !shouldShowProxyWarning else {
+            showProxyAlert(title: Alert.title, message: Alert.message)
+            return
+        }
+
         executeActions([.startCompanyLogin(code: nil)])
     }
 
     func landingViewControllerDidChooseSSOLogin() {
         executeActions([.startSSOFlow])
+    }
+
+    func landingViewControllerDidChooseInfoBackend() {
+        executeActions([.presentCustomBackendAlert])
+    }
+
+    private func showProxyAlert(title: String, message: String) {
+        // not supported, show alert
+        let alert = AuthenticationCoordinatorAlert(title: title,
+                                                   message: message,
+                                                   actions: [.ok])
+        executeActions([.presentAlert(alert)])
+    }
+
+    private var shouldShowProxyWarning: Bool {
+       BackendEnvironment.shared.proxy != nil
+    }
+}
+
+extension EnvironmentTypeProvider {
+    var customUrl: URL? {
+        switch value {
+        case .custom(let url):
+            return url
+        default:
+            return nil
+        }
+    }
+}
+
+extension BackendEnvironment {
+
+    var proxyCredentials: ProxyCredentials? {
+        return proxy.flatMap { proxy in
+            ProxyCredentials.retrieve(for: proxy)
+        }
+    }
+
+    var proxyCredentialsInput: AuthenticationProxyCredentialsInput? {
+        proxyCredentials.flatMap {
+            AuthenticationProxyCredentialsInput(username: $0.username, password: $0.password)
+        }
     }
 }

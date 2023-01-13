@@ -64,6 +64,7 @@ public enum SemanticColors {
         static let textErrorDefault = UIColor(light: Asset.Colors.red500Light, dark: Asset.Colors.red500Dark)
         static let textPasswordRulesCheck = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray20)
         static let textTabBar = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray60)
+        static let textFieldFloatingLabel = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray50)
     }
 
     public enum SearchBar {

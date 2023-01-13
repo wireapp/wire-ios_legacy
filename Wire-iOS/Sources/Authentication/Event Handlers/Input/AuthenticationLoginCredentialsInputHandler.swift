@@ -32,15 +32,22 @@ class AuthenticationLoginCredentialsInputHandler: AuthenticationEventHandler {
             return nil
         }
 
-        if let (email, password) = context as? (String, String) {
-            let request = AuthenticationLoginRequest.email(address: email, password: password)
-            return [.startLoginFlow(request)]
+        if let (emailPassword, proxyCredentials) = context as? (EmailPasswordInput, AuthenticationProxyCredentialsInput?) {
+            let request = AuthenticationLoginRequest.email(address: emailPassword.email, password: emailPassword.password)
+
+            return [.startLoginFlow(request, proxyCredentials)]
         } else if let phoneNumber = context as? PhoneNumber {
             let request = AuthenticationLoginRequest.phoneNumber(phoneNumber.fullNumber)
-            return [.startLoginFlow(request)]
+            // here phone input is not available with proxy credentials form
+            return [.startLoginFlow(request, nil)]
         } else {
             return nil
         }
     }
 
+}
+
+struct EmailPasswordInput {
+    var email: String
+    var password: String
 }

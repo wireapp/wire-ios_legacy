@@ -28,11 +28,15 @@ extension BackendEnvironment {
         if let typeOverride = AutomationHelper.sharedHelper.backendEnvironmentTypeOverride() {
             environmentType = EnvironmentType(stringValue: typeOverride)
         }
-        guard let environment = BackendEnvironment(userDefaults: .applicationGroupCombinedWithStandard, configurationBundle: .backendBundle, environmentType: environmentType) else {
+        guard let environment = BackendEnvironment(
+            userDefaults: .applicationGroupCombinedWithStandard,
+            configurationBundle: .backendBundle,
+            environmentType: environmentType
+        ) else {
             fatalError("Malformed backend configuration data")
         }
         return environment
-        }() {
+    }() {
         didSet {
             AutomationHelper.sharedHelper.disableBackendTypeOverride()
             shared.save(in: .applicationGroup)

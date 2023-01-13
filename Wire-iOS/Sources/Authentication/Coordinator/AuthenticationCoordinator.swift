@@ -136,7 +136,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
         self.backupRestoreController = BackupRestoreController(target: presenter)
         super.init()
-
         updateLoginObservers()
         unauthenticatedSessionObserver = sessionManager.addUnauthenticatedSessionManagerCreatedSessionObserver(self)
         companyLoginController?.delegate = self
@@ -144,6 +143,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         presenter.delegate = self
         stateController.delegate = self
         eventResponderChain.configure(delegate: self)
+        addBackendSwitchObserver()
     }
 
     deinit {
@@ -197,6 +197,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
         case .replace:
             var viewControllers = presenter.viewControllers
             viewControllers[viewControllers.count - 1] = stepViewController
+            stateController.transition(to: .landingScreen, mode: .reset)
             presenter.setViewControllers(viewControllers, animated: true)
         }
     }
@@ -215,6 +216,14 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
         updateLoginObservers()
+    }
+
+    func addBackendSwitchObserver() {
+        NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
+            self?.startAuthentication(with: nil, numberOfAccounts: SessionManager.numberOfAccounts)
+        }
     }
 
     func updateLoginObservers() {
@@ -337,7 +346,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 switchCredentialsType(newType)
 
             case .startRegistrationFlow(let unverifiedCredential):
-                startRegistration(unverifiedCredential)
+                activateNetworkSessions { [weak self] _ in
+                    self?.startRegistration(unverifiedCredential)
+                }
 
             case .setUserName(let userName):
                 updateUnregisteredUser(\.name, userName)
@@ -353,8 +364,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .startSSOFlow:
                 startAutomaticSSOFlow()
 
-            case .startLoginFlow(let request):
-                startLoginFlow(request: request)
+            case .startLoginFlow(let request, let credentials):
+                startLoginFlow(request: request, proxyCredentials: credentials)
 
             case .startBackupFlow:
                 backupRestoreController.startBackupFlow()
@@ -619,19 +630,36 @@ extension AuthenticationCoordinator {
     // MARK: - Login
 
     /// Starts the login flow with the specified request.
-    private func startLoginFlow(request: AuthenticationLoginRequest) {
-        switch request {
-        case .email(let address, let password):
-            let credentials = ZMEmailCredentials(email: address, password: password)
-            presenter?.isLoadingViewVisible = true
-            stateController.transition(to: .authenticateEmailCredentials(credentials))
-            unauthenticatedSession.login(with: credentials)
+    private func startLoginFlow(request: AuthenticationLoginRequest, proxyCredentials: AuthenticationProxyCredentialsInput?) {
+        let action = { [weak self] in
 
-        case .phoneNumber(let phoneNumber):
-            presenter?.isLoadingViewVisible = true
-            let nextStep = AuthenticationFlowStep.requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
-            stateController.transition(to: nextStep)
-            unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+            switch request {
+            case .email(let address, let password):
+                let credentials = ZMEmailCredentials(email: address, password: password)
+                self?.presenter?.isLoadingViewVisible = true
+                self?.stateController.transition(to: .authenticateEmailCredentials(credentials))
+                self?.unauthenticatedSession.login(with: credentials)
+
+            case .phoneNumber(let phoneNumber):
+                self?.presenter?.isLoadingViewVisible = true
+                let nextStep = AuthenticationFlowStep.requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
+                self?.stateController.transition(to: nextStep)
+                self?.unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+            }
+        }
+
+        if let proxyCredentials = proxyCredentials {
+            sessionManager.saveProxyCredentials(username: proxyCredentials.username,
+                                                password: proxyCredentials.password)
+        }
+
+        activateNetworkSessions { [weak self] error in
+            guard error == nil else {
+                self?.sessionManager.removeProxyCredentials()
+                self?.showAlertWithGeneralError()
+                return
+            }
+            action()
         }
     }
 
@@ -782,4 +810,26 @@ extension AuthenticationCoordinator {
         stateController.unwindState()
     }
 
+    private func showAlertWithGeneralError() {
+        typealias Alert = L10n.Localizable.Credentials.GeneralError.Alert
+
+        executeActions(
+            [.presentAlert(.init(title: Alert.title,
+                                 message: Alert.message,
+                                 actions: [.ok]))]
+        )
+    }
+
+    /// Call this method when ready to use network sessions : first login
+    private func activateNetworkSessions(before action: @escaping (Error?) -> Void) {
+        sessionManager.markNetworkSessionsAsReady(true)
+        self.presenter?.isLoadingViewVisible = true
+        sessionManager.resolveAPIVersion { [weak self] error in
+            self?.presenter?.isLoadingViewVisible = false
+            if error != nil {
+                self?.sessionManager.markNetworkSessionsAsReady(false)
+            }
+            action(error)
+        }
+    }
 }
