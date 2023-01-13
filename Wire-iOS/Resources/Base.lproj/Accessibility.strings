@@ -236,3 +236,12 @@
 "tabBar.archived.description" = "Archive";
 "tabBar.archived.hint" = "Double tap to open list of archived conversations";
 "tabBar.item.value" = "Selected";
+
+"landing.loginEnterpriseButton.description" = "Log in with SSO";
+"tabBar.email.description" = "Log in via email";
+"tabBar.phone.description" = "Log in via phone number";
+"authentication.forgotPasswordButton.description" = "Change your password";
+"authentication.backButton.description" = "Go back to start screen";
+
+"connection.archiveButton.description" = "Archive connection";
+"connection.cancelButton.description" = "Cancel connection";

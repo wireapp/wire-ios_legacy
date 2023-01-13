@@ -35,6 +35,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
                                                      UITextFieldDelegate {
 
     typealias Registration = L10n.Localizable.Registration
+    typealias TabBarStrings = L10n.Accessibility.TabBar
     weak var actioner: AuthenticationActioner?
 
     /// Types of flow provided by the view controller.
@@ -149,11 +150,13 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
                                     image: nil,
                                     selectedImage: nil)
         emailTab.accessibilityIdentifier = "UseEmail"
+        emailTab.accessibilityLabel = TabBarStrings.Email.description
 
         let passwordTab = UITabBarItem(title: Registration.registerByPhone.capitalized,
                                        image: nil,
                                        selectedImage: nil)
         passwordTab.accessibilityIdentifier = "UsePhone"
+        passwordTab.accessibilityLabel = TabBarStrings.Phone.description
 
         return TabBar(items: [emailTab, passwordTab])
     }()
@@ -173,6 +176,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(attributeString, for: .normal)
+        button.accessibilityLabel = L10n.Accessibility.Authentication.ForgotPasswordButton.description
         button.addTarget(self, action: #selector(forgotPasswordTapped), for: .touchUpInside)
 
         return button

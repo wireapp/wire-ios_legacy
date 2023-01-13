@@ -136,6 +136,7 @@ final class LandingViewController: AuthenticationStepViewController {
                             cornerRadius: 16,
                             fontSpec: .buttonBigSemibold)
         button.accessibilityIdentifier = "Enterprise Login"
+        button.accessibilityLabel = L10n.Accessibility.Landing.LoginEnterpriseButton.description
         button.setTitle(Landing.Login.Enterprise.Button.title, for: .normal)
         button.addTarget(self,
                          action: #selector(enterpriseLoginButtonTapped(_:)),

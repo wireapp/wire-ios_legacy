@@ -206,5 +206,6 @@ final class TabBar: UIView {
     fileprivate func updateButtonSelection() {
         tabs.forEach { $0.isSelected = false }
         tabs[selectedIndex].isSelected = true
+        tabs[selectedIndex].accessibilityValue = L10n.Accessibility.TabBar.Item.value
     }
 }

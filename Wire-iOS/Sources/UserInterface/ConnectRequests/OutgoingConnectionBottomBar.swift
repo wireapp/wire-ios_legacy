@@ -25,6 +25,8 @@ enum OutgoingConnectionBottomBarAction: UInt {
 
 final class OutgoingConnectionViewController: UIViewController {
 
+    typealias Connection = L10n.Accessibility.Connection
+
     private let cancelButton = IconButton()
     private let archiveButton = IconButton()
 
@@ -49,7 +51,7 @@ final class OutgoingConnectionViewController: UIViewController {
     }
 
     private func setupCancelButton() {
-        cancelButton.accessibilityLabel = "cancel connection"
+        cancelButton.accessibilityLabel = Connection.CancelButton.description
         cancelButton.setIcon(.undo, size: .tiny, for: .normal)
         cancelButton.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         cancelButton.setIconColor(SemanticColors.Icon.foregroundDefault.withAlphaComponent(0.4), for: .highlighted)
@@ -61,7 +63,7 @@ final class OutgoingConnectionViewController: UIViewController {
     }
 
     private func setupArchiveButton() {
-        archiveButton.accessibilityLabel = "archive connection"
+        archiveButton.accessibilityLabel = Connection.ArchiveButton.description
         archiveButton.setIcon(.archive, size: .tiny, for: .normal)
         archiveButton.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         archiveButton.setIconColor(SemanticColors.Icon.foregroundDefault.withAlphaComponent(0.4), for: .highlighted)

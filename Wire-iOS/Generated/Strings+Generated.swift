@@ -135,6 +135,16 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "audioRecord.stopButton.description", fallback: "Stop recording")
       }
     }
+    internal enum Authentication {
+      internal enum BackButton {
+        /// Go back to start screen
+        internal static let description = L10n.tr("Accessibility", "authentication.backButton.description", fallback: "Go back to start screen")
+      }
+      internal enum ForgotPasswordButton {
+        /// Change your password
+        internal static let description = L10n.tr("Accessibility", "authentication.forgotPasswordButton.description", fallback: "Change your password")
+      }
+    }
     internal enum ClientsList {
       internal enum BackButton {
         /// Go back to device list
@@ -163,6 +173,16 @@ internal enum L10n {
       internal enum KeyFingerprint {
         /// Key fingerprint
         internal static let description = L10n.tr("Accessibility", "clientsList.keyFingerprint.description", fallback: "Key fingerprint")
+      }
+    }
+    internal enum Connection {
+      internal enum ArchiveButton {
+        /// Archive connection
+        internal static let description = L10n.tr("Accessibility", "connection.archiveButton.description", fallback: "Archive connection")
+      }
+      internal enum CancelButton {
+        /// Cancel connection
+        internal static let description = L10n.tr("Accessibility", "connection.cancelButton.description", fallback: "Cancel connection")
       }
     }
     internal enum ContactsList {
@@ -623,6 +643,12 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "guestConversationSettings.closeButton.description", fallback: "Close guest settings")
       }
     }
+    internal enum Landing {
+      internal enum LoginEnterpriseButton {
+        /// Log in with SSO
+        internal static let description = L10n.tr("Accessibility", "landing.loginEnterpriseButton.description", fallback: "Log in with SSO")
+      }
+    }
     internal enum LicenseDetailsSettings {
       internal enum BackButton {
         /// Go back to License details
@@ -808,6 +834,10 @@ internal enum L10n {
         /// Double tap to open list of recent conversations
         internal static let hint = L10n.tr("Accessibility", "tabBar.conversations.hint", fallback: "Double tap to open list of recent conversations")
       }
+      internal enum Email {
+        /// Log in via email
+        internal static let description = L10n.tr("Accessibility", "tabBar.email.description", fallback: "Log in via email")
+      }
       internal enum Folders {
         /// List of conversations organized in folders
         internal static let description = L10n.tr("Accessibility", "tabBar.folders.description", fallback: "List of conversations organized in folders")
@@ -817,6 +847,10 @@ internal enum L10n {
       internal enum Item {
         /// Selected
         internal static let value = L10n.tr("Accessibility", "tabBar.item.value", fallback: "Selected")
+      }
+      internal enum Phone {
+        /// Log in via phone number
+        internal static let description = L10n.tr("Accessibility", "tabBar.phone.description", fallback: "Log in via phone number")
       }
     }
   }
@@ -3029,8 +3063,8 @@ internal enum L10n {
       internal static let searchInConversation = L10n.tr("Localizable", "keyboardshortcut.searchInConversation", fallback: "Search in Conversation...")
     }
     internal enum Landing {
-      /// Wire. Add your Account.
-      internal static let header = L10n.tr("Localizable", "landing.header", fallback: "Wire. Add your Account.")
+      /// Wire. Log in or create a personal account.
+      internal static let header = L10n.tr("Localizable", "landing.header", fallback: "Wire. Log in or create a personal account.")
       /// Trying to create a Pro or Enterprise account for your business or organization?
       internal static let welcomeMessage = L10n.tr("Localizable", "landing.welcome_message", fallback: "Trying to create a Pro or Enterprise account for your business or organization?")
       /// Unfortunately, that's not possible in the app - once you have created your team, you can log in here
