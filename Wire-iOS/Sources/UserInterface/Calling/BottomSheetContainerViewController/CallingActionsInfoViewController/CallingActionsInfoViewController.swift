@@ -109,14 +109,14 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     }
 
     private func createConstraints() {
-        actionsViewHeightConstraint = actionsView.heightAnchor.constraint(equalToConstant: 112.0)
+        actionsViewHeightConstraint = actionsView.heightAnchor.constraint(equalToConstant: 128.0)
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
             stackView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
-
-            actionsView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
+            actionsView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor, constant: 16.0),
+            actionsView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -16.0),
             actionsViewHeightConstraint,
 
             participantsHeaderView.heightAnchor.constraint(equalToConstant: participantsHeaderHeight),
@@ -134,11 +134,11 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
 
     func updateActionViewHeight() {
         guard UIDevice.current.orientation.isLandscape else {
-            actionsViewHeightConstraint.constant =  isIncomingCall ? 230 : 112
+            actionsViewHeightConstraint.constant =  isIncomingCall ? 230 : 128
             actionsView.verticalStackView.alignment = .fill
             return
         }
-        actionsViewHeightConstraint.constant =  125.0
+        actionsViewHeightConstraint.constant =  128.0
         actionsView.verticalStackView.alignment = .center
     }
 

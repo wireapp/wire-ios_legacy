@@ -77,6 +77,9 @@ final class GridView: UICollectionView {
         isPagingEnabled = true
 
         contentInsetAdjustmentBehavior = .never
+        if DeveloperFlag.isUpdatedCallingUI {
+            backgroundColor = .clear
+        }
     }
 
     // MARK: - Public Interface

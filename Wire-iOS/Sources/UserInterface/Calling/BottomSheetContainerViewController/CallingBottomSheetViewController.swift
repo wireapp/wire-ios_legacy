@@ -46,7 +46,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         case .incoming:
             offset = UIDevice.current.orientation.isLandscape ? 128.0 : 230.0
         default:
-            offset = UIDevice.current.orientation.isLandscape ? 128.0 : 112.0
+            offset = 128.0
         }
         if case .established = callInfoConfiguration?.state, let configuration = callInfoConfiguration, configuration.classification != .none {
             offset += SecurityLevelView.SecurityLevelViewHeight
@@ -213,6 +213,10 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
+        if configuration.state != callInfoConfiguration?.state {
+            headerBar.updateConfiguration(configuration: configuration)
+            visibleVoiceChannelViewController.view.layoutSubviews()
+        }
         callInfoConfiguration = configuration
         updateState()
         callDegradationController.state = configuration.degradationState

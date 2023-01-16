@@ -47,7 +47,6 @@ class CallingActionsView: UIView {
     private let botttomStackView = UIStackView(axis: .horizontal)
     private var input: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
-    private var verticalStackViewTopContraint: NSLayoutConstraint!
 
     // Buttons
     private let microphoneButton = CallingActionButton.microphoneButton()
@@ -56,6 +55,7 @@ class CallingActionsView: UIView {
     private let flipCameraButton = CallingActionButton.flipCameraButton()
     private let endCallButton =  EndCallButton.endCallButton()
     private let handleView = AccessibilityActionView()
+    private let handleContainerView = UIView()
     private let largePickUpButton = PickUpButton.bigPickUpButton()
     private let largeHangUpButton = EndCallButton.bigEndCallButton()
 
@@ -67,16 +67,16 @@ class CallingActionsView: UIView {
         didSet {
             guard oldValue != isIncomingCall else { return }
             topStackView.removeSubviews()
-            handleView.isHidden = isIncomingCall
+            handleContainerView.isHidden = isIncomingCall
             handleView.accessibilityElementsHidden = isIncomingCall
             if isIncomingCall {
                 [microphoneButton, cameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
                 addIncomingCallControllButtons()
-                verticalStackViewTopContraint.constant = 16.0
+                verticalStackView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 0, right: 4)
             } else {
                 establishedCallButtons.forEach(topStackView.addArrangedSubview)
                 removeIncomingCallControllButtons()
-                verticalStackViewTopContraint.constant = 4.0
+                verticalStackView.layoutMargins = UIEdgeInsets(top: 7, left: 0, bottom: 0, right: 0)
             }
             setNeedsDisplay()
         }
@@ -97,16 +97,19 @@ class CallingActionsView: UIView {
     }
 
     private func setupViews() {
-        backgroundColor = SemanticColors.View.backgroundDefaultWhite
+        backgroundColor = .clear
         topStackView.distribution = .equalSpacing
         topStackView.spacing = 6
         verticalStackView.alignment = .center
         verticalStackView.spacing = 10
+        verticalStackView.isLayoutMarginsRelativeArrangement = true
+        verticalStackView.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
         addSubview(verticalStackView)
         establishedCallButtons.forEach(topStackView.addArrangedSubview)
         handleView.layer.cornerRadius = 3.0
         handleView.backgroundColor = SemanticColors.View.backgroundCallDragBarIndicator
-        [handleView, topStackView].forEach(verticalStackView.addArrangedSubview)
+        handleContainerView.addSubview(handleView)
+        [handleContainerView, topStackView].forEach(verticalStackView.addArrangedSubview)
         [
             flipCameraButton,
             cameraButton,
@@ -121,11 +124,14 @@ class CallingActionsView: UIView {
 
     private func createConstraints() {
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalStackViewTopContraint = verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4)
+        handleView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            verticalStackViewTopContraint,
+            verticalStackView.topAnchor.constraint(equalTo: topAnchor),
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            handleView.centerXAnchor.constraint(equalTo: handleContainerView.centerXAnchor),
+            handleView.topAnchor.constraint(equalTo: handleContainerView.topAnchor),
+            handleView.bottomAnchor.constraint(equalTo: handleContainerView.bottomAnchor),
             handleView.heightAnchor.constraint(equalToConstant: 5),
             handleView.widthAnchor.constraint(equalToConstant: 130)
         ])
@@ -142,6 +148,8 @@ class CallingActionsView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         establishedCallButtons.forEach { $0.updateState() }
+        [largePickUpButton, largeHangUpButton].forEach { $0.updateState() }
+
     }
 
     private func addIncomingCallControllButtons() {
@@ -153,9 +161,9 @@ class CallingActionsView: UIView {
         }
 
         NSLayoutConstraint.activate([
-            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 16),
+            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor),
             largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
-            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -16),
+            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
             largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12)
         ])
     }
