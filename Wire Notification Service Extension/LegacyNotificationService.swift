@@ -176,6 +176,7 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
           analytics: nil
       )
 
+      session.wireLogger = DatadogWrapper.shared()
       session.delegate = self
       return session
   }
@@ -255,5 +256,26 @@ extension UNNotificationContent {
 
       return userID
   }
+
+}
+
+extension DatadogWrapper: WireLogger {
+    
+    public func info(_ message: String) {
+        print("loging datadog...")
+        self.log(level: .info, message: message)
+    }
+
+    public func debug(_ message: String) {
+        self.log(level: .debug, message: message)
+    }
+
+    public func warn(_ message: String) {
+        self.log(level: .warn, message: message)
+    }
+
+    public func error(_ message: String, _ error: Error) {
+        self.log(level: .critical, message: message)
+    }
 
 }
