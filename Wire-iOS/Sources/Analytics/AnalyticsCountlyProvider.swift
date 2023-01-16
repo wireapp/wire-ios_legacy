@@ -128,6 +128,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
         config.manualSessionHandling = true
         config.deviceID = analyticsIdentifier
 
+        config.urlSessionConfiguration = self.sessionConfiguration
         updateCountlyUser(withProperties: userProperties)
 
         countlyInstanceType.sharedInstance().start(with: config)
@@ -142,6 +143,19 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
 
         beginSession()
         tagPendingEvents()
+    }
+
+    private var sessionConfiguration: URLSessionConfiguration {
+        guard let proxy = BackendEnvironment.shared.proxy else {
+            return URLSessionConfiguration.ephemeral
+        }
+
+        let credentials = ProxyCredentials.retrieve(for: proxy)
+        let settings = BackendEnvironment.shared.proxy?.socks5Settings(proxyUsername: credentials?.username, proxyPassword: credentials?.password)
+
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.connectionProxyDictionary = settings
+        return configuration
     }
 
     private func endCountly() {
