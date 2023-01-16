@@ -76,7 +76,7 @@ class CallingActionsView: UIView {
             } else {
                 establishedCallButtons.forEach(topStackView.addArrangedSubview)
                 removeIncomingCallControllButtons()
-                verticalStackViewTopContraint.constant = 8.0
+                verticalStackViewTopContraint.constant = 4.0
             }
             setNeedsDisplay()
         }
@@ -121,12 +121,11 @@ class CallingActionsView: UIView {
 
     private func createConstraints() {
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalStackViewTopContraint = verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 8)
+        verticalStackViewTopContraint = verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4)
         NSLayoutConstraint.activate([
             verticalStackViewTopContraint,
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topStackView.heightAnchor.constraint(equalToConstant: 84).withPriority(.required),
             handleView.heightAnchor.constraint(equalToConstant: 5),
             handleView.widthAnchor.constraint(equalToConstant: 130)
         ])

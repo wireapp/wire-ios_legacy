@@ -30,7 +30,6 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setNeedsLayout()
         button.layoutIfNeeded()
-        UserDefaults.applicationGroup.set(true, forKey: DeveloperFlag.deprecatedCallingUI.rawValue)
     }
 
     override func tearDown() {

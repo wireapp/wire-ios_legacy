@@ -47,7 +47,7 @@ class BottomSheetContainerViewController: UIViewController {
 
     var configuration: BottomSheetConfiguration {
         didSet {
-            visibleControllerBottomConstraint = contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -configuration.initialOffset)
+            visibleControllerBottomConstraint.constant = -configuration.initialOffset
             bottomViewHeightConstraint.constant = configuration.height
             view.setNeedsLayout()
         }
