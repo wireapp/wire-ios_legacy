@@ -50,7 +50,7 @@ extension UIBarButtonItem {
         systemImage: Bool,
         target buttonTarget: Any?,
         action buttonAction: Selector?,
-        font buttonFont: FontSpec = .headerRegularFont) -> UIBarButtonItem {
+        font buttonFont: UIFont = .preferredFont(forTextStyle: .body)) -> UIBarButtonItem {
 
             var rightBarButtonItem: UIBarButtonItem
             if systemImage {
@@ -68,12 +68,10 @@ extension UIBarButtonItem {
 
             let buttonStates: [UIControl.State] = [.normal, .highlighted, .disabled, .selected, .focused, .application, .reserved]
 
-            if let buttonFont = buttonFont.font {
-                buttonStates.forEach { buttonState in
-                    rightBarButtonItem.setTitleTextAttributes(
-                        [NSAttributedString.Key.font: buttonFont],
-                        for: buttonState)
-                }
+            buttonStates.forEach { buttonState in
+                rightBarButtonItem.setTitleTextAttributes(
+                    [NSAttributedString.Key.font: buttonFont],
+                    for: buttonState)
             }
             return rightBarButtonItem
 
@@ -84,7 +82,7 @@ extension UIBarButtonItem {
         systemImage: Bool,
         target buttonTarget: Any?,
         action buttonAction: Selector?,
-        font buttonFont: FontSpec = .headerRegularFont) -> UIBarButtonItem {
+        font buttonFont: UIFont = .preferredFont(forTextStyle: .body)) -> UIBarButtonItem {
 
             var leftBarButtonItem: UIBarButtonItem
             if systemImage {
@@ -102,12 +100,10 @@ extension UIBarButtonItem {
 
             let buttonStates: [UIControl.State] = [.normal, .highlighted, .disabled, .selected, .focused, .application, .reserved]
 
-            if let buttonFont = buttonFont.font {
-                buttonStates.forEach { buttonState in
-                    leftBarButtonItem.setTitleTextAttributes(
-                        [NSAttributedString.Key.font: buttonFont],
-                        for: buttonState)
-                }
+            buttonStates.forEach { buttonState in
+                leftBarButtonItem.setTitleTextAttributes(
+                    [NSAttributedString.Key.font: buttonFont],
+                    for: buttonState)
             }
             return leftBarButtonItem
 
