@@ -143,8 +143,8 @@ final class BackupPasswordViewController: UIViewController {
 
         navigationItem.setupNavigationBarTitle(title: HistoryBackup.Password.title.capitalized)
 
-        let cancelButtonItem: UIBarButtonItem = .createNavigationRightBarButtonItem(
-            title: HistoryBackup.Password.next.capitalized,
+        let cancelButtonItem: UIBarButtonItem = .createNavigationLeftBarButtonItem(
+            title: HistoryBackup.Password.cancel.capitalized,
             systemImage: false,
             target: self,
             action: #selector(cancel)
