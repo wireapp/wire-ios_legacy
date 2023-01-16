@@ -143,20 +143,24 @@ final class BackupPasswordViewController: UIViewController {
 
         navigationItem.setupNavigationBarTitle(title: HistoryBackup.Password.title.capitalized)
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: HistoryBackup.Password.cancel.capitalized,
-            style: .plain,
+        let cancelButtonItem: UIBarButtonItem = .createNavigationRightBarButtonItem(
+            title: HistoryBackup.Password.next.capitalized,
+            systemImage: false,
             target: self,
             action: #selector(cancel)
         )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+
+        let nextButtonItem: UIBarButtonItem = .createNavigationRightBarButtonItem(
             title: HistoryBackup.Password.next.capitalized,
-            style: .done,
+            systemImage: false,
             target: self,
             action: #selector(completeWithCurrentResult)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = .accent()
-        navigationItem.rightBarButtonItem?.isEnabled = false
+       )
+        nextButtonItem.tintColor = UIColor.accent()
+        nextButtonItem.isEnabled = false
+
+        navigationItem.leftBarButtonItem = cancelButtonItem
+        navigationItem.rightBarButtonItem = nextButtonItem
     }
 
     fileprivate func updateState(with text: String) {
