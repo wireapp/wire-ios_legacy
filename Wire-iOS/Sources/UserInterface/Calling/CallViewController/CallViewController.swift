@@ -219,6 +219,9 @@ final class CallViewController: UIViewController {
         } else {
             addToSelf(callGridViewController)
         }
+        if DeveloperFlag.isUpdatedCallingUI {
+            view.backgroundColor = .clear
+        }
     }
 
     private func createConstraints() {
@@ -325,6 +328,7 @@ final class CallViewController: UIViewController {
     }
 
     private func updateAppearance() {
+        guard !DeveloperFlag.isUpdatedCallingUI else { return }
         view.backgroundColor = UIColor.from(scheme: .background, variant: callInfoConfiguration.variant)
     }
 
