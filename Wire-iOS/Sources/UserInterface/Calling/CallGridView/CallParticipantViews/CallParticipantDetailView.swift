@@ -76,7 +76,6 @@ final class CallParticipantDetailsView: RoundedBlurView {
             labelContainerView.layer.masksToBounds = true
             microphoneImageView.image = StyleKitIcon.microphoneOff.makeImage(size: .tiny,
                                                                              color: SemanticColors.Icon.foregroundMicrophone)
-            microphoneImageView.tintColor = SemanticColors.Icon.foregroundMicrophone
             microphoneImageView.backgroundColor = SemanticColors.Icon.foregroundDefaultWhite
             microphoneImageView.contentMode = .center
             microphoneImageView.layer.cornerRadius = 3.0
@@ -133,5 +132,12 @@ final class CallParticipantDetailsView: RoundedBlurView {
                                        inContainer: labelContainerView,
                                        withInsets: UIEdgeInsets.init(top: 4, left: 4, bottom: 4, right: 4))
         )
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
+        microphoneImageView.image = StyleKitIcon.microphoneOff.makeImage(size: .tiny,
+                                                                         color: SemanticColors.Icon.foregroundMicrophone)
     }
 }
