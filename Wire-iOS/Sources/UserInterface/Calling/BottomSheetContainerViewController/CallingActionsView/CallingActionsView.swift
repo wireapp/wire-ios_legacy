@@ -47,7 +47,6 @@ class CallingActionsView: UIView {
     private let botttomStackView = UIStackView(axis: .horizontal)
     private var input: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
-    private var verticalStackViewTopContraint: NSLayoutConstraint!
 
     // Buttons
     private let microphoneButton = CallingActionButton.microphoneButton()
@@ -72,11 +71,11 @@ class CallingActionsView: UIView {
             if isIncomingCall {
                 [microphoneButton, cameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
                 addIncomingCallControllButtons()
-                verticalStackViewTopContraint.constant = 16.0
+                verticalStackView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 0, right: 4)
             } else {
                 establishedCallButtons.forEach(topStackView.addArrangedSubview)
                 removeIncomingCallControllButtons()
-                verticalStackViewTopContraint.constant = 4.0
+                verticalStackView.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
             }
             setNeedsDisplay()
         }
@@ -102,6 +101,8 @@ class CallingActionsView: UIView {
         topStackView.spacing = 6
         verticalStackView.alignment = .center
         verticalStackView.spacing = 10
+        verticalStackView.isLayoutMarginsRelativeArrangement = true
+        verticalStackView.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
         addSubview(verticalStackView)
         establishedCallButtons.forEach(topStackView.addArrangedSubview)
         handleView.layer.cornerRadius = 3.0
@@ -121,9 +122,8 @@ class CallingActionsView: UIView {
 
     private func createConstraints() {
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalStackViewTopContraint = verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4)
         NSLayoutConstraint.activate([
-            verticalStackViewTopContraint,
+            verticalStackView.topAnchor.constraint(equalTo: topAnchor),
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             handleView.heightAnchor.constraint(equalToConstant: 5),
@@ -153,9 +153,9 @@ class CallingActionsView: UIView {
         }
 
         NSLayoutConstraint.activate([
-            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 16),
+            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor),
             largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
-            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -16),
+            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
             largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12)
         ])
     }
