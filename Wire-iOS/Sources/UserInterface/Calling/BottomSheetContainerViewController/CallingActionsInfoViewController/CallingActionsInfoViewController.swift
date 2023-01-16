@@ -116,7 +116,9 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
             stackView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
 
-            actionsView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
+//            actionsView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -(32.0 + view.safeAreaInsets.leading + view.safeAreaInsets.trailing )),
+            actionsView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor, constant: 16.0),
+            actionsView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -16.0),
             actionsViewHeightConstraint,
 
             participantsHeaderView.heightAnchor.constraint(equalToConstant: participantsHeaderHeight),
