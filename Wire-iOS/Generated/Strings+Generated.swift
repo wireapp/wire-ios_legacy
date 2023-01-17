@@ -3072,16 +3072,16 @@ internal enum L10n {
       internal enum Alert {
         internal enum CreateNewAccount {
           internal enum NotSupported {
-            /// Creating a new personal account on an on-premise backend with proxy support is currently not possible.
-            internal static let message = L10n.tr("Localizable", "landing.alert.create-new-account.not-supported.message", fallback: "Creating a new personal account on an on-premise backend with proxy support is currently not possible.")
+            /// You can't create a personal account on an on-premises backend with proxy support.
+            internal static let message = L10n.tr("Localizable", "landing.alert.create-new-account.not-supported.message", fallback: "You can't create a personal account on an on-premises backend with proxy support.")
             /// Not supported
             internal static let title = L10n.tr("Localizable", "landing.alert.create-new-account.not-supported.title", fallback: "Not supported")
           }
         }
         internal enum Sso {
           internal enum NotSupported {
-            /// Log in via SSO on an on-premise backend with proxy support is currently not possible.
-            internal static let message = L10n.tr("Localizable", "landing.alert.sso.not-supported.message", fallback: "Log in via SSO on an on-premise backend with proxy support is currently not possible.")
+            /// You can't log in via SSO on an on-premises backend with proxy support.
+            internal static let message = L10n.tr("Localizable", "landing.alert.sso.not-supported.message", fallback: "You can't log in via SSO on an on-premises backend with proxy support.")
             /// Not supported
             internal static let title = L10n.tr("Localizable", "landing.alert.sso.not-supported.title", fallback: "Not supported")
           }
@@ -3107,8 +3107,8 @@ internal enum L10n {
           return L10n.tr("Localizable", "landing.custom_backend.title", String(describing: p1), fallback: "Connected to \"%@\"")
         }
         internal enum Alert {
-          /// On-premise Backend
-          internal static let title = L10n.tr("Localizable", "landing.custom_backend.alert.title", fallback: "On-premise Backend")
+          /// On-premises Backend
+          internal static let title = L10n.tr("Localizable", "landing.custom_backend.alert.title", fallback: "On-premises Backend")
           internal enum Message {
             /// Backend name:
             internal static let backendName = L10n.tr("Localizable", "landing.custom_backend.alert.message.backend-name", fallback: "Backend name:")

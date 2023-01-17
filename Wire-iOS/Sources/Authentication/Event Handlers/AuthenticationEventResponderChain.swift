@@ -67,6 +67,7 @@ class AuthenticationEventResponderChain {
         case registrationStepSuccess
         case userProfileChange(UserChangeInfo)
         case userInput(Any)
+        case deviceConfigurationComplete
     }
 
     // MARK: - Properties
@@ -98,6 +99,7 @@ class AuthenticationEventResponderChain {
     var registrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var userProfileChangeObservers: [AnyAuthenticationEventHandler<UserChangeInfo>] = []
     var userInputObservers: [AnyAuthenticationEventHandler<Any>] = []
+    var deviceConfigurationHandlers: [AnyAuthenticationEventHandler<Void>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
@@ -169,6 +171,9 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationAddEmailPasswordInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationReauthenticateInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationShowCustomBackendInfoHandler(), to: &userInputObservers)
+
+        // deviceConfigurationHandlers
+        registerHandler(DeviceConfigurationEventHandler(), to: &deviceConfigurationHandlers)
     }
 
     /// Registers a handler inside the specified type erased array.
@@ -210,6 +215,8 @@ class AuthenticationEventResponderChain {
             handleEvent(with: userProfileChangeObservers, context: changeInfo)
         case .userInput(let value):
             handleEvent(with: userInputObservers, context: value)
+        case .deviceConfigurationComplete:
+            handleEvent(with: deviceConfigurationHandlers, context: ())
         }
     }
 

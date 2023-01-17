@@ -59,6 +59,7 @@ final class ProxyCredentialsViewController: UIViewController {
         textField.placeholder = Credentials.Username.placeholder.capitalized // TODO: .uppercased() when new design is implemented
         textField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         textField.delegate = self
+        textField.addDoneButtonOnKeyboard()
         return textField
     }()
 
@@ -68,6 +69,7 @@ final class ProxyCredentialsViewController: UIViewController {
         textField.placeholder = Credentials.Password.placeholder.capitalized // TODO: .uppercased() when new design is implemented
         textField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         textField.delegate = self
+        textField.addDoneButtonOnKeyboard()
         textField.returnKeyType = .done
         return textField
     }()
