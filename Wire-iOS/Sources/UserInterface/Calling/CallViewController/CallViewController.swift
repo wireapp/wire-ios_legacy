@@ -240,7 +240,6 @@ final class CallViewController: UIViewController {
         }
     }
 
-
     private func createConstraintsForUpdatedUI() {
         NSLayoutConstraint.activate([
             callGridViewController.view.topAnchor.constraint(equalTo: view.safeTopAnchor),

@@ -128,8 +128,6 @@ class CallingActionsView: UIView {
         handleView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: topAnchor),
-//            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor).withPriority(.defaultLow),
-//            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor).withPriority(.defaultLow),
             verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             verticalStackView.widthAnchor.constraint(equalTo: widthAnchor).withPriority(.defaultLow),
             verticalStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 392).withPriority(.required),
