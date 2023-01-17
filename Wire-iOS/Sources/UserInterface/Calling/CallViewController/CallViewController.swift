@@ -189,6 +189,10 @@ final class CallViewController: UIViewController {
         }
     }
 
+    func reloadGrid() {
+        callGridViewController.gridView.reloadData()
+    }
+
     override func accessibilityPerformEscape() -> Bool {
         guard let delegate = delegate else { return false }
         delegate.callViewControllerDidDisappear(self, for: conversation)

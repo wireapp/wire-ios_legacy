@@ -144,6 +144,10 @@ final class CallGridViewController: SpinnerCapableViewController {
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
+    func releadGrid() {
+        gridView.reloadData()
+    }
+
     private func createConstraints() {
         [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView, pageIndicator].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
