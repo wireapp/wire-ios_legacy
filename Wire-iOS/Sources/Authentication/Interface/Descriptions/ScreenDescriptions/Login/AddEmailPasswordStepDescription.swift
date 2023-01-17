@@ -41,9 +41,9 @@ class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
         initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
         footerView = nil
 
-        let loginDescription = LoginFooterDescription()
+        let loginDescription = CTAFooterDescription()
         secondaryView = loginDescription
-        loginDescription.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        loginDescription.ctaButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
 
         emailPasswordFieldDescription.textField.delegate = self
 
@@ -62,14 +62,14 @@ class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
     }
 
     private func updateLoginButtonState(_ textField: EmailPasswordTextField) {
-        (secondaryView as? LoginFooterDescription)?.loginButton.isEnabled = textField.emailField.isInputValid && textField.passwordField.isInputValid
+        (secondaryView as? CTAFooterDescription)?.ctaButton.isEnabled = textField.emailField.isInputValid && textField.passwordField.isInputValid
     }
 }
 
 extension AddEmailPasswordStepDescription: EmailPasswordTextFieldDelegate {
 
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-        (secondaryView as? LoginFooterDescription)?.loginButton.isEnabled = textField.emailField.isInputValid && textField.passwordField.isInputValid
+        (secondaryView as? CTAFooterDescription)?.ctaButton.isEnabled = textField.emailField.isInputValid && textField.passwordField.isInputValid
     }
 
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {}
@@ -77,33 +77,33 @@ extension AddEmailPasswordStepDescription: EmailPasswordTextFieldDelegate {
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {}
 }
 
-// MARK: - LoginFooterDescription
+// MARK: - CTAFooterDescription
 
-private class LoginFooterDescription: ViewDescriptor, AuthenticationSecondaryViewDescription {
+private class CTAFooterDescription: ViewDescriptor, AuthenticationSecondaryViewDescription {
     var views: [ViewDescriptor] {
         [self]
     }
 
     var actioner: AuthenticationActioner?
 
-    let loginButton = Button(style: .accentColorTextButtonStyle,
+    let ctaButton = Button(style: .accentColorTextButtonStyle,
                              cornerRadius: 16,
                              fontSpec: .buttonBigSemibold)
 
     init() {
-        loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
+        ctaButton.setTitle(L10n.Localizable.AddEmailPasswordStep.CtaButton.title.capitalized, for: .normal)
     }
 
     func create() -> UIView {
         let containerView = UIView()
-        containerView.addSubview(loginButton)
+        containerView.addSubview(ctaButton)
 
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        ctaButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            loginButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 31),
-            loginButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 31),
-            loginButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -31),
-            loginButton.heightAnchor.constraint(equalToConstant: 48)
+            ctaButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 31),
+            ctaButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 31),
+            ctaButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -31),
+            ctaButton.heightAnchor.constraint(equalToConstant: 48)
         ])
 
         return containerView
