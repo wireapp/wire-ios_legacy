@@ -18,25 +18,98 @@
 
 import Foundation
 import WireUtilities
+import UIKit
 
 class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
 
     let backButton: BackButtonDescription?
-    let mainView: ViewDescriptor & ValueSubmission
+    var mainView: ViewDescriptor & ValueSubmission {
+        emailPasswordFieldDescription
+    }
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
     let initialValidation: ValueValidation
     let footerView: AuthenticationFooterViewDescription?
 
+    private let emailPasswordFieldDescription = EmailPasswordFieldDescription(forRegistration: true, usePasswordDeferredValidation: true)
+
     init() {
         backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription(forRegistration: true, usePasswordDeferredValidation: true)
         headline = "registration.add_email_password.hero.title".localized
         subtext = "registration.add_email_password.hero.paragraph".localized
         initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
-        secondaryView = nil
         footerView = nil
+
+        let loginDescription = LoginFooterDescription()
+        secondaryView = loginDescription
+        loginDescription.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+
+        emailPasswordFieldDescription.textField.delegate = self
+
+        updateLoginButtonState(emailPasswordFieldDescription.textField)
     }
 
+    @objc
+    func loginButtonTapped(sender: Any) {
+        if let passwordError = emailPasswordFieldDescription.textField.passwordValidationError {
+            emailPasswordFieldDescription.valueValidated?(.error(passwordError, showVisualFeedback: true))
+            return
+        }
+
+        let credentials = (emailPasswordFieldDescription.textField.emailField.input, emailPasswordFieldDescription.textField.passwordField.input)
+        emailPasswordFieldDescription.valueSubmitted?(credentials)
+    }
+
+    private func updateLoginButtonState(_ textField: EmailPasswordTextField) {
+        (secondaryView as? LoginFooterDescription)?.loginButton.isEnabled = textField.emailField.isInputValid && textField.passwordField.isInputValid
+    }
+}
+
+extension AddEmailPasswordStepDescription: EmailPasswordTextFieldDelegate {
+
+    func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
+        (secondaryView as? LoginFooterDescription)?.loginButton.isEnabled = textField.emailField.isInputValid && textField.passwordField.isInputValid
+    }
+
+    func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {}
+
+    func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {}
+}
+
+// MARK: - LoginFooterDescription
+
+private class LoginFooterDescription: ViewDescriptor, AuthenticationSecondaryViewDescription {
+    var views: [ViewDescriptor] {
+        [self]
+    }
+
+    var actioner: AuthenticationActioner?
+
+    let loginButton = Button(style: .accentColorTextButtonStyle,
+                             cornerRadius: 16,
+                             fontSpec: .buttonBigSemibold)
+
+    init() {
+        loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
+    }
+
+    func create() -> UIView {
+        let containerView = UIView()
+        containerView.addSubview(loginButton)
+
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loginButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 31),
+            loginButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 31),
+            loginButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -31),
+            loginButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
+
+        return containerView
+    }
+
+    func display(on error: Error) -> ViewDescriptor? {
+        return nil
+    }
 }

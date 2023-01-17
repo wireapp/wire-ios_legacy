@@ -31,6 +31,12 @@ extension EmailPasswordTextFieldDelegate {
 
 class RevisedEmailPasswordTextField: EmailPasswordTextField {
 
+    override func configureSubviews() {
+        super.configureSubviews()
+//        passwordField.bindConfirmationButton(to: emailField)
+//        passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+    }
+    
     override func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
@@ -94,7 +100,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
-    private func configureSubviews() {
+    func configureSubviews() {
         contentStack.axis = .vertical
         contentStack.spacing = 36
         contentStack.alignment = .fill
@@ -108,7 +114,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         emailField.colorSchemeVariant = colorSchemeVariant
-        passwordField.addDoneButtonOnKeyboard()
+        emailField.addDoneButtonOnKeyboard()
         emailField.enableConfirmButton = { [weak self] in
             self?.emailValidationError == nil
         }
@@ -118,9 +124,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         passwordField.delegate = self
         passwordField.textFieldValidationDelegate = self
         passwordField.placeholder = L10n.Localizable.Password.placeholder.capitalized
-        passwordField.bindConfirmationButton(to: emailField)
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
-        passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         passwordField.colorSchemeVariant = colorSchemeVariant
         passwordField.addDoneButtonOnKeyboard()
         passwordField.enableConfirmButton = { [weak self] in
