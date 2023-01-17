@@ -42,6 +42,10 @@ final class CallController: NSObject {
         addObservers()
     }
 
+    deinit {
+        observerTokens.removeAll()
+    }
+
     // MARK: - Public Implementation
     func updateActiveCallPresentationState() {
         guard let priorityCallConversation = priorityCallConversation else {

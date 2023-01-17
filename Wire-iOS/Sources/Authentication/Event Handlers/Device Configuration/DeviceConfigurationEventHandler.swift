@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2023 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,17 +18,18 @@
 
 import Foundation
 
-/**
- * Handles the notification informing that the user session has been created after the user registered.
- */
-
-class RegistrationSessionAvailableEventHandler: AuthenticationEventHandler {
+class DeviceConfigurationEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        guard case .createUser = currentStep else { return nil }
-        return [.transition(.configureDevice, mode: .normal), .configureDevicePermissions]
+        guard case .configureDevice = currentStep else { return nil }
+
+        if statusProvider?.sharedUserSession?.hasCompletedInitialSync == true {
+            return [.hideLoadingView, postAction]
+        } else {
+            return [.transition(.pendingInitialSync(next: nil), mode: .normal)]
+        }
     }
 
 }
