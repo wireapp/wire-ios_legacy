@@ -99,8 +99,7 @@ class CallingActionsView: UIView {
     private func setupViews() {
         backgroundColor = .clear
         topStackView.distribution = .equalSpacing
-        topStackView.spacing = 6
-        verticalStackView.alignment = .center
+        verticalStackView.alignment = .fill
         verticalStackView.spacing = 10
         verticalStackView.isLayoutMarginsRelativeArrangement = true
         verticalStackView.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
@@ -127,13 +126,16 @@ class CallingActionsView: UIView {
         handleView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: topAnchor),
-            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            verticalStackView.widthAnchor.constraint(equalTo: widthAnchor).withPriority(.defaultLow),
+            verticalStackView.widthAnchor.constraint(lessThanOrEqualToConstant: 392).withPriority(.required),
             handleView.centerXAnchor.constraint(equalTo: handleContainerView.centerXAnchor),
             handleView.topAnchor.constraint(equalTo: handleContainerView.topAnchor),
             handleView.bottomAnchor.constraint(equalTo: handleContainerView.bottomAnchor),
             handleView.heightAnchor.constraint(equalToConstant: 5),
-            handleView.widthAnchor.constraint(equalToConstant: 130)
+            handleView.widthAnchor.constraint(equalToConstant: 130),
+            topStackView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 14),
+            topStackView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor, constant: -14)
         ])
     }
 
@@ -161,10 +163,10 @@ class CallingActionsView: UIView {
         }
 
         NSLayoutConstraint.activate([
-            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor),
-            largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
-            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
-            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12)
+            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 20.0),
+            largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12.0),
+            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0),
+            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12.0)
         ])
     }
 

@@ -82,10 +82,6 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
         stackView.alignment = .center
         stackView.distribution = .fill
         stackView.spacing = 0
-
-        actionsView.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        actionsView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumInteritemSpacing = 12
@@ -114,21 +110,21 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
             stackView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
             stackView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
-            actionsView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor, constant: 16.0),
-            actionsView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -16.0),
+            stackView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -20),
+
+            actionsView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            actionsView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
             actionsViewHeightConstraint,
 
             participantsHeaderView.heightAnchor.constraint(equalToConstant: participantsHeaderHeight),
             participantsHeaderLabel.leadingAnchor.constraint(equalTo: participantsHeaderView.leadingAnchor, constant: 16.0),
             participantsHeaderLabel.centerYAnchor.constraint(equalTo: participantsHeaderView.centerYAnchor),
 
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            participantsHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            participantsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-            securityLevelView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            collectionView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            participantsHeaderView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            participantsHeaderView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            securityLevelView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
     }
 

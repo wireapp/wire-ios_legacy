@@ -99,6 +99,11 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        visibleVoiceChannelViewController.reloadGrid()
+    }
+
     private func setupViews() {
         view.backgroundColor = SemanticColors.View.backgroundDefault
         headerBar.minimalizeButton.addTarget(self, action: #selector(hideCallView), for: .touchUpInside)
@@ -199,8 +204,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     private func startCallDurationTimer() {
         stopCallDurationTimer()
-        guard let configuration = callInfoConfiguration else { return }
-        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [headerBar] _ in
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [callInfoConfiguration, headerBar] _ in
+            guard let configuration = callInfoConfiguration, case .established = configuration.state else { return }
             headerBar.updateConfiguration(configuration: configuration)
         }
     }
@@ -216,9 +221,11 @@ extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
         if configuration.state != callInfoConfiguration?.state {
             headerBar.updateConfiguration(configuration: configuration)
             visibleVoiceChannelViewController.view.layoutSubviews()
+            callInfoConfiguration = configuration
+            updateState()
+        } else {
+            callInfoConfiguration = configuration
         }
-        callInfoConfiguration = configuration
-        updateState()
         callDegradationController.state = configuration.degradationState
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
         panGesture.isEnabled = !configuration.state.isIncoming
