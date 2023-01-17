@@ -1305,7 +1305,7 @@
 "landing.custom_backend.title" = "Connected to \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Show more";
 "landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
-"landing.custom_backend.alert.title" = "On-premise Backend";
+"landing.custom_backend.alert.title" = "On-premises Backend";
 "landing.custom_backend.alert.message.backend-name" = "Backend name:";
 "landing.custom_backend.alert.message.backend-url" = "Backend URL:";
 
@@ -1949,8 +1949,8 @@ to reset this device and log in again";
 "proxy-credentials.password.placeholder" = "Password";
 
 "landing.alert.create-new-account.not-supported.title" = "Not supported";
-"landing.alert.create-new-account.not-supported.message" = "Creating a new personal account on an on-premise backend with proxy support is currently not possible.";
+"landing.alert.create-new-account.not-supported.message" = "You can't create a personal account on an on-premises backend with proxy support.";
 "landing.alert.sso.not-supported.title" = "Not supported";
-"landing.alert.sso.not-supported.message" = "Log in via SSO on an on-premise backend with proxy support is currently not possible.";
+"landing.alert.sso.not-supported.message" = "You can't log in via SSO on an on-premises backend with proxy support.";
 "credentials.general-error.alert.title" = "Invalid Information";
 "credentials.general-error.alert.message" = "These account credentials are incorrect. Please verify your details and try again.";
