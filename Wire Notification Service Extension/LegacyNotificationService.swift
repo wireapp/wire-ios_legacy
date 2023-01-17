@@ -176,7 +176,7 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
           analytics: nil
       )
 
-      session.wireLogger = DatadogWrapper.shared()
+      session.logger = DatadogWrapper.shared
       session.delegate = self
       return session
   }
