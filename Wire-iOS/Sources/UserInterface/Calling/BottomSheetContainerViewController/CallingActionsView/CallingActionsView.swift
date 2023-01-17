@@ -99,8 +99,6 @@ class CallingActionsView: UIView {
     private func setupViews() {
         backgroundColor = .clear
         topStackView.distribution = .equalSpacing
-
-//        topStackView.spacing = 16
         verticalStackView.alignment = .fill
         verticalStackView.spacing = 10
         verticalStackView.isLayoutMarginsRelativeArrangement = true
