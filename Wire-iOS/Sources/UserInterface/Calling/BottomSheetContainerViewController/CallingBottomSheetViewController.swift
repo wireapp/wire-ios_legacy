@@ -213,7 +213,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
-        if configuration.state != callInfoConfiguration?.state {
+        if configuration.state != callInfoConfiguration?.state, case .established = configuration.state {
             headerBar.updateConfiguration(configuration: configuration)
             visibleVoiceChannelViewController.view.layoutSubviews()
         }
