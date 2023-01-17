@@ -112,7 +112,11 @@ final class CallViewController: UIViewController {
         disableVideoIfNeeded()
 
         setupViews()
-        createConstraints()
+        if DeveloperFlag.isUpdatedCallingUI {
+            createConstraintsForUpdatedUI()
+        } else {
+            createConstraints()
+        }
         updateConfiguration()
 
         singleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
@@ -230,6 +234,16 @@ final class CallViewController: UIViewController {
         } else {
             callGridViewController.view.fitIn(view: view)
         }
+    }
+
+
+    private func createConstraintsForUpdatedUI() {
+        NSLayoutConstraint.activate([
+            callGridViewController.view.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            callGridViewController.view.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+            callGridViewController.view.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            callGridViewController.view.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor)
+        ])
     }
 
     private func setupObservers() {

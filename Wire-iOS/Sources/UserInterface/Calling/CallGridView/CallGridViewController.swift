@@ -148,9 +148,22 @@ final class CallGridViewController: SpinnerCapableViewController {
         [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView, pageIndicator].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
+        if DeveloperFlag.isUpdatedCallingUI {
+            [ thumbnailViewController.view].forEach {
+                $0.fitIn(view: view)
+            }
 
-        [gridView, thumbnailViewController.view].forEach {
-            $0.fitIn(view: view)
+            NSLayoutConstraint.activate([
+                gridView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+                gridView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+                gridView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+                gridView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor)
+            ])
+
+        } else {
+            [gridView, thumbnailViewController.view].forEach {
+                $0.fitIn(view: view)
+            }
         }
         let topStackTopDistance = DeveloperFlag.isUpdatedCallingUI ? 6.0 : 24.0
         NSLayoutConstraint.activate([
@@ -160,7 +173,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
             pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             pageIndicator.heightAnchor.constraint(equalToConstant: CGFloat.pageIndicatorHeight),
-            pageIndicator.centerXAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
+            pageIndicator.centerXAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -22)
         ])
 
         pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
