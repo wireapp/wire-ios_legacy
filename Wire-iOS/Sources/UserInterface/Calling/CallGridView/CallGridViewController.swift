@@ -144,7 +144,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
-    func releadGrid() {
+    func releadGridData() {
         gridView.reloadData()
     }
 
