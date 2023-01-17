@@ -102,11 +102,13 @@ class EmailPasswordTextField: UIView, MagicTappable {
         addSubview(contentStack)
 
         emailField.delegate = self
+        emailField.addDoneButtonOnKeyboard()
         emailField.textFieldValidationDelegate = self
         emailField.placeholder = L10n.Localizable.Email.placeholder.capitalized
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         emailField.colorSchemeVariant = colorSchemeVariant
+        passwordField.addDoneButtonOnKeyboard()
         emailField.enableConfirmButton = { [weak self] in
             self?.emailValidationError == nil
         }
@@ -120,7 +122,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         passwordField.colorSchemeVariant = colorSchemeVariant
-
+        passwordField.addDoneButtonOnKeyboard()
         passwordField.enableConfirmButton = { [weak self] in
             self?.isPasswordEmpty == false
         }
@@ -128,7 +130,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
         contentStack.addArrangedSubview(passwordField)
     }
 
-     func configureConstraints() {
+    func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([

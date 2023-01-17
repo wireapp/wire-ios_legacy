@@ -186,6 +186,7 @@ final class ConversationViewController: UIViewController {
 
         if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
             updateRightNavigationItemsButtons()
+            updateLeftNavigationBarItems()
         }
     }
 
@@ -536,10 +537,6 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         button.layer.cornerRadius = 12
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
-
-        if showingSearchResults {
-            button.tintColor = UIColor.accent()
-        }
 
         return UIBarButtonItem(customView: button)
     }

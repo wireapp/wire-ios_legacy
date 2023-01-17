@@ -35,6 +35,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
                                                      UITextFieldDelegate {
 
     typealias Registration = L10n.Localizable.Registration
+    typealias TabBarStrings = L10n.Accessibility.TabBar
     weak var actioner: AuthenticationActioner?
 
     /// Types of flow provided by the view controller.
@@ -101,18 +102,17 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     convenience init(flowType: FlowType, backendEnvironmentProvider: @escaping () -> BackendEnvironmentProvider = { BackendEnvironment.shared }) {
         switch flowType {
         case .login(let credentialsType, let credentials):
-            let showProxyCredentials = backendEnvironmentProvider().proxy?.needsAuthentication == true
             let description = LogInStepDescription()
-            self.init(description: description, contentCenterConstraintActivation: !showProxyCredentials)
+            self.init(description: description, contentCenterConstraintActivation: false)
             self.credentialsType = credentials?.primaryCredentialsType ?? credentialsType
             self.prefilledCredentials = credentials
-            self.shouldUseScrollView = showProxyCredentials
+            self.shouldUseScrollView = true
         case .reauthentication(let credentials):
             let description = ReauthenticateStepDescription(prefilledCredentials: credentials)
-            self.init(description: description, contentCenterConstraintActivation: true)
+            self.init(description: description, contentCenterConstraintActivation: false)
             self.credentialsType = credentials?.primaryCredentialsType ?? .email
             self.prefilledCredentials = credentials
-            self.shouldUseScrollView = false
+            self.shouldUseScrollView = true
         case .registration:
             let description = PersonalRegistrationStepDescription()
             self.init(description: description, contentCenterConstraintActivation: true)
@@ -150,11 +150,13 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
                                     image: nil,
                                     selectedImage: nil)
         emailTab.accessibilityIdentifier = "UseEmail"
+        emailTab.accessibilityLabel = TabBarStrings.Email.description
 
         let passwordTab = UITabBarItem(title: Registration.registerByPhone.capitalized,
                                        image: nil,
                                        selectedImage: nil)
         passwordTab.accessibilityIdentifier = "UsePhone"
+        passwordTab.accessibilityLabel = TabBarStrings.Phone.description
 
         return TabBar(items: [emailTab, passwordTab])
     }()
@@ -174,6 +176,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(attributeString, for: .normal)
+        button.accessibilityLabel = L10n.Accessibility.Authentication.ForgotPasswordButton.description
         button.addTarget(self, action: #selector(forgotPasswordTapped), for: .touchUpInside)
 
         return button
@@ -254,8 +257,13 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
     private func setupDefaultView() {
         let horizontalMargin: CGFloat = 31
+        let emptyView = UIView()
         contentStack.spacing = 24
 
+        if stepDescription.subtext == nil && shouldUseScrollView {
+            contentStack.addArrangedSubview(emptyView)
+            contentStack.setCustomSpacing(56, after: emptyView)
+        }
         contentStack.addArrangedSubview(tabBar)
         contentStack.addArrangedSubview(emailInputField)
         contentStack.addArrangedSubview(emailPasswordInputField)
@@ -264,7 +272,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         contentStack.addArrangedSubview(loginButton)
 
         contentStack.isLayoutMarginsRelativeArrangement = true
-        contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: horizontalMargin, bottom: 0, trailing: horizontalMargin)
+        contentStack.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0,
+                                                                        leading: horizontalMargin,
+                                                                        bottom: 0,
+                                                                        trailing: horizontalMargin)
     }
 
     override func createMainView() -> UIView {
