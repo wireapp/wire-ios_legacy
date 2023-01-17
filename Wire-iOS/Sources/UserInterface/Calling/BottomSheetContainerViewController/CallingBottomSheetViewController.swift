@@ -219,13 +219,16 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
     func didUpdateConfiguration(configuration: CallInfoConfiguration) {
         if configuration.state != callInfoConfiguration?.state {
-            headerBar.updateConfiguration(configuration: configuration)
-            visibleVoiceChannelViewController.view.layoutSubviews()
+            if case .established = configuration.state {
+                headerBar.updateConfiguration(configuration: configuration)
+            }
+            visibleVoiceChannelViewController.reloadGrid()
             callInfoConfiguration = configuration
             updateState()
         } else {
             callInfoConfiguration = configuration
         }
+
         callDegradationController.state = configuration.degradationState
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
         panGesture.isEnabled = !configuration.state.isIncoming
