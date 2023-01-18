@@ -12,5 +12,7 @@
 	<array>
 		<string>group.$(WIRE_BUNDLE_ID)</string>
 	</array>
+	<key>com.apple.developer.pushkit.unrestricted-voip</key>
+	<true/>
 </dict>
 </plist>
