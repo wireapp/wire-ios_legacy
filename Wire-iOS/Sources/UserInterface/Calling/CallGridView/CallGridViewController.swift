@@ -74,6 +74,14 @@ final class CallGridViewController: SpinnerCapableViewController {
             guard !configuration.isEqual(to: oldValue) else { return }
             dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
+            if
+                DeveloperFlag.isUpdatedCallingUI,
+                configuration.isGroupCall,
+                configuration.isConnected,
+                !oldValue.isConnected
+            {
+                updateHint(for: .connectionEstablished)
+            }
         }
     }
 
@@ -237,6 +245,9 @@ final class CallGridViewController: SpinnerCapableViewController {
     func updateHint(for event: CallGridEvent) {
         switch event {
         case .viewDidLoad:
+            guard !DeveloperFlag.isUpdatedCallingUI else { return }
+            hintView.show(hint: .fullscreen)
+        case .connectionEstablished:
             hintView.show(hint: .fullscreen)
         case .configurationChanged where configuration.callHasTwoParticipants:
             guard

@@ -31,6 +31,7 @@ struct CallGridConfiguration: CallGridViewControllerInput, Equatable {
     let presentationMode: VideoGridPresentationMode
     let callHasTwoParticipants: Bool
     let isConnected: Bool
+    let isGroupCall: Bool
 
     init(voiceChannel: VoiceChannel) {
         let videoStreamArrangment = voiceChannel.createStreamArrangment()
@@ -43,6 +44,7 @@ struct CallGridConfiguration: CallGridViewControllerInput, Equatable {
         presentationMode = voiceChannel.videoGridPresentationMode
         callHasTwoParticipants = voiceChannel.callHasTwoParticipants
         isConnected = voiceChannel.state.isConnected
+        isGroupCall = voiceChannel.isGroupCall
     }
 }
 

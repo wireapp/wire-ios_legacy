@@ -29,6 +29,7 @@ protocol CallGridViewControllerInput {
     var presentationMode: VideoGridPresentationMode { get }
     var callHasTwoParticipants: Bool { get }
     var isConnected: Bool { get }
+    var isGroupCall: Bool { get }
 
     func isEqual(to other: CallGridViewControllerInput) -> Bool
 }
