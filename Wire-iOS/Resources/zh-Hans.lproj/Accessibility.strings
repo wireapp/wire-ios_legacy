@@ -207,15 +207,6 @@
 "conversationsListHeader.expandedButton.description" = "Expanded";
 
 "conversationsList.accountButton.hint" = "Double tap to open profile and settings";
-"conversationsList.contactsBottomBar.description" = "联络人";
-"conversationsList.contactsBottomBar.hint" = "Double tap to search for people and open contact list";
-"conversationsList.recentBottomBar.description" = "会话";
-"conversationsList.recentBottomBar.hint" = "Double tap to open list of recent conversations";
-"conversationsList.folderBottomBar.description" = "Folders";
-"conversationsList.folderBottomBar.hint" = "Double tap to open list of conversations organized in folders";
-"conversationsList.archiveBottomBar.description" = "归档";
-"conversationsList.archiveBottomBar.hint" = "Double tap to open list of archived conversations";
-"conversationsList.bottomBar.value" = "Selected";
 "conversationsList.silencedStatus.value" = "Silenced";
 "conversationsList.mentionStatus.value" = "You are mentioned";
 "conversationsList.replyStatus.value" = "回复";
@@ -235,3 +226,44 @@
 "conversationAnnouncement.file.description" = "File %@ received from %@";
 "conversationAnnouncement.deletedMessage.description" = "%@ deleted a message";
 "conversationAnnouncement.editedMessage.description" = "%@ edited a message";
+
+"calling.flipCameraBackButton.description" = "Flip to back camera";
+"calling.flipCameraFrontButton.description" = "Flip to front camera";
+"calling.videoOnButton.description" = "打开摄像头";
+"calling.videoOffButton.description" = "关闭相机";
+"calling.microphoneOnButton.description" = "Turn on microphone";
+"calling.microphoneOffButton.description" = "Turn off microphone";
+"calling.speakerOnButton.description" = "Turn on speaker";
+"calling.speakerOffButton.description" = "Turn off speaker";
+"calling.hangUpButton.description" = "结束通话";
+"calling.acceptButton.description" = "接听";
+"calling.userCellFullscreen.hint" = "Quadruple tap for full screen";
+"calling.userCellMinimize.hint" = "Quadruple tap to minimize view";
+"calling.microphoneOn.description" = "Microphone on";
+"calling.microphoneOff.description" = "Microphone off";
+"calling.cameraOn.description" = "Camera on";
+"calling.cameraOff.description" = "Camera off";
+"calling.activeSpeaker.description" = "Active speaker";
+"calling.sharesScreen.description" = "Shares screen";
+"calling.swipeUpParticipants.hint" = "Double tap to swipe up and view all participant’s details";
+"calling.swipeDownParticipants.hint" = "Double tap to swipe down and hide participant’s details";
+"calling.headerBar.description" = "Minimize calling view";
+
+"tabBar.contacts.description" = "联络人";
+"tabBar.contacts.hint" = "Double tap to search for people and open contact list";
+"tabBar.conversations.description" = "List of recent conversations";
+"tabBar.conversations.hint" = "Double tap to open list of recent conversations";
+"tabBar.folders.description" = "List of conversations organized in folders";
+"tabBar.folders.hint" = "Double tap to open list of conversations organized in folders";
+"tabBar.archived.description" = "归档";
+"tabBar.archived.hint" = "Double tap to open list of archived conversations";
+"tabBar.item.value" = "Selected";
+
+"landing.loginEnterpriseButton.description" = "使用 SSO 登录";
+"tabBar.email.description" = "Log in via email";
+"tabBar.phone.description" = "Log in via phone number";
+"authentication.forgotPasswordButton.description" = "Change your password";
+"authentication.backButton.description" = "Go back to start screen";
+
+"connection.archiveButton.description" = "Archive connection";
+"connection.cancelButton.description" = "Cancel connection";

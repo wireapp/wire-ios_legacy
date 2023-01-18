@@ -650,6 +650,8 @@
 "voice.cancel_button.title" = "Скасувати";
 "voice.call_button.title" = "Аудіодзвінок";
 "voice.end_call_button.title" = "Завершити дзвінок";
+"voice.pick_up_button.title" = "Прийняти";
+"voice.calling.title" = "Calling...";
 "voice.call_error.unsupported_version.title" = "Будь ласка, оновіть Wire";
 "voice.call_error.unsupported_version.message" = "Ви отримали дзвінок, який не підтримується цією версією Wire.\nОновіть вашу версію Wire з App Store.";
 "voice.call_error.unsupported_version.dismiss" = "Пізніше";
@@ -664,6 +666,8 @@
 
 "voice.top_overlay.tap_to_return" = "Торкніться, щоб повернутися до дзвінка";
 "voice.top_overlay.accessibility_title" = "Активний дзвінок";
+
+"voice.flip_camera_button.title" = "Flip";
 
 // Voice New
 
@@ -1288,7 +1292,7 @@
 
 // Landing screen
 
-"landing.header" = "Wire. Додати акаунт.";
+"landing.header" = "Wire. Log in or create a personal account.";
 "landing.welcome_message" = "Пробуєте створити Pro або корпоративний акаунт для свого бізнесу чи організації?";
 "landing.welcome_submessage" = "На жаль, це неможливо зробити в додатку - як тільки ви створите свою команду, то зможете увійти тут";
 "landing.create_account.title" = "Створити персональний акаунт в Wire";
@@ -1305,6 +1309,9 @@
 "landing.custom_backend.title" = "З'єднано з \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Показати більше";
 "landing.custom_backend.more_info.alert.title" = " Ви з'єднані з сервером третьої сторони: %@";
+"landing.custom_backend.alert.title" = "On-premises Backend";
+"landing.custom_backend.alert.message.backend-name" = "Backend name:";
+"landing.custom_backend.alert.message.backend-url" = "Backend URL:";
 
 // Create team
 
@@ -1932,6 +1939,21 @@
 "keyboardshortcut.openPeople" = "Люди";
 
 // MARK: - Security classification
-"security_classification.security_level" = "РІВЕНЬ БЕЗПЕКИ:";
+"security_classification.security_level" = "Security level:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "НЕВІДОМИЙ";
+
+"proxy-credentials.title" = "Proxy Credentials";
+// url of proxy server as backend
+"proxy-credentials.caption" = "This backend is configured to use the following proxy server: %@.";
+"proxy-credentials.username.label" = "Proxy Email or Username";
+"proxy-credentials.username.placeholder" = "Email or Username";
+"proxy-credentials.password.label" = "Proxy Password";
+"proxy-credentials.password.placeholder" = "Пароль";
+
+"landing.alert.create-new-account.not-supported.title" = "Not supported";
+"landing.alert.create-new-account.not-supported.message" = "You can't create a personal account on an on-premises backend with proxy support.";
+"landing.alert.sso.not-supported.title" = "Not supported";
+"landing.alert.sso.not-supported.message" = "You can't log in via SSO on an on-premises backend with proxy support.";
+"credentials.general-error.alert.title" = "Invalid Information";
+"credentials.general-error.alert.message" = "These account credentials are incorrect. Please verify your details and try again.";
