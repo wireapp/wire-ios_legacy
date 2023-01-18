@@ -5611,8 +5611,8 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.network_error.title", fallback: "No Internet Connection")
       }
       internal enum PickUpButton {
-        /// Pick Up
-        internal static let title = L10n.tr("Localizable", "voice.pick_up_button.title", fallback: "Pick Up")
+        /// Accept
+        internal static let title = L10n.tr("Localizable", "voice.pick_up_button.title", fallback: "Accept")
       }
       internal enum SpeakerButton {
         /// Speaker
