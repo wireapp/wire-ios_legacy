@@ -19,61 +19,9 @@
 import Foundation
 import UIKit
 
-enum FontBook {
-
-    enum FontStyle {
-
-        case title3
-        case headline
-        case body
-        case subheadline
-        case caption1
-        case title3Bold
-        case calloutBold
-        case footnote
-
-    }
-
-    static func font(for style: FontStyle) -> UIFont {
-        switch style {
-        case .title3:
-            return .preferredFont(forTextStyle: .title3)
-
-        case .headline:
-            return .preferredFont(forTextStyle: .headline)
-
-        case .body:
-            return .preferredFont(forTextStyle: .body)
-
-        case .subheadline:
-            return .preferredFont(forTextStyle: .subheadline)
-
-        case .caption1:
-            return .preferredFont(forTextStyle: .caption1)
-
-        case .title3Bold:
-            return .preferredFont(forTextStyle:
-                    .title3)
-
-        case .calloutBold:
-            return .preferredFont(forTextStyle: .callout)
-
-        case .footnote:
-            return .preferredFont(forTextStyle: .footnote)
-        }
-    }
-
-    static var label: UILabel {
-        let label = UILabel()
-        label.font = .font(for: .title3)
-        return label
-    }
-
-}
-
 extension UIFont {
 
-    enum FontStyle {
+    public enum FontStyle {
             case title3
             case headline
             case body
@@ -82,11 +30,16 @@ extension UIFont {
             case title3Bold
             case calloutBold
             case footnote
+            case bodyTwoSemibold
 
     }
 
-    static func font(for style: FontStyle) -> UIFont {
+    public static func font(for style: FontStyle) -> UIFont {
             switch style {
+
+            case .bodyTwoSemibold:
+                return  .systemFont(ofSize: 16, weight: .semibold)
+                
             case .title3:
                 return .preferredFont(forTextStyle: .title3)
 
