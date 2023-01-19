@@ -227,6 +227,28 @@
 "conversationAnnouncement.deletedMessage.description" = "%@ deleted a message";
 "conversationAnnouncement.editedMessage.description" = "%@ edited a message";
 
+"calling.flipCameraBackButton.description" = "Flip to back camera";
+"calling.flipCameraFrontButton.description" = "Flip to front camera";
+"calling.videoOnButton.description" = "Turn on camera";
+"calling.videoOffButton.description" = "Turn off camera";
+"calling.microphoneOnButton.description" = "Turn on microphone";
+"calling.microphoneOffButton.description" = "Turn off microphone";
+"calling.speakerOnButton.description" = "Turn on speaker";
+"calling.speakerOffButton.description" = "Turn off speaker";
+"calling.hangUpButton.description" = "End call";
+"calling.acceptButton.description" = "Accept";
+"calling.userCellFullscreen.hint" = "Quadruple tap for full screen";
+"calling.userCellMinimize.hint" = "Quadruple tap to minimize view";
+"calling.microphoneOn.description" = "Microphone on";
+"calling.microphoneOff.description" = "Microphone off";
+"calling.cameraOn.description" = "Camera on";
+"calling.cameraOff.description" = "Camera off";
+"calling.activeSpeaker.description" = "Active speaker";
+"calling.sharesScreen.description" = "Shares screen";
+"calling.swipeUpParticipants.hint" = "Double tap to swipe up and view all participant’s details";
+"calling.swipeDownParticipants.hint" = "Double tap to swipe down and hide participant’s details";
+"calling.headerBar.description" = "Minimize calling view";
+
 "tabBar.contacts.description" = "Contacts";
 "tabBar.contacts.hint" = "Double tap to search for people and open contact list";
 "tabBar.conversations.description" = "List of recent conversations";

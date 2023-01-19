@@ -95,6 +95,7 @@ public enum SemanticColors {
         static let backgroundPasswordRuleCheck = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray20)
         static let backgroundPhoneCall = UIColor(light: Asset.Colors.green500Light, dark: Asset.Colors.green500Dark)
         static let backgroundMissedPhoneCall = UIColor(light: Asset.Colors.red500Light, dark: Asset.Colors.red500Dark)
+        static let foregroundMicrophone = UIColor(light: Asset.Colors.red500Light, dark: Asset.Colors.red500Dark)
     }
 
     public enum View {
@@ -119,17 +120,23 @@ public enum SemanticColors {
         static let borderCharacterInputField = UIColor(light: Asset.Colors.gray80, dark: Asset.Colors.gray40)
         static let borderCharacterInputFieldEnabled = UIColor(light: Asset.Colors.blue500Light, dark: Asset.Colors.blue500Dark)
         static let borderInputBar = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray100)
+        static let backgroundCallDragBarIndicator = UIColor(light: Asset.Colors.gray70, dark: Asset.Colors.gray70)
         static let backgroundBlue = UIColor(light: Asset.Colors.blue100Light, dark: Asset.Colors.blue900Dark)
         static let backgroundGreen = UIColor(light: Asset.Colors.green100Light, dark: Asset.Colors.green900Dark)
         static let backgroundAmber = UIColor(light: Asset.Colors.amber100Light, dark: Asset.Colors.amber900Dark)
         static let backgroundRed = UIColor(light: Asset.Colors.red100Light, dark: Asset.Colors.red900Dark)
         static let backgroundPurple = UIColor(light: Asset.Colors.purple100Light, dark: Asset.Colors.purple900Dark)
         static let backgroundTurqoise = UIColor(light: Asset.Colors.turquoise100Light, dark: Asset.Colors.turquoise900Dark)
+        static let backgroundCallOverlay = UIColor(light: Asset.Colors.black, dark: Asset.Colors.black)
     }
 
     public enum TabBar {
         static let backgroundSeperatorSelected = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
         static let backgroundSeparator = UIColor(light: Asset.Colors.gray50, dark: Asset.Colors.gray80)
+    }
+
+    public enum PageIndicator {
+        static let backgroundDefault = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray90)
     }
 
     public enum Button {
@@ -159,6 +166,24 @@ public enum SemanticColors {
         static let borderInputBarItemHighlighted = UIColor(light: Asset.Colors.blue300Light, dark: Asset.Colors.blue700Dark)
         static let textInputBarItemEnabled = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
         static let textInputBarItemHighlighted = UIColor(light: Asset.Colors.blue500Light, dark: Asset.Colors.white)
+
+        /// Calling buttons
+        static let backgroundCallingNormal = UIColor(light: Asset.Colors.white, dark: Asset.Colors.gray90)
+        static let backgroundCallingSelected = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
+        static let backgroundCallingDisabled = UIColor(light: Asset.Colors.gray20, dark: Asset.Colors.gray95)
+
+        static let borderCallingNormal = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray100)
+        static let borderCallingSelected = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
+        static let borderCallingDisabled = UIColor(light: Asset.Colors.gray40, dark: Asset.Colors.gray95)
+
+        static let iconCallingNormal = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
+        static let iconCallingSelected = UIColor(light: Asset.Colors.white, dark: Asset.Colors.black)
+        static let iconCallingDisabled = UIColor(light: Asset.Colors.gray60, dark: Asset.Colors.gray70)
+
+        static let textCallingNormal = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
+        static let textCallingDisabled = UIColor(light: Asset.Colors.gray60, dark: Asset.Colors.gray70)
+
+        static let backgroundPickUp = UIColor(light: Asset.Colors.green500Light, dark: Asset.Colors.green500Dark)
         static let textUnderlineEnabledDefault = UIColor(light: Asset.Colors.black, dark: Asset.Colors.white)
     }
 }

@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 import SnapshotTesting
+import WireCommonComponents
 
 final class CallInfoRootViewControllerTests: ZMSnapshotTestCase {
 
@@ -36,6 +37,7 @@ final class CallInfoRootViewControllerTests: ZMSnapshotTestCase {
         mockUsers = SwiftMockLoader.mockUsers()
         defaultFixture = CallInfoTestFixture(otherUser: mockOtherUser, selfUser: mockSelfUser, mockUsers: mockUsers)
         CallingConfiguration.config = .largeConferenceCalls
+        UserDefaults.applicationGroup.set(true, forKey: DeveloperFlag.deprecatedCallingUI.rawValue)
     }
 
     override func tearDown() {

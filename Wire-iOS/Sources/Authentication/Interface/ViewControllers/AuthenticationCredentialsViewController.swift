@@ -224,10 +224,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         innerTopStackView.axis = .vertical
         innerTopStackView.spacing = verticalSpacing
 
-        if let infoView = customBackendInfo() {
-            innerTopStackView.addArrangedSubview(infoView)
-            innerTopStackView.setCustomSpacing(66, after: infoView)
-        }
+        addCustomBackendViewIfNeeded(to: innerTopStackView, space: 66)
 
         innerTopStackView.addArrangedSubview(tabBar)
         innerTopStackView.addArrangedSubview(emailInputField)
@@ -260,6 +257,8 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         let emptyView = UIView()
         contentStack.spacing = 24
 
+        addCustomBackendViewIfNeeded(to: contentStack, space: 0)
+
         if stepDescription.subtext == nil && shouldUseScrollView {
             contentStack.addArrangedSubview(emptyView)
             contentStack.setCustomSpacing(56, after: emptyView)
@@ -276,6 +275,12 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
                                                                         leading: horizontalMargin,
                                                                         bottom: 0,
                                                                         trailing: horizontalMargin)
+    }
+
+    private func addCustomBackendViewIfNeeded(to uiStackView: UIStackView, space: CGFloat) {
+        guard let infoView = customBackendInfo() else { return }
+        uiStackView.addArrangedSubview(infoView)
+        uiStackView.setCustomSpacing(space, after: infoView)
     }
 
     override func createMainView() -> UIView {
@@ -345,6 +350,8 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
         if shouldUseScrollView {
             NSLayoutConstraint.activate([
+                contentStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
+                contentStack.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor),
                 contentStack.widthAnchor.constraint(equalToConstant: 375),
                 contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 86)
@@ -365,6 +372,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.height, right: 0.0)
         scrollView.contentInset = contentInsets
         scrollView.verticalScrollIndicatorInsets = contentInsets
+
         let activeRect = activeField.convert(activeField.bounds, to: scrollView)
         scrollView.scrollRectToVisible(activeRect, animated: true)
     }
@@ -535,7 +543,6 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             return
         }
         // no-op: we do not update the UI depending on the validity of the input
-
     }
 
     private func updateLoginButtonState() {

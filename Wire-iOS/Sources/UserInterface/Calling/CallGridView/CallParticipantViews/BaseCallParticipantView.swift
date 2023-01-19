@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import avs
 import WireSyncEngine
+import WireCommonComponents
 
 class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
 
@@ -31,6 +32,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             updateBorderStyle()
             updateVideoKind()
             hideVideoViewsIfNeeded()
+            setupAccessibility()
         }
     }
 
@@ -52,6 +54,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             updateBorderStyle()
             updateFillMode()
             updateScalableView()
+            setupAccessibility()
         }
     }
 
@@ -64,6 +67,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     var avatarView = UserImageView(size: .normal)
     var userSession = ZMUserSession.shared()
     private(set) var videoView: AVSVideoViewProtocol?
+    private var borderLayer = CALayer()
 
     // MARK: - Private Properties
 
@@ -102,6 +106,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         hideVideoViewsIfNeeded()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
+        setupAccessibility()
     }
 
     @available(*, unavailable)
@@ -117,6 +122,23 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         userDetailsView.alpha = userDetailsAlpha
     }
 
+    private func setupAccessibility() {
+        typealias Calling = L10n.Accessibility.Calling
+
+        guard let userName = userDetailsView.name else {
+            return
+        }
+
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        let microphoneState = userDetailsView.microphoneIconStyle.accessibilityLabel
+        let cameraState = (stream.isSharingVideo && !stream.isScreenSharing) ? Calling.CameraOn.description : Calling.CameraOff.description
+        let activeSpeaker = stream.isParticipantUnmutedAndSpeakingNow ? Calling.ActiveSpeaker.description : ""
+        let screenSharing = stream.isScreenSharing ? Calling.SharesScreen.description : ""
+        accessibilityLabel = "\(userName), \(microphoneState), \(cameraState), \(activeSpeaker), \(screenSharing)"
+        accessibilityHint = isMaximized ? Calling.UserCellMinimize.hint : Calling.UserCellFullscreen.hint
+    }
+
     func setupViews() {
         addSubview(avatarView)
         addSubview(userDetailsView)
@@ -124,29 +146,40 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         backgroundColor = .graphite
         avatarView.user = stream.user
         avatarView.userSession = userSession
-        userDetailsView.alpha = 0
+        userDetailsView.alpha = DeveloperFlag.isUpdatedCallingUI ? 1 : 0
+
+        guard DeveloperFlag.isUpdatedCallingUI else { return }
+        layer.cornerRadius = 3
+        layer.masksToBounds = true
+        borderLayer.borderColor = SemanticColors.View.backgroundDefaultWhite.cgColor
+        borderLayer.borderWidth = 5.0
+        borderLayer.cornerRadius = 3
+        layer.insertSublayer(borderLayer, above: layer)
     }
 
     func createConstraints() {
-
-        [avatarView, userDetailsView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [avatarView, userDetailsView].prepareForLayout()
 
         detailsConstraints = UserDetailsConstraints(
             view: userDetailsView,
             superview: self,
             safeAreaInsets: adjustedInsets
         )
-
+        let avatarWidth = DeveloperFlag.isUpdatedCallingUI ? 72.0 : 88.0
         NSLayoutConstraint.activate([
             userDetailsView.heightAnchor.constraint(equalToConstant: 24),
             avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
             avatarView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            avatarView.widthAnchor.constraint(equalToConstant: 88),
+            avatarView.widthAnchor.constraint(equalToConstant: avatarWidth),
             avatarView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.7),
             avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor)
         ])
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
+        borderLayer.borderColor = SemanticColors.View.backgroundDefaultWhite.cgColor
     }
 
     private func hideVideoViewsIfNeeded() {
@@ -201,8 +234,15 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         let showBorderForActiveSpeaker = shouldShowActiveSpeakerFrame && stream.isParticipantUnmutedAndSpeakingNow
         let showBorderForAudioParticipant = shouldShowBorderWhenVideoIsStopped && !stream.isSharingVideo
 
-        layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? 1 : 0
-        layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
+        guard DeveloperFlag.isUpdatedCallingUI else {
+            layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? 1 : 0
+            layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
+            return
+        }
+
+        layer.borderWidth = showBorderForActiveSpeaker ? 2 : 0
+        layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.clear.cgColor
+        borderLayer.isHidden = !showBorderForActiveSpeaker
     }
 
     // MARK: - Orientation & Layout
@@ -210,6 +250,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     override func layoutSubviews() {
         super.layoutSubviews()
         detailsConstraints?.updateEdges(with: adjustedInsets)
+        borderLayer.frame = bounds
     }
 
     func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation,

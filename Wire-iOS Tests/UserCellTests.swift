@@ -17,6 +17,7 @@
 //
 
 import XCTest
+import WireCommonComponents
 @testable import Wire
 
 final class UserCellTests: ZMSnapshotTestCase {
@@ -35,6 +36,7 @@ final class UserCellTests: ZMSnapshotTestCase {
         mockUser.handle = "james_hetfield_1"
 
         conversation = MockGroupDetailsConversation()
+        UserDefaults.applicationGroup.set(true, forKey: DeveloperFlag.deprecatedCallingUI.rawValue)
     }
 
     override func tearDown() {

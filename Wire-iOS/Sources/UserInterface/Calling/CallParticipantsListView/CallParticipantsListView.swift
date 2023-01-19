@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import WireCommonComponents
 
 typealias CallParticipantsList = [CallParticipantsListCellConfiguration]
 
@@ -115,7 +116,6 @@ extension CallParticipantsListView: UICollectionViewDataSource {
                                        variant: colorSchemeVariant,
                                        selfUser: selfUser)
         }
-
         return cell
     }
 
@@ -130,13 +130,15 @@ extension UserCell: CallParticipantsListCellConfigurable {
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
-        configure(with: user.value, selfUser: selfUser)
         accessoryIconView.isHidden = true
         microphoneIconView.set(style: MicrophoneIconStyle(
             state: microphoneState,
             shouldPulse: activeSpeakerState.isSpeakingNow)
         )
         videoIconView.set(style: VideoIconStyle(state: videoState))
+        configure(with: user.value, selfUser: selfUser)
+        guard DeveloperFlag.isUpdatedCallingUI else { return }
+        backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
 
 }

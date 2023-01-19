@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 // MARK: - ActiveCallRouterProtocol
 protocol ActiveCallRouterProtocol: AnyObject {
@@ -42,7 +43,15 @@ protocol CallQualityRouterProtocol: AnyObject {
 class ActiveCallRouter: NSObject {
 
     // MARK: - Public Property
-    var isActiveCallShown = false
+    var isActiveCallShown = false {
+        didSet {
+            if isActiveCallShown {
+                isPresentingActiveCall = false
+            }
+        }
+    }
+
+    var isPresentingActiveCall = false
 
     // MARK: - Private Property
     private let rootViewController: RootViewController
@@ -81,14 +90,27 @@ class ActiveCallRouter: NSObject {
 extension ActiveCallRouter: ActiveCallRouterProtocol {
     // MARK: - ActiveCall
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool) {
-        guard !isActiveCallShown else { return }
+        guard
+            !isPresentingActiveCall,
+            !isActiveCallShown
+        else {
+            return
+        }
 
         // NOTE: We resign first reponder for the input bar since it will attempt to restore
         // first responder when the call overlay is interactively dismissed but canceled.
         UIResponder.currentFirst?.resignFirstResponder()
 
-        let activeCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
-        activeCallViewController.delegate = callController
+        var activeCallViewController: UIViewController!
+        if DeveloperFlag.isUpdatedCallingUI {
+            let bottomSheetActiveCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel)
+            bottomSheetActiveCallViewController.delegate = callController
+            activeCallViewController = bottomSheetActiveCallViewController
+        } else {
+            let oldActiveCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
+            oldActiveCallViewController.delegate = callController
+            activeCallViewController = oldActiveCallViewController
+        }
 
         let modalVC = ModalPresentationViewController(viewController: activeCallViewController, enableDismissOnPan: !CallingConfiguration.config.paginationEnabled)
 
@@ -156,6 +178,7 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     }
 
     private func presentActiveCall(modalViewController: ModalPresentationViewController, animated: Bool) {
+        isPresentingActiveCall = true
         rootViewController.present(modalViewController, animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = true
         })
