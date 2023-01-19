@@ -204,9 +204,9 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
 
     private func startCallDurationTimer() {
         stopCallDurationTimer()
-        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [callInfoConfiguration, headerBar] _ in
-            guard let configuration = callInfoConfiguration, case .established = configuration.state else { return }
-            headerBar.updateConfiguration(configuration: configuration)
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let configuration = self?.callInfoConfiguration, case .established = configuration.state else { return }
+            self?.headerBar.updateConfiguration(configuration: configuration)
         }
     }
 
