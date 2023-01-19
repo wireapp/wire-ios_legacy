@@ -247,6 +247,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
         // Fixed Constraints
         contentCenter = contentCenterYAnchor.constraint(equalTo: view.centerYAnchor)
+        contentCenter.priority = .init(999)
         contentCenter.isActive = contentCenterConstraintActivation
         contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = contentCenterConstraintActivation
 
@@ -356,7 +357,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         // Adjust if we need more space
         if offset > currentOffset {
             contentCenter.constant = -offset
-            contentCenter.priority = .defaultLow
         }
     }
 
