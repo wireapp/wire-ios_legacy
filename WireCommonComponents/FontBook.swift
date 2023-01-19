@@ -22,72 +22,66 @@ import UIKit
 extension UIFont {
 
     public enum FontStyle {
-            case title3
-            case headline
-            case body
-            case subheadline
-            case caption1
-            case title3Bold
-            case calloutBold
-            case footnote
-            case bodyTwoSemibold
+        case title3
+        case headline
+        case body
+        case subheadline
+        case caption1
+        case title3Bold
+        case calloutBold
+        case footnoteSemibold
+        case bodyTwoSemibold
 
     }
 
     public static func font(for style: FontStyle) -> UIFont {
-            switch style {
+        switch style {
 
-            case .bodyTwoSemibold:
-                return  .systemFont(ofSize: 16, weight: .semibold)
-                
-            case .title3:
-                return .preferredFont(forTextStyle: .title3)
+        case .title3:
+            return .preferredFont(forTextStyle: .title3)
 
-            case .headline:
-                return .preferredFont(forTextStyle: .headline)
+        case .headline:
+            return .preferredFont(forTextStyle: .headline)
 
-            case .body:
-                return .preferredFont(forTextStyle: .body)
+        case .body:
+            return .preferredFont(forTextStyle: .body)
 
-            case .subheadline:
-                return .preferredFont(forTextStyle: .subheadline)
+        case .subheadline:
+            return .preferredFont(forTextStyle: .subheadline)
 
-            case .caption1:
-                return .preferredFont(forTextStyle: .caption1)
+        case .caption1:
+            return .preferredFont(forTextStyle: .caption1)
 
-            case .title3Bold:
-                return .preferredFont(forTextStyle:
-                        .title3)
+        case .title3Bold:
+            return .preferredFont(forTextStyle: .title3).fontWeight(.bold)
 
-            case .calloutBold:
-                return .preferredFont(forTextStyle: .callout)
+        case .calloutBold:
+            return .preferredFont(forTextStyle: .callout).fontWeight(.bold)
 
-            case .footnote:
-                return .preferredFont(forTextStyle: .footnote)
-            }
-        }
+        case .footnoteSemibold:
+            return .preferredFont(forTextStyle: .footnote).fontWeight(.semibold)
 
-}
-
-class MyLabel: UILabel {
-
-    var fontStyle: UIFont.FontStyle {
-        didSet {
-            font = .font(for: fontStyle)
+        case .bodyTwoSemibold:
+            return  .systemFont(ofSize: 16, weight: .semibold)
         }
     }
 
-    init(
-        text: String = "",
-        style: UIFont.FontStyle = .body
-    ) {
-        fontStyle = style
-        super.init(frame: .zero)
-        self.text = text
-    }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    /// Returns a new font with the weight specified
+    ///
+    /// - Parameter weight: The new font weight
+    public func fontWeight(_ weight: UIFont.Weight) -> UIFont {
+        let fontDescriptor = UIFontDescriptor(fontAttributes: [
+            UIFontDescriptor.AttributeName.size: pointSize,
+            UIFontDescriptor.AttributeName.family: familyName
+        ])
 
+        // Add the font weight to the descriptor
+        let weightedFontDescriptor = fontDescriptor.addingAttributes([
+            UIFontDescriptor.AttributeName.traits: [
+                UIFontDescriptor.TraitKey.weight: weight
+            ]
+        ])
+        return UIFont(descriptor: weightedFontDescriptor, size: 0)
+    }
 }
