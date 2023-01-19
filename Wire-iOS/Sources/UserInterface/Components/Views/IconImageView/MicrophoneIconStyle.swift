@@ -75,7 +75,7 @@ extension MicrophoneIconStyle: PulsingIconImageStyle {
 extension MicrophoneIconStyle {
     init(state: MicrophoneState?, shouldPulse: Bool) {
         guard let state = state else {
-            self = .hidden
+            self = .muted
             return
         }
         switch state {
