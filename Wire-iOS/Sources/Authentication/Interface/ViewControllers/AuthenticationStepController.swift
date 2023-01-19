@@ -356,6 +356,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         // Adjust if we need more space
         if offset > currentOffset {
             contentCenter.constant = -offset
+            contentCenter.priority = .defaultLow
         }
     }
 

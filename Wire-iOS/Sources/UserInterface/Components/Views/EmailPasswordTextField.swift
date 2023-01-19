@@ -31,14 +31,8 @@ extension EmailPasswordTextFieldDelegate {
 
 class RevisedEmailPasswordTextField: EmailPasswordTextField {
 
-    override func configureSubviews() {
-        super.configureSubviews()
-//        passwordField.bindConfirmationButton(to: emailField)
-//        passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-    }
-    
     override func configureConstraints() {
-        contentStack.translatesAutoresizingMaskIntoConstraints = false
+        [passwordField, emailField, contentStack].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         NSLayoutConstraint.activate([
             // dimensions
@@ -135,8 +129,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
     }
 
     func configureConstraints() {
-        contentStack.translatesAutoresizingMaskIntoConstraints = false
-
+        [passwordField, emailField, contentStack].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         NSLayoutConstraint.activate([
             // dimensions
             passwordField.heightAnchor.constraint(equalToConstant: 48),
