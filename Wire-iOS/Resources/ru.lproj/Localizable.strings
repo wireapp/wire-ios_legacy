@@ -650,6 +650,8 @@
 "voice.cancel_button.title" = "Отменить";
 "voice.call_button.title" = "Позвонить";
 "voice.end_call_button.title" = "Завершить звонок";
+"voice.pick_up_button.title" = "Принять";
+"voice.calling.title" = "Вызов...";
 "voice.call_error.unsupported_version.title" = "Пожалуйста, обновите Wire";
 "voice.call_error.unsupported_version.message" = "Вы приняли вызов, не поддерживаемый этой версией Wire. Получите последнюю версию в App Store.";
 "voice.call_error.unsupported_version.dismiss" = "Позже";
@@ -664,6 +666,8 @@
 
 "voice.top_overlay.tap_to_return" = "Нажмите, чтобы вернуться к вызову";
 "voice.top_overlay.accessibility_title" = "Текущий вызов";
+
+"voice.flip_camera_button.title" = "Перевернуть";
 
 // Voice New
 
@@ -905,7 +909,7 @@
 "device.type.unknown" = "Неизвестное";
 
 // Bot
-"participants.services.remove_integration.button" = "Remove service";
+"participants.services.remove_integration.button" = "Удалить сервис";
 
 // Group details
 "group_details.guest_options_cell.title" = "Гости";
@@ -1288,7 +1292,7 @@
 
 // Landing screen
 
-"landing.header" = "Wire. Добавьте свой аккаунт.";
+"landing.header" = "Wire. Войдите или создайте персональный аккаунт.";
 "landing.welcome_message" = "Хотите создать аккаунт Pro или Enterprise для вашего бизнеса или организации?";
 "landing.welcome_submessage" = "К сожалению, это невозможно в приложении - как только вы создадите свою команду, вы сможете авторизоваться здесь.";
 "landing.create_account.title" = "Создать персональный аккаунт Wire";
@@ -1305,6 +1309,9 @@
 "landing.custom_backend.title" = "Подключен к \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Развернуть";
 "landing.custom_backend.more_info.alert.title" = " Вы подключены к стороннему серверу: %@";
+"landing.custom_backend.alert.title" = "Внутренний бэкэнд";
+"landing.custom_backend.alert.message.backend-name" = "Название бэкэнда";
+"landing.custom_backend.alert.message.backend-url" = "URL бэкэнда:";
 
 // Create team
 
@@ -1932,6 +1939,21 @@
 "keyboardshortcut.openPeople" = "Контакты";
 
 // MARK: - Security classification
-"security_classification.security_level" = "УРОВЕНЬ БЕЗОПАСНОСТИ:";
+"security_classification.security_level" = "Уровень безопасности:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "НЕКЛАССИФИЦИРОВАН";
+
+"proxy-credentials.title" = "Учетные данные прокси";
+// url of proxy server as backend
+"proxy-credentials.caption" = "Этот бэкэнд настроен на использование следующего прокси: %@.";
+"proxy-credentials.username.label" = "Email или имя пользователя прокси";
+"proxy-credentials.username.placeholder" = "Email или имя пользователя";
+"proxy-credentials.password.label" = "Пароль прокси";
+"proxy-credentials.password.placeholder" = "Пароль";
+
+"landing.alert.create-new-account.not-supported.title" = "Не поддерживается";
+"landing.alert.create-new-account.not-supported.message" = "Нельзя создать персональный аккаунт во внутреннем бэкэнде с поддержкой прокси.";
+"landing.alert.sso.not-supported.title" = "Не поддерживается";
+"landing.alert.sso.not-supported.message" = "Нельзя авторизоваться через SSO во внутреннем бэкэнде с поддержкой прокси.";
+"credentials.general-error.alert.title" = "Неверная информация";
+"credentials.general-error.alert.message" = "Эти учетные данные неверны.  Проверьте их и повторите попытку.";

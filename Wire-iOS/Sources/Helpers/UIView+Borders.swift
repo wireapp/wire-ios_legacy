@@ -30,7 +30,7 @@ extension UIView {
             border.backgroundColor = color
         }
 
-    private func addConstraintsForBorder(for anchor: Anchor, borderWidth: CGFloat, to parentView: UIView) {
+    func addConstraintsForBorder(for anchor: Anchor, borderWidth: CGFloat, to parentView: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
         switch anchor {
         case .top:

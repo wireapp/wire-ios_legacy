@@ -145,6 +145,92 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "authentication.forgotPasswordButton.description", fallback: "Change your password")
       }
     }
+    internal enum Calling {
+      internal enum AcceptButton {
+        /// Accept
+        internal static let description = L10n.tr("Accessibility", "calling.acceptButton.description", fallback: "Accept")
+      }
+      internal enum ActiveSpeaker {
+        /// Active speaker
+        internal static let description = L10n.tr("Accessibility", "calling.activeSpeaker.description", fallback: "Active speaker")
+      }
+      internal enum CameraOff {
+        /// Camera off
+        internal static let description = L10n.tr("Accessibility", "calling.cameraOff.description", fallback: "Camera off")
+      }
+      internal enum CameraOn {
+        /// Camera on
+        internal static let description = L10n.tr("Accessibility", "calling.cameraOn.description", fallback: "Camera on")
+      }
+      internal enum FlipCameraBackButton {
+        /// Flip to back camera
+        internal static let description = L10n.tr("Accessibility", "calling.flipCameraBackButton.description", fallback: "Flip to back camera")
+      }
+      internal enum FlipCameraFrontButton {
+        /// Flip to front camera
+        internal static let description = L10n.tr("Accessibility", "calling.flipCameraFrontButton.description", fallback: "Flip to front camera")
+      }
+      internal enum HangUpButton {
+        /// End call
+        internal static let description = L10n.tr("Accessibility", "calling.hangUpButton.description", fallback: "End call")
+      }
+      internal enum HeaderBar {
+        /// Minimize calling view
+        internal static let description = L10n.tr("Accessibility", "calling.headerBar.description", fallback: "Minimize calling view")
+      }
+      internal enum MicrophoneOff {
+        /// Microphone off
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOff.description", fallback: "Microphone off")
+      }
+      internal enum MicrophoneOffButton {
+        /// Turn off microphone
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOffButton.description", fallback: "Turn off microphone")
+      }
+      internal enum MicrophoneOn {
+        /// Microphone on
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOn.description", fallback: "Microphone on")
+      }
+      internal enum MicrophoneOnButton {
+        /// Turn on microphone
+        internal static let description = L10n.tr("Accessibility", "calling.microphoneOnButton.description", fallback: "Turn on microphone")
+      }
+      internal enum SharesScreen {
+        /// Shares screen
+        internal static let description = L10n.tr("Accessibility", "calling.sharesScreen.description", fallback: "Shares screen")
+      }
+      internal enum SpeakerOffButton {
+        /// Turn off speaker
+        internal static let description = L10n.tr("Accessibility", "calling.speakerOffButton.description", fallback: "Turn off speaker")
+      }
+      internal enum SpeakerOnButton {
+        /// Turn on speaker
+        internal static let description = L10n.tr("Accessibility", "calling.speakerOnButton.description", fallback: "Turn on speaker")
+      }
+      internal enum SwipeDownParticipants {
+        /// Double tap to swipe down and hide participant’s details
+        internal static let hint = L10n.tr("Accessibility", "calling.swipeDownParticipants.hint", fallback: "Double tap to swipe down and hide participant’s details")
+      }
+      internal enum SwipeUpParticipants {
+        /// Double tap to swipe up and view all participant’s details
+        internal static let hint = L10n.tr("Accessibility", "calling.swipeUpParticipants.hint", fallback: "Double tap to swipe up and view all participant’s details")
+      }
+      internal enum UserCellFullscreen {
+        /// Quadruple tap for full screen
+        internal static let hint = L10n.tr("Accessibility", "calling.userCellFullscreen.hint", fallback: "Quadruple tap for full screen")
+      }
+      internal enum UserCellMinimize {
+        /// Quadruple tap to minimize view
+        internal static let hint = L10n.tr("Accessibility", "calling.userCellMinimize.hint", fallback: "Quadruple tap to minimize view")
+      }
+      internal enum VideoOffButton {
+        /// Turn off camera
+        internal static let description = L10n.tr("Accessibility", "calling.videoOffButton.description", fallback: "Turn off camera")
+      }
+      internal enum VideoOnButton {
+        /// Turn on camera
+        internal static let description = L10n.tr("Accessibility", "calling.videoOnButton.description", fallback: "Turn on camera")
+      }
+    }
     internal enum ClientsList {
       internal enum BackButton {
         /// Go back to device list
@@ -4435,8 +4521,8 @@ internal enum L10n {
       }
     }
     internal enum SecurityClassification {
-      /// SECURITY LEVEL:
-      internal static let securityLevel = L10n.tr("Localizable", "security_classification.security_level", fallback: "SECURITY LEVEL:")
+      /// Security level:
+      internal static let securityLevel = L10n.tr("Localizable", "security_classification.security_level", fallback: "Security level:")
       internal enum Level {
         /// VS-NfD
         internal static let bund = L10n.tr("Localizable", "security_classification.level.bund", fallback: "VS-NfD")
@@ -5470,6 +5556,10 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "voice.call_error.unsupported_version.title", fallback: "Please update Wire")
         }
       }
+      internal enum Calling {
+        /// Calling...
+        internal static let title = L10n.tr("Localizable", "voice.calling.title", fallback: "Calling...")
+      }
       internal enum CancelButton {
         /// Cancel
         internal static let title = L10n.tr("Localizable", "voice.cancel_button.title", fallback: "Cancel")
@@ -5498,6 +5588,10 @@ internal enum L10n {
         /// End Call
         internal static let title = L10n.tr("Localizable", "voice.end_call_button.title", fallback: "End Call")
       }
+      internal enum FlipCameraButton {
+        /// Flip
+        internal static let title = L10n.tr("Localizable", "voice.flip_camera_button.title", fallback: "Flip")
+      }
       internal enum FlipVideoButton {
         /// Switch camera
         internal static let title = L10n.tr("Localizable", "voice.flip_video_button.title", fallback: "Switch camera")
@@ -5515,6 +5609,10 @@ internal enum L10n {
         internal static let body = L10n.tr("Localizable", "voice.network_error.body", fallback: "You must be online to call. Check your connection and try again.")
         /// No Internet Connection
         internal static let title = L10n.tr("Localizable", "voice.network_error.title", fallback: "No Internet Connection")
+      }
+      internal enum PickUpButton {
+        /// Accept
+        internal static let title = L10n.tr("Localizable", "voice.pick_up_button.title", fallback: "Accept")
       }
       internal enum SpeakerButton {
         /// Speaker

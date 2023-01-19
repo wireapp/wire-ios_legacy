@@ -17,6 +17,7 @@
 //
 
 import WireSyncEngine
+import WireCommonComponents
 
 struct CallGridConfiguration: CallGridViewControllerInput, Equatable {
 
@@ -29,6 +30,8 @@ struct CallGridConfiguration: CallGridViewControllerInput, Equatable {
     let shouldShowActiveSpeakerFrame: Bool
     let presentationMode: VideoGridPresentationMode
     let callHasTwoParticipants: Bool
+    let isConnected: Bool
+    let isGroupCall: Bool
 
     init(voiceChannel: VoiceChannel) {
         let videoStreamArrangment = voiceChannel.createStreamArrangment()
@@ -40,6 +43,8 @@ struct CallGridConfiguration: CallGridViewControllerInput, Equatable {
         shouldShowActiveSpeakerFrame = voiceChannel.shouldShowActiveSpeakerFrame
         presentationMode = voiceChannel.videoGridPresentationMode
         callHasTwoParticipants = voiceChannel.callHasTwoParticipants
+        isConnected = voiceChannel.state.isConnected
+        isGroupCall = voiceChannel.isGroupCall
     }
 }
 
@@ -192,6 +197,7 @@ extension VoiceChannel {
     }
 
     fileprivate var shouldShowActiveSpeakerFrame: Bool {
+        if DeveloperFlag.isUpdatedCallingUI { return true }
         return connectedParticipants.count > 2 && videoGridPresentationMode == .allVideoStreams
     }
 

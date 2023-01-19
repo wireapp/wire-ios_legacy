@@ -20,7 +20,7 @@ import Foundation
 import avs
 import WireSyncEngine
 
-fileprivate extension VoiceChannel {
+extension VoiceChannel {
     func accessoryType() -> CallInfoViewControllerAccessoryType {
         switch state {
         case .incoming(_, shouldRing: true, _),
@@ -95,7 +95,7 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput {
-    fileprivate static let maxActiveSpeakers: Int = 4
+    static let maxActiveSpeakers: Int = 4
 
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool

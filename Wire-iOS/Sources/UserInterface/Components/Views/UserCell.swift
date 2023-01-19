@@ -204,21 +204,23 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         ])
     }
 
-    private func setupAccessibility() {
-        typealias ContactsList = L10n.Accessibility.ContactsList
-        typealias ServicesList = L10n.Accessibility.ServicesList
+    func setupAccessibility() {
         typealias ClientsList = L10n.Accessibility.ClientsList
-        typealias CreateConversation = L10n.Accessibility.CreateConversation
+        typealias Calling = L10n.Accessibility.Calling
 
-        guard let title = titleLabel.text,
-              let subtitle = subtitleLabel.text else {
+        guard let title = titleLabel.text else {
                   isAccessibilityElement = false
                   return
               }
         isAccessibilityElement = true
         accessibilityTraits = .button
 
-        var content = "\(title), \(subtitle)"
+        var content = "\(title)"
+
+        if let subtitle = subtitleLabel.text {
+            content += ", " + subtitle
+        }
+
         if let userType = userTypeIconView.accessibilityLabel,
            !userTypeIconView.isHidden {
             content += ", \(userType)"
@@ -228,7 +230,32 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             content += ", " + ClientsList.DeviceVerified.description
         }
 
+        if !microphoneIconView.isHidden {
+            accessibilityTraits = .staticText
+            if let microphoneStyle = microphoneIconView.style as? MicrophoneIconStyle {
+                switch microphoneStyle {
+                case .unmuted, .unmutedPulsing:
+                    content += ", " + Calling.MicrophoneOn.description
+                case .muted, .hidden:
+                    content += ", " + Calling.MicrophoneOff.description
+                }
+            }
+
+            if !videoIconView.isHidden {
+                content += ", " + Calling.CameraOn.description
+            }
+        } else {
+            setupAccessibilityHint()
+        }
+
         accessibilityLabel = content
+    }
+
+    private func setupAccessibilityHint() {
+        typealias ContactsList = L10n.Accessibility.ContactsList
+        typealias ServicesList = L10n.Accessibility.ServicesList
+        typealias ClientsList = L10n.Accessibility.ClientsList
+        typealias CreateConversation = L10n.Accessibility.CreateConversation
 
         if !checkmarkIconView.isHidden {
             accessibilityHint = isSelected

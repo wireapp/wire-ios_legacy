@@ -650,6 +650,8 @@
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
 "voice.end_call_button.title" = "End Call";
+"voice.pick_up_button.title" = "Accept";
+"voice.calling.title" = "Calling...";
 "voice.call_error.unsupported_version.title" = "Please update Wire";
 "voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
 "voice.call_error.unsupported_version.dismiss" = "Later";
@@ -664,6 +666,8 @@
 
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
 "voice.top_overlay.accessibility_title" = "Ongoing call";
+
+"voice.flip_camera_button.title" = "Flip";
 
 // Voice New
 
@@ -1936,7 +1940,7 @@ to reset this device and log in again";
 "keyboardshortcut.openPeople" = "People";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.security_level" = "Security level:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "UNCLASSIFIED";
 

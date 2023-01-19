@@ -650,6 +650,8 @@
 "voice.cancel_button.title" = "Abbrechen";
 "voice.call_button.title" = "Anruf";
 "voice.end_call_button.title" = "Anruf beenden";
+"voice.pick_up_button.title" = "Annehmen";
+"voice.calling.title" = "Ruft an";
 "voice.call_error.unsupported_version.title" = "Bitte Wire aktualisieren";
 "voice.call_error.unsupported_version.message" = "Der erhaltene Anruf wird von dieser Version von Wire nicht unterstützt.\nBitte im App Store auf die neueste Version aktualisieren.";
 "voice.call_error.unsupported_version.dismiss" = "Später";
@@ -664,6 +666,8 @@
 
 "voice.top_overlay.tap_to_return" = "Zum Anruf zurückkehren";
 "voice.top_overlay.accessibility_title" = "Aktiver Anruf";
+
+"voice.flip_camera_button.title" = "Wechseln";
 
 // Voice New
 
@@ -775,7 +779,7 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Verlauf löschen?";
-"meta.menu.delete_content.dialog_message" = "Der Gesprächsverlauf wird auf all deinen Geräten gelöscht.";
+"meta.menu.delete_content.dialog_message" = "Der Gesprächsverlauf wird auf all Ihren Geräten gelöscht.";
 "meta.menu.delete_content.leave_as_well_message" = "Unterhaltung verlassen";
 "meta.menu.delete_content.button_cancel" = "Abbrechen";
 "meta.menu.delete_content.button_delete" = "Löschen";
@@ -1288,7 +1292,7 @@
 
 // Landing screen
 
-"landing.header" = "Wire. Konto hinzufügen.";
+"landing.header" = "Wire. Melden Sie sich an oder erstellen Sie ein persönliches Benutzerkonto.";
 "landing.welcome_message" = "Möchten Sie ein Pro- oder Enterprise-Konto für Ihr Unternehmen oder Ihre Organisation erstellen?";
 "landing.welcome_submessage" = "Leider ist das in der App nicht möglich – sobald Sie Ihr Team erstellt haben, können Sie sich hier anmelden";
 "landing.create_account.title" = "Erstellen Sie ein privates Wire-Konto";
@@ -1305,6 +1309,9 @@
 "landing.custom_backend.title" = "Verbunden mit \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Mehr anzeigen";
 "landing.custom_backend.more_info.alert.title" = " Mit dem Server eines Drittanbieters verbunden: %@";
+"landing.custom_backend.alert.title" = "Lokales Backend";
+"landing.custom_backend.alert.message.backend-name" = "Backend-Name:";
+"landing.custom_backend.alert.message.backend-url" = "Backend-URL:";
 
 // Create team
 
@@ -1932,6 +1939,21 @@
 "keyboardshortcut.openPeople" = "Kontakte";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SICHERHEITSNIVEAU:";
+"security_classification.security_level" = "Sicherheitsniveau:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "NICHT EINGESTUFT";
+
+"proxy-credentials.title" = "Proxy-Zugangsdaten";
+// url of proxy server as backend
+"proxy-credentials.caption" = "Dieses Backend ist für die Verwendung des folgenden Proxy-Servers konfiguriert: %@.";
+"proxy-credentials.username.label" = "Proxy-E‐Mail‐Adresse oder Benutzername";
+"proxy-credentials.username.placeholder" = "E‐Mail‐Adresse oder Benutzername";
+"proxy-credentials.password.label" = "Proxy-Passwort";
+"proxy-credentials.password.placeholder" = "Passwort";
+
+"landing.alert.create-new-account.not-supported.title" = "Nicht unterstützt";
+"landing.alert.create-new-account.not-supported.message" = "Sie können kein privates Benutzerkonto auf einem lokalen Backend mit Proxy-Unterstützung erstellen.";
+"landing.alert.sso.not-supported.title" = "Nicht unterstützt";
+"landing.alert.sso.not-supported.message" = "Sie können sich nicht über SSO auf einem lokalen Backend mit Proxy-Unterstützung anmelden.";
+"credentials.general-error.alert.title" = "Ungültige Informationen";
+"credentials.general-error.alert.message" = "Diese Zugangsdaten sind nicht korrekt. Bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut.";
