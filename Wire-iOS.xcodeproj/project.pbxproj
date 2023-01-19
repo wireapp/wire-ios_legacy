@@ -4935,6 +4935,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				013718252979AC2600BD961F /* DatadogCrashReporting.xcframework */,
 				010497D22940DE870046124D /* Datadog.xcframework */,
 				06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */,
 				1658E93126C5609F003D0090 /* Starscream.xcframework */,
