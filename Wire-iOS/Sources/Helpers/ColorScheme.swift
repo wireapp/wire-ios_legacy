@@ -119,6 +119,7 @@ enum ColorSchemeColor: Int {
     case textSecurityNotClassified
     case backgroundSecurityNotClassified
     case white
+
     fileprivate func colorPair(accentColor: UIColor) -> ColorPair {
         switch self {
         case .textForeground:

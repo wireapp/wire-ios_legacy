@@ -25,6 +25,8 @@ enum CallActionIconType: IconLabelButtonInput {
     case camera
     case speaker
     case flipCamera
+    case endCall
+    case pickUp
 
     func icon(forState state: UIControl.State) -> StyleKitIcon {
         switch state {
@@ -40,7 +42,9 @@ enum CallActionIconType: IconLabelButtonInput {
         case .microphone: return Voice.MuteButton.title
         case .camera: return Voice.VideoButton.title
         case .speaker: return Voice.SpeakerButton.title
-        case .flipCamera: return Voice.FlipVideoButton.title
+        case .flipCamera: return DeveloperFlag.isUpdatedCallingUI ? Voice.FlipCameraButton.title : Voice.FlipVideoButton.title
+        case .endCall:  return DeveloperFlag.isUpdatedCallingUI ? Voice.HangUpButton.title : Voice.EndCallButton.title
+        case .pickUp: return Voice.PickUpButton.title
         }
     }
 
@@ -50,6 +54,8 @@ enum CallActionIconType: IconLabelButtonInput {
         case .camera: return "CallVideoButton"
         case .speaker: return "CallSpeakerButton"
         case .flipCamera: return "CallFlipCameraButton"
+        case .endCall: return "EndCallButton"
+        case .pickUp: return "PickUpButton"
         }
     }
 
@@ -59,6 +65,8 @@ enum CallActionIconType: IconLabelButtonInput {
         case .camera: return .cameraOff
         case .speaker: return .speakerOff
         case .flipCamera: return .flipCamera
+        case .endCall: return .endCall
+        case .pickUp: return .endCall
         }
     }
 
@@ -68,6 +76,8 @@ enum CallActionIconType: IconLabelButtonInput {
         case .camera: return .camera
         case .speaker: return .speaker
         case .flipCamera: return .flipCamera
+        case .endCall: return .endCall
+        case .pickUp: return .endCall
         }
     }
 }

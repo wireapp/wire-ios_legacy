@@ -19,8 +19,10 @@
 import XCTest
 @testable import Wire
 import SnapshotTesting
+import WireCommonComponents
 
 struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
+    var isConnected: Bool = true
 
     var shouldShowActiveSpeakerFrame: Bool = true
 
@@ -35,6 +37,8 @@ struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
     var presentationMode: VideoGridPresentationMode = .allVideoStreams
 
     var callHasTwoParticipants: Bool = false
+
+    var isGroupCall: Bool = false
 }
 
 final class CallGridViewControllerSnapshotTests: ZMSnapshotTestCase {
@@ -72,6 +76,7 @@ final class CallGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         )
 
         CallingConfiguration.config = .largeConferenceCalls
+        UserDefaults.applicationGroup.set(true, forKey: DeveloperFlag.deprecatedCallingUI.rawValue)
     }
 
     override func tearDown() {
