@@ -274,12 +274,18 @@ extension CallingBottomSheetViewController: CallViewControllerDelegate {
 
 extension VoiceChannel {
     fileprivate func getParticipantsList() -> CallParticipantsList {
-        let sortedParticipants = participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
+        let sortedParticipants = participants(
+            ofKind: .all,
+            activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers
+        )
+
         return sortedParticipants.map {
-            CallParticipantsListCellConfiguration.callParticipant(user: HashBox(value: $0.user),
-                             videoState: $0.state.videoState,
-                             microphoneState: $0.state.microphoneState,
-                             activeSpeakerState: $0.activeSpeakerState)
+            CallParticipantsListCellConfiguration.callParticipant(
+                user: HashBox(value: $0.user),
+                videoState: $0.state.videoState,
+                microphoneState: $0.state.microphoneState,
+                activeSpeakerState: $0.activeSpeakerState
+            )
         }
     }
 }

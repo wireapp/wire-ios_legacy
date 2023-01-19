@@ -37,7 +37,7 @@ extension VoiceChannel {
              .mediaStopped,
              .established,
              .incoming(_, shouldRing: false, _):
-            return .participantsList(sortedConnectedParticipants().map {
+            return .participantsList(sortedParticipants().map {
                 .callParticipant(user: HashBox(value: $0.user),
                                  videoState: $0.state.videoState,
                                  microphoneState: $0.state.microphoneState,
@@ -237,12 +237,12 @@ fileprivate extension VoiceChannel {
 
     var isAnyParticipantSendingVideo: Bool {
         return videoState.isSending                                  // Current user is sending video and can toggle off
-            || connectedParticipants.any { $0.state.isSendingVideo } // Other participants are sending video
+            || participants.any { $0.state.isSendingVideo } // Other participants are sending video
             || isIncomingVideoCall                                   // This is an incoming video call
     }
 
-    func sortedConnectedParticipants() -> [CallParticipant] {
-        return connectedParticipants.sorted { lhs, rhs in
+    func sortedParticipants() -> [CallParticipant] {
+        return participants.sorted { lhs, rhs in
             lhs.user.name?.lowercased() < rhs.user.name?.lowercased()
         }
     }
@@ -255,13 +255,13 @@ fileprivate extension VoiceChannel {
     }
 
     var allowPresentationModeUpdates: Bool {
-        return connectedParticipants.count > 2
+        return participants.count > 2
     }
 }
 
 extension VoiceChannel {
-    var connectedParticipants: [CallParticipant] {
-        return participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers).filter(\.state.isConnected)
+    var participants: [CallParticipant] {
+        return participants(ofKind: .all, activeSpeakersLimit: CallInfoConfiguration.maxActiveSpeakers)
     }
 
     private var hashboxFirstDegradedUser: HashBoxUser? {

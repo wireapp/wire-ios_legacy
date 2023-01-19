@@ -123,22 +123,14 @@ extension VoiceChannel {
 
     func activeStreams(from participants: [CallParticipant]) -> [Stream] {
         return participants.compactMap { participant in
-            switch participant.state {
-            case .connected(let videoState, let microphoneState):
-                if !callingConfig.audioTilesEnabled && !videoState.isSending {
-                    return nil
-                }
-                return Stream(
-                    streamId: participant.streamId,
-                    user: participant.user,
-                    microphoneState: microphoneState,
-                    videoState: videoState,
-                    activeSpeakerState: participant.activeSpeakerState,
-                    isPaused: videoState == .paused
-                )
-            default:
-                return nil
-            }
+            return Stream(
+                streamId: participant.streamId,
+                user: participant.user,
+                microphoneState: participant.state.microphoneState,
+                videoState: participant.state.videoState,
+                activeSpeakerState: participant.activeSpeakerState,
+                isPaused: participant.state.videoState?.isPaused ?? false
+            )
         }
     }
 
@@ -193,12 +185,12 @@ extension VoiceChannel {
     }
 
     fileprivate var callHasTwoParticipants: Bool {
-        return connectedParticipants.count == 2
+        return participants.count == 2
     }
 
     fileprivate var shouldShowActiveSpeakerFrame: Bool {
         if DeveloperFlag.isUpdatedCallingUI { return true }
-        return connectedParticipants.count > 2 && videoGridPresentationMode == .allVideoStreams
+        return participants.count > 2 && videoGridPresentationMode == .allVideoStreams
     }
 
     private var isUnconnectedOutgoingVideoCall: Bool {
