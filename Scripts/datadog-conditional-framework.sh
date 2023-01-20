@@ -6,4 +6,5 @@ else
     echo "REMOVE TRACE OF DATADOG FRAMEWORK";
     rm -rf $BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/Datadog.framework
     rm -rf $BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/DatadogCrashReporting.framework
+    rm -rf $BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/CrashReporter.framework
 fi
