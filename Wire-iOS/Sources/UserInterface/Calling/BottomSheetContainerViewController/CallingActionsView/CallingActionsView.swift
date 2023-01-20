@@ -238,7 +238,7 @@ class CallingActionsView: UIView {
         cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Calling.VideoOffButton.description : Calling.VideoOnButton.description
         flipCameraButton.accessibilityLabel = input.cameraType == .front ? Calling.FlipCameraBackButton.description : Calling.FlipCameraFrontButton.description
         largePickUpButton.accessibilityLabel = Calling.AcceptButton.description
-        largePickUpButton.accessibilityLabel = Calling.HangUpButton.description
+        largeHangUpButton.accessibilityLabel = Calling.HangUpButton.description
     }
 
     private func updateHandleViewAccessibilityLabel() {

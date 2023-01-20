@@ -650,7 +650,7 @@
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
 "voice.end_call_button.title" = "End Call";
-"voice.pick_up_button.title" = "Pick Up";
+"voice.pick_up_button.title" = "Accept";
 "voice.calling.title" = "Calling...";
 "voice.call_error.unsupported_version.title" = "Please update Wire";
 "voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";

@@ -650,6 +650,8 @@
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";
 "voice.end_call_button.title" = "通話を終了";
+"voice.pick_up_button.title" = "承諾";
+"voice.calling.title" = "Calling...";
 "voice.call_error.unsupported_version.title" = "Wire を更新してください";
 "voice.call_error.unsupported_version.message" = "着信した通話はこのバージョンのWireではサポートされていません。\n最新バージョンをApp Storeから入手してください。";
 "voice.call_error.unsupported_version.dismiss" = "あとで";
@@ -664,6 +666,8 @@
 
 "voice.top_overlay.tap_to_return" = "タップして通話に戻る";
 "voice.top_overlay.accessibility_title" = "通話中";
+
+"voice.flip_camera_button.title" = "Flip";
 
 // Voice New
 
@@ -1288,7 +1292,7 @@
 
 // Landing screen
 
-"landing.header" = "Wire。あなたのアカウントを追加します。";
+"landing.header" = "Wire. Log in or create a personal account.";
 "landing.welcome_message" = "ビジネスまたは組織で利用するために Proまたは Enterprise アカウントを作成しようとしていますか?";
 "landing.welcome_submessage" = "残念ながら、アプリでは不可能です。チームを作成したら、こちらからログインできます。";
 "landing.create_account.title" = "Wire 個人アカウントを作成します";
@@ -1305,6 +1309,9 @@
 "landing.custom_backend.title" = "%@ に接続しました";
 "landing.custom_backend.more_info.button.title" = "さらに表示";
 "landing.custom_backend.more_info.alert.title" = " サードパーティのサーバに接続中: %@";
+"landing.custom_backend.alert.title" = "On-premises Backend";
+"landing.custom_backend.alert.message.backend-name" = "Backend name:";
+"landing.custom_backend.alert.message.backend-url" = "Backend URL:";
 
 // Create team
 
@@ -1932,6 +1939,21 @@
 "keyboardshortcut.openPeople" = "会話";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.security_level" = "Security level:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "UNCLASSIFIED";
+
+"proxy-credentials.title" = "Proxy Credentials";
+// url of proxy server as backend
+"proxy-credentials.caption" = "This backend is configured to use the following proxy server: %@.";
+"proxy-credentials.username.label" = "Proxy Email or Username";
+"proxy-credentials.username.placeholder" = "Email or Username";
+"proxy-credentials.password.label" = "Proxy Password";
+"proxy-credentials.password.placeholder" = "パスワード";
+
+"landing.alert.create-new-account.not-supported.title" = "Not supported";
+"landing.alert.create-new-account.not-supported.message" = "You can't create a personal account on an on-premises backend with proxy support.";
+"landing.alert.sso.not-supported.title" = "Not supported";
+"landing.alert.sso.not-supported.message" = "You can't log in via SSO on an on-premises backend with proxy support.";
+"credentials.general-error.alert.title" = "Invalid Information";
+"credentials.general-error.alert.message" = "These account credentials are incorrect. Please verify your details and try again.";

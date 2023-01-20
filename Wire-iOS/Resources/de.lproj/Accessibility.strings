@@ -207,15 +207,6 @@
 "conversationsListHeader.expandedButton.description" = "Erweitert";
 
 "conversationsList.accountButton.hint" = "Doppeltippen, um Profil und Einstellungen zu öffnen";
-"conversationsList.contactsBottomBar.description" = "Kontakte";
-"conversationsList.contactsBottomBar.hint" = "Doppeltippen, um nach Personen zu suchen und Kontaktliste zu öffnen";
-"conversationsList.recentBottomBar.description" = "Unterhaltungen";
-"conversationsList.recentBottomBar.hint" = "Doppeltippen, um Liste der letzten Unterhaltungen zu öffnen";
-"conversationsList.folderBottomBar.description" = "Ordner";
-"conversationsList.folderBottomBar.hint" = "Doppeltippen, um Liste der in Ordnern organisierten Unterhaltungen zu öffnen";
-"conversationsList.archiveBottomBar.description" = "Archiv";
-"conversationsList.archiveBottomBar.hint" = "Doppeltippen, um Liste archivierter Unterhaltungen zu öffnen";
-"conversationsList.bottomBar.value" = "Ausgewählt";
 "conversationsList.silencedStatus.value" = "Stumm geschaltet";
 "conversationsList.mentionStatus.value" = "Sie wurden erwähnt";
 "conversationsList.replyStatus.value" = "Antworten";
@@ -235,3 +226,44 @@
 "conversationAnnouncement.file.description" = "Datei %@ von %@ erhalten";
 "conversationAnnouncement.deletedMessage.description" = "%@ hat eine Nachricht gelöscht";
 "conversationAnnouncement.editedMessage.description" = "%@ hat eine Nachricht bearbeitet";
+
+"calling.flipCameraBackButton.description" = "Kamera auf der Rückseite verwenden";
+"calling.flipCameraFrontButton.description" = "Frontkamera verwenden";
+"calling.videoOnButton.description" = "Kamera einschalten";
+"calling.videoOffButton.description" = "Kamera ausschalten";
+"calling.microphoneOnButton.description" = "Mikrofon einschalten";
+"calling.microphoneOffButton.description" = "Mikrofon ausschalten";
+"calling.speakerOnButton.description" = "Lautsprecher einschalten";
+"calling.speakerOffButton.description" = "Lautsprecher ausschalten";
+"calling.hangUpButton.description" = "Anruf beenden";
+"calling.acceptButton.description" = "Annehmen";
+"calling.userCellFullscreen.hint" = "Viermal tippen für Vollbild";
+"calling.userCellMinimize.hint" = "Viermal tippen, um Ansicht zu verkleinern";
+"calling.microphoneOn.description" = "Mikrofon an";
+"calling.microphoneOff.description" = "Mikrofon aus";
+"calling.cameraOn.description" = "Kamera an";
+"calling.cameraOff.description" = "Kamera aus";
+"calling.activeSpeaker.description" = "Aktiver Sprecher";
+"calling.sharesScreen.description" = "Teilt Bildschirm";
+"calling.swipeUpParticipants.hint" = "Doppeltippen, um nach oben zu wischen und alle Teilnehmerdetails anzuzeigen";
+"calling.swipeDownParticipants.hint" = "Doppeltippen, um nach unten zu wischen und die Teilnehmerdetails zu verbergen";
+"calling.headerBar.description" = "Anrufansicht verkleinern";
+
+"tabBar.contacts.description" = "Kontakte";
+"tabBar.contacts.hint" = "Doppeltippen, um nach Personen zu suchen und Kontaktliste zu öffnen";
+"tabBar.conversations.description" = "Liste der letzten Unterhaltungen";
+"tabBar.conversations.hint" = "Doppeltippen, um Liste der letzten Unterhaltungen zu öffnen";
+"tabBar.folders.description" = "Liste der in Ordnern organisierten Unterhaltungen";
+"tabBar.folders.hint" = "Doppeltippen, um Liste der in Ordnern organisierten Unterhaltungen zu öffnen";
+"tabBar.archived.description" = "Archiv";
+"tabBar.archived.hint" = "Doppeltippen, um Liste archivierter Unterhaltungen zu öffnen";
+"tabBar.item.value" = "Ausgewählt";
+
+"landing.loginEnterpriseButton.description" = "Mit SSO anmelden";
+"tabBar.email.description" = "Mit E-Mail-Adresse anmelden";
+"tabBar.phone.description" = "Mit Telefonnummer anmelden";
+"authentication.forgotPasswordButton.description" = "Passwort ändern";
+"authentication.backButton.description" = "Zurück zum Startbildschirm";
+
+"connection.archiveButton.description" = "Unterhaltung archivieren";
+"connection.cancelButton.description" = "Verbindung abbrechen";
