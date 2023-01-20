@@ -1376,6 +1376,8 @@
 		EECA835426F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */; };
 		EECA90AA287449EC0024B301 /* DeveloperFlagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA90A9287449EC0024B301 /* DeveloperFlagsView.swift */; };
 		EECA90AC28744A060024B301 /* DeveloperFlagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA90AB28744A060024B301 /* DeveloperFlagsViewModel.swift */; };
+		EECC5231297AC0A900177AB5 /* CrashReporter.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EECC5232297AC0D300177AB5 /* CrashReporter.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; };
 		EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */; };
 		EED92353278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED92352278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift */; };
 		EEDEA26823ED609C000EF7E3 /* ContactsViewController+Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */; };
@@ -1847,6 +1849,7 @@
 				A96867DA26A5E71000679D95 /* PINCache.xcframework in Embed Frameworks */,
 				A96867C526A5E65000679D95 /* Ziphy.xcframework in Embed Frameworks */,
 				A96867B126A5E5A000679D95 /* WireLinkPreview.xcframework in Embed Frameworks */,
+				EECC5231297AC0A900177AB5 /* CrashReporter.xcframework in Embed Frameworks */,
 				A96867AF26A5E59F00679D95 /* WireImages.xcframework in Embed Frameworks */,
 				A96867CB26A5E68400679D95 /* FLAnimatedImage.xcframework in Embed Frameworks */,
 				A96867D426A5E6E100679D95 /* ZipArchive.xcframework in Embed Frameworks */,
@@ -3331,6 +3334,7 @@
 		EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerFeatureConfigSnapshotTests.swift; sourceTree = "<group>"; };
 		EECA90A9287449EC0024B301 /* DeveloperFlagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperFlagsView.swift; sourceTree = "<group>"; };
 		EECA90AB28744A060024B301 /* DeveloperFlagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperFlagsViewModel.swift; sourceTree = "<group>"; };
+		EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CrashReporter.xcframework; path = Carthage/Build/CrashReporter.xcframework; sourceTree = "<group>"; };
 		EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorage.swift; sourceTree = "<group>"; };
 		EED92352278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccentColorPickerSnapshotTests.swift; path = "Wire-iOS Tests/AccentColorPickerSnapshotTests.swift"; sourceTree = SOURCE_ROOT; };
 		EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Invite.swift"; sourceTree = "<group>"; };
@@ -3798,6 +3802,7 @@
 				A99EE1F82666591A00E713FC /* WireProtos.xcframework in Frameworks */,
 				A99EE1FB266659BF00E713FC /* WireTransport.xcframework in Frameworks */,
 				A99EE205266660D300E713FC /* AppCenter.xcframework in Frameworks */,
+				EECC5232297AC0D300177AB5 /* CrashReporter.xcframework in Frameworks */,
 				A96867E726A5E93700679D95 /* SwiftProtobuf.xcframework in Frameworks */,
 				A99EE1FE266659CB00E713FC /* HTMLString.xcframework in Frameworks */,
 				1658E93626C5652B003D0090 /* Starscream.xcframework in Frameworks */,
@@ -4935,6 +4940,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */,
 				01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */,
 				010497D22940DE870046124D /* Datadog.xcframework */,
 				06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */,
