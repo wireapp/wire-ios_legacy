@@ -66,7 +66,6 @@ final class Country: NSObject {
 
     class func detectCountry(withMatcher matcher: @escaping (Country?) -> Bool) -> Country? {
         let matches = allCountries?.filter(matcher) ?? []
-        let allCountries = self.allCountries
 
         // One or no matches is trivial case
         if matches.count <= 1 {
