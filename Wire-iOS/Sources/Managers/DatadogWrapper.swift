@@ -70,7 +70,7 @@ public class DatadogWrapper {
                 .trackUIKitRUMActions()
                 .trackBackgroundEvents()
                 .trackRUMLongTasks()
-                .enableCrashReporting(using: DDCrashReportingPlugin()) // NEW
+                .enableCrashReporting(using: DDCrashReportingPlugin())
                 .build()
         )
 
