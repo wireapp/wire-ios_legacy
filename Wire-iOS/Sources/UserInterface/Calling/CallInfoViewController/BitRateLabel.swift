@@ -18,13 +18,15 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 enum BitRateStatus: String {
     case constant
     case variable
 
     fileprivate var localizedUppercasedText: String {
-        return "call.status.\(rawValue)_bitrate".localized(uppercased: true)
+        let uppercased = !DeveloperFlag.isUpdatedCallingUI
+        return "call.status.\(rawValue)_bitrate".localized(uppercased: uppercased)
     }
 
     fileprivate var accessibilityValue: String {
@@ -36,7 +38,7 @@ enum BitRateStatus: String {
     }
 }
 
-class BitRateLabel: UILabel {
+class BitRateLabel: DynamicFontLabel {
     var bitRateStatus: BitRateStatus? {
         didSet {
             updateLabel()

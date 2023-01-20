@@ -22,6 +22,7 @@ import WireDataModel
 import WireSyncEngine
 import avs
 import DifferenceKit
+import WireCommonComponents
 
 protocol CallGridViewControllerDelegate: AnyObject {
     func callGridViewController(_ viewController: CallGridViewController, perform action: CallGridAction)
@@ -73,6 +74,14 @@ final class CallGridViewController: SpinnerCapableViewController {
             guard !configuration.isEqual(to: oldValue) else { return }
             dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
+            if
+                DeveloperFlag.isUpdatedCallingUI,
+                configuration.isGroupCall,
+                configuration.isConnected,
+                !oldValue.isConnected
+            {
+                updateHint(for: .connectionEstablished)
+            }
         }
     }
 
@@ -81,8 +90,9 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     /// Update view visibility when this view controller is covered or not
-    var isCovered: Bool = true {
+    var isCovered: Bool = !DeveloperFlag.isUpdatedCallingUI {
         didSet {
+            if DeveloperFlag.isUpdatedCallingUI { isCovered = false }
             guard isCovered != oldValue else { return }
             notifyVisibilityChanged()
             displayIndicatorViewsIfNeeded()
@@ -124,6 +134,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Setup
 
     private func setupViews() {
+
         gridView.dataSource = self
         gridView.gridViewDelegate = self
         view.addSubview(gridView)
@@ -137,29 +148,53 @@ final class CallGridViewController: SpinnerCapableViewController {
         topStack.addArrangedSubview(hintView)
 
         view.addSubview(pageIndicator)
+        pageIndicator.pageControl.addTarget(self, action: #selector(didChangePage), for: .valueChanged)
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
+    }
+
+    func releadGridData() {
+        gridView.reloadData()
     }
 
     private func createConstraints() {
         [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView, pageIndicator].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
+        if DeveloperFlag.isUpdatedCallingUI {
+            [ thumbnailViewController.view].forEach {
+                $0.fitIn(view: view)
+            }
 
-        [gridView, thumbnailViewController.view].forEach {
-            $0.fitIn(view: view)
+            NSLayoutConstraint.activate([
+                gridView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+                gridView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+                gridView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+                gridView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor)
+            ])
+
+        } else {
+            [gridView, thumbnailViewController.view].forEach {
+                $0.fitIn(view: view)
+            }
         }
-
+        let topStackTopDistance = DeveloperFlag.isUpdatedCallingUI ? 6.0 : 24.0
         NSLayoutConstraint.activate([
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24),
+            topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: topStackTopDistance),
             topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
             pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             pageIndicator.heightAnchor.constraint(equalToConstant: CGFloat.pageIndicatorHeight),
-            pageIndicator.centerXAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
+            pageIndicator.centerXAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -22)
         ])
 
         pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
+    }
+
+    @objc func didChangePage(sender: UIPageControl) {
+        let newCurrentPage = sender.currentPage
+        pageIndicator.currentPage = newCurrentPage
+        gridView.scrollToPage(page: newCurrentPage, animated: true)
     }
 
     // MARK: - Public Interface
@@ -210,6 +245,9 @@ final class CallGridViewController: SpinnerCapableViewController {
     func updateHint(for event: CallGridEvent) {
         switch event {
         case .viewDidLoad:
+            guard !DeveloperFlag.isUpdatedCallingUI else { return }
+            hintView.show(hint: .fullscreen)
+        case .connectionEstablished:
             hintView.show(hint: .fullscreen)
         case .configurationChanged where configuration.callHasTwoParticipants:
             guard
@@ -271,6 +309,9 @@ final class CallGridViewController: SpinnerCapableViewController {
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
         requestVideoStreamsIfNeeded(forPage: gridView.currentPage)
+        if DeveloperFlag.isUpdatedCallingUI {
+            selfCallParticipantView?.avatarView.isHidden = !configuration.isConnected
+        }
     }
 
     private func displaySpinnerIfNeeded() {
@@ -352,6 +393,8 @@ final class CallGridViewController: SpinnerCapableViewController {
             view?.isPaused = $0.isPaused
             view?.pinchToZoomRule = pinchToZoomRule
             view?.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
+            view?.accessibilityHint = configuration.callHasTwoParticipants ? "" : view?.accessibilityHint
+            view?.accessibilityTraits = configuration.callHasTwoParticipants ? .staticText : .button
         }
     }
 

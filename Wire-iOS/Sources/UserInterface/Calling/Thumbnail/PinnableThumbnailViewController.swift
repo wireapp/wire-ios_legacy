@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class PinnableThumbnailViewController: UIViewController {
 
@@ -57,6 +58,7 @@ final class PinnableThumbnailViewController: UIViewController {
 
         self.thumbnailContentSize = contentSize
         updateThumbnailFrame(animated: false, parentSize: thumbnailContainerView.frame.size)
+        pinningBehavior.updateFields(in: thumbnailContainerView.bounds)
     }
 
     func updateThumbnailContentSize(_ newSize: CGSize, animated: Bool) {
@@ -109,7 +111,8 @@ final class PinnableThumbnailViewController: UIViewController {
         thumbnailContainerView.addSubview(thumbnailView)
         thumbnailView.autoresizingMask = []
         thumbnailView.clipsToBounds = true
-        thumbnailView.shape = .rounded(radius: 12)
+        let cornerRadius = DeveloperFlag.isUpdatedCallingUI ? 6.0 : 12.0
+        thumbnailView.shape = .rounded(radius: cornerRadius)
 
         thumbnailContainerView.layer.shadowRadius = 30
         thumbnailContainerView.layer.shadowOpacity = 0.32

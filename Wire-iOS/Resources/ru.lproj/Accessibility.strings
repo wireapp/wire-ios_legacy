@@ -208,15 +208,6 @@
 "conversationsListHeader.expandedButton.description" = "Развернуто";
 
 "conversationsList.accountButton.hint" = "Нажмите дважды, чтобы открыть профиль и настройки";
-"conversationsList.contactsBottomBar.description" = "Контакты";
-"conversationsList.contactsBottomBar.hint" = "Нажмите дважды, чтобы найти людей и открыть список контактов";
-"conversationsList.recentBottomBar.description" = "Беседы";
-"conversationsList.recentBottomBar.hint" = "Нажмите дважды, чтобы открыть список последних бесед";
-"conversationsList.folderBottomBar.description" = "Папки";
-"conversationsList.folderBottomBar.hint" = "Нажмите дважды, чтобы открыть список бесед, организованных по папкам";
-"conversationsList.archiveBottomBar.description" = "Архив";
-"conversationsList.archiveBottomBar.hint" = "Нажмите дважды, чтобы открыть список архивных бесед";
-"conversationsList.bottomBar.value" = "Выбрано";
 "conversationsList.silencedStatus.value" = "Без звука";
 "conversationsList.mentionStatus.value" = "Вас упомянули";
 "conversationsList.replyStatus.value" = "Ответить";
@@ -236,3 +227,44 @@
 "conversationAnnouncement.file.description" = "Файл %@ получен от %@";
 "conversationAnnouncement.deletedMessage.description" = "%@ удалил сообщение";
 "conversationAnnouncement.editedMessage.description" = "%@ изменил сообщение";
+
+"calling.flipCameraBackButton.description" = "Переключиться на основную камеру";
+"calling.flipCameraFrontButton.description" = "Переключиться на фронтальную камеру";
+"calling.videoOnButton.description" = "Включить камеру";
+"calling.videoOffButton.description" = "Выключить камеру";
+"calling.microphoneOnButton.description" = "Включить микрофон";
+"calling.microphoneOffButton.description" = "Выключить микрофон";
+"calling.speakerOnButton.description" = "Включить динамик";
+"calling.speakerOffButton.description" = "Выключить динамик";
+"calling.hangUpButton.description" = "Завершить звонок";
+"calling.acceptButton.description" = "Принять";
+"calling.userCellFullscreen.hint" = "Четырехпальцевое касание для перехода в полноэкранный режим";
+"calling.userCellMinimize.hint" = "Четырехпальцевое касание для минимизации";
+"calling.microphoneOn.description" = "Микрофон включен";
+"calling.microphoneOff.description" = "Микрофон отключен";
+"calling.cameraOn.description" = "Камера включена";
+"calling.cameraOff.description" = "Камера отключена";
+"calling.activeSpeaker.description" = "Активный динамик";
+"calling.sharesScreen.description" = "Демонстрация экрана";
+"calling.swipeUpParticipants.hint" = "Двойное касание для пролистывания вверх и просмотра всех данных участника";
+"calling.swipeDownParticipants.hint" = "Двойное касание для пролистывания вниз и скрытия данных участника";
+"calling.headerBar.description" = "Свернуть вид вызова";
+
+"tabBar.contacts.description" = "Контакты";
+"tabBar.contacts.hint" = "Нажмите дважды, чтобы найти людей и открыть список контактов";
+"tabBar.conversations.description" = "Список недавних бесед";
+"tabBar.conversations.hint" = "Нажмите дважды, чтобы открыть список последних бесед";
+"tabBar.folders.description" = "Список бесед, организованных по папкам";
+"tabBar.folders.hint" = "Нажмите дважды, чтобы открыть список бесед, организованных по папкам";
+"tabBar.archived.description" = "Архивировать";
+"tabBar.archived.hint" = "Нажмите дважды, чтобы открыть список архивных бесед";
+"tabBar.item.value" = "Выбрано";
+
+"landing.loginEnterpriseButton.description" = "Войти при помощи SSO";
+"tabBar.email.description" = "Войти по email";
+"tabBar.phone.description" = "Войти по номеру телефона";
+"authentication.forgotPasswordButton.description" = "Сменить пароль";
+"authentication.backButton.description" = "Вернуться к начальному экрану";
+
+"connection.archiveButton.description" = "Архивировать контакт";
+"connection.cancelButton.description" = "Отменить подключение";
