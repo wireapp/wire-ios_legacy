@@ -1377,7 +1377,7 @@
 		EECA90AA287449EC0024B301 /* DeveloperFlagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA90A9287449EC0024B301 /* DeveloperFlagsView.swift */; };
 		EECA90AC28744A060024B301 /* DeveloperFlagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA90AB28744A060024B301 /* DeveloperFlagsViewModel.swift */; };
 		EECC5231297AC0A900177AB5 /* CrashReporter.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		EECC5232297AC0D300177AB5 /* CrashReporter.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; };
+		EECC5232297AC0D300177AB5 /* CrashReporter.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */; };
 		EED92353278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED92352278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift */; };
 		EEDEA26823ED609C000EF7E3 /* ContactsViewController+Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */; };
