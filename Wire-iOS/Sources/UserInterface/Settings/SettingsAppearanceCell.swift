@@ -117,6 +117,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
 
         NSLayoutConstraint.activate([
             centerConstraint,
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
 
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
