@@ -262,7 +262,6 @@ extension UNNotificationContent {
 extension DatadogWrapper: WireLogger {
     
     public func info(_ message: String) {
-        print("loging datadog...")
         self.log(level: .info, message: message)
     }
 
@@ -275,7 +274,7 @@ extension DatadogWrapper: WireLogger {
     }
 
     public func error(_ message: String, _ error: Error) {
-        self.log(level: .critical, message: message)
+        self.log(level: .error, message: message)
     }
 
 }
