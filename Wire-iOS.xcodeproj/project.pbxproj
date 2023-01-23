@@ -16,6 +16,7 @@
 		0137182A297A94CC00BD961F /* DatadogCrashReporting.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0137182B297A957A00BD961F /* DatadogCrashReporting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0139E49C296EE1E200E17ADE /* Datadog.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 010497D22940DE870046124D /* Datadog.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0196B966297EA20F00BD4921 /* CrashReporter.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; };
 		060E5336257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */; };
 		061275DE26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */; };
 		061282632379C25500C1A53C /* UITextView+ReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */; };
@@ -1376,7 +1377,6 @@
 		EECA835426F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */; };
 		EECA90AA287449EC0024B301 /* DeveloperFlagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA90A9287449EC0024B301 /* DeveloperFlagsView.swift */; };
 		EECA90AC28744A060024B301 /* DeveloperFlagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA90AB28744A060024B301 /* DeveloperFlagsViewModel.swift */; };
-		EECC5231297AC0A900177AB5 /* CrashReporter.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EECC5232297AC0D300177AB5 /* CrashReporter.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECC522F297AC0A800177AB5 /* CrashReporter.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */; };
 		EED92353278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED92352278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift */; };
@@ -1849,7 +1849,6 @@
 				A96867DA26A5E71000679D95 /* PINCache.xcframework in Embed Frameworks */,
 				A96867C526A5E65000679D95 /* Ziphy.xcframework in Embed Frameworks */,
 				A96867B126A5E5A000679D95 /* WireLinkPreview.xcframework in Embed Frameworks */,
-				EECC5231297AC0A900177AB5 /* CrashReporter.xcframework in Embed Frameworks */,
 				A96867AF26A5E59F00679D95 /* WireImages.xcframework in Embed Frameworks */,
 				A96867CB26A5E68400679D95 /* FLAnimatedImage.xcframework in Embed Frameworks */,
 				A96867D426A5E6E100679D95 /* ZipArchive.xcframework in Embed Frameworks */,
@@ -3754,6 +3753,7 @@
 				A96867FC26A5ECA700679D95 /* avs.xcframework in Frameworks */,
 				A96867DC26A5E71900679D95 /* CallKit.framework in Frameworks */,
 				A96867F626A5EAE600679D95 /* libcmark.xcframework in Frameworks */,
+				0196B966297EA20F00BD4921 /* CrashReporter.xcframework in Frameworks */,
 				A96867B626A5E5A000679D95 /* WireShareEngine.xcframework in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
 				A96867BC26A5E5A000679D95 /* WireTransport.xcframework in Frameworks */,
@@ -3788,6 +3788,7 @@
 			files = (
 				0137182B297A957A00BD961F /* DatadogCrashReporting.xcframework in Frameworks */,
 				010497E3294202D70046124D /* Datadog.xcframework in Frameworks */,
+				EECC5232297AC0D300177AB5 /* CrashReporter.xcframework in Frameworks */,
 				A99EE1F22666590000E713FC /* WireLinkPreview.xcframework in Frameworks */,
 				A99EE1E8266658D500E713FC /* WireCryptobox.xcframework in Frameworks */,
 				A96867EA26A5E93900679D95 /* WireDataModel.xcframework in Frameworks */,
@@ -3802,7 +3803,6 @@
 				A99EE1F82666591A00E713FC /* WireProtos.xcframework in Frameworks */,
 				A99EE1FB266659BF00E713FC /* WireTransport.xcframework in Frameworks */,
 				A99EE205266660D300E713FC /* AppCenter.xcframework in Frameworks */,
-				EECC5232297AC0D300177AB5 /* CrashReporter.xcframework in Frameworks */,
 				A96867E726A5E93700679D95 /* SwiftProtobuf.xcframework in Frameworks */,
 				A99EE1FE266659CB00E713FC /* HTMLString.xcframework in Frameworks */,
 				1658E93626C5652B003D0090 /* Starscream.xcframework in Frameworks */,
