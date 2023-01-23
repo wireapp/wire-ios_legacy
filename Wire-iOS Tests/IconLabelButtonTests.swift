@@ -17,9 +17,10 @@
 //
 
 import XCTest
+import WireCommonComponents
 @testable import Wire
 
-final class IconLabelButtonTests: XCTestCase {
+final class IconLabelButtonTests: ZMSnapshotTestCase {
 
     fileprivate var button: IconLabelButton!
 

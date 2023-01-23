@@ -22,4 +22,5 @@ enum CallGridEvent {
     case configurationChanged
     case maximizationChanged(stream: Stream, maximized: Bool)
     case viewDidLoad
+    case connectionEstablished
 }

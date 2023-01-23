@@ -650,6 +650,8 @@
 "voice.cancel_button.title" = "إلغاء";
 "voice.call_button.title" = "اتصال";
 "voice.end_call_button.title" = "إنهاء المكالمة";
+"voice.pick_up_button.title" = "قبول";
+"voice.calling.title" = "Calling...";
 "voice.call_error.unsupported_version.title" = "Please update Wire";
 "voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
 "voice.call_error.unsupported_version.dismiss" = "لاحقاً";
@@ -664,6 +666,8 @@
 
 "voice.top_overlay.tap_to_return" = "انقر للعودة إلى المكالمة";
 "voice.top_overlay.accessibility_title" = "مكالمة جارية";
+
+"voice.flip_camera_button.title" = "Flip";
 
 // Voice New
 
@@ -1288,7 +1292,7 @@
 
 // Landing screen
 
-"landing.header" = "Wire. Add your Account.";
+"landing.header" = "Wire. Log in or create a personal account.";
 "landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
 "landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
 "landing.create_account.title" = "Create a Wire personal account";
@@ -1305,6 +1309,9 @@
 "landing.custom_backend.title" = "Connected to \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Show more";
 "landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+"landing.custom_backend.alert.title" = "On-premises Backend";
+"landing.custom_backend.alert.message.backend-name" = "Backend name:";
+"landing.custom_backend.alert.message.backend-url" = "Backend URL:";
 
 // Create team
 
@@ -1932,6 +1939,21 @@
 "keyboardshortcut.openPeople" = "أشخاص";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.security_level" = "Security level:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "UNCLASSIFIED";
+
+"proxy-credentials.title" = "Proxy Credentials";
+// url of proxy server as backend
+"proxy-credentials.caption" = "This backend is configured to use the following proxy server: %@.";
+"proxy-credentials.username.label" = "Proxy Email or Username";
+"proxy-credentials.username.placeholder" = "Email or Username";
+"proxy-credentials.password.label" = "Proxy Password";
+"proxy-credentials.password.placeholder" = "كلمة المرور";
+
+"landing.alert.create-new-account.not-supported.title" = "Not supported";
+"landing.alert.create-new-account.not-supported.message" = "You can't create a personal account on an on-premises backend with proxy support.";
+"landing.alert.sso.not-supported.title" = "Not supported";
+"landing.alert.sso.not-supported.message" = "You can't log in via SSO on an on-premises backend with proxy support.";
+"credentials.general-error.alert.title" = "Invalid Information";
+"credentials.general-error.alert.message" = "These account credentials are incorrect. Please verify your details and try again.";

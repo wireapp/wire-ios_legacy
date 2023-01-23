@@ -140,7 +140,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
-
         return true
     }
 

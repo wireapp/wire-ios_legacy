@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 // MARK: - ActiveCallRouterProtocol
 protocol ActiveCallRouterProtocol: AnyObject {
@@ -100,8 +101,16 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         // first responder when the call overlay is interactively dismissed but canceled.
         UIResponder.currentFirst?.resignFirstResponder()
 
-        let activeCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
-        activeCallViewController.delegate = callController
+        var activeCallViewController: UIViewController!
+        if DeveloperFlag.isUpdatedCallingUI {
+            let bottomSheetActiveCallViewController = CallingBottomSheetViewController(voiceChannel: voiceChannel)
+            bottomSheetActiveCallViewController.delegate = callController
+            activeCallViewController = bottomSheetActiveCallViewController
+        } else {
+            let oldActiveCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
+            oldActiveCallViewController.delegate = callController
+            activeCallViewController = oldActiveCallViewController
+        }
 
         let modalVC = ModalPresentationViewController(viewController: activeCallViewController, enableDismissOnPan: !CallingConfiguration.config.paginationEnabled)
 

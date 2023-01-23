@@ -33,7 +33,7 @@ final class CallStatusView: UIView {
 
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
-    private let bitrateLabel = BitRateLabel()
+    private let bitrateLabel = BitRateLabel(fontSpec: .smallSemiboldFont, color: SemanticColors.Label.textDefaultWhite)
     private let stackView = UIStackView(axis: .vertical)
 
     var configuration: CallStatusViewInputType {
@@ -113,7 +113,7 @@ private let callDurationFormatter: DateComponentsFormatter = {
     return formatter
 }()
 
-private extension CallStatusViewInputType {
+extension CallStatusViewInputType {
     var displayString: String {
         switch state {
         case .none: return ""

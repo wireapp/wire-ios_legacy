@@ -27,11 +27,11 @@ protocol IconLabelButtonInput {
 
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64
-    private static let height: CGFloat = 88
 
     private(set) var iconButton = IconButton()
     private(set) var subtitleTransformLabel = TransformLabel()
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private var widthConstraint: NSLayoutConstraint!
 
     var appearance: CallActionAppearance = .dark(blurred: false) {
         didSet {
@@ -39,14 +39,13 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    init(input: IconLabelButtonInput) {
+    init(input: IconLabelButtonInput, iconSize: StyleKitIcon.Size = .tiny) {
         super.init()
         setupViews()
         createConstraints()
-        iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
-        iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
+        iconButton.setIcon(input.icon(forState: .normal), size: iconSize, for: .normal)
+        iconButton.setIcon(input.icon(forState: .selected), size: iconSize, for: .selected)
         subtitleTransformLabel.text = input.label
-        self.accessibilityIdentifier = input.accessibilityIdentifier
     }
 
     @available(*, unavailable)
@@ -56,7 +55,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        updateState()
+        apply(appearance)
     }
 
     private func setupViews() {
@@ -71,16 +70,17 @@ class IconLabelButton: ButtonWithLargerHitArea {
         subtitleTransformLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleTransformLabel.textTransform = .upper
         subtitleTransformLabel.textAlignment = .center
+        subtitleTransformLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         titleLabel?.font = FontSpec(.small, .semibold).font!
         [blurView, iconButton, subtitleTransformLabel].forEach(addSubview)
     }
 
     private func createConstraints() {
+        widthConstraint = widthAnchor.constraint(equalToConstant: IconLabelButton.width)
         NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            heightAnchor.constraint(greaterThanOrEqualToConstant: IconLabelButton.height),
-            iconButton.widthAnchor.constraint(equalToConstant: IconLabelButton.width),
-            iconButton.heightAnchor.constraint(equalToConstant: IconLabelButton.width),
+            widthConstraint,
+            iconButton.widthAnchor.constraint(equalTo: widthAnchor),
+            iconButton.heightAnchor.constraint(equalTo: iconButton.heightAnchor),
             blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
             blurView.trailingAnchor.constraint(equalTo: iconButton.trailingAnchor),
             blurView.topAnchor.constraint(equalTo: iconButton.topAnchor),
@@ -88,16 +88,23 @@ class IconLabelButton: ButtonWithLargerHitArea {
             iconButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconButton.topAnchor.constraint(equalTo: topAnchor),
             iconButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            iconButton.heightAnchor.constraint(equalTo: widthAnchor),
+            subtitleTransformLabel.topAnchor.constraint(equalTo: iconButton.bottomAnchor, constant: 8.0),
             subtitleTransformLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             subtitleTransformLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             subtitleTransformLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
 
-    private func updateState() {
+    func updateState() {
         apply(appearance)
         subtitleTransformLabel.font = titleLabel?.font
         subtitleTransformLabel.textColor = titleColor(for: state)
+    }
+
+    func updateButtonWidth(width: CGFloat) {
+        widthConstraint.constant = width
+        blurView.layer.cornerRadius = width / 2
     }
 
     override var isHighlighted: Bool {
@@ -121,7 +128,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    private func apply(_ configuration: CallActionAppearance) {
+    func apply(_ configuration: CallActionAppearance) {
         setTitleColor(configuration.iconColorNormal, for: .normal)
         iconButton.setIconColor(configuration.iconColorNormal, for: .normal)
         iconButton.setBackgroundImageColor(configuration.backgroundColorNormal, for: .normal)
@@ -145,8 +152,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
 }
 
 // MARK: - Helper
-
-fileprivate extension UIControl.State {
+ extension UIControl.State {
     static let disabledAndSelected: UIControl.State = [.disabled, .selected]
     static let selectedAndHighlighted: UIControl.State = [.highlighted, .selected]
 }

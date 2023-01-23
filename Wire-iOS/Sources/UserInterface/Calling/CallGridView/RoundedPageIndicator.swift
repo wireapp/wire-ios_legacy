@@ -18,8 +18,11 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 class RoundedPageIndicator: RoundedBlurView {
+    private let selectedPageIndicator = UIImage.circle(filled: true)
+    private let defaultPageIndicator = UIImage.circle(filled: false)
     let pageControl = UIPageControl()
 
     override func setupViews() {
@@ -31,6 +34,15 @@ class RoundedPageIndicator: RoundedBlurView {
         addSubview(pageControl)
         pageControl.currentPageIndicatorTintColor = .accent()
 
+        if DeveloperFlag.isUpdatedCallingUI {
+            backgroundColor = SemanticColors.View.borderInputBar
+            pageControl.pageIndicatorTintColor = SemanticColors.Switch.borderOffStateEnabled
+            blurView.isHidden = true
+            if #available(iOS 14.0, *) {
+                pageControl.preferredIndicatorImage = defaultPageIndicator
+            }
+        }
+
         if #available(iOS 14.0, *) {
             pageControl.backgroundStyle = .minimal
             pageControl.allowsContinuousInteraction = false
@@ -40,7 +52,6 @@ class RoundedPageIndicator: RoundedBlurView {
     override func createConstraints() {
         super.createConstraints()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             pageControl.centerYAnchor.constraint(equalTo: centerYAnchor),
             pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.pageControlMargin),
@@ -52,12 +63,21 @@ class RoundedPageIndicator: RoundedBlurView {
         didSet {
             pageControl.numberOfPages = numberOfPages
             isHidden = numberOfPages <= 1
+            currentPage = 0
         }
     }
 
     var currentPage: Int = 0 {
         didSet {
             pageControl.currentPage = currentPage
+            if #available(iOS 14.0, *), DeveloperFlag.isUpdatedCallingUI {
+                guard numberOfPages > 0 else { return }
+                let lastPageIndex = numberOfPages - 1
+                for index in 0...lastPageIndex {
+                    pageControl.setIndicatorImage(defaultPageIndicator, forPage: index)
+                }
+                pageControl.setIndicatorImage(selectedPageIndicator, forPage: currentPage)
+            }
         }
     }
 
@@ -69,4 +89,33 @@ class RoundedPageIndicator: RoundedBlurView {
 
 private extension CGFloat {
     static let pageControlMargin: CGFloat = 10
+}
+
+private extension UIImage {
+
+    class func circle(filled: Bool) -> UIImage? {
+        let size = CGSize(width: 12, height: 12)
+        let lineWidth = 1.0
+
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        guard let context = UIGraphicsGetCurrentContext() else {
+                return nil
+        }
+        if filled {
+            context.setFillColor(UIColor.black.cgColor)
+        } else {
+            context.setStrokeColor(UIColor.black.cgColor)
+        }
+        context.setLineWidth(lineWidth)
+        let rect = CGRect(origin: .zero, size: size).insetBy(dx: lineWidth * 0.5, dy: lineWidth * 0.5)
+        context.addEllipse(in: rect)
+        if filled {
+            context.fillPath()
+        } else {
+            context.strokePath()
+        }
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }

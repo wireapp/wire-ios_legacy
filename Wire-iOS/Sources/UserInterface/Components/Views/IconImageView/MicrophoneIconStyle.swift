@@ -57,7 +57,14 @@ extension MicrophoneIconStyle: IconImageStyle {
     }
 
     var accessibilityLabel: String {
-        return rawValue
+        typealias Calling = L10n.Accessibility.Calling
+
+        switch self {
+        case .unmuted, .unmutedPulsing:
+            return Calling.MicrophoneOn.description
+        case .muted, .hidden:
+            return Calling.MicrophoneOff.description
+        }
     }
 }
 
