@@ -67,11 +67,11 @@ final class ConfirmAssetViewController: UIViewController {
     private let bottomPanel: UIView = UIView()
     private let confirmButtonsStack: UIStackView = UIStackView()
     private let acceptImageButton: Button = Button(style: .accentColorTextButtonStyle,
-                                                         cornerRadius: 8,
-                                                         fontSpec: .buttonSmallBold)
+                                                         cornerRadius: 16,
+                                                         fontSpec: .buttonBigSemibold)
     private let rejectImageButton: Button = Button(style: .secondaryTextButtonStyle,
-                                                   cornerRadius: 8,
-                                                   fontSpec: .buttonSmallBold)
+                                                   cornerRadius: 16,
+                                                   fontSpec: .buttonBigSemibold)
     private let contentLayoutGuide: UILayoutGuide = UILayoutGuide()
     private let imageToolbarSeparatorView: UIView = UIView()
 
