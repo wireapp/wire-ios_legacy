@@ -144,10 +144,6 @@ final class FullscreenImageViewController: UIViewController {
 
     // MARK: - Overrides
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -201,7 +197,7 @@ final class FullscreenImageViewController: UIViewController {
             minimumDismissMagnitude = 250
         }
 
-        view.backgroundColor = .from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     private func setupSnapshotBackgroundView() {

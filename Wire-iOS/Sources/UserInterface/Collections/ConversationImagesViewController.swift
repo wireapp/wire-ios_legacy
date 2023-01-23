@@ -117,10 +117,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
     override var prefersStatusBarHidden: Bool {
         return navigationController?.isNavigationBarHidden ?? false
     }
@@ -141,7 +137,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         updateBarsForPreview()
 
-        view.backgroundColor = .from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     private func createConstraints() {
