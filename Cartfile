@@ -9,4 +9,4 @@ github "wireapp/wire-ios-notification-engine" ~> 16.0.0
 github "wireapp/wire-ios-share-engine" ~> 256.0.0
 github "wireapp/wire-ios-sync-engine" ~> 437.0.0
 github "wireapp/wire-ios-ziphy" ~> 19.0.0
-github "DataDog/dd-sdk-ios" ~> 1.14.0
+github "wireapp/dd-sdk-ios" ~> 1.14.0

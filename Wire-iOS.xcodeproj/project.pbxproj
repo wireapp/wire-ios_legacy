@@ -13,8 +13,6 @@
 		010497DB2940F4F40046124D /* ProxyCredentialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010497D82940F4F40046124D /* ProxyCredentialsViewController.swift */; };
 		010497E12940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010497E02940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift */; };
 		010497E3294202D70046124D /* Datadog.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 010497D22940DE870046124D /* Datadog.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		0137182A297A94CC00BD961F /* DatadogCrashReporting.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		0137182B297A957A00BD961F /* DatadogCrashReporting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0139E49C296EE1E200E17ADE /* Datadog.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 010497D22940DE870046124D /* Datadog.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		060E5336257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */; };
 		061275DE26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */; };
@@ -1831,9 +1829,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				0139E49C296EE1E200E17ADE /* Datadog.xcframework in Embed Frameworks */,
-				0137182A297A94CC00BD961F /* DatadogCrashReporting.xcframework in Embed Frameworks */,
 				A96867AD26A5E59F00679D95 /* WireDataModel.xcframework in Embed Frameworks */,
 				A96867CE26A5E68600679D95 /* Down.xcframework in Embed Frameworks */,
+				01AAD75D294FD4CF00F1CFFD /* Datadog.xcframework in Embed Frameworks */,
 				A96867A726A5E52F00679D95 /* WireCanvas.xcframework in Embed Frameworks */,
 				A96867BD26A5E5A000679D95 /* WireTransport.xcframework in Embed Frameworks */,
 				A96867C826A5E68100679D95 /* FormatterKit.xcframework in Embed Frameworks */,
@@ -1886,7 +1884,6 @@
 		010497D72940F4F40046124D /* CustomBackendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBackendView.swift; sourceTree = "<group>"; };
 		010497D82940F4F40046124D /* ProxyCredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyCredentialsViewController.swift; sourceTree = "<group>"; };
 		010497E02940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationShowCustomBackendInfoHandler.swift; sourceTree = "<group>"; };
-		01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DatadogCrashReporting.xcframework; path = Carthage/Build/DatadogCrashReporting.xcframework; sourceTree = "<group>"; };
 		060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsPropertyFactory+AppLock.swift"; sourceTree = "<group>"; };
 		061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInteractionRestrictionTextView.swift; sourceTree = "<group>"; };
 		061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ReplaceTests.swift"; sourceTree = "<group>"; };
@@ -3782,7 +3779,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0137182B297A957A00BD961F /* DatadogCrashReporting.xcframework in Frameworks */,
 				010497E3294202D70046124D /* Datadog.xcframework in Frameworks */,
 				A99EE1F22666590000E713FC /* WireLinkPreview.xcframework in Frameworks */,
 				A99EE1E8266658D500E713FC /* WireCryptobox.xcframework in Frameworks */,
@@ -4935,7 +4931,6 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */,
 				010497D22940DE870046124D /* Datadog.xcframework */,
 				06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */,
 				1658E93126C5609F003D0090 /* Starscream.xcframework */,

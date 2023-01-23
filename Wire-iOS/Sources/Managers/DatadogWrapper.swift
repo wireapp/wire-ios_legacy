@@ -19,7 +19,6 @@
 import Foundation
 #if DATADOG_IMPORT
 import Datadog
-import DatadogCrashReporting
 import WireTransport
 import UIKit
 
@@ -70,7 +69,6 @@ public class DatadogWrapper {
                 .trackUIKitRUMActions()
                 .trackBackgroundEvents()
                 .trackRUMLongTasks()
-                .enableCrashReporting(using: DDCrashReportingPlugin())
                 .build()
         )
 
