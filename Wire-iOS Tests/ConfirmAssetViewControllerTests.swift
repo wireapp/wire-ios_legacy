@@ -26,7 +26,6 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        sut.overrideUserInterfaceStyle = .light
     }
 
     override func tearDown() {
