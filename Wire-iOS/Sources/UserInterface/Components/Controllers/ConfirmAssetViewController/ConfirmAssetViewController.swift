@@ -62,15 +62,16 @@ final class ConfirmAssetViewController: UIViewController {
     private var imageToolbarView: ImageToolbarView?
 
     private let topPanel: UIView = UIView()
-    private let titleLabel: UILabel = UILabel()
+    private let titleLabel: DynamicFontLabel = DynamicFontLabel(fontSpec: .headerSemiboldFont,
+                                                                color: SemanticColors.Label.textDefault)
     private let bottomPanel: UIView = UIView()
     private let confirmButtonsStack: UIStackView = UIStackView()
     private let acceptImageButton: Button = Button(style: .accentColorTextButtonStyle,
                                                          cornerRadius: 8,
-                                                         fontSpec: .buttonBigSemibold)
+                                                         fontSpec: .buttonSmallBold)
     private let rejectImageButton: Button = Button(style: .secondaryTextButtonStyle,
                                                    cornerRadius: 8,
-                                                   fontSpec: .buttonBigSemibold)
+                                                   fontSpec: .buttonSmallBold)
     private let contentLayoutGuide: UILayoutGuide = UILayoutGuide()
     private let imageToolbarSeparatorView: UIView = UIView()
 
@@ -128,7 +129,6 @@ final class ConfirmAssetViewController: UIViewController {
     }
 
     private func setupStyle() {
-        titleLabel.font = UIFont.mediumSemiboldFont
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
 
