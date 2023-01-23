@@ -289,7 +289,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
-        self.buttonsBar.backgroundColor = UIColor.from(scheme: .barBackground)
+        self.buttonsBar.backgroundColor = SemanticColors.View.backgroundDefaultWhite
         self.view.addSubview(self.buttonsBar)
 
         self.updateButtonsForMessage()
