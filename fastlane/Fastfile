@@ -307,18 +307,6 @@ platform :ios do
         )
     end
 
-    desc "Upload dsyms to Datadog"
-    lane :upload_dsyms_datadog do |options|
-        build = Build.new(options: options)
-        
-        upload_symbols_to_datadog(
-            api_key: ENV["DATADOG_API_KEY"],
-            dsym_paths: [
-            "#{build.artifact_path(with_filename: true)}.app.dSYM.zip"
-            ],
-            site: "datadoghq.eu")
-    end
-
     desc "Run post-test tasks"
     lane :post_test do
         sh "curl -s https://codecov.io/bash > codecov"

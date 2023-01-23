@@ -169,8 +169,7 @@ final class DeveloperToolsViewModel: ObservableObject {
             sections.append(Section(
                 header: "Datadog",
                 items: [
-                    .text(TextItem(title: "User ID", value: String(describing: dataDogUserId))),
-                    .button(.init(title: "Crash Report Test", action: { fatalError("crash app") }))
+                    .text(TextItem(title: "User ID", value: String(describing: dataDogUserId)))
                 ]
             ))
         }
