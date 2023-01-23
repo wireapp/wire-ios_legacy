@@ -76,7 +76,7 @@ final class ConfirmAssetViewController: UIViewController {
     private let imageToolbarSeparatorView: UIView = UIView()
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
+        return .default
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -164,7 +164,7 @@ final class ConfirmAssetViewController: UIViewController {
         playerViewController.player = AVPlayer(url: videoURL)
         playerViewController.player?.play()
         playerViewController.showsPlaybackControls = true
-        playerViewController.view.backgroundColor = SemanticColors.View.backgroundDefaultBlack
+        playerViewController.view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
 
         view.addSubview(playerViewController.view)
 
