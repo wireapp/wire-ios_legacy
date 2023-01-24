@@ -62,6 +62,8 @@ class CallingActionsView: UIView {
     private var establishedCallButtons: [IconLabelButton] {
         return [flipCameraButton, cameraButton, microphoneButton, speakerButton, endCallButton]
     }
+    private var largeButtonsPortraitConstraints: [NSLayoutConstraint] = []
+    private var largeButtonsLandscapeConstraints: [NSLayoutConstraint] = []
 
     var isIncomingCall: Bool = false {
         didSet {
@@ -161,13 +163,25 @@ class CallingActionsView: UIView {
             $0.subtitleTransformLabel.font = FontSpec(.small, .bold).font!
             addSubview($0)
         }
-
         NSLayoutConstraint.activate([
             largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 20.0),
             largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12.0),
             largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0),
             largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12.0)
         ])
+
+        largeButtonsPortraitConstraints = [
+            largeHangUpButton.centerXAnchor.constraint(equalTo: microphoneButton.centerXAnchor).withPriority(.required),
+            largePickUpButton.centerXAnchor.constraint(equalTo: speakerButton.centerXAnchor).withPriority(.required)
+        ]
+        largeButtonsLandscapeConstraints = [
+            largeHangUpButton.centerYAnchor.constraint(equalTo: microphoneButton.centerYAnchor).withPriority(.required),
+            largePickUpButton.centerYAnchor.constraint(equalTo: largeHangUpButton.centerYAnchor).withPriority(.required)
+        ]
+        let isPortrait = !UIDevice.current.orientation.isLandscape
+        NSLayoutConstraint.activate(
+            isPortrait ? largeButtonsPortraitConstraints : largeButtonsLandscapeConstraints
+        )
     }
 
     private func removeIncomingCallControllButtons() {
@@ -253,6 +267,17 @@ class CallingActionsView: UIView {
     @objc private func handleViewAccessibilityAction() {
         bottomSheetScrollingDelegate?.toggleBottomSheetVisibility()
         updateHandleViewAccessibilityLabel()
+    }
+
+    func viewWillRotate(toPortrait portrait: Bool) {
+        guard isIncomingCall else { return }
+        if portrait {
+            NSLayoutConstraint.activate(largeButtonsPortraitConstraints)
+            NSLayoutConstraint.deactivate(largeButtonsLandscapeConstraints)
+        } else {
+            NSLayoutConstraint.activate(largeButtonsLandscapeConstraints)
+            NSLayoutConstraint.deactivate(largeButtonsPortraitConstraints)
+        }
     }
 }
 

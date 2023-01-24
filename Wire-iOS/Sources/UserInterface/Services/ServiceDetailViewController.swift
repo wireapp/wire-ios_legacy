@@ -102,7 +102,9 @@ final class ServiceDetailViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        self.title = self.service.serviceUser.name?.localizedUppercase
+        if let title = self.service.serviceUser.name {
+            navigationItem.setupNavigationBarTitle(title: title.capitalized)
+        }
 
         setupViews()
     }
