@@ -84,6 +84,8 @@ public class DatadogWrapper {
             .build()
 
         datadogUserId = UIDevice.current.identifierForVendor?.uuidString.sha256String ?? "none"
+
+        WireLogger.provider = self
     }
 
     public func startMonitoring() {
@@ -131,6 +133,34 @@ extension DatadogWrapper: RemoteLogger {
             error: error,
             attributes: attributes
         )
+    }
+
+}
+
+extension DatadogWrapper: WireSystem.LoggerProtocol {
+
+    public func debug(_ message: String, attributes: LogAttributes?) {
+        log(level: .debug, message: message, attributes: attributes ?? .init())
+    }
+
+    public func info(_ message: String, attributes: LogAttributes?) {
+        log(level: .info, message: message, attributes: attributes ?? .init())
+    }
+
+    public func notice(_ message: String, attributes: LogAttributes?) {
+        log(level: .notice, message: message, attributes: attributes ?? .init())
+    }
+
+    public func warn(_ message: String, attributes: LogAttributes?) {
+        log(level: .warn, message: message, attributes: attributes ?? .init())
+    }
+
+    public func error(_ message: String, attributes: LogAttributes?) {
+        log(level: .error, message: message, attributes: attributes ?? .init())
+    }
+
+    public func critical(_ message: String, attributes: LogAttributes?) {
+        log(level: .critical, message: message, attributes: attributes ?? .init())
     }
 
 }
