@@ -23,7 +23,7 @@ final class FeedbackOverlayView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .from(scheme: .textForeground)
+        label.textColor = SemanticColors.Label.textDefault
 
         return label
     }()
@@ -35,7 +35,7 @@ final class FeedbackOverlayView: UIView {
         addSubview(titleLabel)
         constrainViews()
         alpha = 0.0
-        backgroundColor = .from(scheme: .background)
+        backgroundColor = SemanticColors.View.backgroundDefaultWhite
     }
 
     @available(*, unavailable)
