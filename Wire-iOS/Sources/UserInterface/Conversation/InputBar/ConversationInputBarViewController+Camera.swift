@@ -88,7 +88,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                             }
                                                             })
             let confirmVideoViewController = ConfirmAssetViewController(context: context)
-            confirmVideoViewController.previewTitle = self.conversation.displayName.localizedUppercase
+            confirmVideoViewController.previewTitle = self.conversation.displayName.localized
 
             endEditing()
             present(confirmVideoViewController, animated: true)
@@ -166,7 +166,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                     })
 
         let confirmImageViewController = ConfirmAssetViewController(context: context)
-        confirmImageViewController.previewTitle = conversation.displayName.localizedUppercase
+        confirmImageViewController.previewTitle = conversation.displayName.localized
 
         endEditing()
         present(confirmImageViewController, animated: true)

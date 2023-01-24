@@ -1013,6 +1013,12 @@ internal enum L10n {
       /// Your session expired
       internal static let title = L10n.tr("Localizable", "account_deleted_session_expired_alert.title", fallback: "Your session expired")
     }
+    internal enum AddEmailPasswordStep {
+      internal enum CtaButton {
+        /// Confirm
+        internal static let title = L10n.tr("Localizable", "add-email-password-step.cta-button.title", fallback: "Confirm")
+      }
+    }
     internal enum AddParticipants {
       internal enum Alert {
         /// The group is full
