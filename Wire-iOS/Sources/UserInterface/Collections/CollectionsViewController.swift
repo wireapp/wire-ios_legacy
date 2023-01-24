@@ -218,10 +218,9 @@ final class CollectionsViewController: UIViewController {
     private func reloadData() {
         UIView.performWithoutAnimation {
             contentView.collectionView.performBatchUpdates({
-                for section in [CollectionsSectionSet.images, CollectionsSectionSet.videos] {
-                    if numberOfElements(for: section) != 0 {
-                        contentView.collectionView.reloadSections(IndexSet(integer: (CollectionsSectionSet.visible.firstIndex(of: section))!))
-                    }
+                for section in [CollectionsSectionSet.images, CollectionsSectionSet.videos]
+                where numberOfElements(for: section) != 0 {
+                    contentView.collectionView.reloadSections(IndexSet(integer: (CollectionsSectionSet.visible.firstIndex(of: section))!))
                 }
             }, completion: { _ in
                 self.contentView.collectionView.reloadData()
@@ -279,10 +278,10 @@ final class CollectionsViewController: UIViewController {
 
         [titleView, titleViewWrapper].prepareForLayout()
         NSLayoutConstraint.activate([
-          titleView.topAnchor.constraint(equalTo: titleViewWrapper.topAnchor, constant: 4),
-          titleView.leftAnchor.constraint(equalTo: titleViewWrapper.leftAnchor),
-          titleView.rightAnchor.constraint(equalTo: titleViewWrapper.rightAnchor),
-          titleView.bottomAnchor.constraint(equalTo: titleViewWrapper.bottomAnchor)
+            titleView.topAnchor.constraint(equalTo: titleViewWrapper.topAnchor, constant: 4),
+            titleView.leftAnchor.constraint(equalTo: titleViewWrapper.leftAnchor),
+            titleView.rightAnchor.constraint(equalTo: titleViewWrapper.rightAnchor),
+            titleView.bottomAnchor.constraint(equalTo: titleViewWrapper.bottomAnchor)
         ])
 
         titleViewWrapper.setNeedsLayout()
@@ -649,8 +648,8 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
               fileMessageData.downloadState == .downloaded,
               messagePresenter.waitingForFileDownload,
               message.isFile || message.isVideo || message.isAudio else {
-            return
-        }
+                  return
+              }
 
         messagePresenter.openFileMessage(message, targetView: cell)
     }
