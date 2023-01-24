@@ -259,22 +259,30 @@ extension UNNotificationContent {
 
 }
 
-extension DatadogWrapper: WireLogger {
-    
-    public func info(_ message: String) {
-        log(level: .info, message: message)
+extension DatadogWrapper: LoggerProtocol {
+
+    public func critical(_ message: String, attributes: LogAttributes?) {
+        log(level: .critical, message: message)
     }
 
-    public func debug(_ message: String) {
-        log(level: .debug, message: message)
+    public func error(_ message: String, attributes: LogAttributes?) {
+        log(level: .error, message: message)
     }
 
-    public func warn(_ message: String) {
+    public func warn(_ message: String, attributes: LogAttributes?) {
         log(level: .warn, message: message)
     }
 
-    public func error(_ message: String, _ error: Error) {
-        log(level: .error, message: message)
+    public func notice(_ message: String, attributes: LogAttributes?) {
+        log(level: .notice, message: message)
+    }
+
+    public func info(_ message: String, attributes: LogAttributes?) {
+        log(level: .info, message: message)
+    }
+
+    public func debug(_ message: String, attributes: LogAttributes?) {
+        log(level: .debug, message: message)
     }
 
 }
