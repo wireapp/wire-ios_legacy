@@ -299,8 +299,8 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
         // Email Password Input View
         emailPasswordInputField.allowEditingPrefilledValue = !isReauthenticating
-        emailPasswordInputField.passwordField.showConfirmButton = false
         emailPasswordInputField.delegate = self
+        emailPasswordInputField.passwordField.addRevealButton(delegate: self)
 
         // Email input view
         emailInputField.delegate = self
@@ -607,5 +607,20 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country) {
         phoneInputView.selectCountry(country)
         viewController.dismiss(animated: true)
+    }
+}
+
+extension AuthenticationCredentialsViewController: ValidatedTextFieldDelegate {
+    func buttonPressed(_ sender: UIButton) {
+        emailPasswordInputField.passwordField.isSecureTextEntry.toggle()
+        emailPasswordInputField.passwordField.updatePasscodeIcon()
+    }
+}
+
+extension ValidatedTextField {
+    func addRevealButton(delegate: ValidatedTextFieldDelegate) {
+        showConfirmButton = true
+        validatedTextFieldDelegate = delegate
+        overrideButtonIcon = StyleKitIcon.AppLock.reveal
     }
 }
