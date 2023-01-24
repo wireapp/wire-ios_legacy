@@ -850,7 +850,7 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
 
         let confirmImageViewController = ConfirmAssetViewController(context: context)
 
-        confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
+        confirmImageViewController.previewTitle = conversation.displayName.localized
 
         present(confirmImageViewController, animated: false)
     }
