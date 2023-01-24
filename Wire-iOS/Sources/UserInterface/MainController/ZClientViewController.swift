@@ -230,7 +230,7 @@ final class ZClientViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 
     // MARK: trait
