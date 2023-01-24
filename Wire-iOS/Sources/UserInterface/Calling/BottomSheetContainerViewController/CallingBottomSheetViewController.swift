@@ -140,6 +140,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         guard self.configuration != newConfiguration else { return }
         self.configuration = newConfiguration
         callingActionsInfoViewController.updateActionViewHeight()
+        callingActionsInfoViewController.actionsView.viewWillRotate(toPortrait: !isLandscape)
         hideBottomSheet()
     }
 
