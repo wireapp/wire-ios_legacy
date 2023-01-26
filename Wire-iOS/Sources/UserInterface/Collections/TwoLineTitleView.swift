@@ -21,13 +21,13 @@ import UIKit
 final class TwoLineTitleView: UIView {
 
     let titleLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(fontSpec: .smallSemiboldFont,
+        let label = DynamicFontLabel(fontSpec: .headerSemiboldFont,
                                      color: SemanticColors.Label.textDefault)
         return label
     }()
 
     let subtitleLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(fontSpec: .smallLightFont,
+        let label = DynamicFontLabel(fontSpec: .mediumRegularFont,
                                      color: SemanticColors.Label.textDefault)
         return label
     }()

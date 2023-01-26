@@ -316,6 +316,18 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         buttonsBar.expandRowButton.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .selected)
     }
 
+    private func updateLikeButtonStyle() {
+        if currentMessage.liked {
+            likeButton.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .normal)
+            likeButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .normal)
+            likeButton.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .normal)
+        } else {
+            likeButton.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
+            likeButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
+            likeButton.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
+        }
+    }
+
     private func createControlsBar() {
         let buttons = createControlsBarButtons()
 
@@ -329,9 +341,9 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     fileprivate func updateLikeButton() {
-
         let messageAction: MessageAction = currentMessage.liked ? .like : .unlike
         likeButton.setIcon(messageAction.icon, size: .tiny, for: .normal)
+        updateLikeButtonStyle()
         likeButton.accessibilityLabel = messageAction.accessibilityLabel
     }
 
