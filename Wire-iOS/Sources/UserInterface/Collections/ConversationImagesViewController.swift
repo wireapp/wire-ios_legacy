@@ -258,7 +258,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         // if the current message is ephemeral, then it will be the only
         // message b/c ephemeral messages are excluded in the collection.
         if !currentMessage.isEphemeral {
-            let copyButton = iconButton(messageAction:.copy)
+            let copyButton = iconButton(messageAction: .copy)
 
             updateLikeButton()
 
