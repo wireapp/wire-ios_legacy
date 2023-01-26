@@ -113,10 +113,6 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
         return view
     }()
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     // MARK: - Search
 
     private var filteredDestinations: [D] = []
