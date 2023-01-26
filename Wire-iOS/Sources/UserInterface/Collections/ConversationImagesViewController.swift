@@ -24,6 +24,8 @@ typealias DismissAction = (_ completion: Completion?) -> Void
 
 final class ConversationImagesViewController: TintColorCorrectedViewController {
 
+    typealias ButtonColors = SemanticColors.Button
+
     let collection: AssetCollectionWrapper
 
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
@@ -174,7 +176,10 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     private func createPageController() {
         pageViewController.delegate = self
         pageViewController.dataSource = self
-        pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
+        pageViewController.setViewControllers([self.imageController(for: self.currentMessage)],
+                                              direction: .forward,
+                                              animated: false,
+                                              completion: .none)
 
         addToSelf(pageViewController)
     }
@@ -288,43 +293,43 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
     private func setupButtonStyle(button: IconButton) {
         button.layer.borderWidth = 1
-        button.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
-        button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
-        button.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
+        button.setIconColor(ButtonColors.textInputBarItemEnabled, for: .normal)
+        button.setBackgroundImageColor(ButtonColors.backgroundInputBarItemEnabled, for: .normal)
+        button.setBorderColor(ButtonColors.borderInputBarItemEnabled, for: .normal)
 
-        button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .highlighted)
-        button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .highlighted)
-        button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .highlighted)
+        button.setIconColor(ButtonColors.textInputBarItemHighlighted, for: .highlighted)
+        button.setBackgroundImageColor(ButtonColors.backgroundInputBarItemHighlighted, for: .highlighted)
+        button.setBorderColor(ButtonColors.borderInputBarItemHighlighted, for: .highlighted)
 
-        button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .selected)
-        button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .selected)
-        button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .selected)
+        button.setIconColor(ButtonColors.textInputBarItemHighlighted, for: .selected)
+        button.setBackgroundImageColor(ButtonColors.backgroundInputBarItemHighlighted, for: .selected)
+        button.setBorderColor(ButtonColors.borderInputBarItemHighlighted, for: .selected)
     }
 
     private func setupExpandRowButton() {
         buttonsBar.expandRowButton.layer.borderWidth = 1
-        buttonsBar.expandRowButton.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
-        buttonsBar.expandRowButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
-        buttonsBar.expandRowButton.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
+        buttonsBar.expandRowButton.setIconColor(ButtonColors.textInputBarItemEnabled, for: .normal)
+        buttonsBar.expandRowButton.setBackgroundImageColor(ButtonColors.backgroundInputBarItemEnabled, for: .normal)
+        buttonsBar.expandRowButton.setBorderColor(ButtonColors.borderInputBarItemEnabled, for: .normal)
 
-        buttonsBar.expandRowButton.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .highlighted)
-        buttonsBar.expandRowButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .highlighted)
-        buttonsBar.expandRowButton.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .highlighted)
+        buttonsBar.expandRowButton.setIconColor(ButtonColors.textInputBarItemHighlighted, for: .highlighted)
+        buttonsBar.expandRowButton.setBackgroundImageColor(ButtonColors.backgroundInputBarItemHighlighted, for: .highlighted)
+        buttonsBar.expandRowButton.setBorderColor(ButtonColors.borderInputBarItemHighlighted, for: .highlighted)
 
-        buttonsBar.expandRowButton.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .selected)
-        buttonsBar.expandRowButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .selected)
-        buttonsBar.expandRowButton.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .selected)
+        buttonsBar.expandRowButton.setIconColor(ButtonColors.textInputBarItemHighlighted, for: .selected)
+        buttonsBar.expandRowButton.setBackgroundImageColor(ButtonColors.backgroundInputBarItemHighlighted, for: .selected)
+        buttonsBar.expandRowButton.setBorderColor(ButtonColors.borderInputBarItemHighlighted, for: .selected)
     }
 
     private func updateLikeButtonStyle() {
         if currentMessage.liked {
-            likeButton.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .normal)
-            likeButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .normal)
-            likeButton.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .normal)
+            likeButton.setIconColor(ButtonColors.textInputBarItemHighlighted, for: .normal)
+            likeButton.setBackgroundImageColor(ButtonColors.backgroundInputBarItemHighlighted, for: .normal)
+            likeButton.setBorderColor(ButtonColors.borderInputBarItemHighlighted, for: .normal)
         } else {
-            likeButton.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
-            likeButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
-            likeButton.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
+            likeButton.setIconColor(ButtonColors.textInputBarItemEnabled, for: .normal)
+            likeButton.setBackgroundImageColor(ButtonColors.backgroundInputBarItemEnabled, for: .normal)
+            likeButton.setBorderColor(ButtonColors.borderInputBarItemEnabled, for: .normal)
         }
     }
 
