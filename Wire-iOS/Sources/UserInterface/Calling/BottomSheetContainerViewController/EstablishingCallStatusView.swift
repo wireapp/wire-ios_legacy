@@ -80,6 +80,7 @@ class EstablishingCallStatusView: UIView {
         [titleLabel, callStateLabel, securityLevelView, spaceView, profileImageView].forEach(stackView.addArrangedSubview)
         profileImageView.layer.cornerRadius = 64.0
         profileImageView.layer.masksToBounds = true
+        profileImageView.contentMode = .scaleAspectFill
     }
 
     private func setupConstraints() {

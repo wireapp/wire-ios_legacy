@@ -165,9 +165,9 @@ class CallingActionsView: UIView {
         }
         NSLayoutConstraint.activate([
             largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 20.0),
-            largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12.0),
+            largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -34.0),
             largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0),
-            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12.0)
+            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -34.0)
         ])
 
         largeButtonsPortraitConstraints = [
