@@ -44,7 +44,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         var offset = 0.0
         switch voiceChannel.state {
         case .incoming:
-            offset = UIDevice.current.orientation.isLandscape ? 128.0 : 230.0
+            offset = UIDevice.current.orientation.isLandscape ? 128.0 : 250.0
         default:
             offset = 128.0
         }
