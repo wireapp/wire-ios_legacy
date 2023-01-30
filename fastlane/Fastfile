@@ -177,92 +177,6 @@ platform :ios do
         )
     end
 
-    lane :current_bundle_id do      
-        get_xcconfig_value(
-            path: 'Configuration/Release.xcconfig',
-            name: 'WIRE_BUNDLE_ID'
-        )
-    end
-
-    lane :current_nse_suffix do      
-        get_xcconfig_value(
-            path: 'Wire-iOS/Resources/Configuration/Notification Extension/Notification-Extension-Base.xcconfig',
-            name: 'NOTIFICATION_EXTENSION_BUNDLE_SUFFIX'
-        )
-    end
-
-    lane :current_shareext_suffix do      
-        get_xcconfig_value(
-            path: 'Wire-iOS/Resources/Configuration/Share Extension/Share-Extension-Base.xcconfig',
-            name: 'SHARE_EXTENSION_BUNDLE_SUFFIX'
-        )
-    end
-
-    desc "Download profiles"
-    lane :download_profiles do |options|
-        build = Build.new(options: options)
-        
-        app_identifier = current_bundle_id
-        share_ext_id = "#{app_identifier}.#{current_shareext_suffix}"
-        nse_id = "#{app_identifier}.#{current_nse_suffix}"
-              
-        if build.debug_build
-            sigh(
-                app_identifier: app_identifier,
-                development: true,
-                skip_certificate_verification: true
-            )
-
-            sigh(
-                app_identifier: share_ext_id,
-                development: true,
-                skip_certificate_verification: true
-            )
-
-            sigh(
-                app_identifier: nse_id,
-                development: true,
-                skip_certificate_verification: true
-            )
-        elsif build.appstore_build
-            sigh(
-                app_identifier: app_identifier,
-                skip_certificate_verification: true
-            )
-
-            sigh(
-                app_identifier: share_ext_id,
-                skip_certificate_verification: true
-            )
-            
-            sigh(
-                app_identifier: nse_id,
-                skip_certificate_verification: true
-            )
-        else
-            sigh(
-                app_identifier: app_identifier,
-                adhoc: true,
-                force: true,
-                skip_certificate_verification: true
-            )
-
-            sigh(
-                app_identifier: share_ext_id,
-                adhoc: true,
-                force: true,
-                skip_certificate_verification: true
-            )
-            
-            sigh(
-                app_identifier: nse_id,
-                adhoc: true,
-                force: true,
-                skip_certificate_verification: true
-            )
-        end
-    end
-
     desc "Upload to AppStore"
     lane :upload_app_store do |options|
         build = Build.new(options: options)
@@ -513,7 +427,7 @@ class Build
         elsif appstore_build
             "app-store"
         else 
-            "ad-hoc"
+            "enterprise"
         end
     end
 

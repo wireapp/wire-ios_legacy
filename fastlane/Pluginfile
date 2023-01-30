@@ -4,4 +4,3 @@
 
 gem 'fastlane-plugin-appcenter'
 gem 'fastlane-plugin-datadog'
-gem 'fastlane-plugin-xcconfig'
