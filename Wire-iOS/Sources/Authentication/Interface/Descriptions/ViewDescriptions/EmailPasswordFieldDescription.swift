@@ -36,28 +36,19 @@ final class EmailPasswordFieldDescription: ValueSubmission {
 
 }
 
-extension EmailPasswordFieldDescription: ViewDescriptor, EmailPasswordTextFieldDelegate {
+extension EmailPasswordFieldDescription: ViewDescriptor {
     func create() -> UIView {
         textField.passwordField.kind = .password(isNew: forRegistration)
-        textField.delegate = self
         textField.prefill(email: prefilledEmail)
         textField.emailField.validateInput()
+        textField.passwordField.addRevealButton(delegate: self)
         return textField
     }
+}
 
-    func textFieldDidUpdateText(_ textField: EmailPasswordTextField) {
-        // Reset the error message when the user changes the text and we use deferred validation
-        guard usePasswordDeferredValidation else { return }
-        valueValidated?(nil)
-    }
-
-    func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String)) {
-        valueSubmitted?(credentials)
-    }
-
-    func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {
-        if let passwordError = textField.passwordValidationError {
-            valueValidated?(.error(passwordError, showVisualFeedback: true))
-        }
+extension EmailPasswordFieldDescription: ValidatedTextFieldDelegate {
+    func buttonPressed(_ sender: UIButton) {
+        textField.passwordField.isSecureTextEntry = !textField.passwordField.isSecureTextEntry
+        textField.passwordField.updatePasscodeIcon()
     }
 }
