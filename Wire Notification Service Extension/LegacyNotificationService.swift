@@ -176,7 +176,6 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
           analytics: nil
       )
 
-      session.logger = DatadogWrapper.shared
       session.delegate = self
       return session
   }
@@ -256,33 +255,5 @@ extension UNNotificationContent {
 
       return userID
   }
-
-}
-
-extension DatadogWrapper: LoggerProtocol {
-
-    public func critical(_ message: String, attributes: LogAttributes?) {
-        log(level: .critical, message: message)
-    }
-
-    public func error(_ message: String, attributes: LogAttributes?) {
-        log(level: .error, message: message)
-    }
-
-    public func warn(_ message: String, attributes: LogAttributes?) {
-        log(level: .warn, message: message)
-    }
-
-    public func notice(_ message: String, attributes: LogAttributes?) {
-        log(level: .notice, message: message)
-    }
-
-    public func info(_ message: String, attributes: LogAttributes?) {
-        log(level: .info, message: message)
-    }
-
-    public func debug(_ message: String, attributes: LogAttributes?) {
-        log(level: .debug, message: message)
-    }
 
 }
