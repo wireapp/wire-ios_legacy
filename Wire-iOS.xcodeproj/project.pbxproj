@@ -1889,6 +1889,23 @@
 		010497D82940F4F40046124D /* ProxyCredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyCredentialsViewController.swift; sourceTree = "<group>"; };
 		010497E02940F5DE0046124D /* AuthenticationShowCustomBackendInfoHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationShowCustomBackendInfoHandler.swift; sourceTree = "<group>"; };
 		01371828297A94CB00BD961F /* DatadogCrashReporting.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DatadogCrashReporting.xcframework; path = Carthage/Build/DatadogCrashReporting.xcframework; sourceTree = "<group>"; };
+		01A5E041297FDAB400624B65 /* Pluginfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Pluginfile; sourceTree = "<group>"; };
+		01A5E042297FDAB400624B65 /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Fastfile; sourceTree = "<group>"; };
+		01A5E043297FDAB500624B65 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		01A5E044297FDAB500624B65 /* report.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = report.xml; sourceTree = "<group>"; };
+		01A5E046297FDAB500624B65 /* updateLicenses */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = updateLicenses; sourceTree = "<group>"; };
+		01A5E047297FDAB500624B65 /* updateStylekit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = updateStylekit; sourceTree = "<group>"; };
+		01A5E048297FDAB500624B65 /* copyExtraAudioNotifications */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = copyExtraAudioNotifications; sourceTree = "<group>"; };
+		01A5E049297FDAB500624B65 /* download-assets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "download-assets.sh"; sourceTree = "<group>"; };
+		01A5E04A297FDAB500624B65 /* install-templates.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "install-templates.sh"; sourceTree = "<group>"; };
+		01A5E04B297FDAB500624B65 /* embed-internal-resources */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "embed-internal-resources"; sourceTree = "<group>"; };
+		01A5E04C297FDAB500624B65 /* embedBuildInfo */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = embedBuildInfo; sourceTree = "<group>"; };
+		01A5E04D297FDAB500624B65 /* download-avs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "download-avs.sh"; sourceTree = "<group>"; };
+		01A5E04E297FDAB500624B65 /* use-local-framework */ = {isa = PBXFileReference; lastKnownFileType = text; path = "use-local-framework"; sourceTree = "<group>"; };
+		01A5E04F297FDAB500624B65 /* convertLocalNotificationSounds */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convertLocalNotificationSounds; sourceTree = "<group>"; };
+		01A5E050297FDAB500624B65 /* remove-bitcode.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "remove-bitcode.sh"; sourceTree = "<group>"; };
+		01A5E051297FDAB500624B65 /* datadog-conditional-framework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "datadog-conditional-framework.sh"; sourceTree = "<group>"; };
+		01A5E052297FDAB500624B65 /* postprocess.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = postprocess.sh; sourceTree = "<group>"; };
 		060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsPropertyFactory+AppLock.swift"; sourceTree = "<group>"; };
 		061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInteractionRestrictionTextView.swift; sourceTree = "<group>"; };
 		061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ReplaceTests.swift"; sourceTree = "<group>"; };
@@ -3812,6 +3829,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01A5E040297FDAB400624B65 /* fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				01A5E041297FDAB400624B65 /* Pluginfile */,
+				01A5E042297FDAB400624B65 /* Fastfile */,
+				01A5E043297FDAB500624B65 /* README.md */,
+				01A5E044297FDAB500624B65 /* report.xml */,
+			);
+			path = fastlane;
+			sourceTree = "<group>";
+		};
+		01A5E045297FDAB500624B65 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				01A5E046297FDAB500624B65 /* updateLicenses */,
+				01A5E047297FDAB500624B65 /* updateStylekit */,
+				01A5E048297FDAB500624B65 /* copyExtraAudioNotifications */,
+				01A5E049297FDAB500624B65 /* download-assets.sh */,
+				01A5E04A297FDAB500624B65 /* install-templates.sh */,
+				01A5E04B297FDAB500624B65 /* embed-internal-resources */,
+				01A5E04C297FDAB500624B65 /* embedBuildInfo */,
+				01A5E04D297FDAB500624B65 /* download-avs.sh */,
+				01A5E04E297FDAB500624B65 /* use-local-framework */,
+				01A5E04F297FDAB500624B65 /* convertLocalNotificationSounds */,
+				01A5E050297FDAB500624B65 /* remove-bitcode.sh */,
+				01A5E051297FDAB500624B65 /* datadog-conditional-framework.sh */,
+				01A5E052297FDAB500624B65 /* postprocess.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		060B1E2D25BADCDB00A6ADA7 /* Password */ = {
 			isa = PBXGroup;
 			children = (
@@ -5765,6 +5813,8 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				01A5E040297FDAB400624B65 /* fastlane */,
+				01A5E045297FDAB500624B65 /* Scripts */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				F12C48952199CBB600F49548 /* Configuration */,
@@ -10295,8 +10345,6 @@
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = W5KEQBF9B5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
