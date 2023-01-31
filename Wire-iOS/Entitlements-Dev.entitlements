@@ -39,7 +39,7 @@
 	<array>
 		<string>$(AppIdentifierPrefix)${WIRE_BUNDLE_ID}</string>
 	</array>
-        <key>com.apple.developer.pushkit.unrestricted-voip</key>
-        <true/>
+	<key>com.apple.developer.pushkit.unrestricted-voip</key>
+	<true/>
 </dict>
 </plist>
