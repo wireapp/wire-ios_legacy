@@ -427,7 +427,7 @@ class Build
         elsif appstore_build
             "app-store"
         else 
-            "enterprise"
+            "ad-hoc"
         end
     end
 
