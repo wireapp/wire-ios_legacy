@@ -1957,3 +1957,4 @@
 "landing.alert.sso.not-supported.message" = "Sie können sich nicht über SSO auf einem lokalen Backend mit Proxy-Unterstützung anmelden.";
 "credentials.general-error.alert.title" = "Ungültige Informationen";
 "credentials.general-error.alert.message" = "Diese Zugangsdaten sind nicht korrekt. Bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut.";
+"add-email-password-step.cta-button.title" = "Bestätigen";

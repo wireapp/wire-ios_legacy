@@ -1957,3 +1957,4 @@
 "landing.alert.sso.not-supported.message" = "Нельзя авторизоваться через SSO во внутреннем бэкэнде с поддержкой прокси.";
 "credentials.general-error.alert.title" = "Неверная информация";
 "credentials.general-error.alert.message" = "Эти учетные данные неверны.  Проверьте их и повторите попытку.";
+"add-email-password-step.cta-button.title" = "Подтвердить";
