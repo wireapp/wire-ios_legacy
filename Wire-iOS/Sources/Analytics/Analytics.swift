@@ -19,8 +19,7 @@
 import Foundation
 import WireDataModel
 import WireSyncEngine
-
-private let zmLog = ZMSLog(tag: "Analytics")
+import WireSystem
 
 final class Analytics: NSObject {
 
@@ -29,11 +28,13 @@ final class Analytics: NSObject {
     private var callingTracker: AnalyticsCallingTracker?
     private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
     private var userObserverToken: Any?
+    private let logger = WireLogger(tag: "Analytics")
 
     static var shared: Analytics!
 
     required init(optedOut: Bool) {
-        zmLog.info("Analytics initWithOptedOut: \(optedOut)")
+        logger.info("Analytics initWithOptedOut: \(optedOut)")
+
         provider = optedOut ? nil : AnalyticsProviderFactory.shared.analyticsProvider()
 
         super.init()
@@ -83,6 +84,7 @@ final class Analytics: NSObject {
 
         attributes.merge(userInfo, strategy: .preferNew)
         tagEvent("e2ee.failed_message_decryption", attributes: attributes)
+        logger.info("e2ee.failed_message_decryption \(attributes)")
     }
 }
 
