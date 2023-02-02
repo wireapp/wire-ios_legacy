@@ -196,6 +196,18 @@ platform :ios do
         )
     end
 
+    desc "Upload to TestFlight"
+    lane :upload_testflight do |options|
+        build = Build.new(options: options)
+
+        sh "cp ../Configuration/Appfile ."
+
+        upload_to_testflight(
+            ipa: "#{build.artifact_path(with_filename: true)}.ipa",
+            skip_waiting_for_build_processing: true
+        )
+    end
+
     desc "Create a new version but not submit for review. Usage: Create release_note.txt in fastlane/metadata/en-US & de-DE folders. Then call $fastlane create_version app_version:X.XX"
     lane :create_version do |options|
         deliver(
