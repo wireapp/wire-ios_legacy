@@ -121,6 +121,7 @@ platform :ios do
         end
 
         build = Build.new(options: options)
+        export_method = options[:export_method] || build.export_method
 
         if build.for_simulator
             Dir.chdir("..") do
@@ -137,7 +138,7 @@ platform :ios do
             build_app(
                 scheme: "Wire-iOS",
                 configuration: build.configuration,
-                export_method: build.export_method,
+                export_method: export_method,
                 export_options: {"iCloudContainerEnvironment": "Production"},
                 derived_data_path: "DerivedData",
                 archive_path: build.archive_path(with_filename: true),
@@ -160,11 +161,12 @@ platform :ios do
         end
 
         build = Build.new(options: options)
+        export_method = options[:export_method] || build.export_method
 
         build_app(
             scheme: "Wire-iOS",
             configuration: build.configuration,
-            export_method: build.export_method,
+            export_method: export_method,
             export_options: {"iCloudContainerEnvironment": "Production"},
             derived_data_path: "DerivedData",
             archive_path: build.archive_path(with_filename: true),
