@@ -137,7 +137,8 @@ class CallingActionsView: UIView {
             handleView.heightAnchor.constraint(equalToConstant: 5),
             handleView.widthAnchor.constraint(equalToConstant: 130),
             topStackView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 14),
-            topStackView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor, constant: -14)
+            topStackView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor, constant: -14),
+            topStackView.heightAnchor.constraint(equalToConstant: 85).withPriority(.required)
         ])
     }
 
@@ -163,20 +164,19 @@ class CallingActionsView: UIView {
             $0.subtitleTransformLabel.font = FontSpec(.small, .bold).font!
             addSubview($0)
         }
-        NSLayoutConstraint.activate([
-            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 20.0),
-            largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -34.0),
-            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0),
-            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -34.0)
-        ])
 
         largeButtonsPortraitConstraints = [
             largeHangUpButton.centerXAnchor.constraint(equalTo: microphoneButton.centerXAnchor).withPriority(.required),
-            largePickUpButton.centerXAnchor.constraint(equalTo: speakerButton.centerXAnchor).withPriority(.required)
+            largePickUpButton.centerXAnchor.constraint(equalTo: speakerButton.centerXAnchor).withPriority(.required),
+
+            largeHangUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -34.0),
+            largePickUpButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -34.0)
         ]
         largeButtonsLandscapeConstraints = [
             largeHangUpButton.centerYAnchor.constraint(equalTo: microphoneButton.centerYAnchor).withPriority(.required),
-            largePickUpButton.centerYAnchor.constraint(equalTo: largeHangUpButton.centerYAnchor).withPriority(.required)
+            largePickUpButton.centerYAnchor.constraint(equalTo: largeHangUpButton.centerYAnchor).withPriority(.required),
+            largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 20.0),
+            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0),
         ]
         let isPortrait = !UIDevice.current.orientation.isLandscape
         NSLayoutConstraint.activate(
