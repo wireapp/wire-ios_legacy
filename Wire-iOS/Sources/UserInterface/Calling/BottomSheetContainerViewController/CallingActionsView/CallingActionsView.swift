@@ -176,7 +176,7 @@ class CallingActionsView: UIView {
             largeHangUpButton.centerYAnchor.constraint(equalTo: microphoneButton.centerYAnchor).withPriority(.required),
             largePickUpButton.centerYAnchor.constraint(equalTo: largeHangUpButton.centerYAnchor).withPriority(.required),
             largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 20.0),
-            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0),
+            largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0)
         ]
         let isPortrait = !UIDevice.current.orientation.isLandscape
         NSLayoutConstraint.activate(
