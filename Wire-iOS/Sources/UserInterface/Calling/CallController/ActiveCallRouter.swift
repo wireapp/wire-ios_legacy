@@ -61,7 +61,7 @@ class ActiveCallRouter: NSObject {
 
     private var isCallQualityShown = false
     private var isCallTopOverlayShown = false
-    private(set) var scheduledPostCallAction: (() -> Void)?
+    private(set) var scheduledDisplayedCallAction: (() -> Void)?
 
     private var zClientViewController: ZClientViewController? {
         return rootViewController.firstChild(ofType: ZClientViewController.self)
@@ -128,8 +128,6 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         }
         rootViewController.dismiss(animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = false
-            self?.scheduledPostCallAction?()
-            self?.scheduledPostCallAction = nil
             completion?()
         })
     }
@@ -156,8 +154,13 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     // MARK: - Alerts
     func presentSecurityDegradedAlert(degradedUser: UserType?) {
         executeOrSchedulePostCallAction { [weak self] in
-            let alert = UIAlertController.degradedCall(degradedUser: degradedUser, callEnded: true)
-            self?.rootViewController.present(alert, animated: true)
+            guard let strongSelf = self else { return }
+            let alert = UIAlertController.degradedCall(degradedUser: degradedUser, callEnded: !strongSelf.isActiveCallShown)
+            if strongSelf.isActiveCallShown {
+                strongSelf.rootViewController.presentedViewController?.present(alert, animated: true)
+            } else {
+                strongSelf.rootViewController.present(alert, animated: true)
+            }
         }
     }
 
@@ -181,16 +184,18 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         isPresentingActiveCall = true
         rootViewController.present(modalViewController, animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = true
+            self?.scheduledDisplayedCallAction?()
+            self?.scheduledDisplayedCallAction = nil
         })
     }
 
     // MARK: - Helpers
 
     func executeOrSchedulePostCallAction(_ action: @escaping () -> Void) {
-        if !isActiveCallShown {
+        if !isActiveCallShown && !isPresentingActiveCall {
             action()
         } else {
-            scheduledPostCallAction = action
+            scheduledDisplayedCallAction = action
         }
     }
 }

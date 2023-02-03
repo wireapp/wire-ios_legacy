@@ -132,8 +132,8 @@ extension CallController: WireCallCenterCallStateObserver {
                              timestamp: Date?,
                              previousCallState: CallState?) {
         presentUnsupportedVersionAlertIfNecessary(callState: callState)
-        presentSecurityDegradedAlertIfNecessary(for: conversation.voiceChannel)
         updateActiveCallPresentationState()
+        presentSecurityDegradedAlertIfNecessary(for: conversation.voiceChannel)
     }
 
     private func presentUnsupportedVersionAlertIfNecessary(callState: CallState) {

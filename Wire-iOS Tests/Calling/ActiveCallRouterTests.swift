@@ -34,7 +34,7 @@ class ActiveCallRouterTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThat_ItExecutesPostCallAction_IfActiveCall_IsNotShown() {
+    func testThat_ItExecutesDisplayedCallAction_IfActiveCall_IsNotShown() {
         // given
         sut.isActiveCallShown = false
         var executed = false
@@ -46,10 +46,10 @@ class ActiveCallRouterTests: XCTestCase {
 
         // then
         XCTAssertTrue(executed)
-        XCTAssertNil(sut.scheduledPostCallAction)
+        XCTAssertNil(sut.scheduledDisplayedCallAction)
     }
 
-    func testThat_ItSavesPostCallAction_IfActiveCall_IsShown() {
+    func testThat_ItSavesDisplayedCallAction_IfActiveCall_IsShown() {
         // given
         sut.isActiveCallShown = true
         var executed = false
@@ -60,9 +60,9 @@ class ActiveCallRouterTests: XCTestCase {
         }
 
         // then
-        XCTAssertNotNil(sut.scheduledPostCallAction)
+        XCTAssertNotNil(sut.scheduledDisplayedCallAction)
         XCTAssertFalse(executed)
-        sut.scheduledPostCallAction?()
+        sut.scheduledDisplayedCallAction?()
         XCTAssertTrue(executed)
     }
 
