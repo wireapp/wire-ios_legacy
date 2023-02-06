@@ -27,6 +27,9 @@ extension VoiceChannel {
 
     func getSecondParticipant() -> ZMUser? {
         guard let participants = self.conversation?.participants as? [ZMUser] else { return nil }
+        if case .incoming = state, let initiator = initiator as? ZMUser {
+            return initiator
+        }
         let selfUserID = ZMUser.selfUser().remoteIdentifier
         return participants.first(where: { $0.remoteIdentifier != selfUserID })
     }
