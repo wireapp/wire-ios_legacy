@@ -178,7 +178,7 @@ class CallingActionsView: UIView {
             largeHangUpButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 20.0),
             largePickUpButton.trailingAnchor.constraint(equalTo: safeTrailingAnchor, constant: -20.0)
         ]
-        let isPortrait = !UIDevice.current.orientation.isLandscape
+        let isPortrait = UIDevice.current.twoDimensionOrientation.isPortrait
         NSLayoutConstraint.activate(
             isPortrait ? largeButtonsPortraitConstraints : largeButtonsLandscapeConstraints
         )

@@ -129,7 +129,7 @@ class CallingActionsInfoViewController: UIViewController, UICollectionViewDelega
     }
 
     func updateActionViewHeight() {
-        guard UIDevice.current.orientation.isLandscape else {
+        guard UIDevice.current.twoDimensionOrientation.isLandscape else {
             actionsViewHeightConstraint.constant =  isIncomingCall ? 250 : 128
             actionsView.verticalStackView.alignment = .fill
             return

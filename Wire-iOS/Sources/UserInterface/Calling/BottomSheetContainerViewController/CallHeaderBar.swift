@@ -64,7 +64,8 @@ class CallHeaderBar: UIView {
             minimalizeButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             minimalizeButton.widthAnchor.constraint(equalToConstant: 32.0),
             minimalizeButton.heightAnchor.constraint(equalToConstant: 32.0),
-            verticalStackView.leadingAnchor.constraint(greaterThanOrEqualTo: minimalizeButton.trailingAnchor, constant: 6.0)
+            verticalStackView.leadingAnchor.constraint(greaterThanOrEqualTo: minimalizeButton.trailingAnchor, constant: 6.0),
+            verticalStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 32.0)
         ])
     }
 
