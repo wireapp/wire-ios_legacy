@@ -44,7 +44,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         var offset = 0.0
         switch voiceChannel.state {
         case .incoming:
-            offset = UIDevice.current.orientation.isLandscape ? 128.0 : 250.0
+            offset = UIDevice.current.twoDimensionOrientation.isLandscape ? 128.0 : 250.0
         default:
             offset = 128.0
         }
@@ -133,7 +133,7 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     // after rotating device recalculate bottom sheet max height
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        let isLandscape = UIDevice.current.orientation.isLandscape
+        let isLandscape = UIDevice.current.twoDimensionOrientation.isLandscape
         // if landscape then bottom sheet should take whole screen (without headerBar)
         let bottomSheetMaxHeight = isLandscape ? (size.height - headerBar.bounds.height) : bottomSheetMaxHeight
         let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
