@@ -133,9 +133,13 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
     // after rotating device recalculate bottom sheet max height
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        updateConstraints(forHeight: size.height)
+    }
+
+    private func updateConstraints(forHeight height: CGFloat) {
         let isLandscape = UIDevice.current.twoDimensionOrientation.isLandscape
         // if landscape then bottom sheet should take whole screen (without headerBar)
-        let bottomSheetMaxHeight = isLandscape ? (size.height - headerBar.bounds.height) : bottomSheetMaxHeight
+        let bottomSheetMaxHeight = isLandscape ? (height - headerBar.bounds.height) : bottomSheetMaxHeight
         let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
         guard self.configuration != newConfiguration else { return }
         self.configuration = newConfiguration
@@ -233,10 +237,7 @@ extension CallingBottomSheetViewController: CallInfoConfigurationObserver {
         callDegradationController.state = configuration.degradationState
         callingActionsInfoViewController.didUpdateConfiguration(configuration: configuration)
         panGesture.isEnabled = !configuration.state.isIncoming
-        guard self.configuration.initialOffset != bottomSheetMinimalOffset else { return }
-        let newConfiguration = BottomSheetConfiguration(height: bottomSheetMaxHeight, initialOffset: bottomSheetMinimalOffset)
-        self.configuration = newConfiguration
-        hideBottomSheet()
+        updateConstraints(forHeight: view.bounds.height)
     }
 }
 
