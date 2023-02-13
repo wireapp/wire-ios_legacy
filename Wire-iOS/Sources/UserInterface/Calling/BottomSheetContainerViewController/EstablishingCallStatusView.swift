@@ -83,6 +83,11 @@ class EstablishingCallStatusView: UIView {
         profileImageView.contentMode = .scaleAspectFill
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0
+    }
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor).withPriority(.required),
