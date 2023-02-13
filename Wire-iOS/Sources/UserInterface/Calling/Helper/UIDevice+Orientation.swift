@@ -20,12 +20,14 @@ import UIKit
 
 extension UIDevice {
     var twoDimensionOrientation: UIDeviceOrientation {
+
+        if let interfaceOrientation = UIApplication.shared.firstKeyWindow?.windowScene?.interfaceOrientation {
+            return interfaceOrientation.isLandscape ? .landscapeLeft : .portrait
+        }
+
         if orientation.isPortrait || orientation.isLandscape {
             return orientation
         }
-        guard let interfaceOrientation = UIApplication.shared.firstKeyWindow?.windowScene?.interfaceOrientation else {
-            return .portrait
-        }
-        return interfaceOrientation.isLandscape ? .landscapeLeft : .portrait
+        return .portrait
     }
 }
