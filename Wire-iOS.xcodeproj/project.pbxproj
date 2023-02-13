@@ -1191,6 +1191,8 @@
 		D38BC97628BF8AA700EB928F /* NotificationServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455DF28AFC443005ACD74 /* NotificationServiceError.swift */; };
 		D3A74DBD29432E8B00DD272F /* EstablishingCallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */; };
 		D3A74DC7294CAFEF00DD272F /* AccessibilityActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */; };
+		D3A74DC3294C530000DD272F /* CallingActionsViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC1294C510100DD272F /* CallingActionsViewTest.swift */; };
+		D3A74DC5294C5A6800DD272F /* CallingBottomSheetViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A74DC4294C5A6800DD272F /* CallingBottomSheetViewControllerTests.swift */; };
 		D3C34E6E28C1593C004A1AF1 /* AccessTokenEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */; };
 		D3C34E7628C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */; };
 		D3DA6E7B292F67680045CC57 /* CallingActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */; };
@@ -3167,6 +3169,8 @@
 		D36E0279293758DD006C3E5A /* CallHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHeaderBar.swift; sourceTree = "<group>"; };
 		D3A74DBC29432E8B00DD272F /* EstablishingCallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishingCallStatusView.swift; sourceTree = "<group>"; };
 		D3A74DC6294CAFEF00DD272F /* AccessibilityActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityActionView.swift; sourceTree = "<group>"; };
+		D3A74DC1294C510100DD272F /* CallingActionsViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsViewTest.swift; sourceTree = "<group>"; };
+		D3A74DC4294C5A6800DD272F /* CallingBottomSheetViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingBottomSheetViewControllerTests.swift; sourceTree = "<group>"; };
 		D3C34E6428C14EEE004A1AF1 /* AccessTokenEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenEndpointTests.swift; sourceTree = "<group>"; };
 		D3C34E7528C1DE4B004A1AF1 /* NotificationByIDEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationByIDEndpointTests.swift; sourceTree = "<group>"; };
 		D3DA6E7A292F67680045CC57 /* CallingActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingActionsView.swift; sourceTree = "<group>"; };
@@ -4866,6 +4870,7 @@
 		6340EF8E237AE90700EF8506 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
+				D3A74DC0294C50DF00DD272F /* UpdatedCallingUI */,
 				638C88C42680F8DD0074D512 /* Mocks */,
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 				EF6251D521395F7E00943708 /* CallGridViewControllerSnapshotTests.swift */,
@@ -7074,6 +7079,15 @@
 				D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D3A74DC0294C50DF00DD272F /* UpdatedCallingUI */ = {
+			isa = PBXGroup;
+			children = (
+				D3A74DC1294C510100DD272F /* CallingActionsViewTest.swift */,
+				D3A74DC4294C5A6800DD272F /* CallingBottomSheetViewControllerTests.swift */,
+			);
+			path = UpdatedCallingUI;
 			sourceTree = "<group>";
 		};
 		D3C34E6328C0C710004A1AF1 /* SimpleNotificationServiceExtension */ = {
@@ -9649,6 +9663,7 @@
 				EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */,
 				5E294595219081A80045ACFA /* Date+Generator.swift in Sources */,
 				EE7F467225B1D058001B3EE4 /* AppLockModule.MockPresenter.swift in Sources */,
+				D3A74DC3294C530000DD272F /* CallingActionsViewTest.swift in Sources */,
 				EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */,
 				D35EEDC128C2004000949F02 /* LegacyNotificationService.swift in Sources */,
 				EEEED9A623F6AF80008C94CA /* TestingAppDelegate.swift in Sources */,
@@ -9768,6 +9783,7 @@
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
 				A9712D5E2743C4FA0008F380 /* GiphyConfirmationViewControllerSnapshotTests.swift in Sources */,
 				A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */,
+				D3A74DC5294C5A6800DD272F /* CallingBottomSheetViewControllerTests.swift in Sources */,
 				A95C76C2240E915D0047CD29 /* CompositeMessageCellTests.swift in Sources */,
 				EF223F5D2327A1CF004480FA /* ConversationListViewControllerViewModelTests.swift in Sources */,
 				EF2FEDC8228E9E42000883C8 /* UserImageViewContainerSnapshotTests.swift in Sources */,

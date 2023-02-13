@@ -61,9 +61,8 @@ class CallingBottomSheetViewController: BottomSheetContainerViewController {
         }
     }
 
-    init(voiceChannel: VoiceChannel) {
+    init(voiceChannel: VoiceChannel, selfUser: UserType) {
         self.voiceChannel = voiceChannel
-        let selfUser: UserType = ZMUser.selfUser()
         visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel, selfUser: selfUser, isOverlayEnabled: false)
         callingActionsInfoViewController = CallingActionsInfoViewController(participants: voiceChannel.getParticipantsList(), selfUser: selfUser)
         super.init(contentViewController: visibleVoiceChannelViewController, bottomSheetViewController: callingActionsInfoViewController, bottomSheetConfiguration: .init(height: bottomSheetMaxHeight, initialOffset: 112.0))
