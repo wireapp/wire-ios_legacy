@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import avs
 
 final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
 
@@ -41,6 +42,8 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
         if selfUser.usesCompanyLogin || password != nil {
             weak var topMostViewController: SpinnerCapableViewController? = UIApplication.shared.topmostViewController(onlyFullScreen: false) as? SpinnerCapableViewController
             topMostViewController?.isLoadingViewVisible = true
+            AVSMediaManager.sharedInstance()?.stop(sound: .ringingFromThemInCallSound)
+            AVSMediaManager.sharedInstance()?.stop(sound: .ringingFromThemSound)
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
                 topMostViewController?.isLoadingViewVisible = false
 
