@@ -2,6 +2,24 @@ opt_out_usage
 default_platform(:ios)
 
 platform :ios do
+    before_all do |lane|
+        lanes_with_api_key = [:upload_app_store, :upload_testflight, :create_version, :submit_review]
+        if lanes_with_api_key.include?(lane)
+            create_api_key
+        end
+    end
+
+    lane :create_api_key do
+        @api_key ||= app_store_connect_api_key(
+          key_id: ENV['KEY_ID'],
+          issuer_id: ENV['KEY_ID_ISSUER'],
+          key_filepath: ENV['KEY_FILE_PATH'],
+          duration: 1200, # optional(maximum 1200)
+          in_house: false # optional but may be required if using match / sigh
+        )
+    end
+    
+
     desc "Fetch dependencies"
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
@@ -121,6 +139,7 @@ platform :ios do
         end
 
         build = Build.new(options: options)
+        export_method = options[:export_method] || build.export_method
 
         if build.for_simulator
             Dir.chdir("..") do
@@ -137,7 +156,7 @@ platform :ios do
             build_app(
                 scheme: "Wire-iOS",
                 configuration: build.configuration,
-                export_method: build.export_method,
+                export_method: export_method,
                 export_options: {"iCloudContainerEnvironment": "Production"},
                 derived_data_path: "DerivedData",
                 archive_path: build.archive_path(with_filename: true),
@@ -160,11 +179,12 @@ platform :ios do
         end
 
         build = Build.new(options: options)
+        export_method = options[:export_method] || build.export_method
 
         build_app(
             scheme: "Wire-iOS",
             configuration: build.configuration,
-            export_method: build.export_method,
+            export_method: export_method,
             export_options: {"iCloudContainerEnvironment": "Production"},
             derived_data_path: "DerivedData",
             archive_path: build.archive_path(with_filename: true),
@@ -183,6 +203,7 @@ platform :ios do
 
         sh "cp ../Configuration/Appfile ."
         deliver(
+            api_key: @api_key,
             ipa: "#{build.artifact_path(with_filename: true)}.ipa",
             submit_for_review: false,
             automatic_release: false,
@@ -196,9 +217,22 @@ platform :ios do
         )
     end
 
+    desc "Upload to TestFlight"
+    lane :upload_testflight do |options|
+        build = Build.new(options: options)
+        sh "cp ../Configuration/Appfile ."
+
+        upload_to_testflight(
+            api_key: @api_key,
+            ipa: "#{build.artifact_path(with_filename: true)}.ipa",
+            skip_waiting_for_build_processing: true
+        )
+    end
+
     desc "Create a new version but not submit for review. Usage: Create release_note.txt in fastlane/metadata/en-US & de-DE folders. Then call $fastlane create_version app_version:X.XX"
     lane :create_version do |options|
         deliver(
+            api_key: @api_key,
             app_version: options[:app_version],
             submit_for_review: false,
             automatic_release: false,
@@ -213,6 +247,7 @@ platform :ios do
     desc "Submit for review with release note. Usage: Create release_note.txt in fastlane/metadata/en-US & de-DE folders. Then call $fastlane submit_review app_version:X.XX"
     lane :submit_review do |options|
         deliver(
+            api_key: @api_key,
             app_version: options[:app_version],
             submit_for_review: true,
             automatic_release: false,
@@ -413,6 +448,10 @@ class Build
         @build_type == "RC"
     end
 
+    def beta_build
+        @build_type == "Beta"
+    end
+
     def debug_build
         @configuration == "Debug"
     end
@@ -424,7 +463,7 @@ class Build
     def export_method
         if debug_build
             "development"
-        elsif appstore_build
+        elsif appstore_build || beta_build
             "app-store"
         else 
             "ad-hoc"
@@ -476,6 +515,8 @@ class Build
             "avs-experimental/#{suffix}"
         when "RC"
             "release/#{suffix}"
+        when "Beta"
+            "release/testflight"
         else
             UI.user_error! "Unknown build type: #{@build_type}"
         end
@@ -553,6 +594,8 @@ class Build
             "Wire-iOS-App-Store"
         elsif rc_build
             "Wire-iOS-Release-Candidate"
+        elsif beta_build
+            "Wire-iOS-Beta"
         end
     end
 end
