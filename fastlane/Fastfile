@@ -2,6 +2,24 @@ opt_out_usage
 default_platform(:ios)
 
 platform :ios do
+    before_all do |lane|
+        lanes_with_api_key = [:upload_app_store, :upload_testflight, :create_version, :submit_review]
+        if lanes_with_api_key.include?(lane)
+            create_api_key
+        end
+    end
+
+    lane :create_api_key do
+        @api_key ||= app_store_connect_api_key(
+          key_id: ENV['KEY_ID'],
+          issuer_id: ENV['KEY_ID_ISSUER'],
+          key_filepath: ENV['KEY_FILE_PATH'],
+          duration: 1200, # optional(maximum 1200)
+          in_house: false # optional but may be required if using match / sigh
+        )
+    end
+    
+
     desc "Fetch dependencies"
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
@@ -121,6 +139,7 @@ platform :ios do
         end
 
         build = Build.new(options: options)
+        export_method = options[:export_method] || build.export_method
 
         if build.for_simulator
             Dir.chdir("..") do
@@ -137,7 +156,7 @@ platform :ios do
             build_app(
                 scheme: "Wire-iOS",
                 configuration: build.configuration,
-                export_method: build.export_method,
+                export_method: export_method,
                 export_options: {"iCloudContainerEnvironment": "Production"},
                 derived_data_path: "DerivedData",
                 archive_path: build.archive_path(with_filename: true),
@@ -160,11 +179,12 @@ platform :ios do
         end
 
         build = Build.new(options: options)
+        export_method = options[:export_method] || build.export_method
 
         build_app(
             scheme: "Wire-iOS",
             configuration: build.configuration,
-            export_method: build.export_method,
+            export_method: export_method,
             export_options: {"iCloudContainerEnvironment": "Production"},
             derived_data_path: "DerivedData",
             archive_path: build.archive_path(with_filename: true),
@@ -180,9 +200,10 @@ platform :ios do
     desc "Upload to AppStore"
     lane :upload_app_store do |options|
         build = Build.new(options: options)
+        sh "cp ../wire-ios/Configuration/Appfile ."
 
-        sh "cp ../Configuration/Appfile ."
         deliver(
+            api_key: @api_key,
             ipa: "#{build.artifact_path(with_filename: true)}.ipa",
             submit_for_review: false,
             automatic_release: false,
@@ -196,9 +217,23 @@ platform :ios do
         )
     end
 
+    desc "Upload to TestFlight"
+    lane :upload_testflight do |options|
+        build = Build.new(options: options)
+        sh "cp ../wire-ios/Configuration/Appfile ."
+
+
+        upload_to_testflight(
+            api_key: @api_key,
+            ipa: "#{build.artifact_path(with_filename: true)}.ipa",
+            skip_waiting_for_build_processing: true
+        )
+    end
+
     desc "Create a new version but not submit for review. Usage: Create release_note.txt in fastlane/metadata/en-US & de-DE folders. Then call $fastlane create_version app_version:X.XX"
     lane :create_version do |options|
         deliver(
+            api_key: @api_key,
             app_version: options[:app_version],
             submit_for_review: false,
             automatic_release: false,
@@ -213,6 +248,7 @@ platform :ios do
     desc "Submit for review with release note. Usage: Create release_note.txt in fastlane/metadata/en-US & de-DE folders. Then call $fastlane submit_review app_version:X.XX"
     lane :submit_review do |options|
         deliver(
+            api_key: @api_key,
             app_version: options[:app_version],
             submit_for_review: true,
             automatic_release: false,
@@ -247,7 +283,7 @@ platform :ios do
             sh "cd ../#{build.archive_path(with_filename: false)} && tar -czf #{build.filename}.xcarchive.tgz #{build.filename}.xcarchive"
         end
         
-        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ #{s3_path}"
+        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa'  --include '*.app.dSYM.zip' --include '*.xcarchive.tgz' --include '*.junit' artifacts/ #{s3_path}"
     end
 
     desc "Upload for internal use"
@@ -318,6 +354,44 @@ platform :ios do
             ],
             site: "datadoghq.eu")
     end
+
+    desc "Run security plans"
+    lane :security_plans do |options|
+        build = Build.new(options: options)
+
+        xcode_version = options[:xcode_version]
+
+        ios_version = "15.2"
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
+
+            if xcode_version == "13.2.1"
+                ios_version = "15.2"
+            elsif xcode_version == "13.1"
+                 ios_version = "15.0"
+            elsif xcode_version == "12.4"
+                ios_version = "14.4"
+            end
+        end
+
+        for scheme in ["Wire-iOS", "WireDataModel", "WireSyncEngine"] do
+            run_tests(
+                testplan: "SecurityTests",
+                scheme: scheme,
+                skip_detect_devices: true,
+                configuration: "Debug",
+                # test_without_building: true,
+                sdk:"iphonesimulator",
+                destination: "platform=iOS Simulator,name=iPhone 8,OS=#{ios_version}",
+                # code_coverage: true,
+                derived_data_path: "DerivedData",
+                buildlog_path: build.build_path,
+                output_directory: "#{build.artifact_path(with_filename: false)}/tests/#{scheme}",
+                output_types: "junit"
+            )    
+        end
+    end
+
 
     desc "Run post-test tasks"
     lane :post_test do
@@ -413,6 +487,10 @@ class Build
         @build_type == "RC"
     end
 
+    def beta_build
+        @build_type == "Beta"
+    end
+
     def debug_build
         @configuration == "Debug"
     end
@@ -424,7 +502,7 @@ class Build
     def export_method
         if debug_build
             "development"
-        elsif appstore_build
+        elsif appstore_build || beta_build
             "app-store"
         else 
             "ad-hoc"
@@ -456,6 +534,7 @@ class Build
     end
 
     def artifact_directory
+        result = ""
         suffix = "" 
         if for_simulator 
             suffix = "simulator" 
@@ -465,20 +544,25 @@ class Build
 
         case @build_type
         when "Playground"
-            "playground-#{normalized_branch_name}/#{suffix}"
+            result = "playground-#{normalized_branch_name}/#{suffix}"
         when "Development"
-            "development/#{suffix}"
+            result = "development/#{suffix}"
         when "Internal"
-            "internal/#{suffix}"
+            result = "internal/#{suffix}"
         when "AppStore"
-            "release/appstore"
+            result = "release/appstore"
         when "AVS"
-            "avs-experimental/#{suffix}"
+            result = "avs-experimental/#{suffix}"
         when "RC"
-            "release/#{suffix}"
+            result = "release/#{suffix}"
+        when "Beta"
+            result = "release/testflight"
         else
             UI.user_error! "Unknown build type: #{@build_type}"
         end
+
+        # We want to group related artifacts by the filename.
+        result + "/" + filename
     end
 
     # Force custom AVS version
@@ -501,7 +585,7 @@ class Build
         end
         # Loop over all icons in the iconset
         processed = 0
-        Dir.glob("../#{iconset_location}/*.png") do |image|
+        Dir.glob("../wire-ios/#{iconset_location}/*.png") do |image|
             width = %x( identify -format %w #{image} )
             image_height = %x( identify -format %h #{image} )
             height = Integer(image_height) / 4.0
@@ -519,7 +603,7 @@ class Build
             prefix = "AVS:#{@avs_version}-"
         end
         if rc_build
-            version = IO.foreach('../Wire-iOS/Resources/Configuration/Version.xcconfig').grep(/WIRE_SHORT_VERSION/).first.split(" = ")[1].chomp
+            version = IO.foreach('../wire-ios/Wire-iOS/Resources/Configuration/Version.xcconfig').grep(/WIRE_SHORT_VERSION/).first.split(" = ")[1].chomp
             prefix = "#{version}-"
         end
 
@@ -553,6 +637,8 @@ class Build
             "Wire-iOS-App-Store"
         elsif rc_build
             "Wire-iOS-Release-Candidate"
+        elsif beta_build
+            "Wire-iOS-Beta"
         end
     end
 end
