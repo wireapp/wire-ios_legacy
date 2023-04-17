@@ -200,7 +200,7 @@ platform :ios do
     desc "Upload to AppStore"
     lane :upload_app_store do |options|
         build = Build.new(options: options)
-        sh "cp ../Configuration/Appfile"
+        sh "cp ../Configuration/Appfile ."
 
         deliver(
             api_key: @api_key,
@@ -220,7 +220,7 @@ platform :ios do
     desc "Upload to TestFlight"
     lane :upload_testflight do |options|
         build = Build.new(options: options)
-        sh "cp ../Configuration/Appfile"
+        sh "cp ../Configuration/Appfile ."
 
 
         upload_to_testflight(
