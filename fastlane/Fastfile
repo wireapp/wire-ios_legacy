@@ -603,7 +603,7 @@ class Build
             prefix = "AVS:#{@avs_version}-"
         end
         if rc_build
-            version = IO.foreach('../wire-ios/Wire-iOS/Resources/Configuration/Version.xcconfig').grep(/WIRE_SHORT_VERSION/).first.split(" = ")[1].chomp
+            version = IO.foreach('../Wire-iOS/Resources/Configuration/Version.xcconfig').grep(/WIRE_SHORT_VERSION/).first.split(" = ")[1].chomp
             prefix = "#{version}-"
         end
 
