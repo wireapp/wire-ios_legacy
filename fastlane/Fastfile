@@ -220,7 +220,7 @@ platform :ios do
     desc "Upload to TestFlight"
     lane :upload_testflight do |options|
         build = Build.new(options: options)
-        sh "cp ../wire-ios/Configuration/Appfile ."
+        sh "cp ../Configuration/Appfile"
 
 
         upload_to_testflight(
