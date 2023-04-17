@@ -200,7 +200,7 @@ platform :ios do
     desc "Upload to AppStore"
     lane :upload_app_store do |options|
         build = Build.new(options: options)
-        sh "cp ../wire-ios/Configuration/Appfile ."
+        sh "cp ../Configuration/Appfile ."
 
         deliver(
             api_key: @api_key,
